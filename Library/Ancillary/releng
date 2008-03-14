@@ -1,0 +1,206 @@
+#! /bin/sh
+
+### releng -- Release Engineering script
+
+# Author: Michaël Grünewald
+# Date: Jeu 13 mar 2008 23:01:35 CET
+# Lang: fr_FR.ISO8859-1
+
+# $Id$
+
+# Copyright (c) 2008, Michaël Grünewald
+# All rights reserved.
+#
+# Redistribution and use in source and binary forms, with or without
+# modification, are permitted provided that the following conditions
+# are met:
+#
+#    1. Redistributions of source code must retain the above copyright
+#    notice, this list of conditions and the following disclaimer.
+#
+#    2. Redistributions in binary form must reproduce the above
+#    copyright notice, this list of conditions and the following
+#    disclaimer in the documentation and/or other materials provided
+#    with the distribution.
+#
+#    3. The name of the author may not be used to endorse or promote
+#    products derived from this software without specific prior written
+#    permission.
+#
+# THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
+# IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+# DISCLAIMED. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR ANY DIRECT,
+# INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+# (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
+# SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+# HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT,
+# STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING
+# IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+# POSSIBILITY OF SUCH DAMAGE.
+
+
+# Ce programme automatise des parties de la procédure de publication.
+# Les parties actuellement prises en charge sont:
+#  - La publication des `tarball'.
+
+# On utilise SVN, PERL, TAR, GZIP, BZIP2 et CURL.
+
+#
+# Configuration
+#
+
+releng_project='makefile'
+releng_sum_tools='md5 sha256'
+releng_repository='svn://Llea.celt.neu/workshop/makefile'
+releng_subversion='/usr/local/bin/svn'
+releng_tmpdir="/tmp"
+releng_target="file://$HOME/export/makefile/"
+
+#
+# Constantes
+#
+
+SUCCESS=0
+FAILURE=1
+
+#
+# Procédures ancillaires
+#
+
+releng_info()
+{
+    echo '***' "$@" 1>&2
+}
+
+releng_svn()
+{
+    $releng_subversion --non-interactive "$@"
+    return $?
+}
+
+releng_exists()
+# $1 sub folder of the repository
+{
+    releng_svn list "$releng_repository/$1" 1>&- 2>&-
+    return $?
+    # Le code de retour de SVN est imprécis
+}
+
+releng_distfile_validate()
+# $1 a releng label
+#    Checks the formal validity of a releng label to be distributed
+{
+    perl -e '
+if($ARGV[0] =~ m/releng-[0-9]+\.[0-9]+-(bp|rc[0-9]+)/) {
+  exit 0;
+} elsif ($ARGV[0] =~ m/release-[0-9]+\.[0-9]+/) {
+  exit 0;
+} else {
+  exit 1;
+}' $1
+    return $?
+}
+
+releng_distfile_mkname()
+# $1 a validated releng label
+#    Computes a public name corresponding to the releng label
+{
+    perl -e '
+$_ = $ARGV[0];
+s/^releng-//;
+s/^release-//;
+print $_;
+' $1
+}
+
+#
+# Procédures principales
+#
+
+releng_usage_display()
+{
+    cat - <<EOF
+Usage: releng TAG
+ Produit les fichiers de distribution pour TAG
+EOF
+}
+
+releng_help()
+{
+    releng_usage_display
+    exit 0
+}
+
+releng_usage()
+{
+    releng_usage_display
+    exit 64
+}
+
+releng_distfile()
+# $1 name of the releng to distribute (e.g. releng-1.0-rc1)
+{
+    local distname
+    local distfiles
+    local sumfiles
+
+    distfiles=''	# Tarballs
+    sumfiles=''		# MD5
+    otherfiles=''	# README
+    allfiles=''		# Concatenation of the three above
+
+
+    releng_distfile_validate "$1"	|| exit 1
+    releng_exists tags/$1		|| exit 2
+
+    distname=$releng_project-`releng_distfile_mkname $1`
+
+    releng_info 'Starting the export'
+    releng_svn export $releng_repository/tags/$1 $releng_tmpdir/$distname
+
+    releng_info 'Creating the gzipped tarball'
+    tar czfC $releng_tmpdir/$distname.tar.gz  $releng_tmpdir $distname \
+	|| exit 3
+
+    releng_info 'Creating the bzipped tarball'
+    tar cjfC $releng_tmpdir/$distname.tar.bz2 $releng_tmpdir $distname \
+	|| exit 4
+
+    releng_info 'Cleaning the export directory'
+    rm -Rf $releng_tmpdir/$distname || exit 5
+
+    distfiles="$distname.tar.gz,$distname.tar.bz2"	# sic
+
+    releng_info 'Making sums'
+    for sum_tool in $releng_sum_tools; do
+	(
+	    cd $releng_tmpdir
+	    $sum_tool $distname.tar.gz $distname.tar.bz2 \
+		> CHECKSUM.$sum_tool
+    );
+	sumfiles="$sumfiles${sumfiles:+,}CHECKSUM.$sum_tool"
+    done
+
+    allfiles="${distfiles}${sumfiles:+,${sumfiles}}${otherfiles:+,${otherfiles}}"
+
+    case $releng_target in
+	file://*)
+	    releng_info 'Creating publication directory'
+	    install -d ${releng_target#file://};;
+    esac
+
+    releng_info 'Publishing files with curl'
+    curl -T "$releng_tmpdir/{${allfiles}}" "$releng_target" || exit 6
+
+    releng_info 'Cleaning the temporary directory'
+    (
+	IFS=','
+	cd $releng_tmpdir
+	rm $allfiles
+    )
+}
+
+releng_distfile "$1"
+
+### End of file `releng'

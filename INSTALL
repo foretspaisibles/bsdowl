@@ -1,0 +1,23 @@
+INSTALL -- Notes à propos de l'installation
+
+Author: Michaël Grünewald
+Date: Ven 10 fév 2006 16:50:40 GMT
+Lang: fr_FR.ISO8859-1
+
+$Id$
+
+
+Dans ce qui suit on note `make' le nom du programme `BSD Make' sur le
+système. Pour FreeBSD, il s'agit effectivement du binaire `make', pour
+Mac OS-X il s'agit de `bsdmake'.
+
+L'installation se fait avec
+
+  make all
+  make install
+
+La procédure d'installation respecte DESTDIR et PREFIX.
+Cf. ``FreeBSD Porter's Handbook'', 9.4.
+
+Les fichiers de directives sont installés dans le dossier
+$DESTDIR/$PREFIX/share/mk.

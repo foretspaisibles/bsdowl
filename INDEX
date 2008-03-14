@@ -1,0 +1,63 @@
+INDEX -- Guide through the Makefile Collection
+
+Author: Michaël Grünewald
+Date: Ven 10 fév 2006 16:50:40 GMT
+Lang: fr_FR.ISO8859-1
+
+$Id$
+
+
+Petit répertoire des ensembles de modules figurant dans la collection
+de fichiers de directives pour BSD Make.
+
+
+Manual		Manuel pour la collection de makefiles
+INDEX		Ce répertoire
+INTRO		Description des méthodologies pour le code
+README		À propos de BSD Make et des Makefiles
+Makefile	Fichier de maintenance
+Mk		Directives BSD Make pour le projet
+Tools		Outils pour le développement
+
+make		Modules d'intérêt général (pour le codeur de directives make)
+misc		Modules divers
+ocaml		Projets avec Objective Caml
+rox		Projets d'actions pour ROX-Filer
+text		Projets avec des formateurs de texte (p.ex. TeX)
+www		Publication sur le WWW
+
+
+make -- Modules d'intérêt général
+
+Il s'agit d'une bibliothèque pour le codeur de directives make. Un
+module intéressant l'utilisateur est `make.subdir.mk'.
+
+
+misc -- Modules divers
+
+Compilation des fichiers elisp, installation de fichiers de script, etc.
+
+
+ocaml -- Projets avec Objective Caml
+
+Préparation de programmes, de bibliothèques et de la documentation
+avec ocamldoc.
+
+
+rox -- Projets d'actions pour ROX-Filer
+
+Installation de scripts d'action pour étendre les possibilités du
+ROX-Filer.
+
+
+text -- Projets avec des formateurs de texte (p.ex. TeX)
+
+Préparation de documents avec TeX. Ces modules très flexibles peuvent
+être paramétrés pour tenir compte de différents formats,
+etc. Préparationde figures avec METAPOST. Les modules principaux sont
+`tex.doc.mk' et `latex.doc.mk'.
+
+
+www -- Publication sur le WWW
+
+Production et publication de fichiers sur le WWW.
