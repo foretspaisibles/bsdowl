@@ -1,4 +1,4 @@
-README -- Collection de Makefiles
+README -- BSD Make Pallas Scripts
 
 Author: Michaël Grünewald
 Date: Ven 10 fév 2006 16:50:40 GMT
@@ -11,8 +11,26 @@ Cette collection de directives pour BSD Make, la version de make
 actuellement distribuée dans le système d'exploitation FreeBSD, rend
 des services dans plusieurs domaines.
 
+Ce projet est hébergé sur gna.org. C'est pour moi un plaisir de
+remercier ici les administrateurs de gna.org pour leur générosité.
 
-1 UTILISATION
+Consultez le fichier COPYING pour connaître les conditions
+d'utilisation de ce logiciel.
+
+Pallas Athéné est Athéna déesse de la sagesse, protectrice des
+sciences et des arts.
+
+
+1 LOGICIELS NÉCESSAIRES
+
+Ces fichiers de directives doivent être utilisés avec BSD Make, la
+version BSD du programme `make'. Ce programme est notamment disponible
+comme `make' sous FreeBSD (programme inclus dans le système de base)
+et comme `bsdmake' dans Mac OS X (programme inclus dans le système de
+base).
+
+
+2 UTILISATION
 
 Pour plus de confort dans l'utilisation de ces directives, on peut
 ajouter le dossier d'instllation dans le chemin de recherche des
@@ -30,16 +48,42 @@ administratives(install, etc.) et fournir au développpeurs un script
 démarre un shell.
 
 
-2 DOCUMENTATION
+3 DOCUMENTATION
 
 En guise de documentation, on trouve parfois des exemples au début de
 certains fichiers de directives.
 
 
-3 PLAN D'ORIENTATION
+4 PLAN D'ORIENTATION
 
 Les modules de directives dont le préfixe est `make' sont des modules
 internes, dont l'usage est ordinairement réservé à l'écriture d'autres
 fichiers de directives. Il y a une exception notable à cette règle, le
 fichier `make.subdir.mk' qui est délègue les actions à effectuer à
 certains des sous-dossiers du dossier actif.
+
+
+4.1 Modules aboutis
+
+Les modules les plus aboutis sont actuellement:
+
+ -- ocaml/ocaml.prog.mk
+ -- ocaml/ocaml.lib.mk
+ -- text/tex.doc.mk
+ -- text/latex.doc.mk
+ -- make/make.subdir.mk
+ -- misc/script.mk
+
+Leurs fonctionnalités peuvent cependant encore évoluer, notamment pour
+améliorer le support des variables .PATH et .OBJDIR.
+
+
+4.2 Modules inaboutis
+
+Les modules particulièrement inaboutis sont les suivants:
+
+  -- misc/*
+  -- rox/*
+
+De plus, ces modules sont inertes. Tout le monde peut se porter
+volontaire pour olonger les fonctionnalités de ces modules.
