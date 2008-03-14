@@ -1,0 +1,45 @@
+README -- Collection de Makefiles
+
+Author: Michaël Grünewald
+Date: Ven 10 fév 2006 16:50:40 GMT
+Lang: fr_FR.ISO8859-1
+
+$Id$
+
+
+Cette collection de directives pour BSD Make, la version de make
+actuellement distribuée dans le système d'exploitation FreeBSD, rend
+des services dans plusieurs domaines.
+
+
+1 UTILISATION
+
+Pour plus de confort dans l'utilisation de ces directives, on peut
+ajouter le dossier d'instllation dans le chemin de recherche des
+fichiers de directives:
+
+ -- en positionnant la variable d'environnement `MAKEFLAGS';
+ -- en utilisant la cible spéciale `.MAKEFLAGS'.
+
+Cf. make(1) pour plus de détails.
+
+Pour l'utilisation de ces directives dans un projet, on peut utiliser
+la directive .MAKEFLAGS dans le fichier Makefile contenant les cibles
+administratives(install, etc.) et fournir au développpeurs un script
+`trampoline' qui positionne corectement des valeurs d'environnement et
+démarre un shell.
+
+
+2 DOCUMENTATION
+
+En guise de documentation, on trouve parfois des exemples au début de
+certains fichiers de directives.
+
+
+3 PLAN D'ORIENTATION
+
+Les modules de directives dont le préfixe est `make' sont des modules
+internes, dont l'usage est ordinairement réservé à l'écriture d'autres
+fichiers de directives. Il y a une exception notable à cette règle, le
+fichier `make.subdir.mk' qui est délègue les actions à effectuer à
+certains des sous-dossiers du dossier actif.
