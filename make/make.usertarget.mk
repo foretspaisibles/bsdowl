@@ -40,19 +40,26 @@
 
 ### SYNOPSIS
 
+# _MAKE_USERTARGET = configure depend build doc all install clean distclean
+# _MAKE_ALLSUBTARGET = configure depend build doc
 # .include "make.usertarget.mk"
 
 
 ### DESCRIPTION
 
 # Crée les cibles pre/do/post pour les cibles de l'interface
-# utilisateur, dont la liste est dans la variable MAKEUSERTARGET.
+# utilisateur, dont la liste est la valeur de la variable
+# _MAKE_USERTARGET.
+#
+# La cible `all' appelle une liste de sous travaux, dont la liste est 
 
 
 .if !target(__<make.usertarget.mk>__)
 __<make.usertarget.mk>__:
 
-.for target in ${MAKEUSERTARGET:Nall}
+.PHONY: ${_MAKE_USERTARGET}
+
+.for target in ${_MAKE_USERTARGET:Nall}
 .if !target(${target})
 .for prefix in pre do post
 .if target(${prefix}-${target})
@@ -62,7 +69,7 @@ ${target}: ${prefix}-${target}
 .endif
 .endfor
 
-.for target in configure depend build
+.for target in ${_MAKE_ALLSUBTARGET}
 .if target(${target})
 do-all: divert-${target}
 
@@ -83,7 +90,7 @@ clean:
 	${RM} -f ${CLEANFILES}
 .endif
 
-.for target in ${MAKEUSERTARGET}
+.for target in ${_MAKE_USERTARGET}
 .if !target(${target})
 ${target}:
 	@: ${INFO} "Nothing to do for target ${target}"

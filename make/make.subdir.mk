@@ -59,7 +59,7 @@
 .if !target(__<make.subdir.mk>__)
 __<make.subdir.mk>__:
 
-_SUBDIR_TARGETS+=	${MAKEUSERTARGET}
+_SUBDIR_TARGETS+=	${_MAKE_USERTARGET}
 _SUBDIR_PREFIX?=
 
 _SUBDIR:	.USE
