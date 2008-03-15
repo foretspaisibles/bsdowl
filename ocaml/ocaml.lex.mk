@@ -83,7 +83,7 @@ _OCAML_MLI+=${if}
 ${lexer:.mll=.cmo}: ${lexer:.mll=.cmi}
 
 ${lexer:.mll=.ml}: ${lexer}
-	${OCAMLLEX} ${lexer}
+	${OCAMLLEX} -o ${.TARGET} ${.ALLSRC}
 
 .endfor
 .endif

@@ -93,7 +93,7 @@ _OCAML_MLI+= ${if}
 .for parser in ${_OCAML_MLY}
 
 ${parser:.mly=.ml} ${parser:.mly=.mli}: ${parser}
-	${OCAMLYACC} ${parser}
+	${OCAMLYACC} -b ${.TARGET:S/.mli$//:S/.ml$//} ${.ALLSRC}
 
 ${parser:.mly=.cmo}: ${parser:.mly=.cmi}
 
