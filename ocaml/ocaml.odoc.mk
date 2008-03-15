@@ -149,6 +149,8 @@ _ODOC_FLAGS+= -hide ${ODOC_HIDE:Q:S/\\ /,/g}
 _ODOC_FLAGS+= -pp ${ODOC_PREPROCESSOR}
 .endif
 .if !empty(ODOC_LOAD)
+.SUFFIX: .odoc
+.PATH.odoc:
 .for load in ${ODOC_LOAD}
 .for path in ${ODOC_SEARCH}
 .if exists(${path}/${load})
@@ -177,7 +179,7 @@ ${ODOC}: ${_OCAML_SRCS.${ODOC_NAME}}
 ${ODOC}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*/.cmi/}
 
 ${ODOC}:
-	${_ODOC_TOOL} -dump ${.TARGET} ${_OCAML_SRCS.${ODOC_NAME}}
+	${_ODOC_TOOL} -dump ${.TARGET} ${.ALLSRC:N*.cmi}
 
 CLEANFILES+= ${ODOC}
 
@@ -204,12 +206,12 @@ ODOC_HTML?= ${ODOC_NAME}_html
 do-doc-odoc: ${ODOC_HTML}
 
 ${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}}
-${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*/.cmi/}
+${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*$/.cmi/}
 
 ${ODOC_HTML}:
 	${RM} -R -f ${ODOC_HTML}.temp ${ODOC_HTML}
 	${MKDIR} ${ODOC_HTML}.temp
-	${_ODOC_TOOL} -html -d ${ODOC_HTML}.temp ${_OCAML_SRCS.${ODOC_NAME}}
+	${_ODOC_TOOL} -html -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi}
 	${MV} ${ODOC_HTML}.temp ${ODOC_HTML}
 
 do-install: do-install-odoc-html
