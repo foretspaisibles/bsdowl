@@ -65,7 +65,7 @@
 # Pour chaque objet, la ligne de production est
 #
 #  ${obj}:
-#	${_OCAML_BUILD.${obj:T}} ${_OCAML_SRCS.${obj:T}}
+#	${_OCAML_BUILD.${obj:T}} ${.ALLSRCS}
 #
 
 
@@ -141,7 +141,7 @@ _OCAML_BUILD.${obj:T}+=${${var}.${obj:T}}
 #
 # Output name
 #
-_OCAML_BUILD.${obj:T}+=-o ${obj}
+_OCAML_BUILD.${obj:T}+=-o ${.TARGET}
 #
 # Additional parameters
 #
@@ -174,8 +174,7 @@ ${obj}:
 .endif
 .endif
 .undef if
-	${_OCAML_BUILD.${obj:T}} ${_OCAML_SRCS.${obj:T}}
-
+	${_OCAML_BUILD.${obj:T}} ${.ALLSRCS}
 
 .endfor
 .endfor
