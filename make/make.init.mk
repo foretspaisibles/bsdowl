@@ -66,10 +66,11 @@
 #  root. Ceci permet d'utiliser le même Makefile pour installer des
 #  programmes `localement', et `globalement' avec la commande `sudo'.
 #
-# Définit la liste MAKEUSERTARGET des cibles ``interface utilisateur''
+# Définit la liste _MAKE_USERTARGET des cibles ``interface utilisateur''
 #  (all, clean, etc.). Voici la liste des ces cibles et les actions
 #  qu'elles doivent entreprendre:
 #
+#    * obj: créer l'arborescence nécessaire sous `objdir', le cas échéant
 #    * configure: traite le code source pour l'adapter à
 #       l'environnement courant;
 #    * depend: traite le code source pour déterminer automatiquement
@@ -154,22 +155,33 @@ FAIL?=			@echo 'Failure:'
 MESG?=			@echo
 NOP?=			@: do nada
 
+
 ## CIBLE IMPLICTE (all)
 
 .MAIN:			all
+
 
 ## APPLICATIONDIR
 
 .if defined(APPLICATION) && !empty(APPLICATION)
 APPLICATIONDIR?=	/${APPLICATION}
-# C'est inutile, puisque c'est ce qui se passe de toute façon
 #.else
+# Inutile, puisque c'est ce qui se passe de toute façon:
 #APPLICATIONDIR?=
 .endif
 
-## MAKEUSERTARGET
+## _MAKE_USERTARGET
 
-MAKEUSERTARGET =	configure depend build doc all install clean distclean
+.if !(${.CURDIR} == ${.OBJDIR})
+_MAKE_USERTARGET = obj
+_MAKE_ALLSUBTARGET = obj
+.else
+_MAKE_USERTARGET =
+_MAKE_ALLSUBTARGET =
+.endif
+
+_MAKE_USERTARGET+= configure depend build doc all install clean distclean
+_MAKE_ALLSUBTARGET+= configure depend build doc
 
 .include "make.own.mk"
 
