@@ -1,4 +1,4 @@
-### ocaml.odoc.mk -- OCAMLDOC
+### ocaml.odoc.mk -- Interface simple avec OCamldoc
 
 # Author: Michaël Grünewald
 # Date: Dim aoû  5 10:21:05 CEST 2007
@@ -40,18 +40,43 @@
 
 ### SYNOPSIS
 
-# do-doc-odoc
-# do-clean-odoc
+# Cette interface simple avec Ocmaldoc permet de produire des fichiers
+# `dump' ou une documentation HTML.
+#
+# Ce module n'est pas destiné à l'usager.
+
+
+# USE_ODOC = yes
+#
+# ODOC_NAME = uname
+# _OCAML_SRCS.${ODOC_NAME} = file_a.mli file_b.mli
+#
+# .include "ocaml.odoc.mk"
 
 
 ### DESCRIPTION
 
+# Objectifs:
+#
+# do-doc-odoc
+# do-install-odoc
+# do-clean-odoc
 
-### XXX
+# Variables:
+#
+# ODOC_NAME
+#  Un nom du système de fichiers UNIX utilisé pour nommer les fichiers
+#   objets.
+#
+# ODOC_SEARCH
+#   Liste des chemins où rechercher les fichiers `dump'
+#   Les chemins relatifs sont interprétés à partir du dossier
+#    ${.OBJDIR}.
+#   Lorsque cette variable n'est pas initialisée mais que SEARCHES
+#    l'est, la valeur de SEARCHES est utilisée.
 
-# La valeur implicite de ODOC_SEARCH doit remplacer ${HOME} et
-# ${PREFIX} par les sous-dossiers d'installation des fichiers
-# ODOC DUMP.
+
+### RÉALISATION
 
 .if !target(__<ocaml.odoc.mk>__)
 __<ocaml.odoc.mk>__:
@@ -72,7 +97,7 @@ ODOC_MERGE?=
 ODOC_LOAD?=
 ODOC_HIDE?=
 ODOC_PREPROCESSOR?=
-ODOC_SEARCH?=${DESTDIR}/usr ${DESTDIR}${HOME} ${DESTDIR}${PREFIX}
+ODOC_SEARCH?=
 ODOC_VERBOSE?=no
 ODOC_EXCLUDE?=
 
@@ -83,7 +108,7 @@ ODOC_NAME?=${APPLICATION}
 .endif
 
 .if !defined(ODOC_NAME)||empty(ODOC_NAME)
-.error The ocaml.odoc.mk module expects ODOC_NAME to be set. A suitable value can also be guessed from the APPLICATION variable value.
+.error The ocaml.odoc.mk module expects ODOC_NAME to be set. A suitable value could also be guessed from the APPLICATION variable value.
 .endif
 
 .if defined(SEARCHES)&&!empty(SEARCHES)
@@ -149,15 +174,9 @@ _ODOC_FLAGS+= -hide ${ODOC_HIDE:Q:S/\\ /,/g}
 _ODOC_FLAGS+= -pp ${ODOC_PREPROCESSOR}
 .endif
 .if !empty(ODOC_LOAD)
-.SUFFIX: .odoc
-.PATH.odoc:
-.for load in ${ODOC_LOAD}
-.for path in ${ODOC_SEARCH}
-.if exists(${path}/${load})
-_ODOC_FLAGS+= -load ${path}/${load}
-.endif
-.endfor
-.endfor
+.SUFFIXES: .odoc
+.PATH.odoc: ${ODOC_SEARCH}
+_ODOC_FLAGS+= ${.ALLSRC:M*.odoc:S/^/-load /}
 .endif
 
 _ODOC_TOOL=${OCAMLDOC}
@@ -175,11 +194,14 @@ ODOCDIR?= ${DOCDIR}/odoc${APPLICATIONDIR}
 
 ODOC=${ODOC_NAME}.odoc
 
+.if !empty(ODOC_LOAD)
+${ODOC_HTML}: ${ODOC_LOAD}
+.endif
 ${ODOC}: ${_OCAML_SRCS.${ODOC_NAME}}
 ${ODOC}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*/.cmi/}
 
 ${ODOC}:
-	${_ODOC_TOOL} -dump ${.TARGET} ${.ALLSRC:N*.cmi}
+	${_ODOC_TOOL} -dump ${.TARGET} ${.ALLSRC:N*.cmi:N*.odoc}
 
 CLEANFILES+= ${ODOC}
 
@@ -205,28 +227,35 @@ ODOC_HTMLDIR?= /html
 ODOC_HTML?= ${ODOC_NAME}_html
 do-doc-odoc: ${ODOC_HTML}
 
+.if !empty(ODOC_LOAD)
+${ODOC_HTML}: ${ODOC_LOAD}
+.endif
 ${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}}
 ${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*$/.cmi/}
 
 ${ODOC_HTML}:
 	${RM} -R -f ${ODOC_HTML}.temp ${ODOC_HTML}
 	${MKDIR} ${ODOC_HTML}.temp
-	${_ODOC_TOOL} -html -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi}
+	${_ODOC_TOOL} -html -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi:N*.odoc}
 	${MV} ${ODOC_HTML}.temp ${ODOC_HTML}
 
-do-install: do-install-odoc-html
+do-install-odoc: do-install-odoc-html
 do-install-odoc-html: do-doc-odoc
 	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP} \
 	  ${DESTDIR}${DOCDIR}${ODOC_HTMLDIR}
 	${INSTALL} -o ${DOCOWN} -g ${DOCGRP} -m ${DOCMODE} \
 	  ${ODOC_HTML}/* ${DESTDIR}${DOCDIR}${ODOC_HTMLDIR}
 
-
 do-clean-odoc: do-clean-odoc-html
 do-clean-odoc-html:
 	${RM} -R -f ${ODOC_HTML}
 
 .endif # !empty(ODOC_FORMAT:Mhtml)
+
+
+.if target(do-install-odoc)
+do-install: do-install-odoc
+.endif
 
 .if target(do-clean-odoc)
 do-clean: do-clean-odoc

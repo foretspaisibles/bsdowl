@@ -1,4 +1,4 @@
-### ocaml.manual.mk -- Préparation des manuels
+### ocaml.manual.mk -- Préparation de la référence HTML
 
 # Author: Michaël Grünewald
 # Date: Lun 10 mar 2008 11:59:53 CET
@@ -40,22 +40,29 @@
 
 ### SYNOPSIS
 
+# Ce module permet de préparer une référence HTML à partir de fichiers
+# sources contenant des commentaires OCamldoc.
+
 # MANUAL = backend.odoc
 # MANUAL+= filter.odoc
 #
 # SEARCHES = backend_src
 # SEARCHES+= filter_src
+#
+# .include "ocaml.manual.mk"
 
-# Produire un manuel de référence à partir de backend.doc et de
-# filter.doc.
 
+### DESCRIPTION
+
+
+### RÉALISATION
 
 .include "make.init.mk"
 
 .if defined(MANUAL)&&!empty(MANUAL)
 ODOC_FORMAT = html
 .for module in ${MANUAL}
-ODOC_LOAD = ${module}
+ODOC_LOAD+= ${module}
 .endfor
 
 USE_ODOC = yes
