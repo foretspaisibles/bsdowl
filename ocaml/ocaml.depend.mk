@@ -68,7 +68,7 @@ __<ocaml.depend.mk>__:
 .endfor
 
 .depend:
-	ocamldep ${.ALLSRC} > .depend
+	ocamldep ${.ALLSRC} > ${.TARGET}
 
 do-clean-depend:
 	${RM} -f .depend
