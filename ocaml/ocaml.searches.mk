@@ -40,21 +40,42 @@
 
 ### SYNOPSIS
 
+# Ce module calcule la variable _OCAML_SEARCHES, c'est une liste
+# d'options pouvant être passée en argument des outils de compilation
+# OCAML.
+#
+# Ce module n'est pas destiné à l'usager.
+
 # SEARCHES+= ../library
-# .include "ocaml.find.mk"
+#
+# .include "ocaml.init.mk"
+# .include "ocaml.searches.mk"
 
 
 ### DESCRIPTION
 
-# Ce module calcule la variable _OCAML_SEARCHES, c'est une liste
-# d'options pouvant être passée en argument des outils de compilation
-# OCAML.
+# SEARCHES
+#  Liste de dossiers à consulter pour trouver les fichiers `cmi',
+#  `cmo', `cmx', `cma' et `cmxa'. Les termes de la liste sont exprimés
+#  relativement à .OBJDIR.
+
 
 .if !target(__<ocaml.searches.mk>__)
 __<ocaml.searches.mk>__:
 
 .if defined(SEARCHES)&&!empty(SEARCHES)
 _OCAML_SEARCHES=${SEARCHES:C/^/-I /}
+# Les fichiers necessitant une recherche opérée par MAKE sont ceux
+# dont les suffixes sont: .cmo .cma .cmx .cmxa et .a. Les fichiers
+# dont le suffixe est .cmi n'apparaissent pas sur la ligne de
+# commande.
+#.PATH.cmi: ${SEARCHES}
+.PATH.cmo: ${SEARCHES}
+.PATH.cmx: ${SEARCHES}
+.PATH.cmxa: ${SEARCHES}
+.PATH.cma: ${SEARCHES}
+.PATH.a: ${SEARCHES}
+.PATH.o: ${SEARCHES}
 .endif
 
 .if defined(_OCAML_SEARCHES) && !empty(_OCAML_SEARCHES)

@@ -54,6 +54,9 @@
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:
 
+
+.SUFFIXES: .cmi .cmo .cmx .o .a .cma .cmxa
+
 _OCAML_OBJECT = _OCAML_CMI
 _OCAML_OBJECT+= _OCAML_CMO
 _OCAML_OBJECT+= _OCAML_CMX
