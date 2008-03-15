@@ -67,7 +67,8 @@ ${target}: ${prefix}-${target}
 do-all: divert-${target}
 
 divert-${target}: .USE
-	${MAKE} ${target}
+	@echo ${MAKE} ${target}
+	@cd ${.CURDIR}; ${MAKE} ${target}
 .endif
 .endfor
 
