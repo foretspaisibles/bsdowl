@@ -54,6 +54,10 @@
 
 ### DESCRIPTION
 
+# SEARCHES
+#  Liste de dossiers à consulter pour trouver les fichiers `odoc'. Les
+#   termes de la liste sont exprimés relativement à .OBJDIR.
+
 
 ### RÉALISATION
 
