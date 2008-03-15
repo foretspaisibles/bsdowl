@@ -68,6 +68,7 @@
 #	${_OCAML_BUILD.${obj:T}} ${_OCAML_SRCS.${obj:T}}
 #
 
+
 ### RÉALISATION
 
 _OCAML_CMI.cmd=MLCI
@@ -98,8 +99,16 @@ _OCAML_CMXA.cmd=MLAN
 _OCAML_CMXA.obj=_OCAML_CMXA
 _OCAML_CMXA.var=MLANFLAGS MLAFLAGS MLFLAGS MLANADD
 
+#
+# Spécialisation des variables
+#
 
-# SPÉCIALISATION DES VARIABLES
+# On spécialise les variables associées aux différents objets, d'après
+# les prescriptions préceentes.
+#
+# Par exemple, pour les objets _OCAML_CN (éxécutables en code natif),
+# les variables MLLNFLAGS, MLLFLAGS, MLFLAGS et MLLNADD sont
+# spécialisées pour les membres apparaissant dans la liste _OCAML_CN.
 
 .for thg in ${_OCAML_OBJECT}
 .for obj in ${${${thg}.obj}}
@@ -113,8 +122,9 @@ ${var}.${obj:T}=${${var}}
 .endfor
 .endfor
 
-
-# LIGNE DE COMMANDE
+#
+# Préparation de la ligne de commande
+#
 
 .for thg in ${_OCAML_OBJECT}
 .for obj in ${${${thg}.obj}}
