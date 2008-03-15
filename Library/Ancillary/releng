@@ -8,7 +8,7 @@
 
 # $Id$
 
-# Copyright (c) 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -50,12 +50,12 @@
 # Configuration
 #
 
-releng_project='makefile'
+releng_project='bsdmakepscripts'
 releng_sum_tools='md5 sha256'
-releng_repository='svn://Llea.celt.neu/workshop/makefile'
+releng_repository="$REPOSITORY"
 releng_subversion='/usr/local/bin/svn'
 releng_tmpdir="/tmp"
-releng_target="file://$HOME/export/makefile/"
+releng_target="file://$HOME/export/bsdmakepscripts/"
 
 #
 # Constantes
@@ -149,7 +149,8 @@ releng_distfile()
     sumfiles=''		# MD5
     otherfiles=''	# README
     allfiles=''		# Concatenation of the three above
-
+    signfiles=''	# Fichiers de signature
+    curlfiles=''	# Liste des fichiers pour CURL
 
     releng_distfile_validate "$1"	|| exit 1
     releng_exists tags/$1		|| exit 2
@@ -170,7 +171,7 @@ releng_distfile()
     releng_info 'Cleaning the export directory'
     rm -Rf $releng_tmpdir/$distname || exit 5
 
-    distfiles="$distname.tar.gz,$distname.tar.bz2"	# sic
+    distfiles="$distname.tar.gz $distname.tar.bz2"	# sic
 
     releng_info 'Making sums'
     for sum_tool in $releng_sum_tools; do
@@ -179,10 +180,19 @@ releng_distfile()
 	    $sum_tool $distname.tar.gz $distname.tar.bz2 \
 		> CHECKSUM.$sum_tool
     );
-	sumfiles="$sumfiles${sumfiles:+,}CHECKSUM.$sum_tool"
+	sumfiles="$sumfiles${sumfiles:+ }CHECKSUM.$sum_tool"
     done
 
-    allfiles="${distfiles}${sumfiles:+,${sumfiles}}${otherfiles:+,${otherfiles}}"
+    allfiles="${distfiles}${sumfiles:+ ${sumfiles}}${otherfiles:+ ${otherfiles}}"
+    releng_info 'Signing files'
+    for file in $distfiles $sumfiles; do
+	(
+	    cd $releng_tmpdir
+	    gpg --detach-sign --clearsign $file
+        );
+	signfiles="$signfiles${signfiles:+ }$file.asc"
+    done
+
 
     case $releng_target in
 	file://*)
@@ -191,13 +201,18 @@ releng_distfile()
     esac
 
     releng_info 'Publishing files with curl'
-    curl -T "$releng_tmpdir/{${allfiles}}" "$releng_target" || exit 6
+    for file in $allfiles $signfiles; do
+	curlfiles="$curlfiles${curlfiles:+,}$file"
+    done
+    curl -T \
+	"$releng_tmpdir/{${curlfiles}}" \
+	"$releng_target" \
+	|| exit 6
 
     releng_info 'Cleaning the temporary directory'
     (
-	IFS=','
 	cd $releng_tmpdir
-	rm $allfiles
+	rm $signfiles $allfiles
     )
 }
 
