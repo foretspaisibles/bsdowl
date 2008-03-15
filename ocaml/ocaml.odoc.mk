@@ -100,6 +100,7 @@ ODOC_PREPROCESSOR?=
 ODOC_SEARCH?=
 ODOC_VERBOSE?=no
 ODOC_EXCLUDE?=
+ODOC_INSTALL_DUMPS?=no
 
 OCAMLDOC?= ocamldoc
 
@@ -190,7 +191,7 @@ _ODOC_TOOL+=${_ODOC_FLAGS}
 
 .if !empty(ODOC_FORMAT:Modoc)
 
-ODOCDIR?= ${DOCDIR}/odoc${APPLICATIONDIR}
+ODOCDIR?= ${DOCDIR}/odoc
 
 ODOC=${ODOC_NAME}.odoc
 
@@ -207,11 +208,13 @@ CLEANFILES+= ${ODOC}
 
 do-doc-odoc: ${ODOC}
 
+.if ${ODOC_INSTALL_DUMPS} == yes
 do-install-odoc: do-doc-odoc
-	${INSTALLDIR} -o ${DOCOWN} -g ${DOCGRP} \
+	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP} \
 	  ${DESTDIR}${ODOCDIR}
 	${INSTALL} -o ${DOCOWN} -g ${DOCGRP} -m ${DOCMODE} \
 	  ${ODOC} ${DESTDIR}${ODOCDIR}
+.endif
 
 .endif # !empty(ODOC_FORMAT:Modoc)
 
