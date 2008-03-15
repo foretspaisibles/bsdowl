@@ -172,18 +172,14 @@ APPLICATIONDIR?=	/${APPLICATION}
 
 ## _MAKE_USERTARGET
 
-.if !(${.CURDIR} == ${.OBJDIR})
-_MAKE_USERTARGET = obj
-_MAKE_ALLSUBTARGET = obj
-.else
-_MAKE_USERTARGET =
-_MAKE_ALLSUBTARGET =
-.endif
+_MAKE_USERTARGET?=
+_MAKE_ALLSUBTARGET?=
+
+.include "make.own.mk"
+.include "make.objdir.mk"
 
 _MAKE_USERTARGET+= configure depend build doc all install clean distclean
 _MAKE_ALLSUBTARGET+= configure depend build doc
-
-.include "make.own.mk"
 
 .endif # !target(__<make.init.mk>__)
 

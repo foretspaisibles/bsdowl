@@ -8,6 +8,7 @@
 
 
 FILES+=	make.init.mk
+FILES+= make.objdir.mk
 FILES+=	make.own.mk
 FILES+= make.usertarget.mk
 FILES+=	make.clean.mk
