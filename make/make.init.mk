@@ -123,16 +123,20 @@
 .if !target(__<make.init.mk>__)
 __<make.init.mk>__:
 
+### PSEUDO COMMANDES (BOOTSTRAP)
+
+ID?=			/usr/bin/id
+.if !defined(UID)
+UID!= ${ID} -u
+.endif
+
+
 ## LECTURE DES FICHIERS DE CONFIGURATION
 
-.if exists(${.CURDIR}/Makefile.inc)
-.include "${.CURDIR}/Makefile.inc"
-.endif
+.sinclude "${.CURDIR}/Makefile.inc"
 
-.if !(${USER} == root) && defined(MAKEINITRC) && !empty(MAKEINITRC)
-.if exists(${MAKEINITRC})
-.include "${MAKEINITRC}"
-.endif
+.if !(${UID} == 0) && defined(MAKEINITRC) && !empty(MAKEINITRC)
+.sinclude "${MAKEINITRC}"
 .endif
 
 ## PSEUDO COMMANDES
@@ -155,6 +159,7 @@ FAIL?=			@echo 'Failure:'
 MESG?=			@echo
 NOP?=			@: do nada
 
+### VARIABLES
 
 ## CIBLE IMPLICTE (all)
 
