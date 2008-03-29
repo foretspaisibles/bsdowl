@@ -1,8 +1,8 @@
-### make.subdir.mk -- Manage subdirectories
+### make.credentials.mk -- Autorisation administrateur modules `make'.
 
 # Author: Michaël Grünewald
-# Date: Ven 10 fév 2006 16:24:23 GMT
-# Lang: fr_FR.ISO8859-1
+# Date: Sam 29 mar 2008 16:05:16 CET
+# Lang: fr_FR.ISO8859-15
 
 # $Id$
 
@@ -40,49 +40,52 @@
 
 ### SYNOPSIS
 
-# SUBDIR+= library
-# SUBDIR+= program
-# SUBDIR+= manual
-#
-# .include "make.subdir.mk"
+# USE_SWITCH_CREDENTIALS=yes
+# .include "make.credentials.mk"
 
 
 ### DESCRIPTION
 
-# Diffuse la demande de production des cibles ``interface
-# utilisateur'' (all, etc.) vers les sous répertoires apparaissant
-# dans SUBDIR.
+# Propose d'utiliser `su' pour traiter la cible `install'.
 
 
-.include "make.init.mk"
-.include "make.credentials.mk"
+### INTERFACE
 
-.if !target(__<make.subdir.mk>__)
-__<make.subdir.mk>__:
+### DÉFINITIONS
 
-_SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
-_SUBDIR_PREFIX?=
+.if !target(__<make.credentials.mk>__)
+__<make.credentials.mk>__:
 
-.if defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
-.PHONY: ${SUBDIR}
-_SUBDIR: .USE
-.for item in ${SUBDIR}
-	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET})"
-	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET}
+### VARIABLES
+
+USE_SWITCH_CREDENTIALS?= yes
+
+_SWITCH_CREDENTIALS_TARGETS?= install
+
+### PSEUDO COMMANDES
+
+ID?= /usr/bin/id
+SU?= /usr/bin/su
+
+.if !defined(UID)
+UID!= ${ID} -u
+.endif
+
+#
+# Changement d'autorisation pour installer en tant que `root'
+#
+
+.if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
+.for target in ${_SWITCH_CREDENTIALS_TARGETS}
+.if !target(${target})
+${target}: ${target}-switch-credentials
+${target}-switch-credentials:
+	${INFO} 'Switching to root credentials for target (${target})'
+	@${SU} root -c '${MAKE} ${target}'
+.endif
 .endfor
 .endif
 
-${SUBDIR}::
-	${INFO} "${.TARGET} (all)"
-	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
+.endif # !target(__<make.credentials.mk>__)
 
-.for target in ${_SUBDIR_TARGETS}
-.if !target(${target}-switch-credentials)
-${target}: _SUBDIR
-.endif
-.endfor
-
-.endif #!target(__<make.subdir.mk>__)
-
-### End of file `make.subdir.mk'
+### End of file `make.credentials.mk'

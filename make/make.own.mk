@@ -77,7 +77,7 @@ _OWN_GRP_GOT!=	id -gn
 _OWN_OWN?=	${USER}
 _OWN_GRP?=	${_OWN_GRP_GOT}
 
-.if (${USER} == root)
+.if defined(UID)&&(${UID} == 0)
 _OWN_DIRMODE?=	755
 _OWN_BINMODE?=	555
 _OWN_DTAMODE?=	444
