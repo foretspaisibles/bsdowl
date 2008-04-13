@@ -21,3 +21,31 @@ Cf. ``FreeBSD Porter's Handbook'', 9.4.
 
 Les fichiers de directives sont installés dans le dossier
 $DESTDIR/$PREFIX/share/mk.
+
+
+APPENDICE. PROCÉDURE D'INSTALLATION DE BMAKE
+
+Utiliser bmake en environnement hostile nécessite de compiler et
+d'installer bmake sous son répertoire personnel. Les étapes suivantes
+peuvent être suivies pour réaliser ces deux opérations.
+
+On télécharge les fichiers bmake.tar.gz et mk.tar.gz distribués par
+leur auteur:
+
+  http://void.crufty.net/ftp/pub/sjg/bmake.tar.gz
+  http://void.crufty.net/ftp/pub/sjg/mk.tar.gz
+
+La suite des indications suppose que ces fichiers ont été placés dans
+le dossier ~/distfiles. On éxécute ensuite les commandes suivantes
+depuis un dossier de travail (par exemple le dossier personnel):
+
+  $ tar xzf ~/distfiles/bmake.tar.gz
+  $ tar xzfC ~/distfiles/mk.tar.gz bmake
+  $ cd bmake
+  $ ./configure --prefix=${HOME}
+  $ make -f makefile.boot bootstrap
+  $ make -f makefile.boot install
+
+Le programme `bmake' est alors installé sous ${HOME}/bin et les
+fichiers de directives qui l'accompagnent sous le sont sous
+${HOME}/share/mk.

@@ -29,6 +29,14 @@ comme `make' sous FreeBSD (programme inclus dans le système de base)
 et comme `bsdmake' dans Mac OS X (programme inclus dans le système de
 base).
 
+Ces fichiers semblent aussi fonctionner avec le programme `bmake', un
+dérivé autonome du programme `make' de NetBSD. Le fichier INSTALL pour
+obtenir des indications sur l'installation de `bmake' sur un système
+GNU/Linux.
+
+Note: Pour utiliser ces directives su un système GNU/Linux, il semble
+qu'il n'y ait actuellement d'autre choix que d'utiliser `bmake'.
+
 
 2 UTILISATION
 
@@ -75,7 +83,8 @@ Les modules les plus aboutis sont actuellement:
  -- misc/script.mk
 
 Leurs fonctionnalités peuvent cependant encore évoluer, notamment pour
-améliorer le support des variables .PATH et .OBJDIR.
+améliorer le support des variables .PATH et .OBJDIR, qui n'est que
+partiel.
 
 
 4.2 Modules inaboutis
