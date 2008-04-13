@@ -60,7 +60,15 @@ __<make.credentials.mk>__:
 
 USE_SWITCH_CREDENTIALS?= yes
 
-_SWITCH_CREDENTIALS_TARGETS?= install
+_SWITCH_CREDENTIALS_TARGETS?=
+
+# On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
+# autorisé à écrire sous ${DESTDIR}/${PREFIX}.
+
+_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
+
+_SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
+
 
 ### PSEUDO COMMANDES
 
