@@ -12,10 +12,7 @@ SUBDIR+= text
 SUBDIR+= rox
 SUBDIR+= misc
 
-.MAKEFLAGS:	-I ${.CURDIR}/Library/Make
-
-USE_SWITCH_CREDENTIALS=yes
-
-.include "subdir.mk"
+.include "Makefile.inc"
+.include "pallas.mk"
 
 ### End of file `Makefile'
