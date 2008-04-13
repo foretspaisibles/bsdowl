@@ -11,13 +11,14 @@ Petit répertoire des ensembles de modules figurant dans la collection
 de fichiers de directives pour BSD Make.
 
 
-Manual		Manuel pour la collection de makefiles
 INDEX		Ce répertoire
+INSTALL		Procédure d'installation
 INTRO		Description des méthodologies pour le code
 README		À propos de BSD Make et des Makefiles
 Makefile	Fichier de maintenance
-Mk		Directives BSD Make pour le projet
-Tools		Outils pour le développement
+Library/Make	Directives BSD Make pour le projet
+Library/Ancillary
+		Outils pour le développement
 
 ocaml		Projets avec Objective Caml
 text		Projets avec des formateurs de texte (p.ex. TeX)
