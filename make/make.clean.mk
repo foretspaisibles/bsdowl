@@ -129,6 +129,11 @@ distclean: clean
 realclean: distclean
 .endif
 
+.if target(clean)&&target(realclean)
+realclean: clean
+.endif
+
+.ORDER: clean distclean realclean
 
 .endif # !target(__<make.clean.mk>__)
 
