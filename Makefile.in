@@ -12,7 +12,10 @@ SUBDIR+= text
 SUBDIR+= rox
 SUBDIR+= misc
 
-.include "Makefile.inc"
+PREFIX?= @prefix@
+
+.MAKEFLAGS: -I${.CURDIR}/Library/Make
+
 .include "pallas.mk"
 
 ### End of file `Makefile'

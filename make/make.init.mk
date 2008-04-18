@@ -182,8 +182,10 @@ _MAKE_ALLSUBTARGET?=
 
 .include "make.own.mk"
 .include "make.objdir.mk"
+.include "make.autoconf.mk"
 
-_MAKE_USERTARGET+= configure depend build doc all install clean distclean
+_MAKE_USERTARGET+= configure depend build doc all install
+_MAKE_USERTARGET+= clean distclean realclean
 _MAKE_ALLSUBTARGET+= configure depend build doc
 
 .endif # !target(__<make.init.mk>__)

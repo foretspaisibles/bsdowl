@@ -1,12 +1,12 @@
-### make.subdir.mk -- Manage subdirectories
+### make.autoconf.mk -- Support pour AUTOCONF
 
 # Author: Michaël Grünewald
-# Date: Ven 10 fév 2006 16:24:23 GMT
+# Date: Ven 18 avr 2008 09:59:39 CEST
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2008, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,49 +40,54 @@
 
 ### SYNOPSIS
 
-# SUBDIR+= library
-# SUBDIR+= program
-# SUBDIR+= manual
-#
-# .include "make.subdir.mk"
-
+# CONFIGURE = Makefile.in
+# CONFIGURE+= header.in
+# .include "make.autoconf.mk"
 
 ### DESCRIPTION
 
-# Diffuse la demande de production des cibles ``interface
-# utilisateur'' (all, etc.) vers les sous répertoires apparaissant
-# dans SUBDIR.
+# Si un fichier `configure.in' figure dans notre dossier, ou si la
+# variable USE_AUTOCONF=yes, une cible recréant le fichier `configure'
+# est créee et des cibles de nettoyage sont ajoutées pour
+# `cleanfiles'.
+#
+# De plus la variable CONFIGURE est examinée, les fichiers objets
+# associés aux fichiers énumérés dans la variable CONFIGURE sont
+# ajoutés aux listes de nettoyage `distclean'.
+#
+# Si un fichier configure.in figure dans notre dossier, ou si la
+# variable USE_AUTOCONF=yes, certains fichiers sont ajoutés
+# automatiquement à CONFIGURE.
 
-.include "make.init.mk"
-.include "make.clean.mk"
-.include "make.credentials.mk"
+.if !target(__<make.autoconf.mk>__)
+__<make.autoconf.mk>__:
 
-.if !target(__<make.subdir.mk>__)
-__<make.subdir.mk>__:
-
-_SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
-_SUBDIR_PREFIX?=
-
-.if defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
-.PHONY: ${SUBDIR}
-_SUBDIR: .USE
-.for item in ${SUBDIR}
-	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET})"
-	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET}
-.endfor
+.if exists(configure.in)
+USE_AUTOCONF?=yes
 .endif
-
-${SUBDIR}::
-	${INFO} "${.TARGET} (all)"
-	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
-
-.for target in ${_SUBDIR_TARGETS}
-.if !target(${target}-switch-credentials)
-${target}: _SUBDIR
+USE_AUTOCONF?=no
+.if ${USE_AUTOCONF} == yes
+.for file in config.status config.log
+.if exists(${file})
+DISTCLEANFILES+= ${file}
 .endif
 .endfor
+.if exists(autom4te.cache)
+DISTCLEANDIRS+= autom4te.cache
+.endif
+CONFIGURE?=
+.for file in Makefile.in
+.if exists(${file})&&empty(CONFIGURE:M${file})
+CONFIGURE+= ${file}
+.endif
+.endfor
+DISTCLEANFILES+= ${CONFIGURE:.in=}
+.if exists(configure.in)
+.if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
+REALCLEANFILES+= configure
+.endif
+.endif
+.endif # ${USE_AUTOCONF} == yes
+.endif # !target(__<make.autoconf.mk>__)
 
-.endif #!target(__<make.subdir.mk>__)
-
-### End of file `make.subdir.mk'
+### End of file `make.autoconf.mk'

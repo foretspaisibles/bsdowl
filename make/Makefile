@@ -15,6 +15,7 @@ FILES+= make.usertarget.mk
 FILES+=	make.clean.mk
 FILES+=	make.subdir.mk
 FILES+=	make.files.mk
+FILES+= make.autoconf.mk
 
 .include "project.mk"
 
