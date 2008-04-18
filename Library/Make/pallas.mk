@@ -45,9 +45,6 @@
 .if !target(__<pallas>__)
 __<pallas>__:
 
-distclean:
-	rm -f Makefile.inc
-
 .include "subdir.mk"
 
 .endif # !target(__<pallas>__)

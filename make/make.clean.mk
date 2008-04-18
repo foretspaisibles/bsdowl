@@ -41,6 +41,11 @@
 ### SYNOPSIS
 
 # CLEANFILES+= ${OBJ}
+# CLEANDIRS+= ${OBJDIR}
+# DISTCLEANFILES+= ${CONFOBJ}
+# DISTCLEANDIRS+= ${CONFOBJDIR}
+# REALCLEANFILES+= ${CONF}
+# REALCLEANDIRS+= ${CONFDIR}
 # .include "make.clean.mk"
 
 
@@ -50,16 +55,81 @@
 # fichiers objets et remettre le répertoire de travail dans son état
 # initial.
 #
-# Pour cela, le module `make.clean.mk' fournit éventuellement une
-# cible `do-clean' réclamant l'effacement des fichiers dont le nom
-# apparaît dans la variable CLEANFILES.
+# Pour cela, le module `make.clean.mk' utilise les valeurs des
+# variables CLEANFILES, CLEANDIRS, DISTCLEANFILES, DISTCLEANDIRS,
+# REALCLEANFILES, REALCLEANDIRFILES, pour créer des cibles
+# do-cleanfiles, do-cleandirs, do-distcleanfiles, do-distcleandirs,
+# do-realcleanfiles et do-realcleandirs et les faire dépendre de
+# do-clean et do-distclean respectivement.
 
 .if !target(__<make.clean.mk>__)
 __<make.clean.mk>__:
-.if !target(do-clean)&&defined(CLEANFILES)&&!empty(CLEANFILES)
-do-clean:
+#
+# Clean files
+#
+.if defined(CLEANFILES)&&!empty(CLEANFILES)
+do-clean: do-clean-cleanfiles
+do-clean-cleanfiles:
 	${RM} -f ${CLEANFILES}
 .endif
+#
+# Clean dirs
+#
+.if defined(CLEANDIRS)&&!empty(CLEANDIRS)
+do-clean: do-clean-cleandirs
+do-clean-cleandirs:
+	${RM} -f -r ${CLEANDIRS}
 .endif
+#
+# Distclean files
+#
+.if defined(DISTCLEANFILES)&&!empty(DISTCLEANFILES)
+do-distclean: do-distclean-distcleanfiles
+do-distclean-distcleanfiles:
+	${RM} -f ${DISTCLEANFILES}
+.endif
+#
+# Distclean dirs
+#
+.if defined(DISTCLEANDIRS)&&!empty(DISTCLEANDIRS)
+do-distclean: do-distclean-distcleandirs
+do-distclean-distcleandirs:
+	${RM} -f -r ${DISTCLEANDIRS}
+.endif
+#
+# Realclean files
+#
+.if defined(REALCLEANFILES)&&!empty(REALCLEANFILES)
+do-realclean: do-realclean-realcleanfiles
+do-realclean-realcleanfiles:
+	${RM} -f ${REALCLEANFILES}
+.endif
+#
+# Realclean dirs
+#
+.if defined(REALCLEANDIRS)&&!empty(REALCLEANDIRS)
+do-realclean: do-realclean-realcleandirs
+do-realclean-realcleandirs:
+	${RM} -f -r ${REALCLEANDIRS}
+.endif
+
+.if target(do-distclean)
+distclean: do-distclean
+.endif
+
+.if target(do-realclean)
+realclean: do-realclean
+.endif
+
+.if target(clean)&&target(distclean)
+distclean: clean
+.endif
+
+.if target(distclean)&&target(realclean)
+realclean: distclean
+.endif
+
+
+.endif # !target(__<make.clean.mk>__)
 
 ### End of file `make.clean.mk'
