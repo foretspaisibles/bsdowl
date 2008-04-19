@@ -1,4 +1,4 @@
-### make.files.mk -- Service générique d'installation
+### bps.files.mk -- Service générique d'installation
 
 # Auteur: Michaël Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
@@ -53,31 +53,31 @@
 # TYPE1DIR = ${X11PREFIX}/directory		# Will respect ${DESTDIR}
 # TYPE1MODE = 400
 #
-# .include "make.init.mk"
-# .include "make.files.mk"
-# .include "make.usertarget.mk"
+# .include "bps.init.mk"
+# .include "bps.files.mk"
+# .include "bps.usertarget.mk"
 
 
 ### DESCRIPTION
 
-# Le module `make.files.mk' propose une procédure générique
+# Le module `bps.files.mk' propose une procédure générique
 # d'installation pour les modules clients.
 #
-# Le module `make.files.mk' définit une notion de groupe d'objets,
+# Le module `bps.files.mk' définit une notion de groupe d'objets,
 # chaque groupe d'objet correspond à un ensemble de paramètres pour
 # l'installation, soit l'emplacement, le propriétaire les droits
 # d'accès et le nom; et à une liste d'objets. Pour chaque objet membre
 # d'un groupe, des paramètres individuels peuvent êtres définis
 # (cf. PARAMÈTRES INDIVIDUELS infra).
 #
-# Le module `make.files.mk' définit encore des cibles/procédures
+# Le module `bps.files.mk' définit encore des cibles/procédures
 # `buildfiles' `installdirs' et `installfiles' à moins que celles-ci
 # ne soient déjà définies par le client. Ceci permet au client
 # d'utiliser des mécanismes spécifiques pour réaliser ces tâches
-# lorsque les actions proposées par le module `make.files.mk' se
+# lorsque les actions proposées par le module `bps.files.mk' se
 # révèlent inappropriées.
 #
-# Le module `make.files.mk' complète le graphe des dépendances en
+# Le module `bps.files.mk' complète le graphe des dépendances en
 # affirmant que `buildfiles' est un prérequis pour `all' et
 # `installfiles'. Le module tient également compte des
 # cibles/procédures preinstall et postinstall lorsqu'elles existent.
@@ -88,11 +88,11 @@
 
 ## DÉFINIR DE NOUVEAUX GROUPES XXX
 
-.if !target(__<make.files.mk>__)
-__<make.files.mk>__:
+.if !target(__<bps.files.mk>__)
+__<bps.files.mk>__:
 
-.if !target(__<make.init.mk>__)
-.error Module make.files.mk require make.init.mk for proper processing.
+.if !target(__<bps.init.mk>__)
+.error Module bps.files.mk require bps.init.mk for proper processing.
 .endif
 
 FILESGROUPS+= FILES BIN DOC SHARE LIB
@@ -184,6 +184,6 @@ ${DESTDIR}${${group}DIR.${file:T}}
 .endif #defined(${group})&&!empty(${group})
 .endfor #group in ${FILESGROUPS}
 
-.endif #!target(__<make.files.mk>__)
+.endif #!target(__<bps.files.mk>__)
 
-### End of file `make.files.mk'
+### End of file `bps.files.mk'

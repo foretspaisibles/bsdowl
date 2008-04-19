@@ -1,12 +1,12 @@
-### make.autoconf.mk -- Support pour AUTOCONF
+### bps.credentials.mk -- Autorisation administrateur modules `make'.
 
 # Author: Michaël Grünewald
-# Date: Ven 18 avr 2008 09:59:39 CEST
-# Lang: fr_FR.ISO8859-1
+# Date: Sam 29 mar 2008 16:05:16 CET
+# Lang: fr_FR.ISO8859-15
 
 # $Id$
 
-# Copyright (c) 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,54 +40,60 @@
 
 ### SYNOPSIS
 
-# CONFIGURE = Makefile.in
-# CONFIGURE+= header.in
-# .include "make.autoconf.mk"
+# USE_SWITCH_CREDENTIALS=yes
+# .include "bps.credentials.mk"
+
 
 ### DESCRIPTION
 
-# Si un fichier `configure.in' figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, une cible recréant le fichier `configure'
-# est créee et des cibles de nettoyage sont ajoutées pour
-# `cleanfiles'.
-#
-# De plus la variable CONFIGURE est examinée, les fichiers objets
-# associés aux fichiers énumérés dans la variable CONFIGURE sont
-# ajoutés aux listes de nettoyage `distclean'.
-#
-# Si un fichier configure.in figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, certains fichiers sont ajoutés
-# automatiquement à CONFIGURE.
+# Propose d'utiliser `su' pour traiter la cible `install'.
 
-.if !target(__<make.autoconf.mk>__)
-__<make.autoconf.mk>__:
 
-.if exists(configure.in)
-USE_AUTOCONF?=yes
+### INTERFACE
+
+### DÉFINITIONS
+
+.if !target(__<bps.credentials.mk>__)
+__<bps.credentials.mk>__:
+
+### VARIABLES
+
+USE_SWITCH_CREDENTIALS?= yes
+
+_SWITCH_CREDENTIALS_TARGETS?=
+
+# On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
+# autorisé à écrire sous ${DESTDIR}/${PREFIX}.
+
+_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
+
+_SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
+
+
+### PSEUDO COMMANDES
+
+ID?= /usr/bin/id
+SU?= /usr/bin/su
+
+.if !defined(UID)
+UID!= ${ID} -u
 .endif
-USE_AUTOCONF?=no
-.if ${USE_AUTOCONF} == yes
-.for file in config.status config.log
-.if exists(${file})
-DISTCLEANFILES+= ${file}
+
+#
+# Changement d'autorisation pour installer en tant que `root'
+#
+
+.if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
+.for target in ${_SWITCH_CREDENTIALS_TARGETS}
+.if !target(${target})
+${target}: ${target}-switch-credentials
+${target}-switch-credentials:
+	${INFO} 'Switching to root credentials for target (${target})'
+	@${SU} root -c '${MAKE} ${target}'
 .endif
 .endfor
-.if exists(autom4te.cache)
-DISTCLEANDIRS+= autom4te.cache
 .endif
-CONFIGURE?=
-.for file in Makefile.in
-.if exists(${file})&&empty(CONFIGURE:M${file})
-CONFIGURE+= ${file}
-.endif
-.endfor
-REALCLEANFILES+= ${CONFIGURE:.in=}
-.if exists(configure.in)
-.if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
-REALCLEANFILES+= configure
-.endif
-.endif
-.endif # ${USE_AUTOCONF} == yes
-.endif # !target(__<make.autoconf.mk>__)
 
-### End of file `make.autoconf.mk'
+.endif # !target(__<bps.credentials.mk>__)
+
+### End of file `bps.credentials.mk'

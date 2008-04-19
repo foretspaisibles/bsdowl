@@ -1,4 +1,4 @@
-### make.own.mk -- Variables pour les utilisateurs, groupes, permissions ...
+### bps.own.mk -- Variables pour les utilisateurs, groupes, permissions ...
 
 # Auteur: Michaël Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
@@ -40,7 +40,7 @@
 
 ### SYNOPSIS
 
-# .include "make.own.mk"
+# .include "bps.own.mk"
 
 
 ### DESCRIPTION
@@ -70,8 +70,8 @@
 #  Nota: hier(7) définit le type de fichier à placer dans SHAREDIR.
 #  SeeAlso: bsd.own.mk, bsd.files.mk, hier(7).
 
-.if !target(__<make.own.mk>__)
-__<make.own.mk>__:
+.if !target(__<bps.own.mk>__)
+__<bps.own.mk>__:
 
 _OWN_GRP_GOT!=	id -gn
 _OWN_OWN?=	${USER}
@@ -111,6 +111,6 @@ DOCMODE?=	${_OWN_DTAMODE}
 DOCOWN?=	${_OWN_OWN}
 DOCGRP?=	${_OWN_GRP}
 
-.endif #!target(__<make.own.mk>__)
+.endif #!target(__<bps.own.mk>__)
 
-### End of file `make.own.mk'
+### End of file `bps.own.mk'

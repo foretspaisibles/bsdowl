@@ -1,8 +1,8 @@
-### make.usertarget.mk -- Cibles de l'insterface utilisateur
+### bps.objdir.mk -- %%DESCRIPTION%%
 
 # Author: Michaël Grünewald
-# Date: Sam  7 jul 2007 09:59:15 CEST
-# Lang: fr_FR.ISO8859-15
+# Date: Sam 15 mar 2008 20:51:30 CET
+# Lang: fr_FR.ISO8859-1
 
 # $Id$
 
@@ -40,67 +40,71 @@
 
 ### SYNOPSIS
 
-# _MAKE_USERTARGET = configure depend build doc all install clean distclean
-# _MAKE_ALLSUBTARGET = configure depend build doc
-# .include "make.usertarget.mk"
-
-
 ### DESCRIPTION
 
-# Crée les cibles pre/do/post pour les cibles de l'interface
-# utilisateur, dont la liste est la valeur de la variable
-# _MAKE_USERTARGET.
+.if !target(__<bps.objdir.mk>__)
+__<bps.objdir.mk>__:
+
 #
-# La cible `all' appelle une liste de sous travaux, dont la liste est
+# Contrôle de MAKEOBJDIRPREFIX et MAKEOBJDIR
+#
 
+# On vérifie que les variables MAKEOBJDIRPREFIX et MAKEOBJDIR n'ont
+# pas été positionnées sur la ligne de commande ou dans le fichier de
+# directives (cf. make(1), .OBJDIR).
 
-.if !target(__<make.usertarget.mk>__)
-__<make.usertarget.mk>__:
+_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
+	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX
 
-.PHONY: ${_MAKE_USERTARGET}
-
-.for target in ${_MAKE_USERTARGET:Nall}
-.if !target(${target})
-.for prefix in pre do post
-.if target(${prefix}-${target})
-${target}: ${prefix}-${target}
-.endif
-.endfor
-.endif
-.endfor
-
-.for target in ${_MAKE_ALLSUBTARGET}
-.if target(${target})
-do-all: divert-${target}
-
-divert-${target}: .USE
-	@echo ${MAKE} ${target}
-	@cd ${.CURDIR}; ${MAKE} ${target}
-.endif
-.endfor
-
-.for prefix in pre do post
-.if target(${prefix}-all)
-all: ${prefix}-all
-.endif
-.endfor
-
-.if !target(clean) && defined(CLEANFILES) && !empty(CLEANFILES)
-clean:
-	${RM} -f ${CLEANFILES}
+.if !empty(_MAKEOBJDIRPREFIX)
+.error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
+	(in bps.conf(5)) or command-line variable.
 .endif
 
-.for target in ${_MAKE_USERTARGET}
-.if !target(${target})
-${target}:
-	@: ${INFO} "Nothing to do for target ${target}"
-.endif
-.endfor
+_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
+	${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR
 
-.if target(clean)&&target(distclean)
-distclean: clean
+.if !empty(_MAKEOBJDIR)
+.error MAKEOBJDIR can only be set in environment, not as a global\
+	(in bps.conf(5)) or command-line variable.
 .endif
 
-.endif # !target(__<make.usertarget.mk>__)
+.undef _MAKE_OBJDIRPREFIX
+.undef _MAKE_OBJDIR
 
-### End of file `make.usertarget.mk'
+
+#
+# Initialisation
+#
+
+.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
+USE_OBJDIR?= yes
+.else
+USE_OBJDIR?= no
+.endif
+
+#
+# User targets
+#
+
+.if ${USE_OBJDIR} == yes
+_MAKE_USERTARGET+= obj
+_MAKE_ALLSUBTARGET+= obj
+
+do-obj:
+.if defined(MAKEOBJDIRPREFIX)
+	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
+.elif defined(MAKEOBJDIR)
+	${INSTALL_DIR} ${MAKEOBJDIR}
+.endif
+
+.if ${.OBJDIR} != ${.CURDIR}
+distclean:
+	@rm -Rf ${.OBJDIR}
+.endif
+
+.endif # USE_OBJDIR
+
+.endif # !target(__<bps.objdir.mk>__)
+
+### End of file `bps.objdir.mk'

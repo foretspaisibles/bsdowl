@@ -1,7 +1,7 @@
-### make.objdir.mk -- %%DESCRIPTION%%
+### bps.subdir.mk -- Manage subdirectories
 
 # Author: Michaël Grünewald
-# Date: Sam 15 mar 2008 20:51:30 CET
+# Date: Ven 10 fév 2006 16:24:23 GMT
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
@@ -40,71 +40,49 @@
 
 ### SYNOPSIS
 
+# SUBDIR+= library
+# SUBDIR+= program
+# SUBDIR+= manual
+#
+# .include "bps.subdir.mk"
+
+
 ### DESCRIPTION
 
-.if !target(__<make.objdir.mk>__)
-__<make.objdir.mk>__:
+# Diffuse la demande de production des cibles ``interface
+# utilisateur'' (all, etc.) vers les sous répertoires apparaissant
+# dans SUBDIR.
 
-#
-# Contrôle de MAKEOBJDIRPREFIX et MAKEOBJDIR
-#
+.include "bps.init.mk"
+.include "bps.clean.mk"
+.include "bps.credentials.mk"
 
-# On vérifie que les variables MAKEOBJDIRPREFIX et MAKEOBJDIR n'ont
-# pas été positionnées sur la ligne de commande ou dans le fichier de
-# directives (cf. make(1), .OBJDIR).
+.if !target(__<bps.subdir.mk>__)
+__<bps.subdir.mk>__:
 
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX
+_SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
+_SUBDIR_PREFIX?=
 
-.if !empty(_MAKEOBJDIRPREFIX)
-.error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
-	(in make.conf(5)) or command-line variable.
+.if defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
+.PHONY: ${SUBDIR}
+_SUBDIR: .USE
+.for item in ${SUBDIR}
+	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET})"
+	@cd ${.CURDIR}/${item}\
+	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET}
+.endfor
 .endif
 
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR
+${SUBDIR}::
+	${INFO} "${.TARGET} (all)"
+	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
 
-.if !empty(_MAKEOBJDIR)
-.error MAKEOBJDIR can only be set in environment, not as a global\
-	(in make.conf(5)) or command-line variable.
+.for target in ${_SUBDIR_TARGETS}
+.if !target(${target}-switch-credentials)
+${target}: _SUBDIR
 .endif
+.endfor
 
-.undef _MAKE_OBJDIRPREFIX
-.undef _MAKE_OBJDIR
+.endif #!target(__<bps.subdir.mk>__)
 
-
-#
-# Initialisation
-#
-
-.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-USE_OBJDIR?= yes
-.else
-USE_OBJDIR?= no
-.endif
-
-#
-# User targets
-#
-
-.if ${USE_OBJDIR} == yes
-_MAKE_USERTARGET+= obj
-_MAKE_ALLSUBTARGET+= obj
-
-do-obj:
-.if defined(MAKEOBJDIRPREFIX)
-	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
-.elif defined(MAKEOBJDIR)
-	${INSTALL_DIR} ${MAKEOBJDIR}
-.endif
-
-.if ${.OBJDIR} != ${.CURDIR}
-distclean:
-	@rm -Rf ${.OBJDIR}
-.endif
-
-.endif # USE_OBJDIR
-
-.endif # !target(__<make.objdir.mk>__)
-
-### End of file `make.objdir.mk'
+### End of file `bps.subdir.mk'

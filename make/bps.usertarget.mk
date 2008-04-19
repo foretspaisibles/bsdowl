@@ -1,8 +1,8 @@
-### make.subdir.mk -- Manage subdirectories
+### bps.usertarget.mk -- Cibles de l'insterface utilisateur
 
 # Author: Michaël Grünewald
-# Date: Ven 10 fév 2006 16:24:23 GMT
-# Lang: fr_FR.ISO8859-1
+# Date: Sam  7 jul 2007 09:59:15 CEST
+# Lang: fr_FR.ISO8859-15
 
 # $Id$
 
@@ -40,49 +40,67 @@
 
 ### SYNOPSIS
 
-# SUBDIR+= library
-# SUBDIR+= program
-# SUBDIR+= manual
-#
-# .include "make.subdir.mk"
+# _MAKE_USERTARGET = configure depend build doc all install clean distclean
+# _MAKE_ALLSUBTARGET = configure depend build doc
+# .include "bps.usertarget.mk"
 
 
 ### DESCRIPTION
 
-# Diffuse la demande de production des cibles ``interface
-# utilisateur'' (all, etc.) vers les sous répertoires apparaissant
-# dans SUBDIR.
+# Crée les cibles pre/do/post pour les cibles de l'interface
+# utilisateur, dont la liste est la valeur de la variable
+# _MAKE_USERTARGET.
+#
+# La cible `all' appelle une liste de sous travaux, dont la liste est
 
-.include "make.init.mk"
-.include "make.clean.mk"
-.include "make.credentials.mk"
 
-.if !target(__<make.subdir.mk>__)
-__<make.subdir.mk>__:
+.if !target(__<bps.usertarget.mk>__)
+__<bps.usertarget.mk>__:
 
-_SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
-_SUBDIR_PREFIX?=
+.PHONY: ${_MAKE_USERTARGET}
 
-.if defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
-.PHONY: ${SUBDIR}
-_SUBDIR: .USE
-.for item in ${SUBDIR}
-	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET})"
-	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET}
-.endfor
+.for target in ${_MAKE_USERTARGET:Nall}
+.if !target(${target})
+.for prefix in pre do post
+.if target(${prefix}-${target})
+${target}: ${prefix}-${target}
 .endif
-
-${SUBDIR}::
-	${INFO} "${.TARGET} (all)"
-	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
-
-.for target in ${_SUBDIR_TARGETS}
-.if !target(${target}-switch-credentials)
-${target}: _SUBDIR
+.endfor
 .endif
 .endfor
 
-.endif #!target(__<make.subdir.mk>__)
+.for target in ${_MAKE_ALLSUBTARGET}
+.if target(${target})
+do-all: divert-${target}
 
-### End of file `make.subdir.mk'
+divert-${target}: .USE
+	@echo ${MAKE} ${target}
+	@cd ${.CURDIR}; ${MAKE} ${target}
+.endif
+.endfor
+
+.for prefix in pre do post
+.if target(${prefix}-all)
+all: ${prefix}-all
+.endif
+.endfor
+
+.if !target(clean) && defined(CLEANFILES) && !empty(CLEANFILES)
+clean:
+	${RM} -f ${CLEANFILES}
+.endif
+
+.for target in ${_MAKE_USERTARGET}
+.if !target(${target})
+${target}:
+	@: ${INFO} "Nothing to do for target ${target}"
+.endif
+.endfor
+
+.if target(clean)&&target(distclean)
+distclean: clean
+.endif
+
+.endif # !target(__<bps.usertarget.mk>__)
+
+### End of file `bps.usertarget.mk'

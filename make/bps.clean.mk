@@ -1,4 +1,4 @@
-### make.clean.mk -- Service pour l'effacement de fichiers
+### bps.clean.mk -- Service pour l'effacement de fichiers
 
 # Auteur: Michaël Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
@@ -46,24 +46,24 @@
 # DISTCLEANDIRS+= ${CONFOBJDIR}
 # REALCLEANFILES+= ${CONF}
 # REALCLEANDIRS+= ${CONFDIR}
-# .include "make.clean.mk"
+# .include "bps.clean.mk"
 
 
 ### DESCRIPTION
 
-# Le module `make.clean.mk' fournit un service pour effacer les
+# Le module `bps.clean.mk' fournit un service pour effacer les
 # fichiers objets et remettre le répertoire de travail dans son état
 # initial.
 #
-# Pour cela, le module `make.clean.mk' utilise les valeurs des
+# Pour cela, le module `bps.clean.mk' utilise les valeurs des
 # variables CLEANFILES, CLEANDIRS, DISTCLEANFILES, DISTCLEANDIRS,
 # REALCLEANFILES, REALCLEANDIRFILES, pour créer des cibles
 # do-cleanfiles, do-cleandirs, do-distcleanfiles, do-distcleandirs,
 # do-realcleanfiles et do-realcleandirs et les faire dépendre de
 # do-clean et do-distclean respectivement.
 
-.if !target(__<make.clean.mk>__)
-__<make.clean.mk>__:
+.if !target(__<bps.clean.mk>__)
+__<bps.clean.mk>__:
 #
 # Clean files
 #
@@ -135,6 +135,6 @@ realclean: clean
 
 .ORDER: clean distclean realclean
 
-.endif # !target(__<make.clean.mk>__)
+.endif # !target(__<bps.clean.mk>__)
 
-### End of file `make.clean.mk'
+### End of file `bps.clean.mk'
