@@ -45,7 +45,7 @@
 
 ### MAGIC STUFF
 
-.include "make.init.mk"
+.include "bps.init.mk"
 .include "ocaml.init.mk"
 
 .if !defined(LIBRARY)||empty(LIBRARY)
@@ -93,8 +93,8 @@ LIB+= ${SRCS.${lib}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
 
 LIBDIR=${PREFIX}/lib/ocaml${APPLICATIONDIR}
 
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `ocaml.lib.mk'

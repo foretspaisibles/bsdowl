@@ -58,7 +58,7 @@
 
 ### MAGIC STUFF
 
-.include "make.init.mk"
+.include "bps.init.mk"
 .include "ocaml.init.mk"
 
 ## DU MODE SINGLETON AU MODE ENSEMBLE
@@ -115,8 +115,8 @@ ${item}.cb: ${SRCS.${item}.cb:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
 .endfor
 
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `ocaml.prog.mk'
