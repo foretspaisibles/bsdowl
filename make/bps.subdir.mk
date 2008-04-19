@@ -1,4 +1,4 @@
-### make.subdir.mk -- Manage subdirectories
+### bps.subdir.mk -- Manage subdirectories
 
 # Author: Michaël Grünewald
 # Date: Ven 10 fév 2006 16:24:23 GMT
@@ -44,7 +44,7 @@
 # SUBDIR+= program
 # SUBDIR+= manual
 #
-# .include "make.subdir.mk"
+# .include "bps.subdir.mk"
 
 
 ### DESCRIPTION
@@ -53,12 +53,12 @@
 # utilisateur'' (all, etc.) vers les sous répertoires apparaissant
 # dans SUBDIR.
 
-.include "make.init.mk"
-.include "make.clean.mk"
-.include "make.credentials.mk"
+.include "bps.init.mk"
+.include "bps.clean.mk"
+.include "bps.credentials.mk"
 
-.if !target(__<make.subdir.mk>__)
-__<make.subdir.mk>__:
+.if !target(__<bps.subdir.mk>__)
+__<bps.subdir.mk>__:
 
 _SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
 _SUBDIR_PREFIX?=
@@ -83,6 +83,6 @@ ${target}: _SUBDIR
 .endif
 .endfor
 
-.endif #!target(__<make.subdir.mk>__)
+.endif #!target(__<bps.subdir.mk>__)
 
-### End of file `make.subdir.mk'
+### End of file `bps.subdir.mk'

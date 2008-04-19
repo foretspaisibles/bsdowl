@@ -1,4 +1,4 @@
-### make.init.mk -- Initialisation pour les modules `make'.
+### bps.init.mk -- Initialisation pour les modules `make'.
 
 # Author: Michaël Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
@@ -40,7 +40,7 @@
 
 ### SYNOPSIS
 
-# .include "make.init.mk"
+# .include "bps.init.mk"
 
 
 ### DESCRIPTION
@@ -58,7 +58,7 @@
 #
 # Définit `all' comme cible implicite.
 #
-# Demande le traitement des fichiers "make.own.mk" et "make.clean.mk"
+# Demande le traitement des fichiers "bps.own.mk" et "bps.clean.mk"
 #  et "Makefile.inc".
 #
 # Demande le traitement du fichier MAKEINITRC si cette variable est
@@ -118,10 +118,10 @@
 # censé être appropriés. C'est en fait la variable APPLICATIONDIR qui
 # joue ce rôle, on s'en sert par exemple pour définir
 # SHAREDIR=/share${APPLICATIONDIR}, etc.
-#  SeeAlso: make.own.mk make.files.mk
+#  SeeAlso: bps.own.mk bps.files.mk
 
-.if !target(__<make.init.mk>__)
-__<make.init.mk>__:
+.if !target(__<bps.init.mk>__)
+__<bps.init.mk>__:
 
 ### PSEUDO COMMANDES (BOOTSTRAP)
 
@@ -182,15 +182,15 @@ APPLICATIONDIR?=	/${APPLICATION}
 _MAKE_USERTARGET?=
 _MAKE_ALLSUBTARGET?=
 
-.include "make.own.mk"
-.include "make.objdir.mk"
-.include "make.autoconf.mk"
-.include "make.dist.mk"
+.include "bps.own.mk"
+.include "bps.objdir.mk"
+.include "bps.autoconf.mk"
+.include "bps.dist.mk"
 
 _MAKE_USERTARGET+= configure depend build doc all install
 _MAKE_USERTARGET+= clean distclean realclean
 _MAKE_ALLSUBTARGET+= configure depend build doc
 
-.endif # !target(__<make.init.mk>__)
+.endif # !target(__<bps.init.mk>__)
 
-### End of file `make.init.mk'
+### End of file `bps.init.mk'

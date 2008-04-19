@@ -7,15 +7,15 @@
 # $Id$
 
 
-FILES+=	make.init.mk
-FILES+= make.credentials.mk
-FILES+= make.objdir.mk
-FILES+=	make.own.mk
-FILES+= make.usertarget.mk
-FILES+=	make.clean.mk
-FILES+=	make.subdir.mk
-FILES+=	make.files.mk
-FILES+= make.autoconf.mk
+FILES+=	bps.init.mk
+FILES+= bps.credentials.mk
+FILES+= bps.objdir.mk
+FILES+=	bps.own.mk
+FILES+= bps.usertarget.mk
+FILES+=	bps.clean.mk
+FILES+=	bps.subdir.mk
+FILES+=	bps.files.mk
+FILES+= bps.autoconf.mk
 
 .include "project.mk"
 

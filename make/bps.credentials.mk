@@ -1,8 +1,8 @@
-### make.objdir.mk -- %%DESCRIPTION%%
+### bps.credentials.mk -- Autorisation administrateur modules `make'.
 
 # Author: Michaël Grünewald
-# Date: Sam 15 mar 2008 20:51:30 CET
-# Lang: fr_FR.ISO8859-1
+# Date: Sam 29 mar 2008 16:05:16 CET
+# Lang: fr_FR.ISO8859-15
 
 # $Id$
 
@@ -40,71 +40,60 @@
 
 ### SYNOPSIS
 
+# USE_SWITCH_CREDENTIALS=yes
+# .include "bps.credentials.mk"
+
+
 ### DESCRIPTION
 
-.if !target(__<make.objdir.mk>__)
-__<make.objdir.mk>__:
-
-#
-# Contrôle de MAKEOBJDIRPREFIX et MAKEOBJDIR
-#
-
-# On vérifie que les variables MAKEOBJDIRPREFIX et MAKEOBJDIR n'ont
-# pas été positionnées sur la ligne de commande ou dans le fichier de
-# directives (cf. make(1), .OBJDIR).
-
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX
-
-.if !empty(_MAKEOBJDIRPREFIX)
-.error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
-	(in make.conf(5)) or command-line variable.
-.endif
-
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR
-
-.if !empty(_MAKEOBJDIR)
-.error MAKEOBJDIR can only be set in environment, not as a global\
-	(in make.conf(5)) or command-line variable.
-.endif
-
-.undef _MAKE_OBJDIRPREFIX
-.undef _MAKE_OBJDIR
+# Propose d'utiliser `su' pour traiter la cible `install'.
 
 
-#
-# Initialisation
-#
+### INTERFACE
 
-.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-USE_OBJDIR?= yes
-.else
-USE_OBJDIR?= no
+### DÉFINITIONS
+
+.if !target(__<bps.credentials.mk>__)
+__<bps.credentials.mk>__:
+
+### VARIABLES
+
+USE_SWITCH_CREDENTIALS?= yes
+
+_SWITCH_CREDENTIALS_TARGETS?=
+
+# On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
+# autorisé à écrire sous ${DESTDIR}/${PREFIX}.
+
+_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
+
+_SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
+
+
+### PSEUDO COMMANDES
+
+ID?= /usr/bin/id
+SU?= /usr/bin/su
+
+.if !defined(UID)
+UID!= ${ID} -u
 .endif
 
 #
-# User targets
+# Changement d'autorisation pour installer en tant que `root'
 #
 
-.if ${USE_OBJDIR} == yes
-_MAKE_USERTARGET+= obj
-_MAKE_ALLSUBTARGET+= obj
-
-do-obj:
-.if defined(MAKEOBJDIRPREFIX)
-	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
-.elif defined(MAKEOBJDIR)
-	${INSTALL_DIR} ${MAKEOBJDIR}
+.if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
+.for target in ${_SWITCH_CREDENTIALS_TARGETS}
+.if !target(${target})
+${target}: ${target}-switch-credentials
+${target}-switch-credentials:
+	${INFO} 'Switching to root credentials for target (${target})'
+	@${SU} root -c '${MAKE} ${target}'
+.endif
+.endfor
 .endif
 
-.if ${.OBJDIR} != ${.CURDIR}
-distclean:
-	@rm -Rf ${.OBJDIR}
-.endif
+.endif # !target(__<bps.credentials.mk>__)
 
-.endif # USE_OBJDIR
-
-.endif # !target(__<make.objdir.mk>__)
-
-### End of file `make.objdir.mk'
+### End of file `bps.credentials.mk'

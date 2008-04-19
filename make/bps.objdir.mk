@@ -1,12 +1,12 @@
-### make.autoconf.mk -- Support pour AUTOCONF
+### bps.objdir.mk -- %%DESCRIPTION%%
 
 # Author: Michaël Grünewald
-# Date: Ven 18 avr 2008 09:59:39 CEST
+# Date: Sam 15 mar 2008 20:51:30 CET
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,54 +40,71 @@
 
 ### SYNOPSIS
 
-# CONFIGURE = Makefile.in
-# CONFIGURE+= header.in
-# .include "make.autoconf.mk"
-
 ### DESCRIPTION
 
-# Si un fichier `configure.in' figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, une cible recréant le fichier `configure'
-# est créee et des cibles de nettoyage sont ajoutées pour
-# `cleanfiles'.
+.if !target(__<bps.objdir.mk>__)
+__<bps.objdir.mk>__:
+
 #
-# De plus la variable CONFIGURE est examinée, les fichiers objets
-# associés aux fichiers énumérés dans la variable CONFIGURE sont
-# ajoutés aux listes de nettoyage `distclean'.
+# Contrôle de MAKEOBJDIRPREFIX et MAKEOBJDIR
 #
-# Si un fichier configure.in figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, certains fichiers sont ajoutés
-# automatiquement à CONFIGURE.
 
-.if !target(__<make.autoconf.mk>__)
-__<make.autoconf.mk>__:
+# On vérifie que les variables MAKEOBJDIRPREFIX et MAKEOBJDIR n'ont
+# pas été positionnées sur la ligne de commande ou dans le fichier de
+# directives (cf. make(1), .OBJDIR).
 
-.if exists(configure.in)
-USE_AUTOCONF?=yes
-.endif
-USE_AUTOCONF?=no
-.if ${USE_AUTOCONF} == yes
-.for file in config.status config.log
-.if exists(${file})
-DISTCLEANFILES+= ${file}
-.endif
-.endfor
-.if exists(autom4te.cache)
-DISTCLEANDIRS+= autom4te.cache
-.endif
-CONFIGURE?=
-.for file in Makefile.in
-.if exists(${file})&&empty(CONFIGURE:M${file})
-CONFIGURE+= ${file}
-.endif
-.endfor
-REALCLEANFILES+= ${CONFIGURE:.in=}
-.if exists(configure.in)
-.if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
-REALCLEANFILES+= configure
-.endif
-.endif
-.endif # ${USE_AUTOCONF} == yes
-.endif # !target(__<make.autoconf.mk>__)
+_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
+	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX
 
-### End of file `make.autoconf.mk'
+.if !empty(_MAKEOBJDIRPREFIX)
+.error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
+	(in bps.conf(5)) or command-line variable.
+.endif
+
+_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
+	${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR
+
+.if !empty(_MAKEOBJDIR)
+.error MAKEOBJDIR can only be set in environment, not as a global\
+	(in bps.conf(5)) or command-line variable.
+.endif
+
+.undef _MAKE_OBJDIRPREFIX
+.undef _MAKE_OBJDIR
+
+
+#
+# Initialisation
+#
+
+.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
+USE_OBJDIR?= yes
+.else
+USE_OBJDIR?= no
+.endif
+
+#
+# User targets
+#
+
+.if ${USE_OBJDIR} == yes
+_MAKE_USERTARGET+= obj
+_MAKE_ALLSUBTARGET+= obj
+
+do-obj:
+.if defined(MAKEOBJDIRPREFIX)
+	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
+.elif defined(MAKEOBJDIR)
+	${INSTALL_DIR} ${MAKEOBJDIR}
+.endif
+
+.if ${.OBJDIR} != ${.CURDIR}
+distclean:
+	@rm -Rf ${.OBJDIR}
+.endif
+
+.endif # USE_OBJDIR
+
+.endif # !target(__<bps.objdir.mk>__)
+
+### End of file `bps.objdir.mk'

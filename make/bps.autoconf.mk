@@ -1,12 +1,12 @@
-### make.credentials.mk -- Autorisation administrateur modules `make'.
+### bps.autoconf.mk -- Support pour AUTOCONF
 
 # Author: Michaël Grünewald
-# Date: Sam 29 mar 2008 16:05:16 CET
-# Lang: fr_FR.ISO8859-15
+# Date: Ven 18 avr 2008 09:59:39 CEST
+# Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2008, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -40,60 +40,54 @@
 
 ### SYNOPSIS
 
-# USE_SWITCH_CREDENTIALS=yes
-# .include "make.credentials.mk"
-
+# CONFIGURE = Makefile.in
+# CONFIGURE+= header.in
+# .include "bps.autoconf.mk"
 
 ### DESCRIPTION
 
-# Propose d'utiliser `su' pour traiter la cible `install'.
+# Si un fichier `configure.in' figure dans notre dossier, ou si la
+# variable USE_AUTOCONF=yes, une cible recréant le fichier `configure'
+# est créee et des cibles de nettoyage sont ajoutées pour
+# `cleanfiles'.
+#
+# De plus la variable CONFIGURE est examinée, les fichiers objets
+# associés aux fichiers énumérés dans la variable CONFIGURE sont
+# ajoutés aux listes de nettoyage `distclean'.
+#
+# Si un fichier configure.in figure dans notre dossier, ou si la
+# variable USE_AUTOCONF=yes, certains fichiers sont ajoutés
+# automatiquement à CONFIGURE.
 
+.if !target(__<bps.autoconf.mk>__)
+__<bps.autoconf.mk>__:
 
-### INTERFACE
-
-### DÉFINITIONS
-
-.if !target(__<make.credentials.mk>__)
-__<make.credentials.mk>__:
-
-### VARIABLES
-
-USE_SWITCH_CREDENTIALS?= yes
-
-_SWITCH_CREDENTIALS_TARGETS?=
-
-# On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
-# autorisé à écrire sous ${DESTDIR}/${PREFIX}.
-
-_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
-
-_SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
-
-
-### PSEUDO COMMANDES
-
-ID?= /usr/bin/id
-SU?= /usr/bin/su
-
-.if !defined(UID)
-UID!= ${ID} -u
+.if exists(configure.in)
+USE_AUTOCONF?=yes
 .endif
-
-#
-# Changement d'autorisation pour installer en tant que `root'
-#
-
-.if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
-.for target in ${_SWITCH_CREDENTIALS_TARGETS}
-.if !target(${target})
-${target}: ${target}-switch-credentials
-${target}-switch-credentials:
-	${INFO} 'Switching to root credentials for target (${target})'
-	@${SU} root -c '${MAKE} ${target}'
+USE_AUTOCONF?=no
+.if ${USE_AUTOCONF} == yes
+.for file in config.status config.log
+.if exists(${file})
+DISTCLEANFILES+= ${file}
 .endif
 .endfor
+.if exists(autom4te.cache)
+DISTCLEANDIRS+= autom4te.cache
 .endif
+CONFIGURE?=
+.for file in Makefile.in
+.if exists(${file})&&empty(CONFIGURE:M${file})
+CONFIGURE+= ${file}
+.endif
+.endfor
+REALCLEANFILES+= ${CONFIGURE:.in=}
+.if exists(configure.in)
+.if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
+REALCLEANFILES+= configure
+.endif
+.endif
+.endif # ${USE_AUTOCONF} == yes
+.endif # !target(__<bps.autoconf.mk>__)
 
-.endif # !target(__<make.credentials.mk>__)
-
-### End of file `make.credentials.mk'
+### End of file `bps.autoconf.mk'

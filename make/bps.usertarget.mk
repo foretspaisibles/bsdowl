@@ -1,4 +1,4 @@
-### make.usertarget.mk -- Cibles de l'insterface utilisateur
+### bps.usertarget.mk -- Cibles de l'insterface utilisateur
 
 # Author: Michaël Grünewald
 # Date: Sam  7 jul 2007 09:59:15 CEST
@@ -42,7 +42,7 @@
 
 # _MAKE_USERTARGET = configure depend build doc all install clean distclean
 # _MAKE_ALLSUBTARGET = configure depend build doc
-# .include "make.usertarget.mk"
+# .include "bps.usertarget.mk"
 
 
 ### DESCRIPTION
@@ -54,8 +54,8 @@
 # La cible `all' appelle une liste de sous travaux, dont la liste est 
 
 
-.if !target(__<make.usertarget.mk>__)
-__<make.usertarget.mk>__:
+.if !target(__<bps.usertarget.mk>__)
+__<bps.usertarget.mk>__:
 
 .PHONY: ${_MAKE_USERTARGET}
 
@@ -101,6 +101,6 @@ ${target}:
 distclean: clean
 .endif
 
-.endif # !target(__<make.usertarget.mk>__)
+.endif # !target(__<bps.usertarget.mk>__)
 
-### End of file `make.usertarget.mk'
+### End of file `bps.usertarget.mk'
