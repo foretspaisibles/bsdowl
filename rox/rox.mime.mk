@@ -43,7 +43,7 @@ __<rox.mime.mk>__:
 
 _MIME_SCRIPT_EXTS?=	sh bash pl py
 
-.include "make.init.mk"
+.include "bps.init.mk"
 .include "rox.init.mk"
 
 MIMEMODE?=	${BINMODE}
@@ -57,9 +57,9 @@ MIMENAME_${mime:T}?=${mime:T:.${item}=}
 
 FILESGROUPS+=MIME
 
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 .endif#!target(__<rox.mime.mk>__)
 

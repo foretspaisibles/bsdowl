@@ -41,14 +41,14 @@
 .if !target(__<rox.template.mk>__)
 __<rox.template.mk>__:
 
-.include "make.init.mk"
+.include "bps.init.mk"
 .include "rox.init.mk"
 
 TEMPLATEMODE?=	${SHAREMOD}
 TEMPLATEDIR?=	${ROXCONFIGDIR}/Template
 
 FILESGROUPS+=TEMPLATE
-.include "make.files.mk"
+.include "bps.files.mk"
 
 .endif#!target(__<rox.template.mk>__)
 

@@ -45,7 +45,7 @@ SENDTOTYPE!= basename ${.CURDIR}
 
 _SENDTO_SCRIPT_EXTS?=	sh bash pl py
 
-.include "make.init.mk"
+.include "bps.init.mk"
 .include "rox.init.mk"
 
 SENDTOMODE?=	${BINMODE}
@@ -68,9 +68,9 @@ SENDTONAME_${sendto:T}:="${SENDTONAME_${sendto:T}:C/_/ /g}"
 
 FILESGROUPS+=SENDTO
 
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 .endif#!target(__<rox.sendto.mk>__)
 
