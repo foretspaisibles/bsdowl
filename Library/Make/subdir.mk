@@ -38,6 +38,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-.include "../../make/make.subdir.mk"
+.include "../../bps/bps.subdir.mk"
 
 ### End of file `subdir.mk'
