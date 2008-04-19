@@ -146,6 +146,7 @@ ENVTOOL?=		env			# Le nom ENV
 CP?=			cp
 RM?=			rm
 MV?=			mv
+LN?=			ln
 MKDIR?=			mkdir
 TAR?=			tar
 INSTALL?=		install
