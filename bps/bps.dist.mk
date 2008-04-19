@@ -1,4 +1,4 @@
-### make.dist.mk -- Préparer la distribution des sources
+### bps.dist.mk -- Préparer la distribution des sources
 
 # Author: Michaël Grünewald
 # Date: Sam 19 avr 2008 00:15:12 CEST
@@ -45,7 +45,7 @@
 # DISTNAME = software
 # DISTCOMPRESSION=gzip bzip2
 # DISTEXCLUDE+=
-# .include "make.dist.mk"
+# .include "bps.dist.mk"
 #
 # Après:
 # DISTFILES = ${DISTNAME}-${DISTVERSION}.tar.gz
@@ -69,8 +69,8 @@
 # merveille... en particulier: utilisez toujours des doms de dossiers
 # absolus (pensez à ${.CURDIR}).
 
-.if !target(__<make.dist.mk>__)
-__<make.dist.mk>__:
+.if !target(__<bps.dist.mk>__)
+__<bps.dist.mk>__:
 DISTDIR?=${.OBJDIR}
 .if !defined(DISTVERSION)
 .if defined(VERSION)&&!empty(VERSION)
@@ -127,6 +127,6 @@ dist: distclean ${DISTFILES}
 REALCLEANFILES+= ${f}
 .endif
 .endfor
-.endif # !target(__<make.dist.mk>__)
+.endif # !target(__<bps.dist.mk>__)
 
-### End of file `make.dist.mk'
+### End of file `bps.dist.mk'
