@@ -40,8 +40,8 @@
 
 APPLICATION=mk
 
-.include "../../make/make.init.mk"
-.include "../../make/make.files.mk"
-.include "../../make/make.usertarget.mk"
+.include "../../bps/bps.init.mk"
+.include "../../bps/bps.files.mk"
+.include "../../bps/bps.usertarget.mk"
 
 ### End of file `project.mk'
