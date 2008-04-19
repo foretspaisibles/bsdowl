@@ -6,7 +6,7 @@
 
 # $Id$
 
-SUBDIR+= make
+SUBDIR+= bps
 SUBDIR+= ocaml
 SUBDIR+= text
 SUBDIR+= rox
