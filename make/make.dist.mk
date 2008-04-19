@@ -40,6 +40,7 @@
 
 ### SYNOPSIS
 
+# DISTDIR = /publish		# Where files are created, defaults to .
 # DISTVERSION = 1.2
 # DISTNAME = software
 # DISTCOMPRESSION=gzip bzip2
@@ -66,6 +67,7 @@
 
 .if !target(__<make.dist.mk>__)
 __<make.dist.mk>__:
+DISTDIR?=${.OBJDIR}
 .if !defined(DISTVERSION)
 .if defined(VERSION)&&!empty(VERSION)
 DISTVERSION = ${VERSION}
@@ -80,9 +82,14 @@ DISTCOMPRESSION.suffix.bzip2=tar.bz2
 DISTCOMPRESSION.flag.gzip=-j
 DISTCOMPRESSION.flag.bzip2=-z
 .for c in ${DISTCOMPRESSION}
-DISTFILES+= ${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}
+DISTFILES+= ${DISTDIR}/${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}
 .endfor
-DISTEXCLUDE+= ${DISTFILES}
+#
+# Inutile d'ajouter les fichiers de distribution à l'archive.
+# La ligne ${DISTNAME}-${DISTVERSION}/${DISTNAME}-${DISTVERSION}
+# set lorsque DISTDIR=${.CURDIR}
+DISTEXCLUDE+= ${DISTFILES:T}
+DISTEXCLUDE+= ${DISTNAME}-${DISTVERSION}/${DISTNAME}-${DISTVERSION}
 .for f in CVS .cvsignore .svn
 .if exists(${f})
 DISTEXCLUDE+=${f}
@@ -96,11 +103,15 @@ DISTEXCLUDE+=${f}
 .endfor
 .endif
 .for c in ${DISTCOMPRESSION}
-${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}:
+${DISTDIR}/${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}:
+	${LN} -s ${.CURDIR} ${DISTDIR}/${DISTNAME}-${DISTVERSION}
 	${TAR} -c\
 	${DISTCOMPRESSION.flag.${c}}\
-	-f ${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}\
-	${DISTEXCLUDE:S/^/-W exclude=/} .
+	-f ${.TARGET}\
+	-C ${DISTDIR}\
+	-H\
+	${DISTEXCLUDE:S/^/-W exclude=/} ${DISTNAME}-${DISTVERSION}
+	${RM} -f ${DISTDIR}/${DISTNAME}-${DISTVERSION}
 .endfor
 dist: distclean ${DISTFILES}
 .for f in ${DISTFILES}
