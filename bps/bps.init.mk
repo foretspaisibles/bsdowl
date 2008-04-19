@@ -185,7 +185,6 @@ _MAKE_ALLSUBTARGET?=
 .include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
-.include "bps.dist.mk"
 
 _MAKE_USERTARGET+= configure depend build doc all install
 _MAKE_USERTARGET+= clean distclean realclean
