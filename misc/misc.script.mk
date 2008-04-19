@@ -70,7 +70,7 @@
 .if !target(__<misc.script.mk>__)
 __<misc.script.mk>__:
 
-.include "make.init.mk"
+.include "bps.init.mk"
 
 _SCRIPT_EXTS?= pl sh bash py
 
@@ -118,9 +118,9 @@ ${script:T:.${ext}=}: ${script}
 CLEANFILES+= ${SCRIPT}
 FILESGROUPS+= SCRIPT
 
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 .endif #!target(__<misc.script.mk>__)
 
