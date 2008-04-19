@@ -1,12 +1,29 @@
-### %%FILENAME%% -- %%DESCRIPTION%%
+#!/bin/sh
+
+# $Id$
+
+echo 'We prepare a new makefile'
+read -p 'filename: ' FILENAME
+read -p 'comment: ' COMMENT
+DATE=`date`
+
+m4 -g\
+    -D __FILENAME__="${FILENAME}" \
+    -D __COMMENT__="${COMMENT}" \
+    -D __DATE__="${DATE}" \
+    -D __YEAR__="${YEAR}" \
+    > ${FILENAME} <<'EOF'
+changecom()dnl
+changequote(,)dnl
+### __FILENAME__ -- __COMMENT__
 
 # Author: Michaël Grünewald
-# Date: %%DATE%%
+# Date: __DATE__
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) %%YEAR%%, Michaël Grünewald
+# Copyright (c) __YEAR__, Michaël Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -42,9 +59,10 @@
 
 ### DESCRIPTION
 
-.if !target(__<%%FILENAME%%>__)
-__<%%FILENAME%%>__:
+.if !target(__<__FILENAME__>__)
+__<__FILENAME__>__:
 
-.endif # !target(__<%%FILENAME%%>__)
+.endif # !target(__<__FILENAME__>__)
 
-### End of file `%%FILENAME%%'
+### End of file `__FILENAME__'
+EOF
