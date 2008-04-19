@@ -81,7 +81,7 @@ CONFIGURE?=
 CONFIGURE+= ${file}
 .endif
 .endfor
-DISTCLEANFILES+= ${CONFIGURE:.in=}
+REALCLEANFILES+= ${CONFIGURE:.in=}
 .if exists(configure.in)
 .if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
 REALCLEANFILES+= configure
