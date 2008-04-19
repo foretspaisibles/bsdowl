@@ -147,6 +147,7 @@ CP?=			cp
 RM?=			rm
 MV?=			mv
 MKDIR?=			mkdir
+TAR?=			tar
 INSTALL?=		install
 INSTALL_DIR?=		install -d
 AWK?=			awk
@@ -183,6 +184,7 @@ _MAKE_ALLSUBTARGET?=
 .include "make.own.mk"
 .include "make.objdir.mk"
 .include "make.autoconf.mk"
+.include "make.dist.mk"
 
 _MAKE_USERTARGET+= configure depend build doc all install
 _MAKE_USERTARGET+= clean distclean realclean
