@@ -58,6 +58,11 @@
 # utilisée par d'autre modules.
 #
 # La valeur de DISTNAME peut être devinée à partir de `.CURDIR'
+#
+# Les fichiers automatiquement exclcus sont:
+#  * les fichiers CVS .cvsignore et .svn
+#  * les fichiers apparaissant dans DISTFILES
+#  * les fichiers objets associés aux sources énumérées dans CONFIGURE
 
 .if !target(__<make.dist.mk>__)
 __<make.dist.mk>__:
