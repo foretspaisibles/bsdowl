@@ -61,7 +61,7 @@
 
 ### RÉALISATION
 
-.include "make.init.mk"
+.include "bps.init.mk"
 
 .if defined(MANUAL)&&!empty(MANUAL)
 ODOC_FORMAT = html
@@ -74,6 +74,6 @@ USE_ODOC = yes
 .include "ocaml.odoc.mk"
 .endif
 
-.include "make.usertarget.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `ocaml.manual.mk'
