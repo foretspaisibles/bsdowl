@@ -1,4 +1,4 @@
-### www.files.mk -- A make.files.mk wrapper for my www
+### www.files.mk -- A bps.files.mk wrapper for my www
 
 # Author: Michaël Grünewald
 # Date: Jeu 13 mar 2008 21:58:28 CET
@@ -38,7 +38,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-.include "make.init.mk"
+.include "bps.init.mk"
 
 FILESGROUPS+=		WWW
 
@@ -56,7 +56,7 @@ WWWMODE?= 440
 .endif
 .endif
 
-.include "make.files.mk"
-.include "make.subdir.mk"
+.include "bps.files.mk"
+.include "bps.subdir.mk"
 
 ### End of file `www.files.mk'
