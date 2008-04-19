@@ -46,6 +46,7 @@
 __<pallas>__:
 
 .include "subdir.mk"
+.include "../../bps/bps.project.mk"
 
 .endif # !target(__<pallas>__)
 
