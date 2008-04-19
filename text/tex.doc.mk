@@ -67,9 +67,9 @@
 .include "tex.init.mk"
 .include "tex.mpost.mk"
 .include "tex.doc.main.mk"
-.include "make.init.mk"
-.include "make.clean.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.init.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `tex.doc.mk'

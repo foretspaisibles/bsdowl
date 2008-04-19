@@ -67,8 +67,8 @@ post-install: post-install-mktexlsr
 post-install-mktexlsr:
 	mktexlsr
 
-.include "make.init.mk"
-.include "make.files.mk"
-.include "make.usertarget.mk"
+.include "bps.init.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `tex.files.mk'
