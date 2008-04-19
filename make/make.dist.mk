@@ -64,6 +64,10 @@
 #  * les fichiers CVS .cvsignore et .svn
 #  * les fichiers apparaissant dans DISTFILES
 #  * les fichiers objets associés aux sources énumérées dans CONFIGURE
+#
+# Note: ne malmenez pas trop DISTDIR, tout ne fonctionne pas encore à
+# merveille... en particulier: utilisez toujours des doms de dossiers
+# absolus (pensez à ${.CURDIR}).
 
 .if !target(__<make.dist.mk>__)
 __<make.dist.mk>__:
@@ -90,6 +94,9 @@ DISTFILES+= ${DISTDIR}/${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}
 # set lorsque DISTDIR=${.CURDIR}
 DISTEXCLUDE+= ${DISTFILES:T}
 DISTEXCLUDE+= ${DISTNAME}-${DISTVERSION}/${DISTNAME}-${DISTVERSION}
+.if !(${DISTDIR} == ${.CURDIR})
+DISTEXCLUDE+= ${DISTDIR}
+.endif
 .for f in CVS .cvsignore .svn
 .if exists(${f})
 DISTEXCLUDE+=${f}
@@ -104,6 +111,7 @@ DISTEXCLUDE+=${f}
 .endif
 .for c in ${DISTCOMPRESSION}
 ${DISTDIR}/${DISTNAME}-${DISTVERSION}.${DISTCOMPRESSION.suffix.${c}}:
+	${INSTALL_DIR} ${DISTDIR}
 	${LN} -s ${.CURDIR} ${DISTDIR}/${DISTNAME}-${DISTVERSION}
 	${TAR} -c\
 	${DISTCOMPRESSION.flag.${c}}\
