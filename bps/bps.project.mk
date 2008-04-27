@@ -78,7 +78,7 @@
 
 # PROJECTAUTHOR
 #
-#   Auteur du projet, par exemple: Michaël Le Barbier
+#   Auteur du projet, par exemple: Michaël Grünewald
 #
 #   La valeur de cette variable est utilisée lors de l'étape de
 #   signature pour déterminer la clef à utiliser.

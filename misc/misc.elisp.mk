@@ -1,6 +1,6 @@
 ### misc.elisp.mk -- Manage Emacs Lisp Directories
 
-# Author: Michaël Le Barbier
+# Author: Michaël Grünewald
 # Date: Fri Feb 10 17:59:16 2006
 # Lang: fr_FR.ISO8859-15
 

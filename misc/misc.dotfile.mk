@@ -1,6 +1,6 @@
 ### misc.dotfile.mk -- BSD Makefile for dotfiles
 
-# Author: Michaël Le Barbier
+# Author: Michaël Grünewald
 # Date: Tue Sep 12 15:33:20 CEST 2006
 # Lang: fr_FR.ISO8859-15
 
