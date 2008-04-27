@@ -1,6 +1,6 @@
 ;; dot.emacs -- Fichier de configuration EMACS -*- lisp -*-
 
-; Author: Michaël Le Barbier
+; Author: Michaël Grünewald
 ; Date: Sun Sep 10 11:37:56 CEST 2006
 ; Lang: fr_FR.ISO8859-15
 
