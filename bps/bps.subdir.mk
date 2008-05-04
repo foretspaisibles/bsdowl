@@ -54,7 +54,6 @@
 # dans SUBDIR.
 
 .include "bps.init.mk"
-.include "bps.clean.mk"
 .include "bps.credentials.mk"
 
 .if !target(__<bps.subdir.mk>__)
@@ -67,9 +66,9 @@ _SUBDIR_PREFIX?=
 .PHONY: ${SUBDIR}
 _SUBDIR: .USE
 .for item in ${SUBDIR}
-	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET})"
+	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
 	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET}
+	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
 .endfor
 .endif
 
@@ -78,11 +77,15 @@ ${SUBDIR}::
 	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
 
 .for target in ${_SUBDIR_TARGETS}
+do-${target}-subdir: _SUBDIR
+	${NOP}
 .if !target(${target}-switch-credentials)
-${target}: _SUBDIR
+${target}: do-${target}-subdir
 .endif
 .endfor
 
 .endif #!target(__<bps.subdir.mk>__)
+
+.include "bps.clean.mk"
 
 ### End of file `bps.subdir.mk'
