@@ -113,14 +113,6 @@ do-realclean-realcleandirs:
 	${RM} -f -r ${REALCLEANDIRS}
 .endif
 
-.if target(do-distclean)
-distclean: do-distclean
-.endif
-
-.if target(do-realclean)
-realclean: do-realclean
-.endif
-
 .if target(clean)&&target(distclean)
 distclean: clean
 .endif
@@ -133,7 +125,19 @@ realclean: distclean
 realclean: clean
 .endif
 
+.if target(do-distclean)
+distclean: do-distclean
+.endif
+
+.if target(do-realclean)
+realclean: do-realclean
+.endif
+
 .ORDER: clean distclean realclean
+
+#.if target(do-realclean-subdir)&&target(do-realclean)
+#.ORDER: do-realclean-subdir do-realclean
+#.endif
 
 .endif # !target(__<bps.clean.mk>__)
 
