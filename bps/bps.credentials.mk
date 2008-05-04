@@ -67,7 +67,9 @@ _SWITCH_CREDENTIALS_TARGETS?=
 
 _SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
 
+.if !empty(_SWITCH_CREDENTIALS.install)
 _SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
+.endif
 
 
 ### PSEUDO COMMANDES
@@ -86,7 +88,8 @@ UID!= ${ID} -u
 .if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
 .for target in ${_SWITCH_CREDENTIALS_TARGETS}
 .if !target(${target})
-${target}: ${target}-switch-credentials
+${target}:: ${target}-switch-credentials
+	${NOP}
 ${target}-switch-credentials:
 	${INFO} 'Switching to root credentials for target (${target})'
 	@${SU} root -c '${MAKE} ${target}'
