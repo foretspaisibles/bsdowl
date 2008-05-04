@@ -62,7 +62,7 @@
 .if !target(__<bps.autoconf.mk>__)
 __<bps.autoconf.mk>__:
 
-.if exists(configure.in)
+.if exists(configure.ac)||exists(autoconf.in)
 USE_AUTOCONF?=yes
 .endif
 USE_AUTOCONF?=no
@@ -82,7 +82,7 @@ CONFIGURE+= ${file}
 .endif
 .endfor
 REALCLEANFILES+= ${CONFIGURE:.in=}
-.if exists(configure.in)
+.if exists(configure.ac)||exists(configure.in)
 .if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
 REALCLEANFILES+= configure
 .endif
