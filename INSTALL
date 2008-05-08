@@ -11,8 +11,9 @@ Dans ce qui suit on note `make' le nom du programme `BSD Make' sur le
 système. Pour FreeBSD, il s'agit effectivement du binaire `make', pour
 Mac OS-X il s'agit de `bsdmake'.
 
-L'installation se fait avec
+L'installation se fait avec la séquence d'instruction
 
+  ./configure --prefix=<prefix>
   make all
   make install
 
