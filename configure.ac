@@ -1,4 +1,2 @@
 AC_INIT(bps/bps.init.mk)
-AC_SUBST(PREFIX)
-AC_SUBST(DESTDIR)
 AC_OUTPUT(Makefile)
