@@ -284,7 +284,9 @@ do-dist: ${PROJECTDIST}
 .endif
 .if !empty(PROJECTDISTSIGN)
 do-dist: ${PROJECTDISTSIGN}
+.if ${USE_PROJECT_GPG} == yes
 do-dist: ${PROJECTDISTSIGN:=.sig}
+.endif
 .endif
 
 .endif # !target(__<bps.project.mk>__)
