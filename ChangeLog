@@ -1,0 +1,5 @@
+2008-05-08  Michaël Grünewald  <michael@Llea.celt.neu>
+
+	* configure.ac: variables PREFIX et DESTDIR.
+
+
