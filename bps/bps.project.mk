@@ -231,6 +231,15 @@ PROJECTDISTEXCLUDE+=${f}
 .endif
 .endfor
 
+.if target(__<bps.autoconf.mk>__)
+.if defined(CONFIGURE)&&!empty(CONFIGURE:M*.in)
+.for f in ${CONFIGURE:M*.in}
+PROJECTDISTEXCLUDE+=${f:.in=}
+.endfor
+.endif
+.endif
+
+
 #
 # Production des archives
 #  pour de bon
@@ -284,10 +293,15 @@ do-dist: ${PROJECTDIST}
 .endif
 .if !empty(PROJECTDISTSIGN)
 do-dist: ${PROJECTDISTSIGN}
+.endif
+
+#
+# Publication
+#
 .if ${USE_PROJECT_GPG} == yes
-do-dist: ${PROJECTDISTSIGN:=.sig}
+do-prepublish: ${PROJECTDISTSIGN:=.sig}
 .endif
-.endif
+
 
 .endif # !target(__<bps.project.mk>__)
 
