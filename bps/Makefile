@@ -16,7 +16,7 @@ FILES+=	bps.clean.mk
 FILES+=	bps.subdir.mk
 FILES+=	bps.files.mk
 FILES+= bps.autoconf.mk
-FILES+= bps.dist.mk
+FILES+= bps.project.mk
 
 .include "project.mk"
 
