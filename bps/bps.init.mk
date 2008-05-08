@@ -133,10 +133,14 @@ UID!= ${ID} -u
 
 ## LECTURE DES FICHIERS DE CONFIGURATION
 
-.sinclude "${.CURDIR}/Makefile.inc"
+.if exists(${.CURDIR}/Makefile.inc)
+.include "${.CURDIR}/Makefile.inc"
+.endif
 
 .if !(${UID} == 0) && defined(MAKEINITRC) && !empty(MAKEINITRC)
-.sinclude "${MAKEINITRC}"
+.if exists(${MAKEINITRC})
+.include "${MAKEINITRC}"
+.endif
 .endif
 
 ## PSEUDO COMMANDES
