@@ -147,6 +147,7 @@ CP?=			cp
 RM?=			rm
 MV?=			mv
 LN?=			ln
+LN_S?=			ln -s
 MKDIR?=			mkdir
 TAR?=			tar
 INSTALL?=		install
