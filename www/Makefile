@@ -7,8 +7,8 @@
 # $Id$
 
 
-FILES =		www.files.mk
+FILES = www.files.mk
 
-.include "../Mk/project.mk"
+.include "project.mk"
 
 ### End of file `Makefile'

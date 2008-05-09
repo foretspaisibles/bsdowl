@@ -14,6 +14,7 @@ SUBDIR+= bps
 SUBDIR+= ocaml
 SUBDIR+= text
 SUBDIR+= misc
+SUBDIR+= www
 SUBDIR+= support
 
 PREFIX?= @prefix@
