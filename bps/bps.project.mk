@@ -46,6 +46,7 @@
 # PROJECTDISTDIR = /attic
 # .include "bps.project.mk"
 
+
 ### DESCRIPTION
 
 # Le support de maintenance pour de petits projets fournit une
@@ -157,6 +158,9 @@
 #   Comme publish, mais s'arrête juste avant la publication proprement
 #   dite.
 
+
+### IMPLÉMENTATION
+
 .if !target(__<bps.project.mk>__)
 __<bps.project.mk>__:
 
@@ -231,12 +235,21 @@ PROJECTDISTEXCLUDE+=${f}
 .endif
 .endfor
 
+.if target(__<bps.autoconf.mk>__)
+.if defined(CONFIGURE)&&!empty(CONFIGURE:M*.in)
+.for f in ${CONFIGURE:M*.in}
+PROJECTDISTEXCLUDE+=${PROJECTDISTNAME}/${f:.in=}
+.endfor
+.endif
+.endif
+
+
 #
 # Production des archives
 #  pour de bon
 #
 .for t in ${_PROJECT_COMPRESS_TOOLS}
-${PROJECTDISTDIR}/${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}:
+${PROJECTDISTDIR}/${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}::
 	${LN} -s ${.CURDIR} ${PROJECTDISTDIR}/${PROJECTDISTNAME}
 	${TAR} -c\
 	${_PROJECT_COMPRESS.flag.${t}}\
@@ -284,8 +297,15 @@ do-dist: ${PROJECTDIST}
 .endif
 .if !empty(PROJECTDISTSIGN)
 do-dist: ${PROJECTDISTSIGN}
-do-dist: ${PROJECTDISTSIGN:=.sig}
 .endif
+
+#
+# Publication
+#
+.if ${USE_PROJECT_GPG} == yes
+do-prepublish: ${PROJECTDISTSIGN:=.sig}
+.endif
+
 
 .endif # !target(__<bps.project.mk>__)
 

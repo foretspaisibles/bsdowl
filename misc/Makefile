@@ -6,7 +6,6 @@
 
 # $Id$
 
-
 FILES+= misc.script.mk
 FILES+=	misc.elisp.mk
 FILES+=	misc.dotfile.mk

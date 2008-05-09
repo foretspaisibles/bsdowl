@@ -1,7 +1,7 @@
-### ocaml.lib.mk -- Préparation de programmes avec Objective Caml
+### script.mk
 
 # Author: Michaël Grünewald
-# Date: Mar  5 avr 2005 10:31:04 GMT
+# Date: Ven  9 mai 2008 14:47:47 CEST
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
@@ -37,69 +37,6 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+.include "../../misc/misc.script.mk"
 
-### SYNOPSIS
-
-### DESCRIPTION
-
-
-### MAGIC STUFF
-
-.include "bps.init.mk"
-.include "ocaml.init.mk"
-
-.if !defined(LIBRARY)||empty(LIBRARY)
-.error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
-.endif
-
-_OCAML_SRCS?=
-_OCAML_CMA?=
-_OCAML_CMXA?=
-_OCAML_A?=
-
-_OCAML_LIB:=${LIBRARY}
-
-.for lib in ${_OCAML_LIB}
-SRCS.${lib:T}?=${SRCS}
-.if !empty(TARGET:Mnative_code)
-_OCAML_SRCS+=SRCS.${lib}.cmxa
-SRCS.${lib:T}.cmxa?=${SRCS.${lib:T}}
-_OCAML_CMXA+=${lib:T}.cmxa
-_OCAML_A+=${lib:T}.a
-.endif
-.if !empty(TARGET:Mbyte_code)
-_OCAML_SRCS+=SRCS.${lib}.cma
-SRCS.${lib:T}.cma?=${SRCS.${lib:T}}
-_OCAML_CMA+=${lib:T}.cma
-.endif
-.endfor
-
-## MORE MAGIC
-
-.include "ocaml.main.mk"
-
-### CIBLES ADMINISTRATIVES
-
-.for lib in ${_OCAML_LIB}
-.if !empty(TARGET:Mnative_code)
-LIB+= ${lib}.cmxa ${lib}.a
-_OCAML_SRCS.${lib}.cmxa=${.ALLSRC}
-${lib}.cmxa: ${SRCS.${lib}.cmxa:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
-.endif
-.if !empty(TARGET:Mbyte_code)
-LIB+= ${lib}.cma
-_OCAML_SRCS.${lib}.cma=${.ALLSRC}
-${lib}.cma: ${SRCS.${lib}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
-.endif
-.if !empty(SRCS.${lib}:C/\.ml[ly]/.ml/:M*.ml)
-LIB+= ${SRCS.${lib}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
-.endif
-.endfor
-
-LIBDIR=${PREFIX}/lib/ocaml${APPLICATIONDIR}
-
-.include "bps.clean.mk"
-.include "bps.files.mk"
-.include "bps.usertarget.mk"
-
-### End of file `ocaml.lib.mk'
+### End of file `script.mk'

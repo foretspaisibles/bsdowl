@@ -6,6 +6,7 @@
 
 # $Id$
 
+PROJECT = bsdmakepscripts
 VERSION = 1.1
 AUTHOR = Michaël Grünewald
 
@@ -14,10 +15,13 @@ SUBDIR+= ocaml
 SUBDIR+= text
 SUBDIR+= rox
 SUBDIR+= misc
+SUBDIR+= support
 
 PREFIX?= @prefix@
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
+
+PROJECTDISTDIR = ${HOME}/Workshop/Distfiles/${PROJECT}
 
 .include "pallas.mk"
 

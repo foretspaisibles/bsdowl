@@ -116,6 +116,8 @@ ODOC_NAME?=${APPLICATION}
 ODOC_SEARCH+= ${SEARCHES}
 .endif
 
+_OCAML_SRCS.${ODOC_NAME}?=
+
 #
 # Calcul des sources
 #
