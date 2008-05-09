@@ -14,13 +14,19 @@ section propre.
 
 1 RELEASES
 
+release-1.0
+
 
 2 TAGS
 
-releng-1.0-bp
+releng-1.1-rc1
+releng-1.1-bp
+releng-1.0-rc2
 releng-1.0-rc1
+releng-1.0-bp
 
 
 3 BRANCHES
 
+releng-1.1
 releng-1.0
