@@ -42,6 +42,7 @@
 
 # SCRIPT = mp2eps.sh
 # SCRIPT+= mp2pdf.sh
+# SCRIPT+= mp2png.sh
 #
 # TMPDIR = /var/run/tmp
 #
@@ -58,7 +59,7 @@
 #
 # Pour bénéficier de cette fonctionnalité, on définit la variable
 # SCRIPT_CONFIGURE. Dans l'exemple précédent, les séquences de
-# caractères %%DESTDIR%% et %%TMPDIR%% sont remplacées par leur valeur
+# caractères @DESTDIR@ et @TMPDIR@ sont remplacées par leur valeur
 # selon make.
 #
 # La valeur des variables énumérées dans SCRIPT_CONFIGURE ne peut pas
@@ -75,8 +76,8 @@ __<misc.script.mk>__:
 _SCRIPT_EXTS?= pl sh bash py
 
 
-# On recalcule la velur de SCRIPT. Ce n'est pas un très bon style de
-# programmation, mais cela permet de présenter à l'utilsiateur une
+# On recalcule la valeur de SCRIPT. Ce n'est pas un très bon style de
+# programmation, mais cela permet de présenter à l'utilisateur une
 # interface ressemblant à celles des autres modules.
 
 _SCRIPT_DECL:= ${SCRIPT}
@@ -94,7 +95,7 @@ SCRIPTGRP?= ${BINGRP}
 
 .if defined(SCRIPT_CONFIGURE)&&!empty(SCRIPT_CONFIGURE)
 .for var in ${SCRIPT_CONFIGURE}
-_SCRIPT_SED+= -e 's|%%${var}%%|${${var:S/|/\|/g}}|g'
+_SCRIPT_SED+= -e 's|@${var}@|${${var:S/|/\|/g}}|g'
 .endfor
 .endif
 
