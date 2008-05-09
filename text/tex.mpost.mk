@@ -59,8 +59,9 @@ MPOST_DEVICE.dvi?= eps
 MPOST_DEVICE.ps?= eps
 MPOST_DEVICE.pdf?= pdf
 
-_MP_VARS+= MPINPUTS
-_MP_VARS+= MPTEX
+_MPOST_FIG?=
+_MPOST_VARS+= MPINPUTS
+_MPOST_VARS+= MPTEX
 
 .if !empty(TEXDEVICE:M*.ps)
 .for device in ${TEXDEVICE:M*.ps}
@@ -129,7 +130,7 @@ SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:=.${MPOST_DEVICE.${device}}}
 # On passe donc les variables TEXINPUTS, TEXFORMATS, etc. dans
 # l'environnement du programme METAPOST.
 
-.for var in ${_TEX_VARS} ${_MP_VARS}
+.for var in ${_TEX_VARS} ${_MPOST_VARS}
 .for fig in ${FIGS}
 .if defined(${var})&&!empty(${var})&&!defined(${var}.${fig:T})
 ${var}.${fig:T} = ${${var}}

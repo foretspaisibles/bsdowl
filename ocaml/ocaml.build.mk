@@ -157,11 +157,11 @@ _OCAML_BUILD.${obj:T}+=${${var}.${obj:T}}
 
 # XXX Indiquer que le fichier CMI est produit avec le fichier CMX/CMO.
 
-.if empty(_OCAML_CMO:M${obj})&&empty(_OCAML_CMX:M${obj})
+.if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))&&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))
 ${obj}:
 .else
 if:=${obj:C/.cm[xo]/.cmi/}
-.if !empty(_OCAML_CMI:M${if})
+.if !(empty(_OCAML_CMI)||empty(_OCAML_CMI:M${if}))
 ${obj}: ${if}
 ${obj}:
 .else

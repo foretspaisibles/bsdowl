@@ -52,6 +52,11 @@
 .error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
 .endif
 
+_OCAML_SRCS?=
+_OCAML_CMA?=
+_OCAML_CMXA?=
+_OCAML_A?=
+
 _OCAML_LIB:=${LIBRARY}
 
 .for lib in ${_OCAML_LIB}
