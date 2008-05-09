@@ -54,20 +54,22 @@ __<bps.objdir.mk>__:
 # directives (cf. make(1), .OBJDIR).
 
 _MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX
+	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX nothing
 
 .if !empty(_MAKEOBJDIRPREFIX)
 .error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
 	(in make.conf(5)) or command-line variable.
 .endif
 
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR
+_MAKE_OBJDIR!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
+       ${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR nothing
 
 .if !empty(_MAKEOBJDIR)
 .error MAKEOBJDIR can only be set in environment, not as a global\
-	(in bps.conf(5)) or command-line variable.
+       (in bps.conf(5)) or command-line variable.
 .endif
+
+
 
 .undef _MAKE_OBJDIRPREFIX
 .undef _MAKE_OBJDIR

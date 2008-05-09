@@ -65,7 +65,7 @@ _SWITCH_CREDENTIALS_TARGETS?=
 # On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
 # autorisé à écrire sous ${DESTDIR}/${PREFIX}.
 
-_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}/${PREFIX} ]; then echo install; fi
+_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}${PREFIX} ]; then echo install; else echo ''; fi
 
 .if !empty(_SWITCH_CREDENTIALS.install)
 _SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
