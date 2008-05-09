@@ -65,9 +65,9 @@
 # on ajoute donc DEVICE à la fin de JOBNAME pour l'éxécution.
 
 .include "tex.init.mk"
+.include "bps.init.mk"
 .include "tex.mpost.mk"
 .include "tex.doc.main.mk"
-.include "bps.init.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"

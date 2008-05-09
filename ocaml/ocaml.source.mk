@@ -84,7 +84,7 @@ _OCAML_MLI+=${if}
 .endif
 .if !empty(${src}:M*.ml)
 .for unit in ${${src}:M*.ml}
-.if empty(_OCAML_ML:M${unit})
+.if empty(_OCAML_ML)||empty(_OCAML_ML:M${unit})
 _OCAML_ML+=${unit}
 .endif
 .endfor
@@ -99,7 +99,7 @@ _OCAML_ML+=${unit}
 
 .if defined(_OCAML_ML)&&!empty(_OCAML_ML)
 .for if in ${_OCAML_ML:.ml=.mli}
-.if exists(${if})&&empty(_OCAML_MLI:M${if})
+.if exists(${if})&&(empty(_OCAML_MLI)||empty(_OCAML_MLI:M${if}))
 _OCAML_MLI+= ${if}
 .endif
 .endfor

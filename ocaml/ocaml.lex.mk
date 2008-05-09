@@ -53,7 +53,7 @@ OCAMLLEX?= ocamllex
 .if defined(${src})
 .if !empty(${src}:M*.mll)
 .for lexer in ${${src}:M*.mll}
-.if empty(_OCAML_MLL:M${lexer})
+.if empty(_OCAML_MLL)||empty(_OCAML_MLL:M${lexer})
 _OCAML_MLL+=${lexer}
 .endif
 .endfor
@@ -63,10 +63,10 @@ _OCAML_MLL+=${lexer}
 
 .if defined(_OCAML_MLL)&&!empty(_OCAML_MLL)
 .for unit in ${_OCAML_MLL:.mll=.ml}
-.if empty(CLEANFILES:M${unit})
+.if empty(CLEANFILES)||empty(CLEANFILES:M${unit})
 CLEANFILES+=${unit}
 .endif
-.if empty(_OCAML_ML:M${unit})
+.if empty(_OCAML_ML)||empty(_OCAML_ML:M${unit})
 _OCAML_ML+=${unit}
 .endif
 .endfor

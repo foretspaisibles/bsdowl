@@ -56,6 +56,13 @@
 .if !target(__<ocaml.object.mk>__)
 __<ocaml.object.mk>__:
 
+_OCAML_SRCS?=
+_OCAML_MLI?=
+_OCAML_ML?=
+_OCAML_CMI?=
+_OCAML_CMO?=
+_OCAML_CMX?=
+_OCAML_O?=
 
 .if !empty(_OCAML_MLI)
 .for if in ${_OCAML_MLI:.mli=.cmi}

@@ -57,6 +57,7 @@
 __<ocaml.yacc.mk>__:
 
 OCAMLYACC?= ocamlyacc
+_OCAML_MLY?=
 
 .for src in ${_OCAML_SRCS}
 .if defined(${src})
