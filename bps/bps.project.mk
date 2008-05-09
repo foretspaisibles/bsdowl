@@ -234,7 +234,7 @@ PROJECTDISTEXCLUDE+=${f}
 .if target(__<bps.autoconf.mk>__)
 .if defined(CONFIGURE)&&!empty(CONFIGURE:M*.in)
 .for f in ${CONFIGURE:M*.in}
-PROJECTDISTEXCLUDE+=${f:.in=}
+PROJECTDISTEXCLUDE+=${PROJECTDISTNAME}/${f:.in=}
 .endfor
 .endif
 .endif
