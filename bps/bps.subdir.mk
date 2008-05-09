@@ -52,6 +52,20 @@
 # Diffuse la demande de production des cibles ``interface
 # utilisateur'' (all, etc.) vers les sous répertoires apparaissant
 # dans SUBDIR.
+#
+# Ces cibles sont celles énumérées dans _SUBDIR_TARGETS et dans
+# _MAKE_USERTARGET.
+#
+# Pour chaque cible ``interface utilisateur'', soit ${target}, une
+# cible do-${target}-subdir est définie, la règle de production de
+# cette cible lance le sous-traitement de ${target} aux
+# sous-répertoires énumérés dans SUBDIR.
+#
+# À moins qu'une cible ${target}-switch-credentials existe, la cible
+# do-${target}-subdir devient un prérequis de ${target}.
+
+
+### IMPLÉMENTATION
 
 .include "bps.init.mk"
 .include "bps.credentials.mk"

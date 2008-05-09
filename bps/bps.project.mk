@@ -46,6 +46,7 @@
 # PROJECTDISTDIR = /attic
 # .include "bps.project.mk"
 
+
 ### DESCRIPTION
 
 # Le support de maintenance pour de petits projets fournit une
@@ -156,6 +157,9 @@
 #
 #   Comme publish, mais s'arrête juste avant la publication proprement
 #   dite.
+
+
+### IMPLÉMENTATION
 
 .if !target(__<bps.project.mk>__)
 __<bps.project.mk>__:

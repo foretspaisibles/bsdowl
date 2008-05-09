@@ -48,13 +48,13 @@
 # Rend des services dans le domaine de l'initialisation.
 #
 # Définit des pseudo-commandes CP, MV INSTALL, INSTALL_DIR,
-#  SED_INPLACE, etc.;
+# SED_INPLACE, etc.;
 #
-# Définit une valeur pour APPLICATION sur la base de la valeur de
-#  .CURDIR.
+# Définit une valeur pour APPLICATIONDIR sur la base de la valeur de
+# APPLICATION, si cette dernière a une valeur.
 #
 # Définit des pseudo-commandes WARN, INFO, MESG, FAIL utilisées pour
-#  le diagnostique.
+# le diagnostique.
 #
 # Définit `all' comme cible implicite.
 #
@@ -62,13 +62,13 @@
 #  et "Makefile.inc".
 #
 # Demande le traitement du fichier MAKEINITRC si cette variable est
-#  définie et que l'utilisateur courant n'est pas l'utilisateur
-#  root. Ceci permet d'utiliser le même Makefile pour installer des
-#  programmes `localement', et `globalement' avec la commande `sudo'.
+# définie et que l'utilisateur courant n'est pas l'utilisateur
+# root. Ceci permet d'utiliser le même Makefile pour installer des
+# programmes `localement', et `globalement' avec la commande `sudo'.
 #
 # Définit la liste _MAKE_USERTARGET des cibles ``interface utilisateur''
-#  (all, clean, etc.). Voici la liste des ces cibles et les actions
-#  qu'elles doivent entreprendre:
+# (all, clean, etc.). Voici la liste des ces cibles et les actions
+# qu'elles doivent entreprendre:
 #
 #    * obj: créer l'arborescence nécessaire sous `objdir', le cas échéant
 #    * configure: traite le code source pour l'adapter à
@@ -88,37 +88,44 @@
 #  Dans certains cas, il faut interpréter très librement le terme
 #  `programme' utilisé ci-dessus.
 
-
-
-### INTERFACE
-
-## Variable MAKEINITRC
 #
-# Lorsque la variable USER ne vaut pas 'root', lorsque la variable
-# 'MAKEINITRC' est définie et a comme valeur le nom d'un fichier,
-# ce fichier est lu par make pendant l'évaluation de ce module, après
-# lecture éventuelle de 'Makefile.inc'.
+# Description des variables
 #
-# Ce mécanisme permet notamment à l'utilisateur de définir des valeurs
-# convenables à DESTDIR, BINOWN, etc. pour installer les objets dans
-# son répertoire personnel. Le rôle spécial de la valeur root permet
-# d'installer les programmes `system-wide' par un simple sudo, sans
-# avoir besoin d'efacer la variable MAKEINITRC.
 
-
-### DÉFINITIONS
-
-## Variable CP RM INSTALL INSTALL_DIR AWK SED SED_INPLACE ECHO.
-
-# Variable APPLICATION APPLICATIONDIR
+# MAKEINITRC
 #
-# La variable APPLICATION peut être définie par le client. Lorsque
-# c'est le cas la Collection de Makefiles essai d'en tenir compte dans
-# certains endroits, notamment pour donner des noms de répertoires
-# censé être appropriés. C'est en fait la variable APPLICATIONDIR qui
-# joue ce rôle, on s'en sert par exemple pour définir
-# SHAREDIR=/share${APPLICATIONDIR}, etc.
-#  SeeAlso: bps.own.mk bps.files.mk
+#   Fichier d'initialisation pour l'utilisateur.
+#
+#   Lorsque la variable USER ne vaut pas 'root', lorsque la variable
+#   'MAKEINITRC' est définie et a comme valeur le nom d'un fichier,
+#   ce fichier est lu par make pendant l'évaluation de ce module, après
+#   lecture éventuelle de 'Makefile.inc'.
+#
+#   Ce mécanisme permet notamment à l'utilisateur de définir des valeurs
+#   convenables à DESTDIR, BINOWN, etc. pour installer les objets dans
+#   son répertoire personnel. Le rôle spécial de la valeur root permet
+#   d'installer les programmes `system-wide' par un simple sudo, sans
+#   avoir besoin d'efacer la variable MAKEINITRC.
+
+# CP RM INSTALL INSTALL_DIR AWK SED SED_INPLACE ECHO.
+#
+#   Pseudo commandes.
+
+# APPLICATION APPLICATIONDIR
+#
+#   Nom de l'application préparée.
+#
+#   La variable APPLICATION peut être définie par le client. Lorsque
+#   c'est le cas la Collection de Makefiles en tient compte dans
+#   certains endroits, notamment pour donner des noms de répertoires
+#   censés être appropriés. C'est en fait la variable APPLICATIONDIR qui
+#   joue ce rôle, on s'en sert par exemple pour définir
+#   SHAREDIR=/share${APPLICATIONDIR}, etc.
+#
+#   SeeAlso: bps.own.mk bps.files.mk
+
+
+### IMPLÉMENTATION
 
 .if !target(__<bps.init.mk>__)
 __<bps.init.mk>__:
@@ -177,9 +184,6 @@ NOP?=			@: do nada
 
 .if defined(APPLICATION) && !empty(APPLICATION)
 APPLICATIONDIR?=	/${APPLICATION}
-#.else
-# Inutile, puisque c'est ce qui se passe de toute façon:
-#APPLICATIONDIR?=
 .endif
 
 ## _MAKE_USERTARGET

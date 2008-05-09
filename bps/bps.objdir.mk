@@ -40,7 +40,13 @@
 
 ### SYNOPSIS
 
+# .include "bps.objdir.mk"
+
+
 ### DESCRIPTION
+
+
+### IMPLÉMENTATION
 
 .if !target(__<bps.objdir.mk>__)
 __<bps.objdir.mk>__:
