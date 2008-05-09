@@ -15,6 +15,7 @@ SUBDIR+= ocaml
 SUBDIR+= text
 SUBDIR+= rox
 SUBDIR+= misc
+SUBDIR+= support
 
 PREFIX?= @prefix@
 
