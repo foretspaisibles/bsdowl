@@ -34,7 +34,14 @@ dérivé autonome du programme `make' de NetBSD. Le fichier INSTALL pour
 obtenir des indications sur l'installation de `bmake' sur un système
 GNU/Linux.
 
-Note: Pour utiliser ces directives su un système GNU/Linux, il semble
+Les fichiers de directives BSD Make Pallas Scripts sont livrés avec
+des scripts de support, réalisant des fonctions trop complexes pour
+être codées dans les fichiers de directives. Ces scripts sont utilisés
+par les fichiers de directives assistant la production de fichiers
+TeX, pour fonctionner, ils doivent trouver les programmes TeX, dvips
+et gs (GhostScript).
+
+Note: Pour utiliser ces directives sur un système GNU/Linux, il semble
 qu'il n'y ait actuellement d'autre choix que d'utiliser `bmake'.
 
 Note: Depuis la version 1.1, la compatibilité avec `bmake' est un
@@ -62,29 +69,33 @@ démarre un shell.
 
 3 DOCUMENTATION
 
-En guise de documentation, on trouve parfois des exemples au début de
-certains fichiers de directives.
+En guise de documentation, on trouve normalement des exemples au début
+des fichiers de directives. Remarquez que ces modules ne sont pas tous
+susceptibles de présenter un intérêt direct pour l'utilisateur, cf. 4
+infra.
 
 
 4 PLAN D'ORIENTATION
 
-Les modules de directives dont le préfixe est `make' sont des modules
+Les modules de directives dont le préfixe est `bsp' sont des modules
 internes, dont l'usage est ordinairement réservé à l'écriture d'autres
 fichiers de directives. Il y a une exception notable à cette règle, le
-fichier `make.subdir.mk' qui est délègue les actions à effectuer à
+fichier `bsp.subdir.mk' qui est délègue les actions à effectuer à
 certains des sous-dossiers du dossier actif.
 
 
-4.1 Modules aboutis
+4.1 Modules susceptibles d'intéresser l'utilisateur
 
-Les modules les plus aboutis sont actuellement:
+Les modules les plus susceptibles d'intéresser l'utilisateur sont les
+suivants:
 
  -- ocaml/ocaml.prog.mk
  -- ocaml/ocaml.lib.mk
  -- text/tex.doc.mk
  -- text/latex.doc.mk
- -- make/make.subdir.mk
- -- misc/script.mk
+ -- bsp/bsp.subdir.mk
+ -- misc/misc.script.mk
+ -- www/www.files.mk
 
 Leurs fonctionnalités peuvent cependant encore évoluer, notamment pour
 améliorer le support des variables .PATH et .OBJDIR, qui n'est que
@@ -95,8 +106,7 @@ partiel.
 
 Les modules particulièrement inaboutis sont les suivants:
 
-  -- misc/*
   -- rox/*
 
-De plus, ces modules sont inertes. Tout le monde peut se porter
-volontaire pour olonger les fonctionnalités de ces modules.
+Ces modules sont inertes, car je n'utilise plus ROX depuis longtemps,
+ils ne sont donc plus installés.
