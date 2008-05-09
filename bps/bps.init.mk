@@ -195,6 +195,22 @@ _MAKE_USERTARGET+= configure depend build doc all install
 _MAKE_USERTARGET+= clean distclean realclean
 _MAKE_ALLSUBTARGET+= configure depend build doc
 
+
+#
+# Héritage de certaines variables
+#
+
+# Les valeurs des variables DESTDIR et PREFIX sont exportées dans
+# l'environnement.
+
+.if empty(.MAKEFLAGS:MPREFIX=*)&&defined(PREFIX)
+.MAKEFLAGS: PREFIX='${PREFIX}'
+.endif
+
+.if empty(.MAKEFLAGS:MDESTDIR=*)&&defined(DESTDIR)
+.MAKEFLAGS: DESTDIR='${DESTDIR}'
+.endif
+
 .endif # !target(__<bps.init.mk>__)
 
 ### End of file `bps.init.mk'
