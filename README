@@ -37,6 +37,10 @@ GNU/Linux.
 Note: Pour utiliser ces directives su un système GNU/Linux, il semble
 qu'il n'y ait actuellement d'autre choix que d'utiliser `bmake'.
 
+Note: Depuis la version 1.1, la compatibilité avec `bmake' est un
+objectif du projet. Cette compatibilité en est cependant toujours au
+stade expérimental.
+
 
 2 UTILISATION
 

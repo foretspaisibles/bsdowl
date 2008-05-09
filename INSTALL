@@ -21,7 +21,7 @@ La procédure d'installation respecte DESTDIR et PREFIX.
 Cf. ``FreeBSD Porter's Handbook'', 9.4.
 
 Les fichiers de directives sont installés dans le dossier
-$DESTDIR/$PREFIX/share/mk.
+${DESTDIR}${PREFIX}/share/mk.
 
 
 APPENDICE. PROCÉDURE D'INSTALLATION DE BMAKE
