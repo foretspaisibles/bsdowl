@@ -9,13 +9,19 @@ $Id$
 
 Dans ce qui suit on note `make' le nom du programme `BSD Make' sur le
 système. Pour FreeBSD, il s'agit effectivement du binaire `make', pour
-Mac OS-X il s'agit de `bsdmake'.
+Mac OS-X il s'agit de `bsdmake', pour les autres systèmes (NetBSD et
+les systèmes basés sur Linux), il s'agit de `bmake'. (Un appendice
+explique comment installer `bmake' sur les systèmes qui ne possèdent
+pas ce programme.)
 
 L'installation se fait avec la séquence d'instruction
 
   ./configure --prefix=<prefix>
   make all
   make install
+
+Des valeurs plausibles pour <prefix> sont /usr/local (valeur
+implcite), /opt/local ou ${HOME}.
 
 La procédure d'installation respecte DESTDIR et PREFIX.
 Cf. ``FreeBSD Porter's Handbook'', 9.4.
@@ -26,19 +32,20 @@ ${DESTDIR}${PREFIX}/share/mk.
 
 APPENDICE. PROCÉDURE D'INSTALLATION DE BMAKE
 
-Utiliser bmake en environnement hostile nécessite de compiler et
-d'installer bmake sous son répertoire personnel. Les étapes suivantes
-peuvent être suivies pour réaliser ces deux opérations.
+Utiliser `bmake' en environnement hostile nécessite de compiler et
+d'installer `bmake' sous son répertoire personnel. Les étapes
+suivantes peuvent être suivies pour réaliser ces deux opérations.
 
-On télécharge les fichiers bmake.tar.gz et mk.tar.gz distribués par
-leur auteur:
+On télécharge les fichiers `bmake.tar.gz' et `mk.tar.gz' distribués
+par leur auteur:
 
   http://void.crufty.net/ftp/pub/sjg/bmake.tar.gz
   http://void.crufty.net/ftp/pub/sjg/mk.tar.gz
 
 La suite des indications suppose que ces fichiers ont été placés dans
 le dossier ~/distfiles. On éxécute ensuite les commandes suivantes
-depuis un dossier de travail (par exemple le dossier personnel):
+depuis un dossier de travail (par exemple un dossier temporaire, ou le
+dossier personnel):
 
   $ tar xzf ~/distfiles/bmake.tar.gz
   $ tar xzfC ~/distfiles/mk.tar.gz bmake
@@ -48,5 +55,8 @@ depuis un dossier de travail (par exemple le dossier personnel):
   $ make -f makefile.boot install
 
 Le programme `bmake' est alors installé sous ${HOME}/bin et les
-fichiers de directives qui l'accompagnent sous le sont sous
+fichiers de directives qui l'accompagnent le sont sous
 ${HOME}/share/mk.
+
+Dans ce contexte, on utilise aussi le préfixe ${HOME} pour
+l'installation de BSD Make Pallas Scripts.
