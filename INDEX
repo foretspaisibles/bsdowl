@@ -8,9 +8,11 @@ $Id$
 
 
 Petit répertoire des ensembles de modules figurant dans la collection
-de fichiers de directives pour BSD Make.
+de fichiers de directives pour BSD Make nommée BSD Make Pallàs scripts.
 
 
+AUTHORS		Personnes ayant contribué à BSD Make Pallàs scripts.
+COPYING		Licence d'utilisation et de distribution (GPL)
 INDEX		Ce répertoire
 INSTALL		Procédure d'installation
 INTRO		Description des méthodologies pour le code
@@ -22,17 +24,17 @@ Library/Ancillary
 
 ocaml		Projets avec Objective Caml
 text		Projets avec des formateurs de texte (p.ex. TeX)
-make		Modules d'intérêt général (pour le codeur de directives make)
+bps		Modules d'intérêt général (pour le codeur de directives make)
 
 misc		Modules divers
 rox		Projets d'actions pour ROX-Filer
 www		Publication sur le WWW
 
 
-make -- Modules d'intérêt général
+bps -- Modules d'intérêt général
 
 Il s'agit d'une bibliothèque pour le codeur de directives make. Un
-module intéressant l'utilisateur est `make.subdir.mk'.
+module intéressant l'utilisateur est `bps.subdir.mk'.
 
 
 misc -- Modules divers
