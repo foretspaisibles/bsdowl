@@ -88,6 +88,9 @@
 
 ## DÉFINIR DE NOUVEAUX GROUPES XXX
 
+
+### IMPLÉMENTATION
+
 .if !target(__<bps.files.mk>__)
 __<bps.files.mk>__:
 

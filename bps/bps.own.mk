@@ -54,9 +54,9 @@
 # cas de l'utilisateur root des autres. Dans le premier cas, il estime
 # que `root' souahite installer des programmes pour qu'ils soient
 # disponibles pour tous les utilisateurs de la machine, ce qui se
-# traduit dans le choix des permissions et de DESTDIR, et dans l'autre
+# traduit dans le choix des permissions et de PREFIX, et dans l'autre
 # cas il estime que les objets sont destinés à une utilisation privée,
-# ce qui est également reflété par les permissions et DESTDIR.
+# ce qui est également reflété par les permissions et PREFIX.
 
 # Variable BINDIR BINOWN BINGRP BINMODE
 # Ces variables décrivent le site d'accueil BINDIR, le propriétaire
@@ -69,6 +69,9 @@
 # LIB, dont le nom est semble-t-il assez explicite.
 #  Nota: hier(7) définit le type de fichier à placer dans SHAREDIR.
 #  SeeAlso: bsd.own.mk, bsd.files.mk, hier(7).
+
+
+### IMPLÉMENTATION
 
 .if !target(__<bps.own.mk>__)
 __<bps.own.mk>__:

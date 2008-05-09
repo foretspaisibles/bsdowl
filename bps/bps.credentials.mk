@@ -46,8 +46,8 @@
 
 ### DESCRIPTION
 
-# Propose d'utiliser `su' pour traiter la cible `install'.
-
+# Propose d'utiliser `su' pour traiter la cible `install' ou d'autres
+# cibles énumérées dans la liste _SWITCH_CREDENTIALS_TARGETS.
 
 ### INTERFACE
 
