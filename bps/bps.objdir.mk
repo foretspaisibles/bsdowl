@@ -58,7 +58,7 @@ _MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
 
 .if !empty(_MAKEOBJDIRPREFIX)
 .error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
-	(in bps.conf(5)) or command-line variable.
+	(in make.conf(5)) or command-line variable.
 .endif
 
 _MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
