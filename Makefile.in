@@ -21,8 +21,6 @@ PREFIX?= @prefix@
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 
-PROJECTDISTDIR = ${HOME}/Workshop/Distfiles/${PROJECT}
-
 .include "pallas.mk"
 
 ### End of file `Makefile'
