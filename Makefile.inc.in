@@ -1,0 +1,17 @@
+### Makefile.inc
+
+# Author: Michaël Grünewald
+# Date: Mer 28 mai 2008 16:47:45 CEST
+# Lang: fr_FR.ISO8859-1
+
+# $Id$
+
+# @configure_input@
+
+# Ce fichier est auutomatiquement lu par `bps.init.mk' (ainsi que
+# ses utilisateurs), il contient les paramètres déterminés par `configure'.
+
+PREFIX?= @prefix@
+.MAKEFLAGS: -I@top_srcdir@/Library/Make
+
+### End of file `Makefile.inc'

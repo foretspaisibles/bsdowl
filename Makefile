@@ -17,10 +17,6 @@ SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
 
-PREFIX?= @prefix@
-
-.MAKEFLAGS: -I${.CURDIR}/Library/Make
-
 .include "pallas.mk"
 
 ### End of file `Makefile'

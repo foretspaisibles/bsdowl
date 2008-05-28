@@ -142,6 +142,14 @@ UID!= ${ID} -u
 
 .if exists(${.CURDIR}/Makefile.inc)
 .include "${.CURDIR}/Makefile.inc"
+.elif exists(../${.CURDIR}/Makefile.inc)
+.include "../${.CURDIR}/Makefile.inc"
+.elif exists(../../${.CURDIR}/Makefile.inc)
+.include "../../${.CURDIR}/Makefile.inc"
+.elif exists(../../../${.CURDIR}/Makefile.inc)
+.include "../../../${.CURDIR}/Makefile.inc"
+.elif exists(../../../../${.CURDIR}/Makefile.inc)
+.include "../../../../${.CURDIR}/Makefile.inc"
 .endif
 
 .if !(${UID} == 0) && defined(MAKEINITRC) && !empty(MAKEINITRC)
