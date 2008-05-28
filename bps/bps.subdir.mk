@@ -84,7 +84,6 @@ _SUBDIR: .USE
 	@cd ${.CURDIR}/${item}\
 	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
 .endfor
-.endif
 
 ${SUBDIR}::
 	${INFO} "${.TARGET} (all)"
@@ -98,6 +97,7 @@ ${target}: do-${target}-subdir
 .endif
 .endfor
 
+.endif # defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
 .endif #!target(__<bps.subdir.mk>__)
 
 .include "bps.clean.mk"
