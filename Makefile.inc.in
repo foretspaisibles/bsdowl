@@ -12,6 +12,6 @@
 # ses utilisateurs), il contient les paramètres déterminés par `configure'.
 
 PREFIX?= @prefix@
-.MAKEFLAGS: -I@top_srcdir@/Library/Make
+.MAKEFLAGS: -I@top_absolute_srcdir@/Library/Make
 
 ### End of file `Makefile.inc'

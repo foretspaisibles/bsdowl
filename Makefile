@@ -17,6 +17,12 @@ SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
 
+# Le fichier Makefile.inc est produit par la commande
+# `./configure'. Tant que la commande `./configure' n'a pas été
+# utilisée pour préparer l'arbre des sources, ce Makefile ne peut pas
+# être utilisé.
+
+.include "Makefile.inc"
 .include "pallas.mk"
 
 ### End of file `Makefile'
