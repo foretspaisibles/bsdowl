@@ -76,7 +76,7 @@ DISTCLEANFILES+= ${file}
 DISTCLEANDIRS+= autom4te.cache
 .endif
 CONFIGURE?=
-.for file in Makefile.in
+.for file in Makefile.in Makefile.inc.in
 .if exists(${file})&&empty(CONFIGURE:M${file})
 CONFIGURE+= ${file}
 .endif
