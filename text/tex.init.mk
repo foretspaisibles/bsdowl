@@ -48,6 +48,8 @@ TEX?= tex
 DVITEX?= ${TEX}
 PDFTEX?= pdftex
 
+# Les variables énumérées par _TEX_VARS sont des variables d'instance
+# supportant une spécialisation pour chaque cible.
 _TEX_VARS+= TEXINPUTS TEXMFOUTPUT TEXFORMATS TEXPOOL TFMFONTS
 _TEX_VARS+= INTERACTION JOBNAME TEXFORMATS
 _TEX_VARS+= COMMENT PROGNAME
@@ -57,7 +59,7 @@ _TEX_DOC = ${DOCS:.tex=}
 _TEX_DEVICES?= pdf ps dvi
 
 _TEX_SUFFIX.dvi = .dvi
-_TEX_SUFFIX.pdf= .pdf
+_TEX_SUFFIX.pdf = .pdf
 _TEX_SUFFIX.ps = .ps
 
 _TEX_DRIVER.dvi?= dvi
