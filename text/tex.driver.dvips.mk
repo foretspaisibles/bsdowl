@@ -38,6 +38,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 .if !target(__<tex.driver.dvips.mk>__)
+__<tex.driver.dvips.mk>__:
 
 DVIPS?= dvips
 
