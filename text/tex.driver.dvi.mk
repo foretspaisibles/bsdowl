@@ -60,6 +60,7 @@
 ### RÉALISATION
 
 .if !target(__<tex.driver.dvi.mk>__)
+__<tex.driver.dvi.mk>__:
 
 #
 # Initialisation des paramètres
@@ -120,13 +121,13 @@ _TEX_ENV.${dvi:T}+= TEXPOOL=${TEXPOOL.${dvi:T}:q}
 .if defined(TFMFONTS.${dvi:T})&&!empty(TFMFONTS.${dvi:T})
 _TEX_ENV.${dvi:T}+= TFMFONTS=${TFMFONTS.${dvi:T}:Q}
 .endif
-# On tient compte de l'environnement pour construire la ligne de commande
+# On insère cet environnement sur la ligne de commande
 .if defined(_TEX_ENV.${dvi:T})&&!empty(_TEX_ENV.${dvi:T})
 _TEX_BUILD.${dvi:T} = ${ENVTOOL} ${_TEX_ENV.${dvi:T}} ${DVITEX}
 .else
 _TEX_BUILD.${dvi:T} = ${DVITEX}
 .endif
-# On analysr maintenant les variables créant des commutateurs
+# On traite les variables dont l'argument est transmis au programme
 .if defined(FORMAT.dvi.${dvi:T})&&!empty(FORMAT.dvi.${dvi:T})
 _TEX_BUILD.${dvi:T}+= -fmt ${FORMAT.dvi.${dvi:T}}
 .endif
@@ -145,6 +146,7 @@ _TEX_BUILD.${dvi:T}+= -progname ${PROGNAME.${dvi:T}}
 # On termine en ajoutant le fichier source principal
 _TEX_BUILD.${dvi:T}+=${_TEX_SRC.${dvi:T}}
 .endfor
+
 
 #
 # Production des recettes
@@ -168,6 +170,7 @@ ${dvi}: ${_TEX_SRC.${dvi:T}}
 	${_TEX_BUILD.${dvi:T}}
 .endif
 .endfor
+
 
 #
 # Clean files
