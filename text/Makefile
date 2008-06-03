@@ -22,7 +22,11 @@ FILES+= latex.doc.mk
 FILES+= latex.files.mk
 
 tex.driver.pdftex.mk: tex.driver.dvi.mk
-	sed -e 's/DVI/PDF/g' -e 's/dvi/pdf/g' ${.ALLSRC} > ${.TARGET}
+	sed \
+	  -e 's/tex\.driver\.dvi\.mk/tex\.driver\.pdftex\.mk/g'\
+	  -e 's/DVI/PDF/g' \
+	  -e 's/dvi/pdf/g' \
+	  ${.ALLSRC} > ${.TARGET}
 
 tex.device.pdf.mk: tex.device.dvi.mk
 	sed -e 's/DVI/PDF/g' -e 's/dvi/pdf/g' ${.ALLSRC} > ${.TARGET}
