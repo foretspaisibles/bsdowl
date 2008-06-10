@@ -174,24 +174,9 @@ ${obj}:
 .endif
 .endif
 .undef if
-	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi:N*.cma:N*.cmxa:N*.a}
-.endfor
-.endfor
+	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi}
 
-.if defined(_OCAML_CB)&&!empty(_OCAML_CB)
-.for item in ${_OCAML_CB}
-.if defined(MLLBADD.${item:T})&&!empty(MLLBADD.${item:T})
-${item}: ${MLLBADD.${item:T}}
-.endif
 .endfor
-.endif
-
-.if defined(_OCAML_CN)&&!empty(_OCAML_CN)
-.for item in ${_OCAML_CN}
-.if defined(MLLNADD.${item:T})&&!empty(MLLNADD.${item:T})
-${item}: ${MLLNADD.${item:T}}
-.endif
 .endfor
-.endif
 
 ### End of file `ocaml.build.mk'
