@@ -76,20 +76,21 @@
 .if !target(__<bps.own.mk>__)
 __<bps.own.mk>__:
 
-_OWN_GRP_GOT!=	id -gn
-_OWN_OWN?=	${USER}
-_OWN_GRP?=	${_OWN_GRP_GOT}
-
 .if defined(UID)&&(${UID} == 0)
 _OWN_DIRMODE?=	755
 _OWN_BINMODE?=	555
 _OWN_DTAMODE?=	444
+_OWN_OWN?=	root
+_OWN_GRP?=	wheel
 DESTDIR?=
 PREFIX?=	/usr/local
 .else
 _OWN_DIRMODE?=	750
 _OWN_BINMODE?=	550
 _OWN_DTAMODE?=	440
+_OWN_OWN?=	${USER}
+_OWN_GRP_GOT!=	id -gn
+_OWN_GRP?=	${_OWN_GRP_GOT}
 DESTDIR?=
 PREFIX?=	${HOME}
 .endif
