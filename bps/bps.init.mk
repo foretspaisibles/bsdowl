@@ -175,6 +175,7 @@ AWK?=			awk
 GREP?=			grep
 SED?=			sed
 SED_INPLACE?=		${SED} -i .bk
+TOUCH?=			touch
 ECHO?=			echo
 INFO?=			@echo '===>'
 WARN?=			@echo 'Warning:'
