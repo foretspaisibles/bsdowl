@@ -186,8 +186,6 @@ CLEANFILES+= ${_TEX_COOKIE}${dvi:T}.${pass}
 ${dvi}: ${_TEX_SRC.${dvi:T}} ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
 	${INFO} 'Multipass job for ${dvi:T} (final)'
 	${_TEX_BUILD.${dvi:T}}
-	${INFO} 'Information summary for ${dvi:T}'
-	@-! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${dvi:.dvi=.log}
 .else
 ${dvi}: ${_TEX_SRC.${dvi:T}}
 	${_TEX_BUILD.${dvi:T}}
