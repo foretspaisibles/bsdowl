@@ -74,7 +74,9 @@
 # fichiers local.
 #
 # Aucune assistance pour la publication sur un système de fichiers
-# distant n'est actuellement assurée par ce module.
+# distant n'est actuellement assurée par ce module, elle peut
+# nénamoins être facilement réalisée à parir d'une installation dans
+# le système de fichier local.
 #
 # Si aucune des variables WWWDIR et SUBDIR n'a reçu une valeur, un
 # message d'erreur est affiché et le porgramme MAKE se termine.
