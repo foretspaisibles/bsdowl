@@ -180,18 +180,30 @@ ${_MPOST_LIST.${fig:T}}: ${fig}
 	${_MPOST_BUILD.${fig:T}} ${.ALLSRC}
 .endfor
 
+
 #
 # Traitement ultérieur des fichiers
 #
 
+# Remarque: à cause de la boucle `for device', si plusieurs fichiers
+# PostScript sont produits, plusieurs recettes pour les figures EPS
+# sont potentiellement générées. On corrige ce comportement (définir
+# plusieurs recettes pour produire un ficheir donné est une erreur) en
+# testant l'existence d'une recette pour produire le fichier de
+# figure avant de proposer la recette générée automatiquement dans la
+# boucle.
+
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
+.if !target(${item}.${MPOST_DEVICE.${device}})
 ${item}.${MPOST_DEVICE.${device}}: ${item}
 	${MPOST_TOOL.${MPOST_DEVICE.${device}}} ${.ALLSRC}
+.endif
 .endfor
 .endfor
 .endfor
+
 
 #
 # Cleanfiles
