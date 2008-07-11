@@ -164,8 +164,6 @@ _TEX_BUILD.${dvi:T}+=${_TEX_SRC.${dvi:T}}
 # dépendances, et permettre l'insertion de passes supplémentaires, par
 # exemple pour la préparation des bibliographies ou des index.
 
-_TEX_COOKIE = .cookie.
-
 .for dvi in ${_TEX_DVI}
 .if defined(MULTIPASS)&&!empty(MULTIPASS)&&!defined(DRAFT)
 .undef _TEX_pass_last
@@ -181,7 +179,7 @@ ${_TEX_COOKIE}${dvi:T}.${pass}: ${_TEX_SRC.${dvi:T}}
 	${_TEX_BUILD.${dvi:T}}
 	@${RM} -f ${dvi}
 	@${TOUCH} ${.TARGET}
-CLEANFILES+= ${_TEX_COOKIE}${dvi:T}.${pass}
+COOKIEFILES+= ${_TEX_COOKIE}${dvi:T}.${pass}
 .endfor
 ${dvi}: ${_TEX_SRC.${dvi:T}} ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
 	${INFO} 'Multipass job for ${dvi:T} (final)'

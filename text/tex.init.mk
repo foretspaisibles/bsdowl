@@ -66,6 +66,15 @@ _TEX_DRIVER.dvi?= dvi
 _TEX_DRIVER.pdf?= pdftex
 _TEX_DRIVER.ps?= dvips
 
+_TEX_COOKIE = .cookie.
+
+COOKIEFILES =
+
+do-clean-cookies:
+	@${RM} -f ${COOKIEFILES}
+
+do-clean: do-clean-cookies
+
 .for device in ${_TEX_DEVICES}
 _TEX_DRIVERS+= ${_TEX_DRIVER.${device}}
 .endfor
