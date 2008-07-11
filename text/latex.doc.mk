@@ -46,4 +46,19 @@ _TEX_AUX_SUFFIXES?= .log .aux .toc
 
 .include "tex.doc.mk"
 
+
+_latex_doc_summary: .USE
+	${INFO} 'Information summary for ${.TARGET:T}'
+	@- (\
+	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log \
+	) && ${ECHO} 'Everything is in order'
+
+.for var in _TEX_DVI _TEX_PDF _TEX_PS
+.if defined(${var})&&!empty(${var})
+.for doc in ${${var}}
+${doc}: _latex_doc_summary
+.endfor
+.endif
+.endfor
+
 ### End of file `latex.doc.mk'
