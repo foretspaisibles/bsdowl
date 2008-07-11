@@ -41,7 +41,7 @@
 
 TEX = latex
 PDFTEX = pdflatex
-MULTIPASS = aux toc-idx final
+MULTIPASS+= aux toc-idx
 _TEX_AUX_SUFFIXES?= .log .aux .toc
 
 .include "tex.doc.mk"

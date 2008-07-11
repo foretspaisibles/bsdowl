@@ -37,6 +37,7 @@
 # IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 # POSSIBILITY OF SUCH DAMAGE.
 
+
 ### SYNOPSIS
 
 # TEX = /usr/local/bin/tex
@@ -158,13 +159,35 @@ _TEX_BUILD.${dvi:T}+=${_TEX_SRC.${dvi:T}}
 # La dépendance ${dvi}: ${_TEX_SRC.${dvi:T}} est ajoutée
 # automatiquement.
 
+# Pour les traitements à plusieurs passes, on utilise des fichiers
+# intermédiaires (des `cookies') pour faciliter la gestion des
+# dépendances, et permettre l'insertion de passes supplémentaires, par
+# exemple pour la préparation des bibliographies ou des index.
+
+_TEX_COOKIE = .cookie.
+
 .for dvi in ${_TEX_DVI}
 .if defined(MULTIPASS)&&!empty(MULTIPASS)&&!defined(DRAFT)
-${dvi}: ${_TEX_SRC.${dvi:T}}
+.undef _TEX_pass_last
 .for pass in ${MULTIPASS}
+.if defined(_TEX_pass_last)
+${_TEX_COOKIE}${dvi:T}.${pass}: ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
+.endif
+_TEX_pass_last:= ${pass}
+.endfor
+.for pass in ${MULTIPASS}
+${_TEX_COOKIE}${dvi:T}.${pass}: ${_TEX_SRC.${dvi:T}}
 	${INFO} 'Multipass job for ${dvi:T} (${pass})'
 	${_TEX_BUILD.${dvi:T}}
+	@${RM} -f ${dvi}
+	@${TOUCH} ${.TARGET}
+CLEANFILES+= ${_TEX_COOKIE}${dvi:T}.${pass}
 .endfor
+${dvi}: ${_TEX_SRC.${dvi:T}} ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
+	${INFO} 'Multipass job for ${dvi:T} (final)'
+	${_TEX_BUILD.${dvi:T}}
+	${INFO} 'Information summary for ${dvi:T}'
+	@!${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${dvi:.dvi=.log}
 .else
 ${dvi}: ${_TEX_SRC.${dvi:T}}
 	${_TEX_BUILD.${dvi:T}}
