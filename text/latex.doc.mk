@@ -41,17 +41,17 @@
 
 TEX = latex
 PDFTEX = pdflatex
-MULTIPASS+= aux toc-idx
+MULTIPASS+= aux toc
 _TEX_AUX_SUFFIXES?= .log .aux .toc
 
 .include "tex.doc.mk"
-
+.include "latex.bibtex.mk"
 
 _latex_doc_summary: .USE
 	${INFO} 'Information summary for ${.TARGET:T}'
 	@- (\
 	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log \
-	) && ${ECHO} 'Everything is in order'
+	) && ${ECHO} 'Everything seems in order'
 
 .for var in _TEX_DVI _TEX_PDF _TEX_PS
 .if defined(${var})&&!empty(${var})
