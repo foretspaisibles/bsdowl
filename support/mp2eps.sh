@@ -79,18 +79,26 @@ process_arg() {
 \end
 EOF
 
-    tex $texfile 2>&- 1>&-
-    dvips $DVIPS_OPTS -E -j -o $epsfile $texbase 2>&- 1>&- 
+    tex $texfile
+    dvips $DVIPS_OPTS -E -j -o $epsfile $texbase
     rm -f $texbase*
 }
 
 # Process Arguments
-while getopts "h" OPTION; do
+DEBUG=no
+while getopts "Dh" OPTION; do
     case $OPTION in
+	D)	DEBUG=yes;;
 	h)	HELP; exit 0;;
 	?)	INVALIDOPT $OPTION; HELP; exit 1;;
     esac
 done
+
+if [ $DEBUG = no ]; then
+    exec 2> /dev/null 1> /dev/null
+else
+    echo Debugging 1>&2
+fi
 
 shift $(( $OPTIND - 1 ))
 
