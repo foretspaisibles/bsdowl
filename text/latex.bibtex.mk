@@ -111,7 +111,7 @@ ${_TEX_COOKIE}${doc:T}.toc: ${_TEX_COOKIE}${doc:T}.bib
 ${_TEX_COOKIE}${doc:T}.bib: ${_TEX_COOKIE}${doc:T}.aux
 	${INFO} 'Processing bibliography database information for ${doc:T}'
 	${_BIBTEX_CMD} ${doc:R}
-CLEANFILES+= ${_TEX_COOKIE}${doc:T}.bib
+COOKIEFILES+= ${_TEX_COOKIE}${doc:T}.bib
 CLEANFILES+= ${doc:R}.bbl
 CLEANFILES+= ${doc:R}.blg
 .endfor
