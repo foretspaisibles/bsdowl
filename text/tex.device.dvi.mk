@@ -65,6 +65,32 @@ ${var}.${doc:T}.dvi = ${${var}.${doc:T}}
 
 
 #
+# Clean files
+#
+
+# Note: si on inverse les deux boucles SFX et DVI, cela ne marche
+# plus, le paramètre formel SFX n'est pas remplacé! (DVI en premier,
+# SFX en second.) Ceci peut peut-être s'expliquer d'après les règles
+# de traitement des boucles for, mais je ne sais pas clarifier ce
+# comportement.
+
+.if !empty(TEXDEVICE:Mdvi)
+.for sfx in ${_TEX_AUX_SUFFIXES}
+.for dvi in ${_TEX_DVI}
+.if empty(CLEANFILES:M${dvi})
+CLEANFILES+= ${dvi}
+.endif
+.for itm in ${dvi:.dvi=${sfx}}
+.if empty(CLEANFILES:M${itm})
+CLEANFILES+= ${itm}
+.endif
+.endfor
+.endfor
+.endfor
+.endif
+
+
+#
 # Build and install files
 #
 
