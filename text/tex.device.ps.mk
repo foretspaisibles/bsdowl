@@ -91,4 +91,37 @@ DOCUMENT+= ${_TEX_DOC:=.${device}}
 .endfor
 .endif
 
+
+
+#
+# Cleanfiles
+#
+
+.if !empty(TEXDEVICE:M*ps)
+.for sfx in ${_TEX_AUX_SUFFIXES}
+.for ps in ${_TEX_PS}
+.if empty(CLEANFILES:M${ps})
+CLEANFILES+= ${ps}
+.endif
+.for itm in ${ps:.ps=${sfx}}
+.if empty(CLEANFILES:M${itm})
+CLEANFILES+= ${itm}
+.endif
+.endfor
+.endfor
+.endfor
+.for sfx in ${_TEX_AUX_SUFFIXES}
+.for dvi in ${_TEX_DVI}
+.if empty(CLEANFILES:M${dvi})
+CLEANFILES+= ${dvi}
+.endif
+.for itm in ${dvi:.dvi=${sfx}}
+.if empty(CLEANFILES:M${itm})
+CLEANFILES+= ${itm}
+.endif
+.endfor
+.endfor
+.endfor
+.endif
+
 ### End of file `tex.device.ps.mk'

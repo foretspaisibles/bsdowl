@@ -171,27 +171,6 @@ ${dvi}: ${_TEX_SRC.${dvi:T}}
 .endif
 .endfor
 
-
-#
-# Clean files
-#
-
-# Note: si on inverse les deux boucles SFX et DVI, cela ne marche
-# plus, le paramètre formel SFX n'est pas remplacé! (DVI en premier,
-# SFX en second) Ceci peut peut-être s'expliquer d'après les règles de
-# traitement des boucles for, mais je ne vois pas.
-
-.for sfx in ${_TEX_AUX_SUFFIXES}
-.for dvi in ${_TEX_DVI}
-.for itm in ${dvi:.dvi=${sfx}}
-.if empty(CLEANFILES:M${itm})
-CLEANFILES+= ${itm}
-.endif
-.endfor
-CLEANFILES+= ${dvi}
-.endfor
-.endfor
-
 .endif #!target(__<tex.driver.dvi.mk>__)
 
 ### End of file `tex.driver.dvi.mk'

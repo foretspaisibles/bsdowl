@@ -96,14 +96,6 @@ ${ps}: ${ps}.dvi
 	${_DVIPS_BUILD.${ps:T}}
 .endfor
 
-#
-# Cleanfiles
-#
-
-.for ps in ${_TEX_PS}
-CLEANFILES+= ${ps}
-.endfor
-
 .endif #!target(__<tex.driver.dvips.mk>__)
 
 ### End of file `tex.driver.dvips.mk'
