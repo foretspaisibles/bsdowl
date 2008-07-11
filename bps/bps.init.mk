@@ -172,6 +172,7 @@ TAR?=			tar
 INSTALL?=		install
 INSTALL_DIR?=		install -d
 AWK?=			awk
+GREP?=			grep
 SED?=			sed
 SED_INPLACE?=		${SED} -i .bk
 ECHO?=			echo
