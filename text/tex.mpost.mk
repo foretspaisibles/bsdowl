@@ -94,7 +94,15 @@ _MPOST_FIG+=${fig}
 .endfor
 
 .for fig in ${_MPOST_FIG}
-_MPOST_LIST.${fig:T}!= sed -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}.\1/p' ${fig}
+.cookie.${fig:T}: ${fig}
+	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}.\1/p' ${.ALLSRC} > ${.TARGET}
+depend: .cookie.${fig:T}
+.if exists(.cookie.${fig:T})
+_MPOST_LIST.${fig:T}!= cat .cookie.${fig:T}
+.else
+_MPOST_LIST.${fig:T} =
+.endif
+COOKIEFILES+= .cookie.${fig:T}
 .endfor
 
 #
@@ -166,9 +174,19 @@ _MPOST_BUILD.${fig:T} = ${ENVTOOL} ${_MPOST_ENV.${fig:T}} ${MPOST}
 .else
 _MPOST_BUILD.${fig:T} = ${MPOST}
 .endif
-# On ajoute le fichier source
-_MPOST_BUILD.${fig:T}+= ${fig}
 .endfor
+
+#
+# Chemins de recherche
+#
+
+# Si la variable MPINPUTS est définie, on utilise sa valeur pour
+# .PATH.mp.
+
+.SUFFIXES: .mp
+.if defined(MPINPUTS)&&!empty(MPINPUTS)
+.PATH.mp: ${MPINPUTS}
+.endif
 
 
 #
