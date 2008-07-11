@@ -57,12 +57,12 @@ FORMAT.${_TEX_SUFFIX.${device}}?= ${FORMAT}
 #
 
 .for doc in ${_TEX_DOC}
-.if defined(SRCS)&&!empty(SRCS)&&!defined(SRCS.${doc:T})
-SRCS.${doc:T} = ${SRCS}
+.if defined(SRCS)&&!empty(SRCS)
+SRCS.${doc:T}+= ${SRCS}
 .endif
 .for device in ${TEXDEVICE}
-.if defined(SRCS.${doc:T})&&!empty(SRCS.${doc:T})&&!defined(SRCS.${doc:T}.${device})
-SRCS.${doc:T}.${device} = ${SRCS.${doc:T}}
+.if defined(SRCS.${doc:T})&&!empty(SRCS.${doc:T})
+SRCS.${doc:T}.${device}+= ${SRCS.${doc:T}}
 .endif
 .endfor
 .endfor
