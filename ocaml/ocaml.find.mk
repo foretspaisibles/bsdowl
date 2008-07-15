@@ -74,6 +74,7 @@ USE_OCAMLFIND?=no
 .if ${USE_OCAMLFIND} == yes
 MLCB?= ocamlfind ocamlc -c
 MLCN?= ocamlfind ocamlopt -c
+OCAMLDOC?= ocamlfind ocamldoc
 .if !empty(TARGET:Mbyte_code)
 MLCI?= ocamlfind ocamlc -c
 .else
@@ -83,7 +84,7 @@ MLLB?= ocamlfind ocamlc -linkpkg
 MLLN?= ocamlfind ocamlopt -linkpkg
 .endif
 
-.for pseudo in MLCB MLCN MLCI MLLB MLLN
+.for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC
 .if defined(PACKAGES)&&!empty(PACKAGES)
 ${pseudo}+= -package "${PACKAGES}"
 .endif
@@ -92,6 +93,6 @@ ${pseudo}+= -predicates "${PREDICATES}"
 .endif
 .endfor
 
-.endif#!target(__<ocaml.find.mk>__)
+.endif #!target(__<ocaml.find.mk>__)
 
 ### End of file `ocaml.find.mk'
