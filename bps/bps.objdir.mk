@@ -1,4 +1,4 @@
-### bps.objdir.mk -- %%DESCRIPTION%%
+### bps.objdir.mk -- Utilisation de OBJDIR
 
 # Author: Michaël Grünewald
 # Date: Sam 15 mar 2008 20:51:30 CET
@@ -45,6 +45,20 @@
 
 ### DESCRIPTION
 
+# Le programme BSD Make dispose de certaines fonctionnalités
+# permettant de produire le code objet dans un répertoire différent de
+# celui contenant le code source. Ce module propose une interface
+# simplifiée pour ces fonctionnalités.
+#
+#  Note: Plus que tout autre, ce module de directives peut entraîner la
+#   perte de données par son utilisation maladroite.
+
+#
+# Description des variables
+
+# MAKE_OBJDIR
+# MAKE_OBJDIRPREFIX
+# USE_OBJDIR
 
 ### IMPLÉMENTATION
 
