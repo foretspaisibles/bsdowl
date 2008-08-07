@@ -82,11 +82,84 @@
 # `installfiles'. Le module tient également compte des
 # cibles/procédures preinstall et postinstall lorsqu'elles existent.
 
-# Nota: ce fichier est dérivé de bsd.files.mk
+# Nota: ce fichier est dérivé de bsd.files.mk, distribué avec le
+#  système FreeBSD.
 
-## PARAMÈTRES INDIVIDUELS XXX
 
-## DÉFINIR DE NOUVEAUX GROUPES XXX
+#
+# Description des variables
+#
+
+# FILESGROUPS
+#
+#  Énumération des groupes de fichiers réclamant la prise en charge de
+#  leur installation par le module `bps.files.mk'.
+
+
+#
+# Paramètres individuels
+#
+
+# Les paramètres de la procédure d'installation du fichier '${file}'
+# appartenant au groupe '${group}' sont décrites ici.
+
+# ${group}DIR.${file:T}
+#
+#  Le dossier d'installation pour ${file}, relativement à
+#  ${DESTDIR}. Si ce dossier n'existe sa création est réclamée par la
+#  cible 'installdirs'.
+#
+#  La valeur implicite pour cette variable est ${group}DIR.
+
+# ${group}NAME.${file:T}
+#
+#  Le nom d'installation pour ${file}, si celui-ci est différent de
+#  celui de ${file}.
+#
+#  La valeur implicite pour cette variable est ${group}NAME. Remarquons
+#  que si ${group}NAME est définie, alors tous les fichiers membres du
+#  groupe ${group} sont installés au même emplacement; on ne
+#  positionne donc la variable ${group}NAME que lorsque ce groupe ne
+#  peut compter qu'un seul membre.
+
+# ${group}OWN.${file:T}
+#
+#  Le propriétaire de ${file:T}.
+#
+#  La valeur implicite pour cette variable est ${group}OWN.
+
+# ${group}GRP.${file:T}
+#
+#  Le groupe propriétaire de ${file:T}.
+#
+#  La valeur implicite pour cette variable est ${group}GRP.
+
+# ${group}MODE.${file:T}
+#
+#  Le mode d'accès de ${file:T}. Voir chmod(2).
+#
+#  La valeur implicite pour cette variable est ${group}MODE.
+
+
+#
+# Définir de nouveaux groupes
+#
+
+# Définir de nouveaux groupes est très simple, comme le montre le
+# petit exemple suivant.
+#
+# Pour créer un groupe SCRIPT, on reporte les déclarations suivantes
+# dans un fichier de directives:
+#
+#   FILESGROUPS+= SCRIPT
+#   SCRIPTDIR?= ${BINDIR}
+#   SCRIPTOWN?= ${BINOWN}
+#   SCRIPTGRP?= ${BINGRP}
+#   SCRIPTMODE?= ${BINMODE}
+#
+# On peut bien entendu initialiser à sa guise les paramètres
+# d'installation pour le groupe SCRIPT, le choix fait ici donne
+# cependant un exemple réaliste.
 
 
 ### IMPLÉMENTATION
