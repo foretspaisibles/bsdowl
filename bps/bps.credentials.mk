@@ -40,7 +40,8 @@
 
 ### SYNOPSIS
 
-# USE_SWITCH_CREDENTIALS=yes
+# USE_SWITCH_CREDENTIALS = yes
+#
 # .include "bps.credentials.mk"
 
 
@@ -49,30 +50,60 @@
 # Propose d'utiliser `su' pour traiter la cible `install' ou d'autres
 # cibles énumérées dans la liste _SWITCH_CREDENTIALS_TARGETS.
 
-### INTERFACE
+#
+# Description des variables
+#
 
-### DÉFINITIONS
+# USE_SWITCH_CREDENTIALS
+#
+#  Indique s'il faut utiliser ou non les privilèges de
+#  l'administrateur pour les cibles énuméréss dans
+#  _SWITCH_CREDENTIALS_TARGETS.
+#
+#  Les valeurs possibles sont 'yes' et 'no'.
+#  La valeur implicte est 'yes'.
+
+# _SWITCH_CREDENTIALS_TARGETS
+#
+#  Énumération des cibles pour lesquelles l'élévation des privlèges
+#  est souhaitée.
+#
+#  La valeur implcite est la liste vide, sauf si l'utilisateur courant
+#  n'est pas autorisé à écrire dans le dossier ${DESTDIR}${PREFIX},
+#  dans ce dernier cas la valeur implicite est la liste à un élément,
+#  'install'.
+
+# SU, ID
+#
+#  Pseudo-commandes dont la valeur est le chemin complet vers les
+#  commandes `su' et `id' respectivement.
+
+
+### IMPLÉMENTATION
 
 .if !target(__<bps.credentials.mk>__)
 __<bps.credentials.mk>__:
 
-### VARIABLES
+#
+# VARIABLES
+#
 
 USE_SWITCH_CREDENTIALS?= yes
 
 _SWITCH_CREDENTIALS_TARGETS?=
 
 # On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
-# autorisé à écrire sous ${DESTDIR}/${PREFIX}.
+# autorisé à écrire sous ${DESTDIR}${PREFIX}.
 
-_SWITCH_CREDENTIALS.install!= if [ ! -w ${DESTDIR}${PREFIX} ]; then echo install; else echo ''; fi
+_SWITCH_CREDENTIALS.install!= if [ ! -w /${DESTDIR}${PREFIX} ]; then echo install; else echo ''; fi
 
 .if !empty(_SWITCH_CREDENTIALS.install)
 _SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
 .endif
 
-
-### PSEUDO COMMANDES
+#
+# PSEUDO COMMANDES
+#
 
 ID?= /usr/bin/id
 SU?= /usr/bin/su
@@ -80,6 +111,7 @@ SU?= /usr/bin/su
 .if !defined(UID)
 UID!= ${ID} -u
 .endif
+
 
 #
 # Changement d'autorisation pour installer en tant que `root'
