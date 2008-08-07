@@ -46,6 +46,7 @@
 # DISTCLEANDIRS+= ${CONFOBJDIR}
 # REALCLEANFILES+= ${CONF}
 # REALCLEANDIRS+= ${CONFDIR}
+#
 # .include "bps.clean.mk"
 
 
@@ -134,10 +135,6 @@ realclean: do-realclean
 .endif
 
 .ORDER: clean distclean realclean
-
-#.if target(do-realclean-subdir)&&target(do-realclean)
-#.ORDER: do-realclean-subdir do-realclean
-#.endif
 
 .endif # !target(__<bps.clean.mk>__)
 
