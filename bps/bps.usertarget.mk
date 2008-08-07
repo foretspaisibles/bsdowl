@@ -40,22 +40,40 @@
 
 ### SYNOPSIS
 
-# _MAKE_USERTARGET = configure depend build doc all install clean distclean
+# _MAKE_USERTARGET = configure depend build doc all install
+# _MAKE_USERTARGET+= clean distclean realclean
 # _MAKE_ALLSUBTARGET = configure depend build doc
+#
 # .include "bps.usertarget.mk"
 
 
 ### DESCRIPTION
 
-# Crée les cibles pre/do/post pour les cibles de l'interface
-# utilisateur, dont la liste est la valeur de la variable
-# _MAKE_USERTARGET.
+# Définit une recette de production pour chaque cible énumérée par la
+# variable _MAKE_USERTARGET. Définit une cible `all:' qui appelle le
+# programme `make' pour produire chacune des cibles énumérées dans
+# _MAKE_ALLSUBTARGET.
 #
-# La cible `all' appelle une liste de sous travaux, dont la liste est
+# Pour chaque cible _target_ figurant dans _MAKE_USERTARGET et pour
+# laquelle il n'existe pas de recettes, on définit une recette, de la
+# façon suivant:
+#
+#  --- si une des cibles pre-_target_, do-_target_ ou post-_target_
+#      existe, alors la recette de _target_ est vide et la production
+#      de _target_ dépend des cibles pre-do-post existantes;
+#  --- sinon, une recette affichant un message ``Nothing to do'' est
+#      affiché.
 
 
 .if !target(__<bps.usertarget.mk>__)
 __<bps.usertarget.mk>__:
+
+#
+# Dépendances pre-do-post
+#
+
+# On insère les dépendances * -> pre-*,  * -> do-* et * -> post-*
+# lorsque le membre de droite existe.
 
 .PHONY: ${_MAKE_USERTARGET}
 
@@ -68,6 +86,11 @@ ${target}: ${prefix}-${target}
 .endfor
 .endif
 .endfor
+
+
+#
+# Cible all
+#
 
 .for target in ${_MAKE_ALLSUBTARGET}
 .if target(${target})
@@ -85,10 +108,10 @@ all: ${prefix}-all
 .endif
 .endfor
 
-.if !target(clean) && defined(CLEANFILES) && !empty(CLEANFILES)
-clean:
-	${RM} -f ${CLEANFILES}
-.endif
+
+#
+# Messages
+#
 
 .for target in ${_MAKE_USERTARGET}
 .if !target(${target})
@@ -96,10 +119,6 @@ ${target}:
 	@: ${INFO} "Nothing to do for target ${target}"
 .endif
 .endfor
-
-.if target(clean)&&target(distclean)
-distclean: clean
-.endif
 
 .endif # !target(__<bps.usertarget.mk>__)
 
