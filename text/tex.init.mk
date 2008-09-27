@@ -44,7 +44,7 @@ TEXMFDIR?= ${PREFIX}/share/texmf
 WEB2CDIR?= ${TEXMFDIR}/web2c
 
 TEXDEVICE?= dvi
-TEX?= tex
+TEX?= pdftex
 DVITEX?= ${TEX}
 PDFTEX?= pdftex
 
