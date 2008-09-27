@@ -39,9 +39,9 @@
 
 ### SYNOPSIS
 
-# TEXGROUP = TEX
-# TEX+= lmodern.sty
-# TEX+= ts1lmvtt.fd
+# TEXGROUP = TEXSRC
+# TEXSRC+= lmodern.sty
+# TEXSRC+= ts1lmvtt.fd
 # ...
 # FORMAT = latex
 # APPLICATION = lm
@@ -53,7 +53,7 @@
 # fichiers figurant dans la liste TEX et pour que `install' installe
 # ces fichiers dans ${TEXDIR}.
 
-TEXGROUP?= TEX
+TEXGROUP?= TEXSRC
 FILESGROUPS+= ${TEXGROUP}
 FORMAT?= plain
 APPLICATION?= misc
