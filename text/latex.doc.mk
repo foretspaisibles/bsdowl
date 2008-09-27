@@ -39,7 +39,7 @@
 
 # Confer `tex.doc.mk'.
 
-TEX = latex
+TEX = pdflatex
 PDFTEX = pdflatex
 MULTIPASS+= aux toc
 _TEX_AUX_SUFFIXES?= .log .aux .toc
