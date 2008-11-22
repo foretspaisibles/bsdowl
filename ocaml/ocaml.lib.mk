@@ -42,14 +42,17 @@
 
 ### DESCRIPTION
 
-
 ### MAGIC STUFF
 
 .include "bps.init.mk"
 .include "ocaml.init.mk"
 
+.if defined(LIB)&&!empty(LIB)
+LIBRARY?= ${LIB}
+.endif
+
 .if !defined(LIBRARY)||empty(LIBRARY)
-.error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
+.error The ocaml.lib.mk expects you to set the LIBRARY or the LIB variable to a sensible value.
 .endif
 
 _OCAML_SRCS?=
@@ -62,14 +65,14 @@ _OCAML_LIB:=${LIBRARY}
 .for lib in ${_OCAML_LIB}
 SRCS.${lib:T}?=${SRCS}
 .if !empty(TARGET:Mnative_code)
-_OCAML_SRCS+=SRCS.${lib}.cmxa
 SRCS.${lib:T}.cmxa?=${SRCS.${lib:T}}
+_OCAML_SRCS+=SRCS.${lib}.cmxa
 _OCAML_CMXA+=${lib:T}.cmxa
 _OCAML_A+=${lib:T}.a
 .endif
 .if !empty(TARGET:Mbyte_code)
-_OCAML_SRCS+=SRCS.${lib}.cma
 SRCS.${lib:T}.cma?=${SRCS.${lib:T}}
+_OCAML_SRCS+=SRCS.${lib}.cma
 _OCAML_CMA+=${lib:T}.cma
 .endif
 .endfor
