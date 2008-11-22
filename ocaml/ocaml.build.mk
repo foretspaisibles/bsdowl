@@ -163,26 +163,30 @@ _OCAML_BUILD.${obj:T}+=${${var}.${obj:T}}
 
 .endif
 
-# XXX Indiquer que le fichier CMI est produit avec le fichier CMX/CMO.
-
 .if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))&&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))
+# We are not building a CMO nor a CMX file
 ${obj}:
+	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi}
 .else
+# We are building a CMO or a CMX file
 if:=${obj:C/.cm[xo]/.cmi/}
 .if !(empty(_OCAML_CMI)||empty(_OCAML_CMI:M${if}))
 ${obj}: ${if}
 ${obj}:
 .else
 .if !target(${if})
+# The CMI file swill be produced from the object
 ${obj} ${if}:
 .else
+# The CMI file comes from a MLI that is proviously built
 ${obj}: ${if}
 ${obj}:
 .endif
 .endif
+	${_OCAML_BUILD.${obj:T}} ${.TARGET:C/.cm[xo]/.ml/}
 .endif
 .undef if
-	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi}
+
 
 .endfor
 .endfor
