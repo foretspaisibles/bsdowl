@@ -40,7 +40,7 @@
 
 ### SYNOPSIS
 
-# PROGRAM =	basicrun
+# PROG =	basicrun
 # SRCS+=	main.ml
 # SRCS+=	basic_types.ml
 # SRCS+=	basic_parser.mly basic_lexer.mll
@@ -48,10 +48,24 @@
 # LIBS =	unix
 # TARGET =	native_code
 
-# PROGRAM =	client server
-# SRCS.client =	client.ml protocol.ml
-# SRCS.server =	server.ml protocol.ml
+# If you have many small programs that share a common set of modules,
+# and do not want ship these modules as a library, you can use the
+# following:
+#
+# PROG =	client server
+# SRCS =        protocol.ml
 # LIBS =	unix
+#
+# If files client.ml and server.ml do exist, they are appended to the
+# automatic value of SRCS.client and SRCS.server, so that after the
+# treatment you end up with the following values:
+#
+# SRCS.client = ${SRCS} client.ml
+# SRCS.server = ${SRCS} server.ml
+#
+# This scheme is useful when writing on programs testing a
+# functionality or regression tests, so that you can keep all of them
+# in a single directory.
 
 ### DESCRIPTION
 
@@ -61,15 +75,24 @@
 .include "bps.init.mk"
 .include "ocaml.init.mk"
 
-## DU MODE SINGLETON AU MODE ENSEMBLE
+.if defined(PROG)&&!empty(PROG)
+PROGRAM?= ${PROG}
+.endif
 
 .if !defined(PROGRAM)||empty(PROGRAM)
-.error The ocaml.prog.mk module expects you to set the PROGRAM variable to a sensible value.
+.error The ocaml.prog.mk module expects you to set the PROGRAM or the PROG variable to a sensible value.
 .endif
+
+## DU MODE SINGLETON AU MODE ENSEMBLE
 
 .for item in ${PROGRAM}
 _OCAML_SRCS+=SRCS.${item:T}
-SRCS.${item:T}?=${SRCS}
+.if !defined(SRCS.${item:T})
+SRCS.${item:T} = ${SRCS}
+.if exists(${item}.ml)
+SRCS.${item:T}+= ${item}.ml
+.endif
+.endif
 .if !empty(TARGET:Mnative_code)
 SRCS.${item:T}.cn?=${SRCS.${item:T}}
 _OCAML_CN+=${item:T}.cn
