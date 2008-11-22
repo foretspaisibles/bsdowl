@@ -1,8 +1,8 @@
-### ocaml.tools.mk -- Pseudo commandes pour CAML
+### ocaml.pack.mk -- Préparation de programmes avec Objective Caml
 
 # Author: Michaël Grünewald
-# Date: Sam  7 jul 2007 20:50:52 CEST
-# Lang: fr_FR.ISO8859-1
+# Date: Mar  5 avr 2005 10:31:04 GMT
+# Lang: fr_FR.ISO8859-15
 
 # $Id$
 
@@ -40,46 +40,71 @@
 
 ### SYNOPSIS
 
-# .include "ocaml.target.mk"
-# .include "ocaml.tools.mk"
-
-
 ### DESCRIPTION
 
-# Ce module définit les pseudo-commande MLCB, MLCN, etc. indiquées
-# dans le tableau ci-dessous.
+### MAGIC STUFF
 
-# MLCB		Compilateur code octet
-# MLCN		Compilateur code natif
-# MLCI		Compilateur d'interfaces
-#                rappelons que les fichiers d'interfaces préparés avec
-#                un compilateur peuvent être utilisés avec l'autre.
-# MLAB		Facteur d'archives (bibliothèques) code octet
-# MLAN		Facteur d'archives (bibliothèques) code natif
-# MLLB		Éditeur de liens code octet
-# MLLN		Éditeur de liens code natif
-# MLPO		Créateur de paquet code octet
-# MLPX		Créateur de paquet code natif
+.include "bps.init.mk"
+.include "ocaml.init.mk"
 
-.if !target(__<ocaml.tools.mk>__)
-__<ocaml.tools.mk>__:
-
-_OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPO MLPX
-
-MLCB?= ocamlc -c
-MLCN?= ocamlopt -c
-.if !empty(TARGET:Mbyte_code)
-MLCI?= ocamlc -c
-.else
-MLCI?= ocamlopt -c
+.if !defined(PACK)||empty(PACK)
+.error The ocaml.pack.mk module expects you to set the PACK variable to a sensible value.
 .endif
-MLAB?= ocamlc -a
-MLAN?= ocamlopt -a
-MLLB?= ocamlc
-MLLN?= ocamlopt
-MLPO?= ${MLCB} -pack
-MLPX?= ${MLCN} -pack
 
-.endif#!target(__<ocaml.tools.mk>__)
+_OCAML_SRCS?=
+_OCAML_CMA?=
+_OCAML_CMXA?=
+_OCAML_A?=
 
-### End of file `ocaml.tools.mk'
+_OCAML_PACK:=${PACK}
+
+.for pack in ${_OCAML_PACK}
+SRCS.${pack:T}?=${SRCS}
+.if !empty(TARGET:Mnative_code)
+SRCS.${pack:T}.cmx?=${SRCS.${pack:T}}
+SRCS.${pack:T}.cmxa?=${pack}.cmx
+_OCAML_SRCS+=SRCS.${pack}.cmx
+_OCAML_CMXA+=${pack:T}.cmxa
+_OCAML_PKX+=${pack:T}.cmx
+_OCAML_A+=${pack:T}.a
+.endif
+.if !empty(TARGET:Mbyte_code)
+SRCS.${pack:T}.cmo?=${SRCS.${pack:T}}
+SRCS.${pack:T}.cma?=${pack}.cmo
+_OCAML_SRCS+=SRCS.${pack}.cmo
+_OCAML_CMA+=${pack:T}.cma
+_OCAML_PKO+=${pack:T}.cmo
+.endif
+.endfor
+
+## MORE MAGIC
+
+.include "ocaml.main.mk"
+
+### CIBLES ADMINISTRATIVES
+
+.for pack in ${_OCAML_PACK}
+.if !empty(TARGET:Mnative_code)
+LIB+= ${pack}.cmxa ${pack}.a
+_OCAML_SRCS.${pack}.cmx=${.ALLSRC}
+_OCAML_SRCS.${pack}.cmxa=${.ALLSRC}
+${pack}.cmx: ${SRCS.${pack:T}.cmx:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
+${pack}.cmxa: ${pack}.cmx
+.endif
+.if !empty(TARGET:Mbyte_code)
+LIB+= ${pack}.cma
+_OCAML_SRCS.${pack}.cmo=${.ALLSRC}
+_OCAML_SRCS.${pack}.cma=${.ALLSRC}
+${pack}.cmo: ${SRCS.${pack:T}.cmo:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
+${pack}.cma: ${pack}.cmo
+.endif
+LIB+= ${pack}.cmi
+.endfor
+
+LIBDIR=${PREFIX}/lib/ocaml${APPLICATIONDIR}
+
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
+
+### End of file `ocaml.pack.mk'

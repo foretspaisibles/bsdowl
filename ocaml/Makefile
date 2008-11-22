@@ -13,6 +13,7 @@ FILES+= ocaml.flags.mk
 FILES+= ocaml.init.mk
 FILES+= ocaml.lex.mk
 FILES+= ocaml.lib.mk
+FILES+= ocaml.pack.mk
 FILES+= ocaml.main.mk
 FILES+= ocaml.object.mk
 FILES+= ocaml.prog.mk

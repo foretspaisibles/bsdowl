@@ -91,11 +91,11 @@ ${lib}.cmxa: ${SRCS.${lib}.cmxa:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 .endif
 .if !empty(TARGET:Mbyte_code)
 LIB+= ${lib}.cma
-_OCAML_SRCS.${lib}.cma=${.ALLSRC}
-${lib}.cma: ${SRCS.${lib}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
+_OCAML_SRCS.${lib:T}.cma=${.ALLSRC}
+${lib}.cma: ${SRCS.${lib:T}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
-.if !empty(SRCS.${lib}:C/\.ml[ly]/.ml/:M*.ml)
-LIB+= ${SRCS.${lib}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
+.if !empty(SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml)
+LIB+= ${SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
 .endif
 .endfor
 
