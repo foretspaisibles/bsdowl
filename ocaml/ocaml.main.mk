@@ -49,12 +49,6 @@ __<ocaml.main.mk>__:
 do-depend:
 	${NOP}
 
-do-clean:
-	${RM} -f ${CLEANFILES}
-
-do-distclean:
-	${NOP}
-
 do-doc:
 	${NOP}
 

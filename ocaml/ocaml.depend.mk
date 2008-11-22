@@ -70,15 +70,10 @@ __<ocaml.depend.mk>__:
 .depend:
 	ocamldep ${.ALLSRC} > ${.TARGET}
 
-do-clean-depend:
-	${RM} -f .depend
+DISTCLEANFILES+= .depend
 
 .if target(do-depend)
 do-depend: .depend
-.endif
-
-.if target(do-distclean)
-do-distclean: do-clean-depend
 .endif
 
 .endif # !target(__<ocaml.depend.mk>__)
