@@ -47,12 +47,15 @@
 .include "bps.init.mk"
 .include "ocaml.init.mk"
 
-.if defined(LIB)&&!empty(LIB)
-LIBRARY?= ${LIB}
-.endif
+# Il ne faut pas utiliser LIB comme nom court pour LIBRARY puisque cet
+# identifiant est le nom d'un groupe d'installation de fichiers.
+#
+# .if defined(LIB)&&!empty(LIB)
+# LIBRARY?= ${LIB}
+# .endif
 
 .if !defined(LIBRARY)||empty(LIBRARY)
-.error The ocaml.lib.mk expects you to set the LIBRARY or the LIB variable to a sensible value.
+.error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
 .endif
 
 _OCAML_SRCS?=
