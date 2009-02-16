@@ -47,6 +47,16 @@
 # .include "tex.mpost.mk"
 
 #
+# Description
+#
+
+# MPTEXINPUTS
+#
+#  This special variable shadows TEXINPUTS when it is defined, this will ease
+#  the share of figure files across several files. Note that, in this case,
+#  figures should be put in a separate folder.
+
+#
 # Pseudo-outils
 #
 
@@ -63,6 +73,7 @@ _MPOST_FIG?=
 _MPOST_VARS+= MPINPUTS
 _MPOST_VARS+= MPTEX
 _MPOST_VARS+= TEX
+_MPOST_VARS+= MPTEXINPUTS
 
 .if !empty(TEXDEVICE:M*.ps)
 .for device in ${TEXDEVICE:M*.ps}
@@ -156,7 +167,9 @@ _MPOST_ENV.${fig:T}+= TEX=${TEX.${fig:T}:Q}
 .if defined(MPINPUTS.${fig:T})&&!empty(MPINPUTS.${fig:T})
 _MPOST_ENV.${fig:T}+= MPINPUTS=${MPINPUTS.${fig:T}:Q:S/\\ /:/g}
 .endif
-.if defined(TEXINPUTS.${fig:T})&&!empty(TEXINPUTS.${fig:T})
+.if defined(MPTEXINPUTS.${fig:T})&&!empty(MPTEXINPUTS.${fig:T})
+_MPOST_ENV.${fig:T}+= TEXINPUTS=${MPTEXINPUTS.${fig:T}:Q:S/\\ /:/g}
+.elif defined(TEXINPUTS.${fig:T})&&!empty(TEXINPUTS.${fig:T})
 _MPOST_ENV.${fig:T}+= TEXINPUTS=${TEXINPUTS.${fig:T}:Q:S/\\ /:/g}
 .endif
 .if defined(TEXMFOUTPUT.${fig:T})&&!empty(TEXMFOUTPUT.${fig:T})
