@@ -48,13 +48,14 @@
 # Le programme BSD Make dispose de certaines fonctionnalités
 # permettant de produire le code objet dans un répertoire différent de
 # celui contenant le code source. Ce module propose une interface
-# simplifiée pour ces fonctionnalités.
+# simplifiée vers ces fonctionnalités.
 #
-#  Note: Plus que tout autre, ce module de directives peut entraîner la
+# Note: Plus que tout autre, ce module de directives peut entraîner la
 #   perte de données par son utilisation maladroite.
 
 #
 # Description des variables
+#
 
 # MAKE_OBJDIR
 # MAKE_OBJDIRPREFIX
@@ -76,7 +77,7 @@ __<bps.objdir.mk>__:
 _MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
 	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX nothing
 
-.if !empty(_MAKEOBJDIRPREFIX)
+.if !empty(_MAKE_OBJDIRPREFIX)
 .error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
 	(in make.conf(5)) or command-line variable.
 .endif
@@ -84,7 +85,7 @@ _MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
 _MAKE_OBJDIR!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
        ${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR nothing
 
-.if !empty(_MAKEOBJDIR)
+.if !empty(_MAKE_OBJDIR)
 .error MAKEOBJDIR can only be set in environment, not as a global\
        (in bps.conf(5)) or command-line variable.
 .endif

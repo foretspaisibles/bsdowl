@@ -49,20 +49,47 @@
 
 ### DESCRIPTION
 
-# Diffuse la demande de production des cibles ``interface
-# utilisateur'' (all, etc.) vers les sous répertoires apparaissant
-# dans SUBDIR.
+# Diffuse la demande de production des cibles administratives énumérées par la
+# variables _SUBDIR_TARGET vers les sous-répertoires énumérés par la variable
+# SUBDIR.
 #
-# Ces cibles sont celles énumérées dans _SUBDIR_TARGETS et dans
-# _MAKE_USERTARGET.
+# Pour chaque cible administrative ${target}, une cible do-${target}-subdir
+# est définie, la règle de production de cette cible lance le sous-traitement
+# de ${target} dans les sous-répertoires énumérés dans SUBDIR.
 #
-# Pour chaque cible ``interface utilisateur'', soit ${target}, une
-# cible do-${target}-subdir est définie, la règle de production de
-# cette cible lance le sous-traitement de ${target} aux
-# sous-répertoires énumérés dans SUBDIR.
+# Les cibles administratives sont marquées par l'attribut `.PHONY'.
 #
 # À moins qu'une cible ${target}-switch-credentials existe, la cible
-# do-${target}-subdir devient un prérequis de ${target}.
+# do-${target}-subdir devient un prérequis de ${target}. Ce comportement
+# permet l'utilsiation conjointe de ce module de directives avec le module
+# `bps.credentials.mk'.
+
+
+#
+# Description des variables
+#
+
+# USE_SUBDIR
+#
+#  Drapeau de contrôle de la rediffusion des ordres de production vers les
+#  sous-dossiers.
+#
+#  La rediffusion des ordres de production vers les sous-dossiers a lieu
+#  lorsque la variable USE_SUBDIR est positionnée à `yes'. En l'absence
+#  d'initialisation explicite, lorsque SUBDIR est initialisée la variable
+#  USE_SUBDIR reçoit la valeur implicite `yes'.
+
+# SUBDIR
+#
+#  Liste des sous-dossiers vers lesquels les ordres de production sont
+#  rediffusés.
+
+# _SUBDIR_TARGET
+#
+#  Liste des ordres de production devant être rediffusés.
+#
+#  Les ordres de production énumérés par la variable _MAKE_USERTARGET
+#  (bps.usertarget.mk) sont automatiquement ajoutés à cette variable.
 
 
 ### IMPLÉMENTATION
@@ -73,10 +100,14 @@
 .if !target(__<bps.subdir.mk>__)
 __<bps.subdir.mk>__:
 
-_SUBDIR_TARGETS+= ${_MAKE_USERTARGET}
+_SUBDIR_TARGET+= ${_MAKE_USERTARGET}
 _SUBDIR_PREFIX?=
 
-.if defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
+.if defined(SUBDIR) && !empty(SUBDIR)
+USE_SUBDIR?= yes
+.endif
+
+.if ${USE_SUBDIR} == yes
 .PHONY: ${SUBDIR}
 _SUBDIR: .USE
 .for item in ${SUBDIR}
@@ -89,7 +120,7 @@ ${SUBDIR}::
 	${INFO} "${.TARGET} (all)"
 	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
 
-.for target in ${_SUBDIR_TARGETS}
+.for target in ${_SUBDIR_TARGET}
 do-${target}-subdir: _SUBDIR
 	${NOP}
 .if !target(${target}-switch-credentials)
@@ -97,7 +128,7 @@ ${target}: do-${target}-subdir
 .endif
 .endfor
 
-.endif # defined(SUBDIR) && !empty(SUBDIR) && !defined(NO_SUBDIR)
+.endif # ${USE_SUBDIR} == yes
 .endif #!target(__<bps.subdir.mk>__)
 
 .include "bps.clean.mk"

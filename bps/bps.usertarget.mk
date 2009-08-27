@@ -49,20 +49,19 @@
 
 ### DESCRIPTION
 
-# Définit une recette de production pour chaque cible énumérée par la
-# variable _MAKE_USERTARGET. Définit une cible `all:' qui appelle le
-# programme `make' pour produire chacune des cibles énumérées dans
+# Définit une recette de production pour chaque cible administrative énumérée
+# par la variable _MAKE_USERTARGET. Définit une cible administrative `all' qui
+# appelle le programme `make' pour produire chacune des cibles énumérées dans
 # _MAKE_ALLSUBTARGET.
 #
-# Pour chaque cible _target_ figurant dans _MAKE_USERTARGET et pour
+# Pour chaque cible ${target} figurant dans _MAKE_USERTARGET et pour
 # laquelle il n'existe pas de recettes, on définit une recette, de la
-# façon suivant:
-#
-#  --- si une des cibles pre-_target_, do-_target_ ou post-_target_
-#      existe, alors la recette de _target_ est vide et la production
-#      de _target_ dépend des cibles pre-do-post existantes;
-#  --- sinon, une recette affichant un message ``Nothing to do'' est
-#      affiché.
+# façon suivante:
+#  -- si une des cibles pre-${target}, do-${target} ou post-${target}
+#     existe, alors la recette de ${target} est vide et la production
+#     de ${target} dépend des cibles pre-do-post existantes;
+#  -- sinon, une recette affichant un message ``Nothing to do'' est
+#     préparée.
 
 
 .if !target(__<bps.usertarget.mk>__)
@@ -73,7 +72,7 @@ __<bps.usertarget.mk>__:
 #
 
 # On insère les dépendances * -> pre-*,  * -> do-* et * -> post-*
-# lorsque le membre de droite existe.
+# dans le graphe des recettes lorsque le membre de droite existe.
 
 .PHONY: ${_MAKE_USERTARGET}
 
