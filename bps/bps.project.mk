@@ -40,10 +40,11 @@
 
 ### SYNOPSIS
 
-# PROJECTVERSION = 1.1
-# PROJECTNAME = projectpublication
-# PROJECTAUTHOR = The name of the GPG guy
-# PROJECTDISTDIR = /attic
+# PROJECTVERSION =	1.1
+# PROJECTNAME =		projectpublication
+# PROJECTAUTHOR =	The name of the GPG guy
+# PROJECTDISTDIR =	/attic
+#
 # .include "bps.project.mk"
 
 
@@ -51,8 +52,13 @@
 
 # Le support de maintenance pour de petits projets fournit une
 # assistance pour les opérations suivantes:
-#  --- la préparation d'archives `tar';
-#  --- la publication de ces archives (avec signature).
+#  -- la préparation d'archives `tar';
+#  -- la publication de ces archives (avec signature).
+#
+# La publication des archives et des signatures se fait vers un point du
+# système de fichiers, la publication vers un serveur ouvert au public
+# nécessite en général des manipulations supplémentaires.
+
 
 #
 # Description des variables
@@ -127,14 +133,14 @@
 #
 #   Liste de fichiers à ne pas inclure dans les archives publiées.
 #   Le module ajoute automatiquement les fichiers objets produits par
-#   le script configure à cette liste (vor bps.autoconf.mk).
-
+#   le script configure à cette liste (voir bps.autoconf.mk).
 
 # USE_PROJECT_GPG
 #
 #   Contôle l'utilisation de GPG pour signer les fichiers publiés. Si
 #   cette variable est positionnée à une autre valeur que yes, les
 #   fichiers sont publiés sans être préalablement signés.
+
 
 #
 # Description des cibles
@@ -187,7 +193,7 @@ PROJECTDISTDIR = ${DISTDIR}
 .endif
 # Les variables permettant de deviner les valeurs pour le module
 # PROJECT ont toutes été positionnées, on passe à l'initialistion à
-# l'aide de valerus implicites.
+# l'aide de valeurs implicites.
 .if !defined(PROJECTNAME)||empty(PROJECTNAME)
 PROJECTNAME = ${.CURDIR:T}
 .endif
@@ -204,9 +210,11 @@ PROJECTDISTSIGN?=
 PROJECTDISTNAME?= ${PROJECTNAME}-${PROJECTVERSION}
 PROJECTDISTDIR?= ${.OBJDIR}
 
+
 #
 # Structures pour le module de compression
 #
+
 _PROJECT_COMPRESS_TOOLS?=bzip2 gzip
 _PROJECT_COMPRESS.suffix.none =
 _PROJECT_COMPRESS.suffix.gzip = .gz
@@ -215,10 +223,12 @@ _PROJECT_COMPRESS.flag.none =
 _PROJECT_COMPRESS.flag.gzip = -z
 _PROJECT_COMPRESS.flag.bzip2 = -j
 
+
 #
 # Production des archives
 #  initialisation
 #
+
 .for t in ${_PROJECT_COMPRESS_TOOLS}
 .for f in ${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}
 PROJECTDISTSIGN+= ${PROJECTDISTDIR}/${f}
@@ -226,9 +236,11 @@ PROJECTDISTEXCLUDE+= ${f}
 .endfor
 .endfor
 
+
 #
 # Fichiers à omettre dans l'archive
 #
+
 .for f in CVS .cvsignore .svn
 .if exists(${f})
 PROJECTDISTEXCLUDE+=${f}
@@ -248,6 +260,7 @@ PROJECTDISTEXCLUDE+=${PROJECTDISTNAME}/${f:.in=}
 # Production des archives
 #  pour de bon
 #
+
 .for t in ${_PROJECT_COMPRESS_TOOLS}
 ${PROJECTDISTDIR}/${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}::
 	${LN} -s ${.CURDIR} ${PROJECTDISTDIR}/${PROJECTDISTNAME}
@@ -260,24 +273,30 @@ ${PROJECTDISTDIR}/${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}::
 	${RM} -f ${PROJECTDISTDIR}/${PROJECTDISTNAME}
 .endfor
 
+
 #
 # Production des signatures
 #
+
 .for f in ${PROJECTDISTSIGN}
 ${f:=.sig}: ${f}
 	cd ${PROJECTDISTDIR};\
 	${GPG} -u '${PROJECTAUTHOR}' -b ${.ALLSRC}
 .endfor
 
+
 #
 # Préparation de la distribution
 #
+
 do-dist-projectdistdir:
 	${INSTALL_DIR} ${PROJECTDISTDIR}
+
 
 #
 # Hospitalité
 #
+
 .for t in dist prepublish publish
 .if target(pre-${t})
 ${t}: pre-${t}
@@ -288,29 +307,31 @@ ${t}: post-${t}
 .endif
 .endfor
 
+
 #
 # Distribution
 #
+
 do-dist: do-dist-projectdistdir
+
 .if !empty(PROJECTDIST)
 do-dist: ${PROJECTDIST}
 .endif
+
 .if !empty(PROJECTDISTSIGN)
 do-dist: ${PROJECTDISTSIGN}
 .endif
 
+
 #
 # Publication
 #
+
 .if ${USE_PROJECT_GPG} == yes
 do-prepublish: ${PROJECTDISTSIGN:=.sig}
 .endif
 
 
 .endif # !target(__<bps.project.mk>__)
-
-#
-# Publication
-#
 
 ### End of file `bps.project.mk'

@@ -137,6 +137,13 @@ ID?=			/usr/bin/id
 UID!= ${ID} -u
 .endif
 
+.if !defined(USER)
+USER!= ${ID} -n -u
+.endif
+
+.if !defined(GROUP)
+GROUP!= ${ID} -n -g
+.endif
 
 ## LECTURE DES FICHIERS DE CONFIGURATION
 
