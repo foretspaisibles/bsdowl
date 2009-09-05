@@ -154,6 +154,11 @@
 #
 #   Crée les archives destinées à la publication.
 #   Ces archives sont placées dans le dossier PROJECTDISTDIR.
+#
+#   Note importante: Le programme GNU tar ne dispose pas d'une option
+#   «déréférencer les liens présents sur la ligne de commande». À cause de
+#   cette restriction, il est interdit d'utiliser un lien symbolique dans
+#   l'arbre des sources d'un projet.
 
 # publish:
 #
@@ -268,8 +273,10 @@ ${PROJECTDISTDIR}/${PROJECTDISTNAME}.tar${_PROJECT_COMPRESS.suffix.${t}}::
 	${_PROJECT_COMPRESS.flag.${t}}\
 	-f ${.TARGET}\
 	-C ${PROJECTDISTDIR}\
-	-H\
-	${PROJECTDISTEXCLUDE:S/^/-W exclude=/} ${PROJECTDISTNAME}
+	-h\
+	${PROJECTDISTEXCLUDE:S/^/--exclude /}\
+	--exclude ${PROJECTDISTNAME}/${PROJECTDISTNAME}\
+	${PROJECTDISTNAME}
 	${RM} -f ${PROJECTDISTDIR}/${PROJECTDISTNAME}
 .endfor
 
