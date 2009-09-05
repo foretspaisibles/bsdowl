@@ -130,6 +130,10 @@
 .if !target(__<bps.init.mk>__)
 __<bps.init.mk>__:
 
+.if exists(bps.config.mk)
+.include "bps.config.mk"
+.endif
+
 ### PSEUDO COMMANDES (BOOTSTRAP)
 
 ID?=			/usr/bin/id

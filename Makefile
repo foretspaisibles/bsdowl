@@ -6,8 +6,6 @@
 
 # $Id$
 
-# @configure_input@
-
 PROJECT = bsdmakepscripts
 VERSION = 1.1
 AUTHOR = Michaël Grünewald
@@ -19,7 +17,6 @@ SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
 
-PREFIX?= @prefix@
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 
 .include "pallas.mk"
