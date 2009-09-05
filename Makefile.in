@@ -1,4 +1,4 @@
-### Makefile
+### @autoconf_input@
 
 # Author: Michaël Grünewald
 # Date: Ven 10 fév 2006 16:50:40 GMT
@@ -16,6 +16,8 @@ SUBDIR+= text
 SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
+
+PREFIX?= @prefix@
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 
