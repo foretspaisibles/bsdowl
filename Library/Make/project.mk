@@ -42,6 +42,7 @@ APPLICATION=mk
 
 .include "../../bps/bps.init.mk"
 .include "../../bps/bps.files.mk"
+.include "../../bps/bps.clean.mk"
 .include "../../bps/bps.usertarget.mk"
 
 ### End of file `project.mk'
