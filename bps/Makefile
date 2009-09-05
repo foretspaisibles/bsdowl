@@ -17,8 +17,6 @@ FILES+=	bps.files.mk
 FILES+= bps.autoconf.mk
 FILES+= bps.project.mk
 
-REALCLEANFILES+= bps.init.mk
-
 .include "project.mk"
 
 ### End of file `Makefile'
