@@ -4,7 +4,7 @@
 # Date: Ven 10 fév 2006 10:40:49 GMT
 # Lang: fr_FR.ISO8859-15
 
-# $Id$
+# $Id: bps.init.mk 150 2009-09-05 17:13:32Z michi $
 
 # Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
@@ -177,15 +177,15 @@ CP?=			cp
 RM?=			rm
 MV?=			mv
 LN?=			ln
-LN_S?=			ln -s
+LN_S?=			@LN_S@
 MKDIR?=			mkdir
-MKDIR_P?=		/opt/local/bin/gmkdir -p
+MKDIR_P?=		@MKDIR_P@
 TAR?=			tar
-INSTALL?=		/opt/local/bin/ginstall -c
-INSTALL_DIR?=		/opt/local/bin/ginstall -c -d
-AWK?=			gawk
-GREP?=			/usr/bin/grep
-SED?=			/opt/local/bin/gsed
+INSTALL?=		@INSTALL@
+INSTALL_DIR?=		@INSTALL@ -d
+AWK?=			@AWK@
+GREP?=			@GREP@
+SED?=			@SED@
 SED_INPLACE?=		${SED} -i .bk
 TOUCH?=			touch
 ECHO?=			echo
