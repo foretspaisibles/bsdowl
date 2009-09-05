@@ -1,4 +1,10 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/bps.init.mk)
+AC_PROG_AWK()
+AC_PROG_GREP()
+AC_PROG_INSTALL()
+AC_PROG_LN_S()
+AC_PROG_MKDIR_P()
+AC_PROG_SED()
 AC_OUTPUT(Makefile)
 AC_OUTPUT(bps/bps.config.mk)
