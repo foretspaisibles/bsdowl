@@ -17,13 +17,13 @@ changecom()dnl
 changequote(,)dnl
 ### __FILENAME__ -- __COMMENT__
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: __DATE__
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) __YEAR__, Michaël Grünewald
+# Copyright (c) 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

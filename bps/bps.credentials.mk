@@ -1,12 +1,12 @@
 ### bps.credentials.mk -- Autorisation administrateur modules `make'.
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam 29 mar 2008 16:05:16 CET
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

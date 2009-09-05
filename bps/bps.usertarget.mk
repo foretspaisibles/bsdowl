@@ -1,12 +1,12 @@
 ### bps.usertarget.mk -- Cibles de l'insterface utilisateur
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam  7 jul 2007 09:59:15 CEST
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

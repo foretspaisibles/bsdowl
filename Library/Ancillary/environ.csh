@@ -1,12 +1,12 @@
 ### environ.csh -- Environnement pour le test des Makefile
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 14 mar 2008 11:01:08 CET
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

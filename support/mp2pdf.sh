@@ -2,7 +2,7 @@
 
 ### mp2pdf.sh -- Converts METAPOST output to PNG
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
 # Lang: fr_FR.ISO8859-15
 
@@ -40,7 +40,7 @@ Notes:
  Typical resolution for screen viewing ranges from 72 to 100, for
  deskjet printers from 300 to 400, and for laserjet or other high
  quality device, from 600 to above.
-Author: ${AUTHOR}
+Author: Michaël Le Barbier Grünewald
 Copyright: ${COPYRIGHT}
 EOF
 }

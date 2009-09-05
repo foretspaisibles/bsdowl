@@ -1,12 +1,12 @@
 ### mkheader.sh -- Prépare un en-tête pour un fichier Makefile
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 14 mar 2008 11:00:31 CET
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -56,7 +56,7 @@ ed -s $1 > /dev/null <<EOF
 2,/^[^[:blank:]]/g/^\$/d
 2i
 
-# Author: $header_author
+# Author: Michaël Le Barbier Grünewald
 # Date: $header_cdate
 # Lang: $header_lang
 

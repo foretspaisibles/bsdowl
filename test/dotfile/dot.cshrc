@@ -1,6 +1,6 @@
 ### csh.cshrc -- TCSH Resource Configuration Script
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 26 jan 2007 19:32:47 CET
 # Lang: fr_FR.ISO8859-15
 

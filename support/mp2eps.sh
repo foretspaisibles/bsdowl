@@ -2,7 +2,7 @@
 
 ### mp2eps.sh -- Converts METAPOST output to PostScript
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
 # Lang: fr_FR.ISO8859-15
 
@@ -33,7 +33,7 @@ Notes:
  The conversion is done thanks to TeX and epsf.tex.
  Pour des résultats optimaux, le fichier de sortie de MetaPost ne doit pas
  utiliser la fonctionnalité des prologues.
-Author: ${AUTHOR}
+Author: Michaël Le Barbier Grünewald
 Copyright: ${COPYRIGHT}
 EOF
 }

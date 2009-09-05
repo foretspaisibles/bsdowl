@@ -1,12 +1,12 @@
 ### misc.elisp.mk -- Manage Emacs Lisp Directories
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Fri Feb 10 17:59:16 2006
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

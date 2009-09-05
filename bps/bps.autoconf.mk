@@ -1,12 +1,12 @@
 ### bps.autoconf.mk -- Support pour AUTOCONF
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 18 avr 2008 09:59:39 CEST
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2008, Michaël Grünewald
+# Copyright (c) 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

@@ -1,6 +1,6 @@
 ### Makefile -- Développement avec Objective Caml
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam  7 jul 2007 18:12:48 CEST
 # Lang: fr_FR.ISO8859-1
 

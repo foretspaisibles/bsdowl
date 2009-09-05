@@ -1,6 +1,6 @@
 ### Makefile -- Scripts that converts DATA from one format to another
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven  9 mai 2008 14:47:47 CEST
 # Lang: fr_FR.ISO8859-15
 

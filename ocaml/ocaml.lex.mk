@@ -1,12 +1,12 @@
 ### ocaml.lex.mk -- Analyseurs syntaxiques produits par ocamllex
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Mer  1 aoû 2007 11:38:01 CEST
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

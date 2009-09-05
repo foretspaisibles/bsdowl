@@ -1,6 +1,6 @@
 ### Makefile -- Collection de Makefiles `make'
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 10 fév 2006 16:51:08 GMT
 # Lang: fr_FR.ISO8859-1
 
