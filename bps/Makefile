@@ -6,7 +6,6 @@
 
 # $Id$
 
-
 FILES+=	bps.init.mk
 FILES+= bps.credentials.mk
 FILES+= bps.objdir.mk
@@ -17,6 +16,9 @@ FILES+=	bps.subdir.mk
 FILES+=	bps.files.mk
 FILES+= bps.autoconf.mk
 FILES+= bps.project.mk
+FILES+= bps.config.mk
+
+REALCLEANFILES+= bps.config.mk
 
 .include "project.mk"
 
