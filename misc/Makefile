@@ -1,6 +1,6 @@
 ### Makefile -- Collection de makefiles `misc'
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam  7 jul 2007 18:09:47 CEST
 # Lang: fr_FR.ISO8859-1
 

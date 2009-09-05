@@ -1,12 +1,12 @@
 ### latex.bibtex.mk -- Support pour BibTeX
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 11 jul 2008 22:17:23 CEST
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) , Michaël Grünewald
+# Copyright (c) 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

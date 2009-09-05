@@ -1,12 +1,12 @@
 ### bps.project.mk -- Maintenance pour de petits projets
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam 19 avr 2008 16:27:56 CEST
 # Lang: fr_FR.ISO8859-1
 
 # $Id$
 
-# Copyright (c) 2008, Michaël Grünewald
+# Copyright (c) 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

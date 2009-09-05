@@ -1,6 +1,6 @@
 ### Makefile
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Sam  7 jul 2007 18:12:07 CEST
 # Lang: fr_FR.ISO8859-1
 

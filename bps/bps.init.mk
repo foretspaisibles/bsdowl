@@ -1,12 +1,12 @@
 ### bps.init.mk -- Initialisation pour les modules `make'.
 
-# Author: Michaël Grünewald
+# Author: Michaël Le Barbier Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
 
-# Copyright (c) 2006, 2007, 2008, Michaël Grünewald
+# Copyright (c) 2006, 2007, 2008, 2009 Michaël Le Barbier Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
