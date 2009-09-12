@@ -73,11 +73,6 @@
 #  dans ce dernier cas la valeur implicite est la liste à un élément,
 #  'install'.
 
-# SU, ID
-#
-#  Pseudo-commandes dont la valeur est le chemin complet vers les
-#  commandes `su' et `id' respectivement.
-
 
 ### IMPLÉMENTATION
 
@@ -99,17 +94,6 @@ _SWITCH_CREDENTIALS.install!= if [ ! -w /${DESTDIR}${PREFIX} ]; then echo instal
 
 .if !empty(_SWITCH_CREDENTIALS.install)
 _SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
-.endif
-
-#
-# PSEUDO COMMANDES
-#
-
-ID?= /usr/bin/id
-SU?= /usr/bin/su
-
-.if !defined(UID)
-UID!= ${ID} -u
 .endif
 
 
