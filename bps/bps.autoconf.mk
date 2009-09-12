@@ -46,18 +46,31 @@
 
 ### DESCRIPTION
 
-# Si un fichier `configure.in' figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, une cible recréant le fichier `configure'
-# est créee et des cibles de nettoyage sont ajoutées pour
-# `cleanfiles'.
+# Si un fichier `configure.ac' ou `configure.in' figure dans notre dossier, ou
+# si la variable USE_AUTOCONF est positionnée à `yes' alors les fichiers
+# objets associés aux fichiers énumérés dans la variable
+# CONFIGURE sont ajoutés aux listes de nettoyage `distclean'.
+
+
 #
-# De plus la variable CONFIGURE est examinée, les fichiers objets
-# associés aux fichiers énumérés dans la variable CONFIGURE sont
-# ajoutés aux listes de nettoyage `distclean'.
+# Description des variables
 #
-# Si un fichier configure.in figure dans notre dossier, ou si la
-# variable USE_AUTOCONF=yes, certains fichiers sont ajoutés
-# automatiquement à CONFIGURE.
+
+# USE_AUTOCONF 
+#
+#  Contrôle l'utilisation des services du module `bps.autoconf.mk'. Si cette
+#  variable n'est pas définie par l'utilisateur et que des traces de
+#  l'utilisation d'autoconf par le projet sont trouvées, cette variable est
+#  positionnée à `yes'.
+
+# CONFIGURE
+#
+#  Énumère les sources traitées par le script `configure'. Les fichiers objets
+#  produits par `autoconf' correspondant à ces sources sont ajoutés à
+#  DISTCLEANFILES.
+#
+#  Si ils existent, les fichiers `Makefile.in' et `Makefile.inc.in' sont
+#  automatiquement ajoutés à cette énumération.
 
 .if !target(__<bps.autoconf.mk>__)
 __<bps.autoconf.mk>__:

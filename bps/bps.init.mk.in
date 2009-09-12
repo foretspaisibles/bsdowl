@@ -194,6 +194,7 @@ WARN?=			@echo 'Warning:'
 FAIL?=			@echo 'Failure:'
 MESG?=			@echo
 NOP?=			@: do nada
+SU?=			su
 
 ### VARIABLES
 
