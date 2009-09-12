@@ -136,7 +136,7 @@ __<bps.init.mk>__:
 
 ### PSEUDO COMMANDES (BOOTSTRAP)
 
-ID?=			/usr/bin/id
+ID?= @ID@
 .if !defined(UID)
 UID!= ${ID} -u
 .endif
