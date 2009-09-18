@@ -50,9 +50,4 @@ __<pallas>__:
 
 .endif # !target(__<pallas>__)
 
-distclean realclean: clean-bps-init
-
-clean-bps-init:
-	${RM} -f bps/bps.init.mk
-
 ### End of file `pallas'
