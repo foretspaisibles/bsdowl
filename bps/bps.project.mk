@@ -187,6 +187,9 @@ PROJECTNAME = ${PROJECT}
 .if !defined(PROJECTNAME)&&defined(NAME)
 PROJECTNAME = ${NAME}
 .endif
+.if !defined(APPLICATION)&&defined(PROJECTNAME)
+APPLICATION = ${PROJECTNAME}
+.endif
 .if !defined(PROJECTAUTHOR)&&defined(AUTHOR)
 PROJECTAUTHOR = ${AUTHOR}
 .endif
