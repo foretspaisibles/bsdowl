@@ -38,6 +38,6 @@
 # POSSIBILITY OF SUCH DAMAGE.
 
 
-ROXCONFIGDIR = /.config/rox.sourceforge.net
+ROXCONFIGDIR = ${PREFIX}/.config/rox.sourceforge.net
 
 ### End of file `rox.init.mk'
