@@ -76,16 +76,8 @@
 #
 #   Fichier d'initialisation pour l'utilisateur.
 #
-#   Lorsque la variable USER ne vaut pas 'root', lorsque la variable
-#   'MAKEINITRC' est définie et a comme valeur le nom d'un fichier,
-#   ce fichier est lu par make pendant l'évaluation de ce module, après
-#   lecture éventuelle de 'Makefile.inc'.
-#
-#   Ce mécanisme permet notamment à l'utilisateur de définir des valeurs
-#   convenables à DESTDIR, BINOWN, etc. pour installer les objets dans
-#   son répertoire personnel. Le rôle spécial de la valeur root permet
-#   d'installer les programmes `system-wide' par un simple sudo, sans
-#   avoir besoin d'efacer la variable MAKEINITRC.
+#   Lorsque la variable 'MAKEINITRC' est définie et a comme valeur le nom d'un
+#   fichier, ce fichier est lu par make pendant l'évaluation de ce module.
 
 # CP RM INSTALL INSTALL_DIR AWK SED SED_INPLACE ECHO.
 #
@@ -129,25 +121,19 @@ USER!= ${ID} -n -u
 GROUP!= ${ID} -n -g
 .endif
 
-## LECTURE DES FICHIERS DE CONFIGURATION
+### FICHIER D'INSTALLATION
 
-.if exists(${.CURDIR}/Makefile.inc)
-.include "${.CURDIR}/Makefile.inc"
-.elif exists(../${.CURDIR}/Makefile.inc)
-.include "../${.CURDIR}/Makefile.inc"
-.elif exists(../../${.CURDIR}/Makefile.inc)
-.include "../../${.CURDIR}/Makefile.inc"
-.elif exists(../../../${.CURDIR}/Makefile.inc)
-.include "../../../${.CURDIR}/Makefile.inc"
-.elif exists(../../../../${.CURDIR}/Makefile.inc)
-.include "../../../../${.CURDIR}/Makefile.inc"
-.endif
+DESTDIR?=	
+PREFIX?= @prefix@
 
-.if !(${UID} == 0) && defined(MAKEINITRC) && !empty(MAKEINITRC)
+### FICHIER DE CONFIGURATION
+
+MAKEINITRC?= ${.CURDIR}/Makefile.inc
+
 .if exists(${MAKEINITRC})
 .include "${MAKEINITRC}"
 .endif
-.endif
+
 
 ## PSEUDO COMMANDES
 
