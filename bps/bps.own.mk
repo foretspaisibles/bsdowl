@@ -62,16 +62,12 @@ _OWN_BINMODE?=	555
 _OWN_DTAMODE?=	444
 _OWN_OWN?=	root
 _OWN_GRP?=	wheel
-DESTDIR?=	
-PREFIX?=	/usr/local
 .else
 _OWN_DIRMODE?=	750
 _OWN_BINMODE?=	550
 _OWN_DTAMODE?=	440
 _OWN_OWN?=	${USER}
 _OWN_GRP?=	${GROUP}
-DESTDIR?=	
-PREFIX?=	${HOME}
 .endif
 
 BINDIR?=	${PREFIX}/bin
