@@ -18,11 +18,15 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-APPLICATION=mk
+SCRIPTDIR = ${_BPS_LIBEXEC}
+SHAREDIR = ${_BPS_DATADIR}
+FILESDIR = ${_BPS_PREFIX}/share/mk
 
 .include "../../bps/bps.init.mk"
+.include "../../text/tex.files.mk"
 .include "../../bps/bps.files.mk"
 .include "../../bps/bps.clean.mk"
 .include "../../bps/bps.usertarget.mk"
+.include "../../misc/misc.script.mk"
 
 ### End of file `project.mk'
