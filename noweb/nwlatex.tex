@@ -1,0 +1,196 @@
+%
+% Définitions l2h pour LaTeX
+%
+
+% l2h substitution th &thorn;
+% l2h argblock paragraph h4
+% l2h argblock subparagraph h5
+
+\makeatletter
+\usepackage[cmyk,dvipsnames]{xcolor}
+\definecolor{emphasize}{cmyk}{0,0,0,0.05}
+\colorlet{example}{Bittersweet}
+
+\usepackage{fancyvrb}
+
+%
+% Underscore mieux mieux
+%
+%\def\_{\/\vrule height 0.4bp depth 0pt width .333em\relax}
+
+%
+% Marquage des éléments du texte
+%
+
+\newcommand\fn[1]{\textsl{#1}}		% Function name
+\newcommand\va[1]{\textit{#1}}		% Variable name
+\newcommand\fa[1]{\textit{#1}}		% Formal argument
+\newcommand\pa[1]{\textsl{#1}}		% Path
+
+% l2h argblock fn em
+% l2h argblock va var
+% l2h argblock fa car
+% l2h argblock pa em
+
+\newcommand\fn@prototype[1]{\texttt{\textbackslash#1}}
+\newcommand\fa@prototype[1]{\LA{}\textit{#1}\RA{}}
+
+%
+% Ajouter un point à la fin d'une suite de tokens, peut-être
+%
+
+\def\maybeaddadot#1{\maybeaddadot@A#1\relax.\relax\st@p}
+\def\maybeaddadot@A#1.\relax#2\st@p{#1.}
+
+
+%
+% Structure
+%
+
+\newenvironment{formalparagraph}[1]%
+  {%
+    \par
+    \bigbreak
+    \noindent
+    \begingroup
+    \def\rmA{#1}%
+    \ifx\rmA\empty\else
+    \textit{#1.~---}\enspace
+    \fi
+    \endgroup
+    \ignorespaces
+  }%
+  {\par\smallbreak}%
+
+\newenvironment{remark}%
+  {\begin{formalparagraph}{Remarque}}%
+  {\end{formalparagraph}}%
+
+\newenvironment{remarks}%
+  {\begin{formalparagraph}{Remarques}\par\nobreak
+  \ignorespaces
+  \parindent\z@
+  \parskip\smallskipamount}%
+  {\end{formalparagraph}}%
+
+\newenvironment{seealso}%
+  {\let\maybeaddadot\relax
+   \begin{formalparagraph}{Voir aussi:}\let\item\seealso@iA}%
+  {\end{formalparagraph}}%
+
+\def\seealso@A{\let\item\seealso@B}
+\def\seealso@B{, }
+
+%
+% Exemples
+%
+
+% l2h envblock example pre
+\DefineVerbatimEnvironment{example}%
+  {Verbatim}%
+  {%
+    xleftmargin=\parindent,
+    formatcom=\let\FancyVerbFormatLine\FancyExampleFormatLine
+  }%
+
+
+\def\FancyExampleFormatLine#1{\llap{\smash{$\vdots$}\enspace}\texttt{#1}}
+
+\let\begin@example@O\example
+
+\def\example{\begingroup\catcode`\^^M\active\example@M}
+
+\newcommand\example@M[1][]{%
+  \def\rmA{#1}%
+  \ifx\rmA\empty
+    \def\next{\begin@example@O}%
+  \else
+    \def\next{\begin@example@T{#1}}%
+  \fi
+  \expandafter\endgroup\next
+}
+
+\def\begin@example@T#1{%
+  \par\bigbreak
+  \noindent\textit{\maybeaddadot{#1}}\par\vskip-\medskipamount\nobreak%
+  \begin@example@O
+}%
+
+
+%
+% Alinéas spéciaux
+%
+
+\newcommand\paracommand[1]{%
+  \par
+  \vskip 4em plus 1em minus 1em
+  \penalty -20
+  \relax
+  \begingroup
+  \markslongfalse
+  \marksouterfalse
+  \marksprimitivefalse
+  \toks0{}%
+  \let\TeX@orig\TeX
+  \def\long{\toksrappend\marks@l\to\toks0}%
+  \def\outer{\toksrappend\marks@o\to\toks0}%
+  \def\TeX{\toksrappend\marks@t\to\toks0}%
+  \let\cs@orig\cs
+  \def\cs##1{\gdef\currentcs{##1}\let\cs\cs@orig\cs{##1}}%
+  \def\fa##1{\LA{}\textit{##1}\RA}%
+  \dimen0=\hsize \advance\dimen0-6pt\relax
+  \noindent\colorbox{emphasize}{\makebox[\dimen0]{#1\hfill\commandmarks}}\par
+  \endgroup
+  \nobreak
+  \smallskip
+  \noindent
+  \ignorespaces
+}
+
+\def\commandmarks{%
+  \the\toks0
+  \let\next\relax
+  \ifmarkslong\let\next\commandmarks@A\fi
+  \ifmarksouter\let\next\commandmarks@A\fi
+  \ifmarksprimitive\let\next\commandmarks@A\fi
+  \next
+}
+
+\def\commandmarks@A{\footnotesize This is %
+\ifmarksouter
+  an outer \ifmarkslong long \fi
+\else
+  \ifmarkslong a long \fi
+\fi
+\ifmarksprimitive \TeX@orig\ primitive\else command\fi
+.}
+
+\def\marks@l{\markslongtrue}
+\def\marks@o{\marksoutertrue}
+\def\marks@t{\marksprimitivetrue}
+
+\newif\ifmarkslong
+\newif\ifmarksouter
+\newif\ifmarksprimitive
+
+\newcommand\paranamespace[1]{%
+  \begin{formalparagraph}{}\em
+  La bibliothèque réserve l'espace de noms privé~\texttt{#1}.%
+  \end{formalparagraph}%
+}
+
+\def\parafakepredicate{%
+  \begin{formalparagraph}{}\em
+  Cette procédure est un faux prédicat. Les faux prédicats sont
+  discutés dans la section~XXX.
+  \end{formalparagraph}%
+}
+
+\def\paraoutercatcode{%
+  \begin{formalparagraph}{}\em
+  Cette procédure manipule la table des %
+  codes de catégorie des caractères~\emph{(catcode table)}, il est %
+  donc recommandé que les procédures l'appelant soient %
+  marquées~\texttt{\string\outer}.%
+  \end{formalparagraph}%
+}

@@ -13,6 +13,7 @@ AUTHOR = Michaël Grünewald
 SUBDIR+= bps
 SUBDIR+= ocaml
 SUBDIR+= text
+SUBDIR+= noweb
 SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
