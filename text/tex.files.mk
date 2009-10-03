@@ -42,10 +42,15 @@ WEB2CDIR?= ${TEXMFDIR}/web2c
 DOCUMENTDIR?= ${TEXMFDIR}/doc/${FORMAT}${APPLICATIONDIR}
 ${TEXGROUP}DIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 
+.if defined(${TEXGROUP})&&!empty(${TEXGROUP})
 post-install: post-install-mktexlsr
-
 post-install-mktexlsr:
+.if ${UID} == 0
+	env -u TEXMFHOME mktexlsr
+.else
 	mktexlsr
+.endif
+.endif
 
 .include "bps.init.mk"
 .include "bps.files.mk"
