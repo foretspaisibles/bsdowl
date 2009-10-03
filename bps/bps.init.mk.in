@@ -106,6 +106,17 @@ __<bps.init.mk>__:
 .include "bps.config.mk"
 .endif
 
+### INSTALLATION DE BPS
+
+# Ces déclarations ne tiennent pas compte de tous les paramètres
+# pouvant être passés au script `configure'.
+
+_BPS_APPLICATIONDIR?= /bps
+_BPS_PREFIX?= @prefix@
+_BPS_DATADIR?= ${_BPS_PREFIX}/share${_BPS_APPLICATIONDIR}
+_BPS_DOCDIR?= ${_BPS_PREFIX}/share/doc${_BPS_APPLICATIONDIR}
+_BPS_LIBEXECDIR?= ${_BPS_PREFIX}/libexec${_BPS_APPLICATIONDIR}
+
 ### PSEUDO COMMANDES (BOOTSTRAP)
 
 ID?= @ID@
@@ -121,7 +132,7 @@ USER!= ${ID} -n -u
 GROUP!= ${ID} -n -g
 .endif
 
-### FICHIER D'INSTALLATION
+### DOSSIER D'INSTALLATION
 
 DESTDIR?=	
 PREFIX?= @prefix@
