@@ -6,6 +6,7 @@
 
 # $Id$
 
+FILES+= conf.freebsd.mk
 FILES+= misc.script.mk
 FILES+=	misc.elisp.mk
 FILES+=	misc.dotfile.mk
