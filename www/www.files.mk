@@ -88,15 +88,19 @@
 
 .include "bps.init.mk"
 
+USE_WWW_OWNERSHIP?= no
+
+.if ${USE_WWW_OWNERSHIP} == yes
+WWWOWN?= www
+WWWGRP?= www
+WWWMODE?= 440
+.endif
+
 FILESGROUPS+= WWW
 
 .if !defined(WWWDIR) && (!defined(SUBDIR) || empty(SUBDIR))
 .error Proper use needs a WWWDIR or SUBDIR value
 .endif
-
-WWWOWN?= www
-WWWGRP?= www
-WWWMODE?= 440
 
 .if empty(.MAKEFLAGS:MWWWBASE)
 .if defined(WWWBASE)&&!empty(WWWBASE)
@@ -105,6 +109,8 @@ WWWMODE?= 440
 .endif
 
 .include "bps.files.mk"
+.include "bps.clean.mk"
+.include "bps.usertarget.mk"
 .include "bps.subdir.mk"
 
 ### End of file `www.files.mk'
