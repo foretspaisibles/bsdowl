@@ -1,4 +1,4 @@
-### main.noweb.mk -- Routines pour NOWEB
+### noweb.main.mk -- Routines pour NOWEB
 
 # Author: Michaël Le Barbier Grünewald
 # Date: Sam  3 oct 2009 19:10:53 CEST
@@ -186,8 +186,8 @@
 
 ### IMPLÉMENTATION
 
-.if !target(__<bps.noweb.mk>__)
-__<bps.noweb.mk>__:
+.if !target(__<noweb.main.mk>__)
+__<noweb.main.mk>__:
 
 .SUFFIXES: .nw
 
@@ -428,4 +428,4 @@ ${file}${_NOWEAVE_DEVICE.suffix.${device}}: ${NOWEB.${file:T}}
 .endfor
 .endfor
 
-.endif #!target(__<bps.noweb.mk>__)
+.endif #!target(__<noweb.main.mk>__)
