@@ -17,11 +17,19 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+.include "bps.init.mk"
+
 NOWEAVE_AUTODEFS = tex
 NOWEAVE_LATEX_WRAPPER = delay
 
-NOWEAVE_LATEX_DEFS?= nwlatex.tex
+NOWEAVE_LATEX_DEFS?= ${_BPS_TEXMFDIR}/tex/latex${_BPS_APPLICATIONDIR}/nwlatex.tex
 NOWEAVE_HTML_CSS?= nwlatex.css
+
+nwlatex.css: ${_BPS_DATADIR}/nwlatex.css
+	${CP} ${.ALLSRC} ${.TARGET}
+
+CLEANFILES+= nwlatex.css
+DOCUMENT+= nwlatex.css
 
 _TEX_DOC = ${NOWEAVE}
 _TEX_DOC+= sampleart
@@ -32,7 +40,9 @@ FORMAT = latex
 DOCUMENT+= ${NOWEAVE:=.html}
 TEXSRC+= ${NOTANGLE}
 
+__slave_tex.files.mk:
+
 .include "bps.project.mk"
-.include "main.noweb.mk"
 .include "tex.files.mk"
+.include "main.noweb.mk"
 .include "latex.doc.mk"
