@@ -6,8 +6,8 @@
 
 # $Id$
 
-FILES = main.noweb.mk
-FILES+= latex.noweb.mk
+FILES = noweb.main.mk
+FILES+= noweb.latex.mk
 
 SHARE+= nwlatex.css
 

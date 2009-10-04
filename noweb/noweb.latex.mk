@@ -1,4 +1,4 @@
-### latex.noweb.mk -- Préparation de macros LaTeX avec NOWEB
+### noweb.latex.mk -- Préparation de macros LaTeX avec NOWEB
 
 # Author: Michaël Le Barbier Grünewald
 # Date: Sam  3 oct 2009 19:10:53 CEST
@@ -42,6 +42,6 @@ DOCUMENT+= ${NOWEAVE:=.html}
 TEXSRC+= ${NOTANGLE}
 
 .include "bps.project.mk"
-.include "main.noweb.mk"
+.include "noweb.main.mk"
 .include "tex.files.mk"
 .include "latex.doc.mk"
