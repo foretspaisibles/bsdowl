@@ -17,7 +17,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-
+APPLICATION = bps
 SCRIPTDIR = ${_BPS_LIBEXEC}
 SHAREDIR = ${_BPS_DATADIR}
 FILESDIR = ${_BPS_PREFIX}/share/mk

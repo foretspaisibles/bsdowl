@@ -33,6 +33,8 @@
 # fichiers figurant dans la liste TEX et pour que `install' installe
 # ces fichiers dans ${TEXDIR}.
 
+.include "bps.init.mk"
+
 TEXGROUP?= TEXSRC
 FILESGROUPS+= ${TEXGROUP}
 FORMAT?= plain
@@ -52,8 +54,9 @@ post-install-mktexlsr:
 .endif
 .endif
 
-.include "bps.init.mk"
+.if !target(__slave_tex.files.mk)
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
+.endif #!target(__slave_tex.files.mk)
 
 ### End of file `tex.files.mk'

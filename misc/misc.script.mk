@@ -53,7 +53,7 @@ __<misc.script.mk>__:
 
 .include "bps.init.mk"
 
-_SCRIPT_EXTS?= pl sh bash py
+_SCRIPT_EXTS?= pl sh bash py sed awk
 
 
 # On recalcule la valeur de SCRIPT. Ce n'est pas un très bon style de

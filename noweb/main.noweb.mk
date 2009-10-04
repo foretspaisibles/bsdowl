@@ -117,6 +117,9 @@
 # NOWEAVE_HTML_CSS
 #
 #  Feuille de style CSS
+#
+#  La valeur de cette variable est insérée dans le fichier
+#  HTML.
 
 # NOWEAVE_LATEX_WRAPPER (yes)
 #
