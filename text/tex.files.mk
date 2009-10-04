@@ -34,13 +34,12 @@
 # ces fichiers dans ${TEXDIR}.
 
 .include "bps.init.mk"
+.include "texmf.init.mk"
 
 TEXGROUP?= TEXSRC
 FILESGROUPS+= ${TEXGROUP}
 FORMAT?= plain
 APPLICATION?= misc
-TEXMFDIR?= ${PREFIX}/share/texmf
-WEB2CDIR?= ${TEXMFDIR}/web2c
 DOCUMENTDIR?= ${TEXMFDIR}/doc/${FORMAT}${APPLICATIONDIR}
 ${TEXGROUP}DIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 
@@ -54,9 +53,7 @@ post-install-mktexlsr:
 .endif
 .endif
 
-.if !target(__slave_tex.files.mk)
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
-.endif #!target(__slave_tex.files.mk)
 
 ### End of file `tex.files.mk'

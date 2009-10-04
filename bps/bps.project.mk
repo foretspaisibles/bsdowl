@@ -170,6 +170,12 @@ PROJECTNAME = ${NAME}
 .if !defined(APPLICATION)&&defined(PROJECTNAME)
 APPLICATION = ${PROJECTNAME}
 .endif
+# La définition possible de APPLICATIONDIR ci-dessous est redondante
+# de celle figurant dans `bps.init.mk' mais il se peut que la variable
+# APPLICATIONDIR ait tout-juste été définie.
+.if defined(APPLICATION)&&!empty(APPLICATION)
+APPLICATIONDIR?= /${APPLICATION}
+.endif
 .if !defined(PROJECTAUTHOR)&&defined(AUTHOR)
 PROJECTAUTHOR = ${AUTHOR}
 .endif

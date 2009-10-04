@@ -20,8 +20,7 @@
 .if !target(__<tex.init.mk>__)
 __<tex.init.mk>__:
 
-TEXMFDIR?= ${PREFIX}/share/texmf
-WEB2CDIR?= ${TEXMFDIR}/web2c
+.include "texmf.init.mk"
 
 TEXDEVICE?= dvi
 TEX?= pdftex
