@@ -23,7 +23,7 @@ SHAREDIR = ${_BPS_DATADIR}
 FILESDIR = ${_BPS_PREFIX}/share/mk
 
 .include "../../bps/bps.init.mk"
-.include "../../text/tex.files.mk"
+.include "../../texmf/tex.files.mk"
 .include "../../bps/bps.files.mk"
 .include "../../bps/bps.clean.mk"
 .include "../../bps/bps.usertarget.mk"
