@@ -27,6 +27,7 @@
 #  KERN		For kernel configuration files
 #  BOOT		For boot configuration files, in /boot
 #  CSUP		For csup configuration files, in /etc/csup
+#  FDI		For decive file informations used by HAL
 #  KDE		For KDE configuration files
 #  XDM		For XDM configuration files, in ${LOCALBASE}/lib/X11/xdm
 #  XDMPIXMAP	For XDM pixmaps
@@ -65,6 +66,18 @@ PORTMODE?= 444
 
 PORTMODE.sudoers = 440
 PORTDIR.PolicyKit.conf = ${PORTDIR}/PolicyKit
+
+
+# FDI
+#
+#  Device information files for the HAL system.
+
+FILESGROUPS+= FDI
+
+FDIDIR?= ${LOCALBASE}/share/hal/fdi/preprobe/20thirdparty
+FDIOWN?= ${BASEOWN}
+FDIGRP?= ${BASEGRP}
+FDIMODE?= 444
 
 
 # KERN
