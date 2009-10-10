@@ -85,6 +85,8 @@ _SUBDIR_PREFIX?=
 
 .if defined(SUBDIR) && !empty(SUBDIR)
 USE_SUBDIR?= yes
+.else
+USE_SUBDIR?= no
 .endif
 
 .if ${USE_SUBDIR} == yes
