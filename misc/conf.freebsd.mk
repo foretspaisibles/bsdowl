@@ -28,6 +28,7 @@
 #  BOOT		For boot configuration files, in /boot
 #  CSUP		For csup configuration files, in /etc/csup
 #  FDI		For decive file informations used by HAL
+#  RC		For RC files used to boot the system
 #  KDE		For KDE configuration files
 #  XDM		For XDM configuration files, in ${LOCALBASE}/lib/X11/xdm
 #  XDMPIXMAP	For XDM pixmaps
@@ -51,6 +52,17 @@ BASEMODE?= 444
 BASEDIR.sshd_config = ${BASEDIR}/ssh
 BASEDIR.ssh_config = ${BASEDIR}/ssh
 BASEMODE.hostpad.conf = 400
+
+# RCD
+#
+#  Files setting up services at boot time.
+
+FILESGROUPS+= RCD
+
+RCDDIR?= ${LOCALBASE}/local/rc.d
+RCDOWN?= ${BASEOWN}
+RCDGRP?= ${BASEGRP}
+RCDMODE?= 555
 
 # PORT
 #
