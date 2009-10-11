@@ -121,6 +121,15 @@
 #   cette variable est positionnée à une autre valeur que yes, les
 #   fichiers sont publiés sans être préalablement signés.
 
+# PROJECTENV
+#
+#   Énumère les variables d'environnement exportées vers les sous-shells
+
+# PROJECTBASE
+#
+#   Dossier principal du projet
+#
+#   Cette variable est initialisée automatiquement à partir de .CURDIR.
 
 #
 # Description des cibles
@@ -149,6 +158,12 @@
 #   Comme publish, mais s'arrête juste avant la publication proprement
 #   dite.
 
+# shell:
+#
+#   Ouvre un shell pour le développeur
+#
+#   L'environnement du shell ouvert par cette cible contient les
+#   liaisons énumérées dans PROJECTENV.
 
 ### IMPLÉMENTATION
 
@@ -326,6 +341,31 @@ do-dist: ${PROJECTDISTSIGN}
 .if ${USE_PROJECT_GPG} == yes
 do-prepublish: ${PROJECTDISTSIGN:=.sig}
 .endif
+
+#
+# Initialisation de PROJECTBASE
+#
+
+.if !defined(PROJECTBASE)
+PROJECTBASE = ${.CURDIR}
+.MAKEFLAGS: PROJECTBASE="${PROJECTBASE}"
+.endif
+
+#
+# Ouverture d'un shell pour le développeur
+#
+
+PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
+# La substitution de la variable MAKEFLAGS est modifiée pour que les
+# options de type `-I' de make apparaissent sous forme compacte. Pour
+# cela, elle fait l'hypothèse que les termes commençant par un `/' ou
+# un `.' sont des chemins à traiter comme arguments pour `-I'.
+
+# La variable SHELL est définie dans l'environnement de l'utilisateur.
+shell:
+	${INFO} "Entering developper's subshell"
+	${ENVTOOL} ${PROJECTENV} ${SHELL}
+	${INFO} "Exiting developper's subshell"
 
 
 .endif # !target(__<bps.project.mk>__)

@@ -28,18 +28,6 @@ __<pallas>__:
 .include "subdir.mk"
 .include "../../bps/bps.project.mk"
 
-# Ouverture d'un shell pour le développeur
-#
-# La substitution de la variable MAKEFLAGS est modifiée pour que les
-# options de type `-I' de make apparaissent sous forme compacte. Pour
-# cela, elle fait l'hypothèse que les termes commençant par un `/' ou
-# un `.' sont des chemins à traiter comme arguments pour `-I'.
-#
-# La variable SHELL est définie dans l'environnement.
-
-shell:
-	env MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^[/\.]|-I/|}" ${SHELL}
-
 .endif # !target(__<pallas>__)
 
 ### End of file `pallas'
