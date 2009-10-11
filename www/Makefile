@@ -8,6 +8,7 @@
 
 
 FILES = www.files.mk
+FILES+= www.sgml.mk
 
 .include "project.mk"
 
