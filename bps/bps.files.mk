@@ -180,7 +180,7 @@ installfiles: installfiles_${group:L}
 installfiles_${group:L}:
 .for file in ${${group}}
 installfiles_${group:L}: installfiles_${group:L}_${file:T}
-installfiles_${group:L}_${file:T}: ${file:T}
+installfiles_${group:L}_${file:T}: ${file}
 	${_${group}_INSTALL.${file:T}}
 .PHONY: installfiles_${group:L}_${file:T}
 .endfor #file in ${${group}}
