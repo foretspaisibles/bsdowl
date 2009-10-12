@@ -24,8 +24,9 @@ __<tex.init.mk>__:
 
 TEXDEVICE?= dvi
 TEX?= pdftex
-DVITEX?= ${TEX}
-PDFTEX?= pdftex
+TEX.dvi?= tex
+TEX.pdf?= pdftex
+TEX.ps?= ${TEX.dvi}
 
 # Les variables énumérées par _TEX_VARS sont des variables d'instance
 # supportant une spécialisation pour chaque cible.
