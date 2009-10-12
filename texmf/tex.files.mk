@@ -47,7 +47,7 @@ ${TEXGROUP}DIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 post-install: post-install-mktexlsr
 post-install-mktexlsr:
 .if ${UID} == 0
-	env -u TEXMFHOME mktexlsr
+	${ENVTOOL} TEXMFHOME='/dev/null' mktexlsr
 .else
 	mktexlsr
 .endif
