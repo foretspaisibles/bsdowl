@@ -41,6 +41,7 @@
 #
 
 MPOST?= mpost
+MPTEX?= ${TEX.dvi}
 MP2EPS?= mp2eps
 MP2PDF?= mp2pdf
 MP2PNG?= mp2png
@@ -52,7 +53,6 @@ MPOST_DEVICE.pdf?= pdf
 _MPOST_FIG?=
 _MPOST_VARS+= MPINPUTS
 _MPOST_VARS+= MPTEX
-_MPOST_VARS+= TEX
 _MPOST_VARS+= MPTEXINPUTS
 
 .if !empty(TEXDEVICE:M*.ps)
@@ -141,8 +141,6 @@ ${var}.${fig:T} = ${${var}}
 .for fig in ${FIGS}
 .if defined(MPTEX.${fig:T})&&!empty(MPTEX.${fig:T})
 _MPOST_ENV.${fig:T}+= TEX=${MPTEX.${fig:T}:Q}
-.elif defined(TEX.${fig:T})&&!empty(TEX.${fig:T})
-_MPOST_ENV.${fig:T}+= TEX=${TEX.${fig:T}:Q}
 .endif
 .if defined(MPINPUTS.${fig:T})&&!empty(MPINPUTS.${fig:T})
 _MPOST_ENV.${fig:T}+= MPINPUTS=${MPINPUTS.${fig:T}:Q:S/\\ /:/g}
