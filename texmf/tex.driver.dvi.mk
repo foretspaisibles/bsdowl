@@ -104,9 +104,9 @@ _TEX_ENV.${dvi:T}+= TFMFONTS=${TFMFONTS.${dvi:T}:Q}
 .endif
 # On insère cet environnement sur la ligne de commande
 .if defined(_TEX_ENV.${dvi:T})&&!empty(_TEX_ENV.${dvi:T})
-_TEX_BUILD.${dvi:T} = ${ENVTOOL} ${_TEX_ENV.${dvi:T}} ${DVITEX}
+_TEX_BUILD.${dvi:T} = ${ENVTOOL} ${_TEX_ENV.${dvi:T}} ${TEX.dvi}
 .else
-_TEX_BUILD.${dvi:T} = ${DVITEX}
+_TEX_BUILD.${dvi:T} = ${TEX.dvi}
 .endif
 # On traite les variables dont l'argument est transmis au programme
 .if defined(FORMAT.dvi.${dvi:T})&&!empty(FORMAT.dvi.${dvi:T})

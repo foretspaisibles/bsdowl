@@ -26,9 +26,11 @@ DVIPS?= dvips
 # Spécialisation des variables
 #
 
-# Par ordre de spécialisation croissante: DVIPSFLAGS,
-# DVIPSFLAGS.document, DVIPSFLAGS.document.ps,
-# DVIPSFLAGS.document.printer.ps.
+# Par ordre de spécialisation croissante:
+#  DVIPSFLAGS,
+#  DVIPSFLAGS.document,
+#  DVIPSFLAGS.document.ps,
+#  DVIPSFLAGS.document.printer.ps.
 
 .for var in DVIPSFLAGS DVIPS
 .for doc in ${_TEX_DOC}

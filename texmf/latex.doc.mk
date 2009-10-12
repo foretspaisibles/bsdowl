@@ -20,7 +20,9 @@
 # Confer `tex.doc.mk'.
 
 TEX = pdflatex
-PDFTEX = pdflatex
+TEX.dvi = latex
+TEX.pdf = pdflatex
+
 MULTIPASS+= aux toc
 _TEX_AUX_SUFFIXES?= .log .aux .toc
 
