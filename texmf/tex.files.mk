@@ -35,29 +35,53 @@
 # système TeX. La liste des fichiers à installer doit être émumérée
 # dans TEXFILES. Le répertoire de destination est calculé à partir de
 # la valeur des variables APPLICATION et FORMAT.
+#
+# Le module réclame la mise-à-jour des bases de données `ls-R'
+# nécessaires.
+
+#
+# Description des variables
+#
+
+# TEXFILES
+#
+#  Énumère les fichiers de macros à installer
+
+# FORMAT (generic)
+#
+#  Format pour lequel les macros sont écrites
+#
+#  Les valeurs courantes sont: amstex, context, generic, latex, plain.
+#  Ce nom est utilisé pour calculer le dossier d'installation
+#  TEXFILESDIR. 
+
+# APPLICATION (misc)
+#
+#  Application désignant les macros
+#
+#  Ce nom est utilisé pour calculer le dossier d'installation
+#  TEXFILESDIR. 
+
+# MKTEXLSR (mktexlsr)
+#
+#  Programme utilisé pour mettre à jour la base de données `ls-R'
+
+### IMPLÉMENTATION
 
 .include "bps.init.mk"
 .include "texmf.init.mk"
 
 MKTEXLSR?= mktexlsr
-TEXGROUP?= TEXFILES
-FILESGROUPS+= ${TEXGROUP}
-FORMAT?= plain
+FILESGROUPS+= TEXFILES
+FORMAT?= generic
 APPLICATION?= misc
 TEXDOCDIR?= ${TEXMFDIR}/doc/${FORMAT}${APPLICATIONDIR}
-${TEXGROUP}DIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
+TEXFILESDIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 
-.if defined(${TEXGROUP})&&!empty(${TEXGROUP})
+.if defined(TEXFILES)&&!empty(TEXFILES)
 post-install: post-install-mktexlsr
 post-install-mktexlsr:
-# L'idiome TEXMFHOME=/dev/null n'est pas très élégant, mais toutes les
-# implémentations de la commande env ne supportent pas l'option `u'
-# pour retirer une liaison de l'environnement.
-.if ${UID} == 0
-	${ENVTOOL} TEXMFHOME='/dev/null' ${MKTEXLSR}
-.else
-	${MKTEXLSR}
-.endif
+	${MKTEXLSR} ${TEXMFDIR}
 .endif
 
 .include "bps.files.mk"
