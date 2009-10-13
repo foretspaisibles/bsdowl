@@ -1,4 +1,4 @@
-### latex.doc.mk -- Produce LaTeX documents
+### latex.doc.pre.mk -- Produce LaTeX documents
 
 # Author: Michaël Le Barbier Grünewald
 # Date: Dim  9 sep 2007 14:49:18 CEST
@@ -19,9 +19,11 @@
 
 # Confer `tex.doc.mk'.
 
-.include "latex.doc.pre.mk"
-.include "tex.doc.mk"
-.include "latex.bibtex.mk"
-.include "latex.doc.post.mk"
+TEX = pdflatex
+TEX.dvi = latex
+TEX.pdf = pdflatex
 
-### End of file `latex.doc.mk'
+MULTIPASS+= aux toc
+_TEX_AUX_SUFFIXES?= .log .aux .toc
+
+### End of file `latex.doc.pre.mk'
