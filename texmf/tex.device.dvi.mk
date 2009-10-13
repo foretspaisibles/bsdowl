@@ -75,7 +75,7 @@ CLEANFILES+= ${itm}
 #
 
 .if !empty(TEXDEVICE:Mdvi)
-DOCUMENT+= ${_TEX_DOC:=.dvi}
+TEXDOC+= ${_TEX_DOC:=.dvi}
 .endif
 
 ### End of file `tex.device.dvi.mk'
