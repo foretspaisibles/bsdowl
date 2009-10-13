@@ -1,4 +1,4 @@
-### latex.doc.mk -- Produce LaTeX documents
+### latex.doc.post.mk -- Produce LaTeX documents
 
 # Author: Michaël Le Barbier Grünewald
 # Date: Dim  9 sep 2007 14:49:18 CEST
@@ -19,9 +19,18 @@
 
 # Confer `tex.doc.mk'.
 
-.include "latex.doc.pre.mk"
-.include "tex.doc.mk"
-.include "latex.bibtex.mk"
-.include "latex.doc.post.mk"
+_latex_doc_summary: .USE
+	${INFO} 'Information summary for ${.TARGET:T}'
+	@- (\
+	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log \
+	) && ${ECHO} 'Everything seems in order'
 
-### End of file `latex.doc.mk'
+.for var in _TEX_DVI _TEX_PDF _TEX_PS
+.if defined(${var})&&!empty(${var})
+.for doc in ${${var}}
+${doc}: _latex_doc_summary
+.endfor
+.endif
+.endfor
+
+### End of file `latex.doc.post.mk'

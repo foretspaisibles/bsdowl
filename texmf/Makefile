@@ -22,6 +22,8 @@ FILES+= tex.files.mk
 FILES+= tex.files.main.mk
 
 FILES+= latex.doc.mk
+FILES+= latex.doc.pre.mk
+FILES+= latex.doc.post.mk
 FILES+= latex.bibtex.mk
 
 tex.driver.pdftex.mk: tex.driver.dvi.mk
