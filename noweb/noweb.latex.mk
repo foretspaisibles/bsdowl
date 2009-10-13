@@ -18,6 +18,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 .include "bps.init.mk"
+.include "bps.project.mk"
 .include "texmf.init.mk"
 
 NOWEAVE_AUTODEFS = tex
@@ -39,9 +40,16 @@ SRCS.sampleart = ${NOTANGLE} sharticle.cls sampleart.tex
 
 FORMAT = latex
 DOCUMENT+= ${NOWEAVE:=.html}
-TEXSRC+= ${NOTANGLE}
+TEXFILES+= ${NOTANGLE}
 
-.include "bps.project.mk"
 .include "noweb.main.mk"
-.include "tex.files.mk"
-.include "latex.doc.mk"
+.include "tex.files.main.mk"
+.include "latex.doc.pre.mk"
+.include "tex.init.mk"
+.include "tex.mpost.mk"
+.include "tex.doc.main.mk"
+.include "latex.bibtex.mk"
+.include "latex.doc.post.mk"
+.include "bps.clean.mk"
+.include "bps.files.mk"
+.include "bps.usertarget.mk"
