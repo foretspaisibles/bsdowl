@@ -67,7 +67,7 @@ JOBNAME.${doc}.${device}.dvi = ${doc}.${device}
 
 .if !empty(TEXDEVICE:M*ps)
 .for device in ${TEXDEVICE:M*ps}
-DOCUMENT+= ${_TEX_DOC:=.${device}}
+TEXDOC+= ${_TEX_DOC:=.${device}}
 .endfor
 .endif
 

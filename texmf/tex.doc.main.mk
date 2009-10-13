@@ -76,13 +76,13 @@ ${doc}.${device}: ${SRCS.${doc:T}.${device}}
 # Files groups
 #
 
-FILESGROUPS+= DOCUMENT
-DOCUMENTDIR?= ${PREFIX}/Documents${APPLICATIONDIR}
-DOCUMENTOWN?= ${DOCOWN}
-DOCUMENTGROUP?= ${DOCGROUP}
-DOCUMENTMODE?= ${DOCMODE}
+FILESGROUPS+= TEXDOC
+TEXDOCDIR?= ${PREFIX}/Documents${APPLICATIONDIR}
+TEXDOCOWN?= ${DOCOWN}
+TEXDOCGROUP?= ${DOCGROUP}
+TEXDOCMODE?= ${DOCMODE}
 
 do-build: do-build-doc
-do-build-doc: ${DOCUMENT}
+do-build-doc: ${TEXDOC}
 
 ### End of file `tex.doc.main.mk'
