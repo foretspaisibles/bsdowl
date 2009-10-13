@@ -11,8 +11,8 @@ FILES+= noweb.latex.mk
 
 SHARE+= nwlatex.css
 
-TEXSRC+= nwlatex.tex
-TEXSRCDIR = ${TEXMFDIR}/tex/latex${APPLICATIONDIR}
+TEXFILES+= nwlatex.tex
+TEXFILESDIR = ${TEXMFDIR}/tex/latex${APPLICATIONDIR}
 
 .include "project.mk"
 
