@@ -1,4 +1,4 @@
-### tex.files.mk -- Installation de fichiers pour un système TeX
+### tex.files.main.mk -- Installation de fichiers pour un système TeX
 
 # Author: Michaël Le Barbier Grünewald
 # Date: Dim  9 sep 2007 17:32:25 CEST
@@ -70,21 +70,8 @@
 
 .include "bps.init.mk"
 .include "texmf.init.mk"
-
-MKTEXLSR?= mktexlsr
-FILESGROUPS+= TEXFILES
-FORMAT?= generic
-APPLICATION?= misc
-TEXDOCDIR?= ${TEXMFDIR}/doc/${FORMAT}${APPLICATIONDIR}
-TEXFILESDIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
-
-.if defined(TEXFILES)&&!empty(TEXFILES)
-post-install: post-install-mktexlsr
-post-install-mktexlsr:
-	${MKTEXLSR} ${TEXMFDIR}
-.endif
-
+.include "tex.files.main.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
-### End of file `tex.files.mk'
+### End of file `tex.files.main.mk'
