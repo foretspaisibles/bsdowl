@@ -20,11 +20,11 @@ L'installation se fait avec la séquence d'instruction
   make all
   make install
 
-Des valeurs plausibles pour <prefix> sont /usr/local (valeur
+Des valeurs fequemment utilisées pour <prefix> sont /usr/local (valeur
 implcite), /opt/local ou ${HOME}.
 
 La procédure d'installation respecte DESTDIR et PREFIX.
-Cf. ``FreeBSD Porter's Handbook'', 9.4.
+Cf. FreeBSD Porter's Handbook, 9.4.
 
 Les fichiers de directives sont installés dans le dossier
 ${DESTDIR}${PREFIX}/share/mk.
@@ -49,14 +49,18 @@ dossier personnel):
 
   $ tar xzf ~/distfiles/bmake.tar.gz
   $ tar xzfC ~/distfiles/mk.tar.gz bmake
-  $ cd bmake
-  $ ./configure --prefix=${HOME}
-  $ make -f makefile.boot bootstrap
-  $ make -f makefile.boot install
+  $ ./bmake/boot-strap --prefix=${HOME}
 
 Le programme `bmake' est alors installé sous ${HOME}/bin et les
 fichiers de directives qui l'accompagnent le sont sous
-${HOME}/share/mk.
+${HOME}/share/mk. On peut alors se débarasser du dossier de travail
+`bmake' avec la commande:
 
-Dans ce contexte, on utilise aussi le préfixe ${HOME} pour
-l'installation de BSD Make Pallas Scripts.
+  $ rm -Rf bmake
+
+Après cette installation de bmake, on utilisera aussi le préfixe
+${HOME} pour l'installation de BSD Make Pallas Scripts.
+
+Le programme `bmake' est très portable, cependant sur certains
+systèmes seule une version récente de GCC (ultérieure à 3.6) arrive à
+compiler `bmake'.
