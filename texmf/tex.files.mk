@@ -19,9 +19,8 @@
 
 ### SYNOPSIS
 
-# TEXGROUP = TEXSRC
-# TEXSRC+= lmodern.sty
-# TEXSRC+= ts1lmvtt.fd
+# TEXFILES+= lmodern.sty
+# TEXFILES+= ts1lmvtt.fd
 # ...
 # FORMAT = latex
 # APPLICATION = lm
@@ -29,14 +28,19 @@
 #
 # .include "tex.files.ml"
 
-# Le fragment précédent s'arrange pour que `build' dépende des
-# fichiers figurant dans la liste TEX et pour que `install' installe
-# ces fichiers dans ${TEXDIR}.
+
+### DESCRIPTION
+
+# Ce module se charge de l'installation de fichiers de macros dans un
+# système TeX. La liste des fichiers à installer doit être émumérée
+# dans TEXFILES. Le répertoire de destination est calculé à partir de
+# la valeur des variables APPLICATION et FORMAT.
 
 .include "bps.init.mk"
 .include "texmf.init.mk"
 
-TEXGROUP?= TEXSRC
+MKTEXLSR?= mktexlsr
+TEXGROUP?= TEXFILES
 FILESGROUPS+= ${TEXGROUP}
 FORMAT?= plain
 APPLICATION?= misc
@@ -46,10 +50,13 @@ ${TEXGROUP}DIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 .if defined(${TEXGROUP})&&!empty(${TEXGROUP})
 post-install: post-install-mktexlsr
 post-install-mktexlsr:
+# L'idiome TEXMFHOME=/dev/null n'est pas très élégant, mais toutes les
+# implémentations de la commande env ne supportent pas l'option `u'
+# pour retirer une liaison de l'environnement.
 .if ${UID} == 0
-	${ENVTOOL} TEXMFHOME='/dev/null' mktexlsr
+	${ENVTOOL} TEXMFHOME='/dev/null' ${MKTEXLSR}
 .else
-	mktexlsr
+	${MKTEXLSR}
 .endif
 .endif
 
