@@ -19,6 +19,7 @@ FILES+= tex.driver.pdftex.mk
 FILES+= tex.driver.dvips.mk
 FILES+= tex.mpost.mk
 FILES+= tex.files.mk
+FILES+= tex.files.main.mk
 
 FILES+= latex.doc.mk
 FILES+= latex.files.mk
