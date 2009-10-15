@@ -22,6 +22,7 @@ __<tex.init.mk>__:
 
 .include "texmf.init.mk"
 
+DRAFT?= no
 TEXDEVICE?= dvi
 TEX?= pdftex
 TEX.dvi?= tex
