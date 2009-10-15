@@ -33,7 +33,7 @@
 # _TEX_VARS+= COMMENT PROGNAME
 #
 # MULTIPASS = aux ref final
-# DRAFT = Yes			# Inhibe MULTIPASS
+# DRAFT = yes			# Inhibe MULTIPASS
 #
 # ${var}.{dvi:T} = value
 
@@ -145,7 +145,7 @@ _TEX_BUILD.${dvi:T}+=${_TEX_SRC.${dvi:T}}
 # exemple pour la préparation des bibliographies ou des index.
 
 .for dvi in ${_TEX_DVI}
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&!defined(DRAFT)
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
 .undef _TEX_pass_last
 .for pass in ${MULTIPASS}
 .if defined(_TEX_pass_last)
