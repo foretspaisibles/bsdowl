@@ -73,6 +73,9 @@ _DVIPS_BUILD.${ps:T}+= -o ${ps} ${ps}.dvi
 # Recettes
 #
 
+# La production du fichier dvi est déléguée au module `tex.driver.dvi.mk', qui
+# s'occupe de gérer correctement les variables MULTIPASS et DRAFT.
+
 .for ps in ${_TEX_PS}
 ${ps}: ${ps}.dvi
 	${_DVIPS_BUILD.${ps:T}}
