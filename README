@@ -7,31 +7,45 @@ Lang: fr_FR.ISO8859-1
 $Id$
 
 
-Cette collection de directives pour BSD Make, la version de make
-actuellement distribuée dans le système d'exploitation FreeBSD, rend
-des services dans plusieurs domaines.
+Cette collection de directives pour BSD Make peut être utilisée pour
+automatiser les cycles de travail liés aux activités suivantes:
+ -- la préparation et la publication de documents TeX;
+ -- le développement de macros TeX avec NOWEB;
+ -- le développement de logiciels avec Objective Caml;
+ -- la maintenance des fichiers de configuration d'une station FreeBSD.
 
-Ce projet est hébergé sur gna.org. C'est pour moi un plaisir de
-remercier ici les administrateurs de gna.org pour leur générosité.
+Ce fichier README contient des références pour l'installation et
+l'utilisation de ces directives.
 
-Consultez le fichier COPYING pour connaître les conditions
-d'utilisation de ce logiciel.
+  1 LOGICIEL LIBRE
+  2 LOGICIELS NÉCESSAIRES
+  3 UTILISATION
+  4 DOCUMENTATION
+  5 PLAN D'ORIENTATON
+  6 DERNIERS REGRETS
 
-Pallas Athéné est Athéna déesse de la sagesse, protectrice des
-sciences et des arts.
+
+1 LOGICIEL LIBRE
+
+Ce logiciel est un logiciel libre, sa copie sa distribution et sa
+modification sont les bienvenus. Les termes précis encadrant son
+utilisation son ceux de la licence CeCILL-B, ils sont rappelés dans
+les fichier COPYING et COPYING-FR de la distribution.
 
 
-1 LOGICIELS NÉCESSAIRES
+
+2 LOGICIELS NÉCESSAIRES
 
 Ces fichiers de directives doivent être utilisés avec BSD Make, la
 version BSD du programme `make'. Ce programme est notamment disponible
 comme `make' sous FreeBSD (programme inclus dans le système de base)
 et comme `bsdmake' dans Mac OS X (programme inclus dans le système de
-base).
+base). Attention, ce logiciel n'est pas compatible avec le programme
+GNU Make, installé comme `make' sur la plupart des systèmes GNU/Linux.
 
 Ces fichiers semblent aussi fonctionner avec le programme `bmake', un
-dérivé autonome du programme `make' de NetBSD. Le fichier INSTALL pour
-obtenir des indications sur l'installation de `bmake' sur un système
+dérivé autonome du programme `make' de NetBSD. Le fichier INSTALL
+détaille la procédure d'installation de `bmake' sur un système
 GNU/Linux.
 
 Les fichiers de directives BSD Make Pallas Scripts sont livrés avec
@@ -49,10 +63,10 @@ objectif du projet. Cette compatibilité en est cependant toujours au
 stade expérimental.
 
 
-2 UTILISATION
+3 UTILISATION
 
 Pour plus de confort dans l'utilisation de ces directives, on peut
-ajouter le dossier d'instllation dans le chemin de recherche des
+ajouter le dossier d'installation dans le chemin de recherche des
 fichiers de directives:
 
  -- en positionnant la variable d'environnement `MAKEFLAGS';
@@ -62,12 +76,12 @@ Cf. make(1) pour plus de détails.
 
 Pour l'utilisation de ces directives dans un projet, on peut utiliser
 la directive .MAKEFLAGS dans le fichier Makefile contenant les cibles
-administratives(install, etc.) et fournir au développpeurs un script
-`trampoline' qui positionne corectement des valeurs d'environnement et
-démarre un shell.
+administratives(install, etc.) et utiliser la commande `make shell'
+définie par `bps.project.mk' qui positionne correctement des valeurs
+d'environnement et démarre un shell.
 
 
-3 DOCUMENTATION
+4 DOCUMENTATION
 
 En guise de documentation, on trouve normalement des exemples au début
 des fichiers de directives. Remarquez que ces modules ne sont pas tous
@@ -75,38 +89,70 @@ susceptibles de présenter un intérêt direct pour l'utilisateur, cf. 4
 infra.
 
 
-4 PLAN D'ORIENTATION
+5 PLAN D'ORIENTATION
 
-Les modules de directives dont le préfixe est `bsp' sont des modules
+Les modules de directives dont le préfixe est `bps' sont des modules
 internes, dont l'usage est ordinairement réservé à l'écriture d'autres
 fichiers de directives. Il y a une exception notable à cette règle, le
 fichier `bsp.subdir.mk' qui est délègue les actions à effectuer à
 certains des sous-dossiers du dossier actif.
 
 
-4.1 Modules susceptibles d'intéresser l'utilisateur
+5.1 Modules susceptibles d'intéresser l'utilisateur
 
 Les modules les plus susceptibles d'intéresser l'utilisateur sont les
 suivants:
 
- -- ocaml/ocaml.prog.mk
- -- ocaml/ocaml.lib.mk
- -- text/tex.doc.mk
- -- text/latex.doc.mk
- -- bsp/bsp.subdir.mk
- -- misc/misc.script.mk
- -- www/www.files.mk
+  bsp/bsp.subdir.mk
+  bsp/bsp.project.mk
+
+    Pour la gestion de projets
+
+
+  ocaml/ocaml.prog.mk
+  ocaml/ocaml.lib.mk
+
+    Pour le développpement d'applications avec OCaml.
+
+
+  www/www.files.mk
+  www/www.sgml.mk
+
+    Pour la préparation de sites web
+
+
+  texmf/tex.doc.mk
+  texmf/latex.doc.mk
+  texmf/tex.files.mk
+
+    Pour la préparation de documents TeX et LaTeX, de macros TeX
+
+
+  noweb/noweb.latex.mk
+
+    Pour le développement de macros LaTeX avec NOWEB
+
 
 Leurs fonctionnalités peuvent cependant encore évoluer, notamment pour
-améliorer le support des variables .PATH et .OBJDIR, qui n'est que
+améliorer le support des variables .PATH et .OBJDIR, qui n'est souvent que
 partiel.
 
 
-4.2 Modules inaboutis
+5.2 Modules inaboutis
 
 Les modules particulièrement inaboutis sont les suivants:
 
-  -- rox/*
+  rox/*
+  misc/*
 
-Ces modules sont inertes, car je n'utilise plus ROX depuis longtemps,
-ils ne sont donc plus installés.
+Les modules rox/* sont inertes et hors d'état de fonctionner, car je
+n'utilise plus ROX depuis longtemps, ils ne sont donc pas installés.
+
+
+6 DERNIERS REGRETS
+
+Ce projet est hébergé sur gna.org. C'est pour moi un plaisir de
+remercier ici les administrateurs de gna.org pour leur générosité.
+
+Pallas Athéné est Athéna déesse de la sagesse, protectrice des
+sciences et des arts.
