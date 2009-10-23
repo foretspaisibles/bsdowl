@@ -6,6 +6,9 @@ Lang: fr_FR.ISO8859-1
 
 $Id$
 
+Avertissement: ces notes concernent les personnes intéressées par la
+ méthodologie de l'écriture des directives pour BSD Make.
+
 
 Le programme `make' aide l'utilisateur à garder à jour les fichiers
 objets associés à un ou plusieurs fichiers sources. Le programme

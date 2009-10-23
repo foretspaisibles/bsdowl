@@ -16,61 +16,47 @@ les systèmes basés sur Linux), il s'agit de `bmake'.
   1 INSTALLATION DE BPS POUR L'UTILISATEUR
   2 INSTALLATION DE BMAKE POUR LES UTILISATEURS DE LINUX
 
+
 1 INSTALLATION DE BPS POUR L'UTILISATEUR
 
-Si vous n'êtes pas administrateur de la machine que vous utilisez, la
-procédure d'installation de BPS est la suivante:
-  -- copie des fichiers de directives dans un dossier approprié;
-  -- paramétrisation du shell pour utiliser ces fichiers. 
+1.1 Obtention des sources
 
-1.1 Copie des fichiers de directives
-
-Après avoir téléchargé la dernière version de BPS,
+Les sources sont distribuées sur Gna!:
 
   http://download.gna.org/bsdmakepscripts/bsdmakepscripts-1.2.tar.bz2
 
-et placé votre copie locale dans ~/distfiles, la procédure copiant les
-fichiers de BPS est la suivante:
 
-  tar xjf ~/distfiles/bsdmakepscripts-1.2.tar.bz2
-  cd bsdmakepscripts-1.2
-  ./configure --prefix=$HOME
-  make all
-  make install
-  cd ..
-  rm -Rf bsdmakepscripts-1.2
+1.2 Installation
 
-Si tout s'est bien passé, les fichiers de directives ont été installés
-dans votre répertoire personnel. Sinon, voyez les conseils prodigués par 1.3.
+La procédure d'installation utilise la séquence habituelle:
+
+  % tar xjf bsdmakepscripts-1.2.tar.bz2
+  % cd bsdmakepscripts-1.2
+  % ./configure --prefix=$HOME
+  % make all
+  % make install
 
 
-1.2 Utilisation des fichiers
+1.3 Paramétrisation du shell
 
-Pour utiliser les fichiers de directives, il faut explique à make où
-les trouver. Cela peut se faire de plusieurs façons.
+Une fonction importante du shell est de définir l'environnement
+d'éxécution des variables. Pour utiliser les fichiers de directives
+BPS, la liaison `MAKEFLAGS=-I${HOME}/share/mk' doit figurer dans
+l'environnement de make. Pour les shells de la famille Bourne (sh),
+les commandes
 
-La première façon consiste à utiliser l'option `I' du programme, comme ceci:
+  % MAKEFLAGS=${HOME}/share/mk
+  % export MAKEFLAGS
 
-  make -I${HOME}/share/mk
+font l'affaire, pour les shells de la famille csh, la seule commande
 
-La seconde consiste à configurer le programme appelant make pour qu'il
-place la liaison `MAKEFLAGS=-I${HOME}/share/mk' dans l'environnement
-de make. Ce programme appelan est typiquement le shell de
-l'utilisateur. Pour les shells de la famille sh, on ajoute les lignes
+  % setenv MAKEFLAGS ${HOME}/share/mk
 
-  MAKEFLAGS=${HOME}/share/mk
-  export MAKEFLAGS
-
-dans le fichier d'initialisation de l'environnement
-(${HOME}/.profile). Pour les shells de la famille csh, on ajoute la
-ligne
-
-  setenv MAKEFLAGS ${HOME}/share/mk
-
-au fichier ${HOME}/.cshrc ou ${HOME}/.tcshrc.
+suffit. Ces commandes devraient être placées dans le fichier
+d'initialisation du shell.
 
 
-1.3 Si quelque chose a mal tourné
+1.4 Si quelque chose a mal tourné
 
 Si le déploiement de l'archive de distribution avec tar n'a pas
 terminé correctement, il se peut que:
@@ -111,20 +97,21 @@ le dossier ~/distfiles. On éxécute ensuite les commandes suivantes
 depuis un dossier de travail (par exemple un dossier temporaire, ou le
 dossier personnel):
 
-  $ tar xzf ~/distfiles/bmake.tar.gz
-  $ tar xzfC ~/distfiles/mk.tar.gz bmake
-  $ ./bmake/boot-strap --prefix=${HOME}
+  % tar xzf ~/distfiles/bmake.tar.gz
+  % tar xzfC ~/distfiles/mk.tar.gz bmake
+  % ./bmake/boot-strap --prefix=${HOME}
 
 Le programme `bmake' est alors installé sous ${HOME}/bin et les
 fichiers de directives qui l'accompagnent le sont sous
 ${HOME}/share/mk. On peut alors se débarasser du dossier de travail
 `bmake' avec la commande:
 
-  $ rm -Rf bmake
+  % rm -Rf bmake
 
 Après cette installation de bmake, on utilisera aussi le préfixe
 ${HOME} pour l'installation de BSD Make Pallas Scripts.
 
-Le programme `bmake' est très portable, cependant sur certains
-systèmes seule une version récente de GCC (ultérieure à 3.6) arrive à
-compiler `bmake'.
+Le programme `bmake' est très portable, cependant sur un système
+Solaris 10, je n'ai pas réussi à compiler `bmake' avec un compilateur
+GCC ancien. Les versions ultérieures à 3.6 semblent compiler
+correctement `bmake'.
