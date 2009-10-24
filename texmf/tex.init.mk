@@ -49,6 +49,10 @@ _TEX_DRIVER.ps?= dvips
 
 _TEX_COOKIE = .cookie.
 
+# Fichiers source de TeX
+_TEX_SUFFIXES?= .tex
+
+
 COOKIEFILES =
 
 do-clean-cookies:
@@ -59,6 +63,17 @@ do-clean: do-clean-cookies
 .for device in ${_TEX_DEVICES}
 _TEX_DRIVERS+= ${_TEX_DRIVER.${device}}
 .endfor
+
+# Si la variable TEXINPUTS est définie, on utilise sa valeur pour
+# .PATH.tex, etc.
+
+.SUFFIXES: ${_TEX_SUFFIXES}
+.if defined(TEXINPUTS)&&!empty(TEXINPUTS)
+.for suffix in ${_TEX_SUFFIXES}
+.PATH${suffix}: ${TEXINPUTS}
+.endfor
+.endif
+
 
 .endif #!target(__<tex.init.mk>__)
 
