@@ -76,6 +76,11 @@ CLEANFILES+= ${itm}
 
 .if !empty(TEXDEVICE:Mdvi)
 TEXDOC+= ${_TEX_DOC:=.dvi}
+.for doc in ${_TEX_DOC}
+.if defined(TEXDOCNAME.${doc:T})&&!empty(TEXDOCNAME.${doc:T})
+TEXDOCNAME.${doc:T}.dvi = ${TEXDOCNAME.${doc:T}}.dvi
+.endif
+.endfor
 .endif
 
 ### End of file `tex.device.dvi.mk'
