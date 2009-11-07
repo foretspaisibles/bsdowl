@@ -68,6 +68,11 @@ JOBNAME.${doc}.${device}.dvi = ${doc}.${device}
 .if !empty(TEXDEVICE:M*ps)
 .for device in ${TEXDEVICE:M*ps}
 TEXDOC+= ${_TEX_DOC:=.${device}}
+.for doc in ${_TEX_DOC}
+.if defined(TEXDOCNAME.${doc:T})&&!empty(TEXDOCNAME.${doc:T})
+TEXDOCNAME.${doc:T}.${device} = ${TEXDOCNAME.${doc:T}}.${device}
+.endif
+.endfor
 .endfor
 .endif
 

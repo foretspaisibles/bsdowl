@@ -48,6 +48,25 @@ SRCS.${doc:T}.${device}+= ${SRCS.${doc:T}}
 .endfor
 
 #
+# Files groups
+#
+
+FILESGROUPS+= TEXDOC
+TEXDOCDIR?= ${PREFIX}/Documents${APPLICATIONDIR}
+TEXDOCOWN?= ${DOCOWN}
+TEXDOCGROUP?= ${DOCGROUP}
+TEXDOCMODE?= ${DOCMODE}
+
+.if defined(TEXDOCNAME)&&!empty(TEXDOCNAME)
+.for doc in ${_TEX_DOC}
+TEXDOCNAME.${doc:T}?= ${TEXDOCNAME}
+.endfor
+.endif
+
+do-build: do-build-doc
+do-build-doc: ${TEXDOC}
+
+#
 # Génération des dépendances
 #
 
@@ -71,18 +90,5 @@ ${doc}.${device}: ${SRCS.${doc:T}.${device}}
 .for driver in ${_TEX_DRIVERS}
 .include "tex.driver.${driver}.mk"
 .endfor
-
-#
-# Files groups
-#
-
-FILESGROUPS+= TEXDOC
-TEXDOCDIR?= ${PREFIX}/Documents${APPLICATIONDIR}
-TEXDOCOWN?= ${DOCOWN}
-TEXDOCGROUP?= ${DOCGROUP}
-TEXDOCMODE?= ${DOCMODE}
-
-do-build: do-build-doc
-do-build-doc: ${TEXDOC}
 
 ### End of file `tex.doc.main.mk'

@@ -78,7 +78,8 @@ PORTMODE?= 444
 
 PORTMODE.sudoers = 440
 PORTDIR.PolicyKit.conf = ${PORTDIR}/PolicyKit
-
+PORTDIR.fonts-local.conf = ${PORTDIR}/fonts
+PORTNAME.fonts-local.conf = local.conf
 
 # FDI
 #

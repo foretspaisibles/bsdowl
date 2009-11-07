@@ -7,7 +7,7 @@
 # $Id$
 
 PROJECT = bsdmakepscripts
-VERSION = 1.1
+VERSION = 1.2
 AUTHOR = Michaël Le Barbier Grünewald
 
 SUBDIR+= bps
