@@ -36,7 +36,7 @@
 
 ### DESCRIPTION
 
-# Objectifs:
+# Targets:
 #
 # do-doc-odoc
 # do-install-odoc
@@ -44,16 +44,57 @@
 
 # Variables:
 #
+#
 # ODOC_NAME
-#  Un nom du système de fichiers UNIX utilisé pour nommer les fichiers
-#   objets.
+#   UNIX file name used to label objects
+#
 #
 # ODOC_SEARCH
-#   Liste des chemins où rechercher les fichiers `dump'
-#   Les chemins relatifs sont interprétés à partir du dossier
-#    ${.OBJDIR}.
-#   Lorsque cette variable n'est pas initialisée mais que SEARCHES
-#    l'est, la valeur de SEARCHES est utilisée.
+#   Lookup path for dump files
+#
+#   Relative paths are interpreted from ${.OBJDIR}. If this variable
+#   is uninitalized but the variable SEARCHES is, it receives the
+#   value of SEARCHES.
+#
+#
+# ODOC_LOAD
+#   List of dump files to load
+#
+#
+# ODOC_HIDE
+#   List of modules to hide
+#
+#
+# ODOC_SORT
+#   Flag governing the sorting of the module list
+#
+#
+# ODOC_KEEP_CODE
+#   Flag governing the keep of the code
+#
+#
+# ODOC_MERGE_INVERSE
+#   Flag governing the merge order inversion
+#
+#
+# ODOC_INSTALL_DUMPS
+#   Flag governing the installation of the dumps
+#
+#
+# ODOC_EXCLUDE
+#   List of modules to exclude
+#
+#
+# ODOC_HTML_CSS_FILE
+#   CSS file to use for the HTML output
+#
+#   This file is copied in the HTML directory output.
+#
+# ODOC_HTML_CSS_URL
+#   CSS name to use for the HTML output
+#
+#   This URL is written in the relevant files, but it must be
+#   available by other means.
 
 
 ### RÉALISATION
@@ -210,6 +251,13 @@ ODOC_HTMLDIR?= /html
 .if !empty(ODOC_FORMAT:Mhtml)
 
 ODOC_HTML?= ${ODOC_NAME}_html
+
+_ODOC_HTML_TOOL?= ${_ODOC_TOOL} -html
+
+.if defined(ODOC_HTML_CSS_URL)&&!empty(ODOC_HTML_CSS_URL)
+_ODOC_HTML_TOOL+= -css-style ${ODOC_HTML_CSS_URL}
+.endif
+
 do-doc-odoc: ${ODOC_HTML}
 
 .if !empty(ODOC_LOAD)
@@ -221,7 +269,10 @@ ${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*$/.cmi/}
 ${ODOC_HTML}:
 	${RM} -R -f ${ODOC_HTML}.temp ${ODOC_HTML}
 	${MKDIR} ${ODOC_HTML}.temp
-	${_ODOC_TOOL} -html -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi:N*.odoc}
+	${_ODOC_HTML_TOOL} -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi:N*.odoc}
+.if defined(ODOC_HTML_CSS_FILE)&&!empty(ODOC_HTML_CSS_FILE)
+	${CP} ${ODOC_HTML_CSS_FILE} ${ODOC_HTML}.temp/style.css
+.endif
 	${MV} ${ODOC_HTML}.temp ${ODOC_HTML}
 
 do-install-odoc: do-install-odoc-html
