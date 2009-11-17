@@ -51,7 +51,7 @@ _TEX_COOKIE = .cookie.
 
 # Fichiers source de TeX
 _TEX_SUFFIXES?= .tex
-
+_TEX_AUX_SUFFIXES?= .log
 
 COOKIEFILES =
 
