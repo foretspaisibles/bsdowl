@@ -82,7 +82,7 @@ LIB+= ${SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
 .endif
 .endfor
 
-LIBDIR=${PREFIX}/lib/ocaml${APPLICATIONDIR}
+LIBDIR?=${PREFIX}/lib/ocaml${APPLICATIONDIR}
 
 .include "bps.clean.mk"
 .include "bps.files.mk"
