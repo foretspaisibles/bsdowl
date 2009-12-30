@@ -155,10 +155,10 @@ ${obj}: ${if}
 ${obj}:
 .else
 .if !target(${if})
-# The CMI file swill be produced from the object
+# The CMI file will be produced from the object
 ${obj} ${if}:
 .else
-# The CMI file comes from a MLI that is proviously built
+# The CMI file comes from a MLI that is previously built
 ${obj}: ${if}
 ${obj}:
 .endif
