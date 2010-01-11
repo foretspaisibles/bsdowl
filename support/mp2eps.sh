@@ -61,11 +61,11 @@ is_no ()
 # Working Functions
 
 process_arg() {
-    local inputfile="$1";
-    local basename=`basename $inputfile .mp`
-    local texbase=`mktemp ${basename}_XXXX`
-    local texfile=$texbase.tex
-    local epsfile=$basename.eps
+    inputfile="$1";
+    basename=`basename $inputfile .mp`
+    texbase=`mktemp ${basename}_XXXX`
+    texfile=$texbase.tex
+    epsfile=$basename.eps
 
     cat > $texfile <<EOF
 \nopagenumbers
@@ -95,12 +95,12 @@ while getopts "Dh" OPTION; do
 done
 
 if [ $DEBUG = no ]; then
-    exec 2> /dev/null 1> /dev/null
+    exec 2>/dev/null 1>/dev/null
 else
     echo Debugging 1>&2
 fi
 
-shift $(( $OPTIND - 1 ))
+shift `expr $OPTIND - 1`
 
 for arg in "$@"; do process_arg "$arg"; done
 
