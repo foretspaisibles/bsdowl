@@ -51,7 +51,7 @@ INVALIDOPT() {
 
 mp2png_process()
 {
-    local file
+    file
     file=`mktemp mp2png.XXXXX`
     cp $1 $file
     mp2eps $file
@@ -69,7 +69,7 @@ while getopts "hr:" OPTION; do
     esac
 done
 
-shift $(( $OPTIND - 1 ))
+shift `expr $OPTIND - 1`
 
 # Let's roll
 

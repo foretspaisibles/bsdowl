@@ -69,7 +69,7 @@ is_no ()
 
 mp2pdf_process()
 {
-    local file
+    file
     file=`mktemp mp2pdf.XXXXX`
     cp $1 $file
     mp2eps $file
@@ -86,7 +86,7 @@ while getopts "hr:" OPTION; do
     esac
 done
 
-shift $(( $OPTIND - 1 ))
+shift `expr $OPTIND - 1`
 
 for arg in "$@"; do mp2pdf_process "$arg"; done
 
