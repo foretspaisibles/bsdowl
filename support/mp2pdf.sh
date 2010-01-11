@@ -11,7 +11,7 @@
 
 # Global Variables:
 
-AUTHOR="Michaël Grünewald <michael.grunewald@laposte.net>"
+AUTHOR="Michaël Le Barbier Grünewald <michael.grunewald@laposte.net>"
 COPYRIGHT="(c)2005"
 PROGNAME=`basename "$0"`
 
