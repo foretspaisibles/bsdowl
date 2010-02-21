@@ -131,6 +131,19 @@
 #
 #   Cette variable est initialisée automatiquement à partir de .CURDIR.
 
+# PROJECTLIBRARY
+#
+#   Bibliothèque du projet
+#
+#   Nom d'un dossier «bibliothèque» contenant des sous-dossiers pour
+#   les modèles utilisés dans le projet, les makefiles spécifiques,
+#   etc.
+
+# PROJECTLIBRARYMAKE
+#
+#   Bibliothèque de fichiers Make
+
+
 #
 # Description des cibles
 #
@@ -350,6 +363,29 @@ do-prepublish: ${PROJECTDISTSIGN:=.sig}
 PROJECTBASE = ${.CURDIR}
 .MAKEFLAGS: PROJECTBASE="${PROJECTBASE}"
 .endif
+
+
+#
+# Initialisation de PROJECTLIBRARY
+#
+
+.if !defined(PROJECTLIBRARY)
+PROJECTLIBRARY = ${PROJECTBASE}/Library
+.MAKEFLAGS: PROJECTLIBRARY="${PROJECTLIBRARY}"
+.endif
+
+
+#
+# Initialisation de PROJECTLIBRARYMAKE
+#
+
+.if !defined(PROJECTLIBRARYMAKE)
+PROJECTLIBRARYMAKE = ${PROJECTLIBRARY}/Make
+.MAKEFLAGS: PROJECTLIBRARYMAKE="${PROJECTLIBRARYMAKE}"
+.endif
+
+.MAKEFLAGS: -I${PROJECTLIBRARYMAKE}
+
 
 #
 # Ouverture d'un shell pour le développeur
