@@ -46,6 +46,15 @@
 #   Chaque terme a sa propre variable SRCS, et la variable SRCS
 #   générale y est ajoutée.
 
+
+# WWWMAIN
+#
+#    Nom du fichier principal
+#
+#    Pour produire plusieurs fichiers, il faut utiliser la forme
+#    spécialisée de cette variable.
+
+
 # WWWBASE
 #
 #   Répertoire racine du document cible (la version installée)
@@ -104,9 +113,18 @@ WWWNORMALIZETOOL+= -i${include}
 .endfor
 
 .for file in ${WWW}
-SRCS.${file:T}?= ${file:.html=.sgml}
-.if empty(SRCS.${file:T}:M${file:.html=.sgml})
-SRCS.${file:T}+= ${file:.html=.sgml}
+.if defined(WWWMAIN)&&!empty(WWWMAIN)
+WWWMAIN.${file:T} = ${WWWMAIN}
+.endif
+.if !defined(WWWMAIN.${file:T}) && exists(${file:.html=.sgml})
+WWWMAIN.${file:T} = ${file:.html=.sgml}
+.endif
+.if !defined(WWWMAIN.${file:T}) || empty(WWWMAIN.${file:T})
+.error "No main file for ${file}"
+.endif
+SRCS.${file:T}?= ${WWWMAIN.${file:T}}
+.if empty(SRCS.${file:T}:M${WWWMAIN.${file:T}})
+SRCS.${file:T}+= ${WWWMAIN.${file:T}}
 .endif
 .endfor
 
@@ -122,7 +140,7 @@ CLEANFILES+= ${file}
 CLEANFILES += ${file}.pre
 .endif
 ${file}: ${SRCS.${file:T}}
-	${WWWNORMALIZETOOL} ${file:.html=.sgml} | ${WWWTIDY} > ${.TARGET}.pre
+	${WWWNORMALIZETOOL} ${WWWMAIN.${file:T}} | ${WWWTIDY} > ${.TARGET}.pre
 	${MV} ${.TARGET}.pre ${.TARGET}
 .endfor
 
