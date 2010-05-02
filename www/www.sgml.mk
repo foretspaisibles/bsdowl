@@ -73,7 +73,7 @@
 #
 #   Énumère les entités à inclure
 #
-#   Il s'agit des entités de type paramètre don la valeur doit être
+#   Il s'agit des entités de type paramètre dont la valeur doit être
 #   positionnée à INCLUDE.
 
 # SEARCH
