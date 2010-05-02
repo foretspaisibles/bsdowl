@@ -103,7 +103,7 @@ WWWMODE?= 440
 FILESGROUPS+= WWW
 
 .if !defined(WWWDIR) && (!defined(SUBDIR) || empty(SUBDIR))
-.error Proper use needs a WWWDIR or SUBDIR value
+.error Proper use needs one of the variables WWWDIR or SUBDIR to have a value
 .endif
 
 .if empty(.MAKEFLAGS:MWWWBASE)
