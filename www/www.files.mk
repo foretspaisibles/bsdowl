@@ -28,7 +28,11 @@
 # SUBDIR = style
 # SUBDIR+= main
 #
-# WWWBASE = ${HOME}/Documents/www
+# # We have to set PREFIX, otherwise the switch credential mechanism
+# # will break.
+#
+# PREFIX = ${HOME}
+# WWWBASE = ${PREFIX}/Documents/www
 #
 # .include "www.files.mk"
 
