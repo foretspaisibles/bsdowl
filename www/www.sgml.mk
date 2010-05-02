@@ -94,7 +94,7 @@ WWWTIDY?= tidy -q -${WWWINPUT}
 
 .for variable in SEARCH CATALOG INCLUDE
 .if defined(${variable})&&!empty(${variable})
-.MAKEFLAGS: ${variable}="${${variable}}"
+.MAKEFLAGS: ${variable}='${${variable}}'
 .else
 ${variable}=
 .endif
