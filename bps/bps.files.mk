@@ -153,6 +153,8 @@ __<bps.files.mk>__:
 
 FILESGROUPS+= FILES BIN DOC SHARE LIB
 
+.include "bps.own.mk"
+
 .if !target(buildfiles)
 .for group in ${FILESGROUPS}
 buildfiles: ${${group}}

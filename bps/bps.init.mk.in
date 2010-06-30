@@ -190,6 +190,10 @@ REALCLEANDIRS?=
 
 ## APPLICATIONDIR
 
+.if !defined(APPLICATION)&&defined(PROJECT)&&!empty(PROJECT)
+APPLICATION = ${PROJECT}
+.endif
+
 .if defined(APPLICATION)&&!empty(APPLICATION)
 APPLICATIONDIR?=	/${APPLICATION}
 .endif
@@ -199,7 +203,6 @@ APPLICATIONDIR?=	/${APPLICATION}
 _MAKE_USERTARGET?=
 _MAKE_ALLSUBTARGET?=
 
-.include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
 
@@ -212,8 +215,8 @@ _MAKE_ALLSUBTARGET+= configure depend build doc
 # Héritage de certaines variables
 #
 
-# Les valeurs des variables DESTDIR et PREFIX sont exportées dans
-# l'environnement.
+# Les valeurs des variables DESTDIR, PREFIX et APPLICATION sont
+# exportées.
 
 .if empty(.MAKEFLAGS:MPREFIX=*)&&defined(PREFIX)
 .MAKEFLAGS: PREFIX='${PREFIX}'
@@ -221,6 +224,10 @@ _MAKE_ALLSUBTARGET+= configure depend build doc
 
 .if empty(.MAKEFLAGS:MDESTDIR=*)&&defined(DESTDIR)
 .MAKEFLAGS: DESTDIR='${DESTDIR}'
+.endif
+
+.if empty(.MAKEFLAGS:MAPPLICATION=*)&&defined(APPLICATION)
+.MAKEFLAGS: APPLICATION='${APPLICATION}'
 .endif
 
 .endif # !target(__<bps.init.mk>__)
