@@ -54,6 +54,7 @@ USE_ODOC = yes
 .include "ocaml.odoc.mk"
 .endif
 
+.include "bps.own.mk"
 .include "bps.usertarget.mk"
 
 ### End of file `ocaml.manual.mk'
