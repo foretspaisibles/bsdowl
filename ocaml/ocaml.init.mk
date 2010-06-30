@@ -31,8 +31,18 @@
 # Donne une définition de la variable _OCAML_OBJECT aussi utilisée
 # dans ocaml.build.mk .
 
+# La variable LIBDIR est initialisée automatiquement avec une valeur
+# dépendant d'APPLICATIONDIR. La variable APPLICATIONDIR est notamment
+# initialisée par `bps.project.mk'.
+
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:
+
+.if !defined(APPLICATIONDIR)||empty(APPLICATIONDIR)
+LIBDIR?=${PREFIX}/lib/ocaml${APPLICATIONDIR}
+.else
+LIBDIR?=${PREFIX}/lib/ocaml/site-lib${APPLICATIONDIR}
+.endif
 
 
 .SUFFIXES: .cmi .cmo .cmx .o .a .cma .cmxa
