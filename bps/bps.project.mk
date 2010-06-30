@@ -180,6 +180,8 @@
 
 ### IMPLÉMENTATION
 
+.include "bps.subdir.mk"
+
 .if !target(__<bps.project.mk>__)
 __<bps.project.mk>__:
 
@@ -369,8 +371,11 @@ PROJECTBASE = ${.CURDIR}
 # Initialisation de PROJECTLIBRARY
 #
 
-.if !defined(PROJECTLIBRARY)
+.if !defined(PROJECTLIBRARY) && exists(${PROJECTBASE}/Library)
 PROJECTLIBRARY = ${PROJECTBASE}/Library
+.endif
+
+.if defined(PROJECTLIBRARY)
 .MAKEFLAGS: PROJECTLIBRARY="${PROJECTLIBRARY}"
 .endif
 
@@ -380,11 +385,23 @@ PROJECTLIBRARY = ${PROJECTBASE}/Library
 #
 
 .if !defined(PROJECTLIBRARYMAKE)
+.if defined(PROJECTLIBRARY) && exists(${PROJECTLIBRARY}/Make)
 PROJECTLIBRARYMAKE = ${PROJECTLIBRARY}/Make
-.MAKEFLAGS: PROJECTLIBRARYMAKE="${PROJECTLIBRARYMAKE}"
+.elif defined(PROJECTLIBRARY) && exists(${PROJECTLIBRARY}/Mk)
+PROJECTLIBRARYMAKE = ${PROJECTLIBRARY}/Mk
+.elif defined(PROJECTBASE) && exists(${PROJECTBASE}/Mk)
+PROJECTLIBRARYMAKE = ${PROJECTBASE}/Mk
+.endif
 .endif
 
-.MAKEFLAGS: -I${PROJECTLIBRARYMAKE}
+.if defined(PROJECTLIBRARYMAKE)
+.MAKEFLAGS: PROJECTLIBRARYMAKE="${PROJECTLIBRARYMAKE}"
+.MAKEFLAGS: -I"${PROJECTLIBRARYMAKE}"
+.endif
+
+#
+# Reading project configuration
+#
 
 
 #
@@ -400,9 +417,8 @@ PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
 # La variable SHELL est définie dans l'environnement de l'utilisateur.
 shell:
 	${INFO} "Entering developper's subshell"
-	${ENVTOOL} ${PROJECTENV} ${SHELL}
+	@${ENVTOOL} ${PROJECTENV} ${SHELL}
 	${INFO} "Exiting developper's subshell"
-
 
 .endif # !target(__<bps.project.mk>__)
 
