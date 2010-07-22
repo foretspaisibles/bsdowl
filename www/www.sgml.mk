@@ -88,7 +88,7 @@
 
 .SUFFIXES: .sgml
 
-WWWNORMALIZE?= sgmlnorm -d
+WWWNORMALIZE?= osgmlnorm -d
 WWWINPUT?= ascii
 WWWTIDY?= tidy -q -${WWWINPUT}
 
