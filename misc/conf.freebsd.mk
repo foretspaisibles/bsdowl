@@ -40,8 +40,9 @@ LOCALBASE?= /usr/local
 
 # BASE
 #
-#  Base system configuration files, such as rc.conf, hosts,
-#  networks, groups, etc.
+#  Base system configuration files
+#
+#  Such as rc.conf, hosts, networks, groups, etc.
 
 FILESGROUPS+= BASE
 
@@ -53,21 +54,24 @@ BASEDIR.sshd_config = ${BASEDIR}/ssh
 BASEDIR.ssh_config = ${BASEDIR}/ssh
 BASEMODE.hostpad.conf = 400
 
-# RCD
+
+# RC
 #
-#  Files setting up services at boot time.
+#  Setting up services at boot time
 
-FILESGROUPS+= RCD
+FILESGROUPS+= RC
 
-RCDDIR?= ${LOCALBASE}/etc/rc.d
-RCDOWN?= ${BASEOWN}
-RCDGRP?= ${BASEGRP}
-RCDMODE?= 555
+RCDIR?= ${LOCALBASE}/etc/rc.d
+RCOWN?= ${BASEOWN}
+RCGRP?= ${BASEGRP}
+RCMODE?= 555
+
 
 # PORT
 #
-#  Port system configurations files, such as sudoers, pkgtools.conf,
-#  apache configuration files, etc.
+#  Third party packages configurations files
+#
+#  Such as sudoers, pkgtools.conf, apache configuration files, etc.
 
 FILESGROUPS+= PORT
 
@@ -83,7 +87,7 @@ PORTNAME.fonts-local.conf = local.conf
 
 # FDI
 #
-#  Device information files for the HAL system.
+#  Device information files for the HAL system
 
 FILESGROUPS+= FDI
 
@@ -95,11 +99,11 @@ FDIMODE?= 444
 
 # KERN
 #
-#  Kernel configuration files, the machine is guessed from the MACHINE
-#  variable.
+#  Kernel configuration files
 #
-#  Note: it would be nice to define a group for each supported machine
-#  type, so that kernels for various machines can be prepared.
+#  The machine is guessed from the MACHINE variable.  Note: it would
+#  be nice to define a group for each supported machine type, so that
+#  kernels for various machines can be prepared.
 
 FILESGROUPS+= KERN
 
@@ -111,7 +115,9 @@ KERNMODE?= 444
 
 # BOOT
 #
-#  Loader configuration files, they go under /boot.
+#  Loader configuration files
+#
+#  These files usually go under /boot.
 
 FILESGROUPS+= BOOT
 
@@ -123,7 +129,9 @@ BOOTMODE?= 444
 
 # CSUP
 #
-#  csup is a software package for updating collections of files
+#  CVS Update
+#
+#  Csup is a software package for updating collections of files
 #  across a network. It is used to keep FreeBSD sources and the ports
 #  collection in sync. Its configuration files goes under /etc/csup.
 
@@ -140,9 +148,10 @@ CSUPNAME.refuse-supfile = refuse
 
 # XORG
 #
-#  X server configuration files, they go under /etc/X11. Note that
-#  these files must be read somewhere to be effective, for instance in
-#  the Xsession script.
+#  X server configuration files
+#
+#  Theses files go under /etc/X11.  Note that these files must be read
+#  somewhere to be effective, for instance in the Xsession script.
 
 FILESGROUPS+= XORG
 
@@ -154,8 +163,11 @@ XORGMODE?= 444
 
 # KDE
 #
-# KDE is a desktop environment. Among other bits of software, it
-# provides a display manager daemon, that is a system component.
+#  K Desktop Environment
+#
+#  KDE is a desktop environment.  Among other bits of software, it
+#  provides a display manager daemon, that is a system component.  We
+#  handle KDE4.
 
 FILESGROUPS+= KDE
 
@@ -169,35 +181,34 @@ KDEDIR.kdmrc = ${KDEDIR}/kdm
 
 # XDM
 #
-# XDM is the display manager daemon shipped with Xorg. It is highly
-# configurable, see comments in the relevant files.
+#  X Display Manager
 #
-# The variable XDMDISPLAY holds the list of the displays that should
-# be initialzed with a Xsetup script.
+#  XDM is the display manager daemon shipped with Xorg. It is highly
+#  configurable, see comments in the relevant files.
 
 FILESGROUPS+= XDM
-XDMDISPLAY = 0
 XDMDIR?= ${LOCALBASE}/lib/X11/xdm
 XDMOWN?= ${BASEOWN}
 XDMGRP?= ${BASEGRP}
 XDMMODE?= 444
 
-XDMMODE.GiveConsole = 555
-XDMMODE.TakeConsole = 555
-XDMMODE.Xreset = 555
-XDMMODE.Xsession = 555
-XDMMODE.Xstartup = 555
-XDMMODE.Xwilling = 555
+XDMMODE.GiveConsole?= 555
+XDMMODE.TakeConsole?= 555
+XDMMODE.Xreset?= 555
+XDMMODE.Xsession?= 555
+XDMMODE.Xstartup?= 555
+XDMMODE.Xwilling?= 555
 
-.for display in ${XDMDISPLAY}
-XDMMODE.Xsetup_${display} = 555
+.for file in ${XDM:MXsetup_*}
+XDMMODE.${file:T}?= 555
 .endfor
 
-FILESGROUPS+= XDMPIXMAP
-XDMPIXMAPDIR?= ${XDMDIR}/pixmaps
-XDMPIXMAPOWN?= ${BASEOWN}
-XDMPIXMAPGRP?= ${BASEGRP}
-XDMPIXMAPMODE?= 444
+# Images goes under ${XDMDIR}/pixmaps
+.for suffix in png gif jpg jpeg xpm
+.for file in ${XDM:M*.${file}}
+XDMDIR.${file:T}?= ${XDMDIR}/pixmaps
+.endfor
+.endfor
 
 
 #
