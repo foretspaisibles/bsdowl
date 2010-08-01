@@ -21,6 +21,7 @@ SUBDIR+= support
 PREFIX?= @prefix@
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
+.MAKEFLAGS: -I${.CURDIR}/bps
 
 .include "pallas.mk"
 
