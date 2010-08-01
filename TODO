@@ -77,7 +77,7 @@ achievement of these two goals.
   	  misc/misc.dotfile.mk
   	  misc/misc.elisp.mk
   	  misc/misc.script.mk
-          misc/conf.freebsd.mk
+  eng str misc/conf.freebsd.mk
 
   	  noweb/noweb.main.mk
   	  noweb/noweb.latex.mk
