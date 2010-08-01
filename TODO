@@ -21,6 +21,8 @@ satisfactory state.  We pursue the following goals:
 Here is a list of files and their state with respect to the
 achievement of these two goals.
 
+	  README
+
   	  bps/bps.files.mk
   	  bps/bps.usertarget.mk
   	  bps/bps.objdir.mk
