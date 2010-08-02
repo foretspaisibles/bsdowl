@@ -1,5 +1,18 @@
 TODO -- Hey Emacs, it's an -*- Org -*- mode file!
 
+* RELEASE ENGINEERING
+** Dependencies and suggestions
+*** mktexlsr
+Remove the install time dependance to `mktexlsr' used by
+`noweb/nwlatex.tex'.
+*** TeX/LaTeX
+List TeX/LaTeX as a suggested package, for `noweb'.
+*** OpenSP
+List OpenSP as a suggested package, for `onsgmls', the SGML normalizer
+used to prepare WEB pages.
+*** nwlatex.css
+Fix installation path for `nwlatex.css'.
+
 * MODULES
 ** OCaml
 The functionalities of these modules shall be reworked.  They lack
