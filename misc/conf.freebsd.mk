@@ -205,7 +205,7 @@ XDMMODE.${file:T}?= 555
 
 # Images goes under ${XDMDIR}/pixmaps
 .for suffix in png gif jpg jpeg xpm
-.for file in ${XDM:M*.${file}}
+.for file in ${XDM:M*.${suffix}}
 XDMDIR.${file:T}?= ${XDMDIR}/pixmaps
 .endfor
 .endfor
