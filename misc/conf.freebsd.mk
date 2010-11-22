@@ -82,7 +82,8 @@ PORTMODE?= 444
 
 PORTMODE.sudoers = 440
 PORTDIR.PolicyKit.conf = ${PORTDIR}/PolicyKit
-
+PORTDIR.fonts-local.conf = ${PORTDIR}/fonts
+PORTNAME.fonts-local.conf = local.conf
 
 # FDI
 #
@@ -204,7 +205,7 @@ XDMMODE.${file:T}?= 555
 
 # Images goes under ${XDMDIR}/pixmaps
 .for suffix in png gif jpg jpeg xpm
-.for file in ${XDM:M*.${file}}
+.for file in ${XDM:M*.${suffix}}
 XDMDIR.${file:T}?= ${XDMDIR}/pixmaps
 .endfor
 .endfor
