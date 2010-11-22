@@ -23,6 +23,12 @@ __<tex.init.mk>__:
 .include "texmf.init.mk"
 
 DRAFT?= no
+.if ${DRAFT} == no
+.undef DRAFTTIMESTAMP
+.else
+DRAFTTIMESTAMP!= date '+-%Y-%m-%d'
+.endif
+
 TEXDEVICE?= dvi
 TEX?= pdftex
 TEX.dvi?= tex
