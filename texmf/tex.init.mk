@@ -23,10 +23,13 @@ __<tex.init.mk>__:
 .include "texmf.init.mk"
 
 DRAFT?= no
+
+TEXTIMESTAMP!= date '+%Y-%m-%d'
+
 .if ${DRAFT} == no
-.undef DRAFTTIMESTAMP
+.undef TEXDRAFTSTAMP
 .else
-DRAFTTIMESTAMP!= date '+-%Y-%m-%d'
+TEXDRAFTSTAMP?= -${TEXTIMESTAMP}
 .endif
 
 TEXDEVICE?= dvi
@@ -80,6 +83,11 @@ _TEX_DRIVERS+= ${_TEX_DRIVER.${device}}
 .endfor
 .endif
 
+# Get rid of the file missfont.log, if it is present.
+
+.if exists(missfont.log)
+DISTCLEANFILES+= missfont.log
+.endif
 
 .endif #!target(__<tex.init.mk>__)
 
