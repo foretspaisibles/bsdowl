@@ -1,0 +1,157 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div"
+End Variables:
+-->
+
+
+<h1 id="makeintro">Introduction Make</h1>
+
+<p>Unix systems have a strong emphasis on files, and a typical work
+session with such a system involves the creation of files
+<em>(sources)</em> and the invocation of many data processing
+procedures <em>(recipes)</em> yielding intermediary and final files
+<em>(objects)</em> as output of their work. Most of the work is
+usually performed through the use of a shell.</p>
+
+
+<p>The Make program is a utility whose input is a workflow declaring
+tasks (<em>targets</em> in Make's parlance) and means to achieve them,
+and whose invocation yields execution of the given tasks.</p>
+
+<p>This presentation emphasizes that Make is a day-to-day companion of
+the UNIX operator, as it can be used to systematize a large part of
+its work. You can read more about the Make program and
+especially on the FreeBSD Make program by reading the <a
+href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/developers-handbook/tools-make.html">paragraphs
+dedicated to Make</a> in the <a
+href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/developers-handbook/index.html">FreeBSD
+Developer's Handbook</a>, and the <a
+href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/pmake/index.html">PMake
+tutorial</a> (the PMake programs is the venerable ancestor of FreeBSD
+Make).</p>
+
+
+<h1 id="makelib">Make scripts</h1>
+
+<p>Make's input is usually not a static specification of the workflow graph,
+but instead a parametrized specification of the graph, it is then
+possible to generalize specifications in order to manage many similar
+situations with the same specification. We call these generic
+specifications Make scripts, it is possible to gather them in
+libraries of scripts solving problems occuring in related
+situations.</p>
+
+<p>BSD Make Pallàs Scripts is a collection of such
+libraries. They can be used to ease the development of OCaml
+software, the production of TeX and LaTeX documents, and few other
+random things.</p>
+
+
+<h1 id="makebsd">BSD Make</h1>
+
+<p>Make is not the name of a well defined program, but the
+name of a large brotherhood. Each of the brother has its own strengths
+and weaknesses, and also its own dialect used to prepare its input
+specification. BSD Make Pallàs scripts can be used with three of these
+brothers, all of them being descendants of the make program in
+BSD4.4. These programs are:</p>
+
+<ul>
+  <li>FreeBSD's make;</li>
+  <li>MAC OS-X's bsdmake;</li>
+  <li>NetBSD's bmake.</li>
+</ul>
+
+<p>Users of Linux based system are likely to be equipped with GNU
+Make. This version of Make is a piece of a larger puzzle, the
+autotools; without these autotools, it is not so useful. However,
+NetBSD's bmake works fine under many Linux based systems. You can get
+source files for it at <a
+href="http://void.crufty.net/ftp/pub/sjg/">Simon J. Gerraty's</a>, see
+build instructions in the <a
+href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/INSTALL?view=auto"
+>INSTALL</a> file of BSD Make Pallàs Scripts distribution.</p>
+
+<h1 id="makeisntr">Downloading, installing and using</h1>
+
+<p>You shall download the latest source distribution: <a
+href="http://download.gna.org/bsdmakepscripts/bsdmakepscripts-1.3.tar.bz2"
+>bsdmakepscripts-1.3.tar.bz2</a>. If you are running a Linux based
+system, or any system but FreeBSD, NetBSD and MAC OS-X, you shall
+consider getting Simon J. Garrety's following software: <a
+href="http://void.crufty.net/ftp/pub/sjg/bmake.tar.gz"
+>bmake.tar.gz</a> and <a
+href="http://void.crufty.net/ftp/pub/sjg/mk.tar.gz"
+>mk.tar.gz</a>.</p>
+
+<p>See the <a
+href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/INSTALL?view=auto"
+>INSTALL</a> file in the source distribution for installation
+instructions. Installation procedure consists of copying the files in
+some directory and arrange so that your Make program knows about
+this.</p>
+
+<p>Specific pages are devoted to the uses of the BSD Make Pallàs
+Scripts:</p>
+
+<ul>
+
+  <li><a href="tex.html">producing TeX and LaTeX documents</a>,
+   note that the scripts have support for the drawing tool
+   METAPOST;</li>
+
+  <li><a href="ocaml.html">producing OCaml software</a>
+   covers production and installation of programs and libraries,
+   although some moderately advanced features of OCaml the compilers
+   are not&nbsp;(yet) supported.</li>
+
+  <li><a href="generation.html">code generation</a> presents some code
+   generation tools and their integration in BSD Make Pallàs Scripts,
+   M4 and Norman Ramsey's <a href="http://www.cs.tufts.edu/~nr/noweb/"
+   >NOWEB</a> are supported;</li>
+
+  <li><a href="guidelines.html">interface guidelines</a> presents
+   aspects shared by all the scripts, documentation for specific
+   scripts occasionally refers to this document;</li>
+
+  <li><a href="writing.html">writing Makefiles</a> discusses the art
+   of writing Makefiles, it assumes you already know the basics and
+   focuses on techniques used in BSD Make Pallàs Scripts.</li>
+
+</ul>
+
+<p><em>Important Note:</em> As this is the case for most software
+products, improper use of BSD Make Pallàs Scripts may lead to data
+loss or other random disagreement, you are on your own! See also the <a
+href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/COPYING?view=auto"
+>COPYING</a> file shipped with the sources, where condition of
+utilisation are stated.</p>
+
+<h1>Software supporting BSD Make Pallàs Scripts</h1>
+
+<p>Some software come with handy scripts using BSD Make Pallàs
+Scripts, we list these friends here:</p>
+
+<ul>
+
+  <li><a href="http://home.gna.org/bhrid/"
+  >Bhrìd TeX</a>, a family of TeX formats;</li>
+
+  <li><a href="https://forge.ocamlcore.org/projects/libertine"
+  >Libertine</a>, a small set of libraries for the OCaml language;</li>
+
+  <li><a href="https://forge.ocamlcore.org/projects/abach"
+  >Abach</a>, a would-be geometry-oriented computation library,
+  for the OCaml language.</li>
+
+</ul>
+
+
+<h1>BSD Make Pallàs Scripts is a Gna! hosted project</h1>
+
+<pre>
+Registration Date: Tuesday 03/11/2008 at 20:35
+License: CeCILL-B License
+Development Status: 5 - Production/Stable
+</pre>

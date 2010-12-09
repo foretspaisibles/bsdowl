@@ -1,0 +1,369 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+<html>
+<head>
+<meta name="generator" content="HTML Tidy, see www.w3.org">
+<title>Producing TeX and LaTeX documents</title>
+<link title="Trendy" href="style/trendy.css" type="text/css" rel=
+"stylesheet">
+<link title="Modern" href="style/modern.css" type="text/css" rel=
+"alternate stylesheet">
+<link title="Classic" href="style/classic.css" type="text/css" rel=
+"alternate stylesheet">
+<link title="G2 Tiling" href="style/g2.css" type="text/css" rel=
+"alternate stylesheet">
+</head>
+<body class="scroll">
+<div id="CANVAS">
+<div id="MORE">
+<div class="link_page">
+<div class="title">Download</div>
+
+<div class="body"><a href=
+"http://download.gna.org/bsdmakepscripts/bsdmakepscripts-1.3.tar.bz2">
+bsdmakepscripts-1.3.tar.bz2</a></div>
+</div>
+
+<div class="link_external">
+<div class="title">On the WWW</div>
+
+<div class="body">
+<ul>
+<li><a href=
+"http://www.freebsd.org/doc/en_US.ISO8859-1/books/pmake/index.html">
+PMake, a tutorial</a></li>
+
+<li><a href="http://home.gna.org/bhrid/">Bhr&igrave;d TeX</a></li>
+
+<li><a href=
+"http://cm.bell-labs.com/who/hobby/MetaPost.html">John'Hobby's
+METAPOST</a></li>
+</ul>
+</div>
+</div>
+
+<div class="link_page">
+<div class="title">Sections</div>
+
+<div class="body">
+<ul>
+<li><a href="index.html">Home</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="PAGE">
+<div id="HEADER">$Date$</div>
+
+<div id="TITLE">
+<p id="HEADLINE">Producing TeX and LaTeX documents</p>
+
+<p id="INTRODUCTION">The BSD Make Pall&agrave;s Scripts may be used
+to ease the production of TeX and LaTeX documents. As the TeX
+toolchain functions mostly like a compiler toolchain, TeX document
+production falls in the predilection domain of Make.</p>
+
+<p id="LEGALISM">This document is copyright (c) 2008, 2009
+Micha&euml;l Le Barbier Gr&uuml;newald. BSD Make Pall&agrave;s
+Scripts is copyright (c) 2006, 2007, 2008, 2009 Micha&euml;l Le
+Barbier Gr&uuml;newald, it is released under the terms of the
+CeCILL-B licence (see COPYING in the sources).</p>
+</div>
+
+<div id="CONTENT">
+<h1>Summary</h1>
+
+<p>On this page, you will learn how to use BSD Make Pall&agrave;s
+Scripts&nbsp;to:</p>
+
+<ul>
+<li>produce simple documents and publish them on the file
+system;</li>
+
+<li>produce the bibliography of your LaTeX document with
+BIBTeX;</li>
+
+<li>produce figures for your document with METAPOST;</li>
+
+<li>deal with documents whose source spans across several
+directories;</li>
+
+<li>deal with documents having parts that need to be computed.</li>
+</ul>
+
+<h1>Foreword: working with TeX or LaTeX</h1>
+
+<p>There is multiple TeX formats in use, plain TeX and LaTeX are
+example of such formats. The LaTeX format enjoys a wide community
+of users, so the module latex.doc.mk is used in examples. However
+most of the following applies to the generic tex.doc.mk as well.
+Some paragraphs in the sequel documents mechanisms specific to
+latex.doc.mk, they are explicitly identified as such.</p>
+
+<h1>Simple documents</h1>
+
+<p>The preparation of a simple document with LaTeX itself is very
+easy, thus the use of BPS may at a first glance look like a useless
+complication instead of a simplification. It provides already some
+help, however.</p>
+
+<h2>The first time</h2>
+
+<p>Suppose the file script.tex holds your manuscript, put it in a
+directory dedicated to your document, and create a file Makefile
+(note the leading capital) with the following content:</p>
+
+<pre class="file">
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>Your document's directory contains now the paper.tex file and
+the Makefile above. Point your shell's working directory to this
+one, and issue the <em>make</em> command:</p>
+
+<pre class="shell">
+$ make
+make build
+===&gt; Multipass job for script.dvi (aux)
+latex script.tex
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4)
+entering extended mode
+(./script.tex
+LaTeX2e &lt;2003/12/01&gt;
+...
+</pre>
+
+<p>If your manuscript has no error, you end up with the following
+object files in your working directory:</p>
+
+<pre class="shell">
+$ ls
+Makefile    script.log
+script.aux  script.tex
+script.dvi  script.toc
+</pre>
+
+<p>Once you are done with the objects, you can clean the directory
+with the <em>make clean</em> mantra:</p>
+
+<pre class="shell">
+$ make clean
+rm -f  script.dvi script.log script.aux script.toc
+</pre>
+
+<p>Cleaning the directory is an optional step, but prevents your
+storage and your archive media to end up filled with unused data,
+that can be quickly recreated on demand. While DVI files are
+usually very small, a few hundred kilobytes, the PS or PDF objects
+are often much larger.</p>
+
+<h2>Installing</h2>
+
+<p>Before you clean up your working directory with the <em>make
+clean</em> mantra, you you may wish to store the objects you
+created in some adequate place of the local filesystem. This step
+is called <em>installation</em> of your document, because it is
+analogous to the installation of a program you freshly compiled.
+You require the installation of your document with the <em>make
+install</em> command, but you must first tell make which place is
+actually adequate. This is done by assigning the DOCUMENTDIR
+variable with the path to the directory you want your files copied
+to, as displayed by the following Makefile:</p>
+
+<pre class="file">
+DOCUMENTDIR = ${HOME}/doc
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>You can then proceed with the <em>make install</em> command:</p>
+
+<pre class="shell">
+$ make install
+install -d /home/michi/doc
+install -o michi -g michi -m 440 script.dvi /home/michi/doc
+</pre>
+
+<p>In comparison with the manual approach for storing the object in
+a safe place with the <em>cp</em> command, you save retyping the
+target directory name the next time you update your document. Plus,
+it eases the organization of your document sources library and
+scales to a large number of documents, see <em>Working with a large
+number of documents</em> below. It is therefore very useful when
+you prepare a local copy of your web page, where you distribute
+papers you wrote, before you upload it on the web serser.</p>
+
+<h2>Selecting an output format</h2>
+
+<p>The TeX toolchain is capable of producing electronic documents
+in several formats. Commonly used formats are DVI, PostScript (PS)
+and PDF. The TEXDEVICE variable governs the format of documents
+produced with the help of latex.doc.mk. Its value is usually
+<i>dvi</i>, so that latex.doc.mk will produce a DVI file from your
+source.</p>
+
+<h2>Drafts and multipass jobs</h2>
+
+<p><em>This section is mostly specific to the latex.doc.mk script,
+the generic tex.doc.mk does not take special care for multipass
+jobs.</em></p>
+
+<p>The latex.tex.mk enforces multipass treatment of your
+manuscript, because LaTeX needs this to produce correct cross
+references created with <em>label</em> and <em>ref</em> commands
+within your document. In the early existence of a document, updates
+are likely to be frequent and it is thus desirable to avoid the
+lenghty multiple passes processing. The module latex.tex.mk has a
+draft mode for this. To enable the draft mode, set make's variable
+DRAFT to yes, this is done by adding an appropriate statement in
+the Makefile, as shown by the following example:</p>
+
+<pre class="file">
+DRAFT?= yes
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>The statement <em>DRAFT?=</em> is a special form of an
+assignement statement, that allows you to type <em>make
+DRAFT=no</em> at the shell prompt if you want to re-enable
+multipass processing of your jobs for one time. When you have
+finished polishing your manuscript, you can remove the DRAFT
+assignement, your paper is then ready for a last <em>make</em> run
+producing the final version of your document. If you are satisfied
+with it, you can <em>install</em> it</p>
+
+<p>When working on a document, it might be useful to keep copies of
+the objects you produced at some point of your work. For instance,
+pciture yourself sending a copy of your work to a friend. Your
+friend will read your paper with attention and send you back his
+comments, but in meanwhile, you kept on improving your document.
+When you receive the comments of your friend, you will compare them
+to the document you sent him. It is therefore useful to keep a copy
+of it. The best way to do this is probably to use a RCS, a software
+system managing history of files. If you do not use such a system,
+you will be happy to learn that tex.doc.mk defines a variable
+DRAFTTIMESTAMP, that expands to a time stamp.</p>
+
+<h2>A split document</h2>
+
+<p>If you are working on a complex document, you certainly have
+split your sources into several files. Usually one file per
+chapter, or per section, plus a main file containing the preamble
+and many <em>input</em> statements to instruct LaTeX to read all of
+the files actually containing the document.</p>
+
+<p>Assume that your document is split into a main file galley.tex
+and two other files part1.tex and part2.tex. Your galley.tex
+certainly looks like this:</p>
+
+<pre class="file">
+\documentclass{article}
+\begin{document}
+\input{part1}
+\input{part2}
+\end{document}
+</pre>
+
+<p>A suitable Makefile is then:</p>
+
+<pre class="file">
+DOC = galley.tex
+SRCS = part1.tex
+SRCS+= part2.tex
+.include "latex.doc.mk"
+</pre>
+
+<h1>Figures with METAPOST</h1>
+
+<p>Modules latex.doc.mk and tex.doc.mk comes with a nice support
+for <a href=
+"http://cm.bell-labs.com/who/hobby/MetaPost.html">METAPOST</a>
+generated pictures, provided you have <a href=
+"http://pages.cs.wisc.edu/~ghost/">Ghostscript</a> and a working
+TeX installation. This is something worth noting, since METAPOST is
+often the right tool to be used for drawing figures appearing in
+TeX documents, but support for it is missing in many GUI editors
+for LaTeX.</p>
+
+<p>Assume you prepared illustrations for your article with
+METAPOST, and split your illustrations into two files illustr1.mp
+and illustr2.mp. To let latex.doc.mk handle the production of your
+figures, add FIGS statements to your Makefile:</p>
+
+<pre class="file">
+DOC = galley.tex
+SRCS = part1.tex
+SRCS+= part2.tex
+FIGS = illustr1.mp
+FIGS+= illustr2.mp
+.include "latex.doc.mk"
+</pre>
+
+<p>Then type in <i>make</i> at the shell prompt. The latex.doc.mk
+will then figure out how many illustrations are present in each
+file, and produce the image files required by your TEXDEVICE.</p>
+
+<p><i>Discovering METAPOST.</i> If you do not know about METAPOST
+but are interested by it, the first good news is that this program
+is included by many (if not all) TeX distributions. The second good
+news is that you can easily find plenty of information and examples
+of its use on the WWW. For instance the <a href=
+"http://www.tug.org/metapost.html">TeX users group</a> has a page
+on its website devoted to this tool. The list you will find there
+is pretty long, so let me add that I especially like the
+introduction written by <a href=
+"http://remote.science.uva.nl/~heck/Courses/mptut.pdf">Andr&eacute;
+Heck</a>, it might be a good starting point for you.</p>
+
+<h1>A complex document</h1>
+
+<p>We illustrate the use of BPS in the production of more complex
+documents. We assume that you have two documents whose sources are
+living in the same file, let's say an article and an abridged
+version of this article. These files share a macro file macro.tex,
+but are otherwise rather independent. The article features a table
+that is generated by a small program <em>gentable</em> sitting in
+the document's directory. The rest of the text is split across
+section1.tex and section2.tex. The summary has just one text file
+summary.tex. The Makefile used looks like this:</p>
+
+<pre class="file">
+DOC = article.tex
+DOC+= summary.tex
+
+SRCS = macros.tex
+SRCS.article.tex = section1.tex
+SRCS.article.tex+= section2.tex
+SRCS.article.tex+= table.tex
+
+table.tex: gentable
+    ./gentable &gt; ${.TARGET}
+
+.include "latex.doc.mk"
+
+CLEANFILES+= table.tex
+</pre>
+
+<h1>Bibliography</h1>
+
+<p>BPS supports the preparation if bibliographies with BibTeX.
+First, you must be sure that the program TeX will find the
+bibliographic databases you enumerated in your document with
+<em>bibliography</em> statements.</p>
+
+<h1>Index</h1>
+
+<p>At the time of writing, there is no specific provision in BPS to
+help the preparation of LaTeX documents with an index.</p>
+
+<h1>Organizing long documents</h1>
+</div>
+
+<div id="FOOTER">$Date$</div>
+</div>
+</div>
+</body>
+</html>
+

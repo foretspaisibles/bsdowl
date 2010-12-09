@@ -1,0 +1,18 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<p id="HEADLINE">Lorem Ipsum</p>
+<p id="INTRODUCTION">Mauris eu quam eget nulla fermentum
+adipiscing.  Nulla ut mauris. Donec dictum. Sed consequat, leo pretium
+sagittis congue, ante nunc laoreet nisl, ac aliquam risus tellus
+commodo elit. Morbi ut odio vitae eros luctus luctus. Cum sociis
+natoque penatibus et magnis dis parturient montes, nascetur ridiculus
+mus.  Nulla placerat porta justo. Nullam malesuada dapibus
+orci. Mauris eu quam eget nulla fermentum adipiscing. Ut posuere
+laoreet pede.  Curabitur et lectus in tellus egestas
+hendrerit. Curabitur adipiscing, mauris non dictum aliquam, arcu risus
+dapibus diam, nec sollicitudin quam erat quis ligula.</p>
+<p id="LEGALISM">This example is copyright (c) 2008 Michaël
+Grünewald.</p>

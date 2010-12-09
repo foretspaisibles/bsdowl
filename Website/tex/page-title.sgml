@@ -1,0 +1,15 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<p id="HEADLINE">Producing TeX and LaTeX documents</p>
+<p id="INTRODUCTION">The BSD Make Pallàs Scripts may be used to ease the
+production of TeX and LaTeX documents. As the TeX toolchain functions
+mostly like a compiler toolchain, TeX document production falls in the
+predilection domain of Make.</p>
+
+<p id="LEGALISM">This document is copyright (c) 2008, 2009 Michaël Le Barbier
+Grünewald. BSD Make Pallàs Scripts is copyright (c) 2006, 2007, 2008,
+2009 Michaël Le Barbier Grünewald, it is released under the terms of
+the CeCILL-B licence (see COPYING in the sources).</p>

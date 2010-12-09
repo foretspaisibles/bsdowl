@@ -1,0 +1,6 @@
+div#MORE .link_local,
+div#MORE .link_external,
+div#MORE .news,
+div#MORE .action {
+  font-size: 80%;
+}

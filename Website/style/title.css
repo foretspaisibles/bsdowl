@@ -1,0 +1,15 @@
+/* title.css -- Présentation dans la zone de titre */
+div#TITLE p#HEADLINE {
+  font-size: 170%;
+}
+
+div#TITLE p#INTRODUCTION {
+  text-align: justify;
+}
+
+div#TITLE p#INTRODUCTION:lang(en):before,
+div#TITLE p#INTRODUCTION:lang(fr):before,
+div#TITLE p#INTRODUCTION:before {
+  content: "Introduction : ";
+  font-weight: bold;
+}
