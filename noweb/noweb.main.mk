@@ -307,7 +307,7 @@ _NOTANGLE_TOOL.${file:T}+= -markup ${NOTANGLE_MARKUP.${file:T}}
 .if defined(NOTANGLE_FILTER.${file:T})&&!empty(NOTANGLE_FILTER.${file:T})
 _NOTANGLE_TOOL.${file:T}+= ${NOTANGLE_FILTER.${file:T}:C/^/-filter /g}
 .endif
-CLEANFILES+= ${file}
+REALCLEANFILES+= ${file}
 ${file}: ${NOWEB.${file:T}}
 	${_NOTANGLE_TOOL.${file:T}} -R${.TARGET} ${.ALLSRC} | cpif ${.TARGET}
 .endfor
