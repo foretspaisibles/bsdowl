@@ -1,0 +1,198 @@
+/* modern.css - A Simple CSS for HTML documents */
+
+@import url("modern_sz.css");
+@import url("layout.css");
+@import url("content.css");
+@import url("title.css");
+@import url("more.css");
+
+body {
+  background: #F6F6F6;
+}
+
+div#PAGE {
+  border: outset thin black;
+  background: white;
+}
+
+/* Styles de texte */
+
+div#TITLE p#INTRODUCTION {
+  font-size: 80%;
+  letter-spacing: 0.05em;
+}
+
+div#TITLE p#HEADLINE {
+  color: #CCCCCC;
+  letter-spacing: 0.33em;
+  text-align: left;
+  text-transform: uppercase;
+}
+
+div#CONTENT h1,
+div#CONTENT h2,
+div#CONTENT h3,
+div#CONTENT h4,
+div#CONTENT h5,
+div#CONTENT h6 {
+  font-weight: normal;
+}
+
+div#CONTENT h1 {
+  color: #CC6600;
+  border-bottom: thin solid;
+}
+
+div#CONTENT h2 {
+  color: #996633;
+}
+
+div#CONTENT h3 {
+  color: #996633;
+}
+
+div#CONTENT h3 {
+  color: #996633;
+}
+
+div#CONTENT h4 {
+  color: #996633;
+}
+div#CONTENT h5 {
+  color: #996633;
+}
+
+div#CONTENT h6,
+div#CONTENT p span.title {
+  color: #996633;
+}
+
+div#CONTENT p span.title {
+  font-style: italic;
+}
+
+
+div#MORE {
+  color: #333300;
+}
+
+div#CONTENT a:link,
+div#CONTENT a:visited {
+  text-decoration: none;
+}
+
+div#CONTENT a:hover {
+  background: #FFFFCC;
+}
+
+div#MORE .news ,
+div#MORE .link_page ,
+div#MORE .link_local ,
+div#MORE .link_external ,
+div#MORE .action  {
+  font-family: Lucida Grande,Lucida Sans Unicode,Arial,Verdana,Bitstream Vera Sans,sans-serif,sans;
+  font-size: 80%;
+  border-style: solid;
+  border-width: 1px;
+  margin-top: 2em;
+}
+
+div#MORE .news .title,
+div#MORE .link_page .title,
+div#MORE .link_local .title,
+div#MORE .link_external .title,
+div#MORE .action .title {
+  font-weight: bold;
+  line-height: 100%;
+  letter-spacing: 0.15em;
+  padding: 5px;
+}
+
+div#MORE .news .body,
+div#MORE .link_page .body,
+div#MORE .link_local .body,
+div#MORE .link_external .body,
+div#MORE .action .body {
+  padding: 5px;
+  line-height: 140%;
+}
+
+/* Texte */
+
+div#CONTENT {
+  line-height: 160%;
+}
+
+/* Couleurs */
+
+div#MORE .link_external .body {
+  border-color: #9999CC;
+  background: #eee;
+}
+
+div#MORE .link_external .title {
+  background: #9999CC;
+}
+
+
+div#MORE .link_page .body {
+  border-color: #CCCCFF;
+  background: #eee;
+}
+
+div#MORE .link_page .title {
+  background: #99CC99;
+}
+
+
+div#MORE .link_local .body {
+  border-color: #CCFFCC;
+  background: #eee;
+}
+
+div#MORE .link_local .title {
+  background: #CC9999;
+}
+
+
+div#MORE .news .body {
+  border-color: #FFCC66;
+  background: #FFFFCC;
+}
+
+div#MORE .news .title {
+  background: #FFCC66;
+}
+
+
+/* Listes de liens */
+
+div#MORE .link_page ul,
+div#MORE .link_local ul,
+div#MORE .link_external ul {
+  padding-left: 2em;
+  padding-right: 1em;
+}
+
+div#MORE .link_page li a,
+div#MORE .link_local li a,
+div#MORE .link_external li a {
+  text-decoration: none;
+}
+
+div#MORE .link_page li a:hover,
+div#MORE .link_local li a:hover,
+div#MORE .link_external li a:hover {
+  text-decoration: underline;
+}
+
+div#TITLE p#INTRODUCTION{
+  font-family: Lucida Grande,Lucida Sans Unicode,Arial,Verdana,Bitstream Vera Sans,sans-serif,sans;
+}
+
+div#TITLE p#LEGALISM {
+  font-family: Lucida Grande,Lucida Sans Unicode,Arial,Verdana,Bitstream Vera Sans,sans-serif,sans;
+  font-size: 80%;
+  text-align: justify;
+  color: #CCCCCC;
+}

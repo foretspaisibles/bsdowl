@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" [
+<!ENTITY head-title SYSTEM "head-title.sgml">
+<!ENTITY head-css SYSTEM "head-css.sgml">
+<!ENTITY more-news SYSTEM "more-news.sgml">
+<!ENTITY more-elink SYSTEM "more-elink.sgml">
+<!ENTITY more-ilink SYSTEM "more-ilink.sgml">
+<!ENTITY page-header SYSTEM "page-header.sgml">
+<!ENTITY page-footer SYSTEM "page-footer.sgml">
+<!ENTITY page-title SYSTEM "page-title.sgml">
+<!ENTITY page-content SYSTEM "page-content.sgml">
+<!ENTITY % with.news "IGNORE">
+<!ENTITY % with.ilink "IGNORE">
+<!ENTITY % with.elink "IGNORE">
+]>
+<html>
+<head>
+<title>&head-title;</title>
+&head-css;
+</head>
+<body class="scroll">
+<div id="MORE">
+<![ %with.news [
+<div class="news">&more-news;</div>
+]]>
+<![ %with.ilink [
+<div class="link_page">&more-ilink;</div>
+]]>
+<![ %with.elink [
+<div class="link_external">&more-elink;</div>
+]]>
+</div><!-- more -->
+<div id="PAGE">
+<div id="HEADER">&page-header;</div>
+<div id="TITLE">&page-title;</div>
+<div id="CONTENT">&page-content;</div>
+<div id="FOOTER">&page-footer;</div>
+</div><!-- page -->
+
+</body>
+</html>

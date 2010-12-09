@@ -1,0 +1,111 @@
+/* scroll_layout.css -- Dimensions et positions pour les parchemins */
+
+/* SYNOPSIS
+body.scroll {
+  font-family: Serif;
+  font-size: 10pt;
+}
+@import "scroll_layout.css"
+
+La déclaration de la fonte générale et de la taille du corps de texte
+est aussi une information métrique, car des unités de la CSS utilisent
+des unités relatives.
+*/
+
+body.scroll,
+body.scroll div#CANVAS,
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#FOOTER,
+body.scroll div#PAGE div#TITLE,
+body.scroll div#PAGE div#CONTENT {
+  margin: 0px 0px 0px 0px;
+}
+
+body.scroll div#CANVAS {
+  margin-left: auto;
+  margin-right: auto;
+  width: 65em;
+  margin-top: 6ex;
+  margin-bottom: 6ex;
+}
+
+body.scroll div#PAGE {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  padding-bottom: 6em;
+  top: 0em;
+  bottom: auto;
+  left: 0em;
+  right: 0em;
+  width: 48em;
+  height: auto;
+  min-height: 100%;
+  background: white;
+}
+
+body.scroll div#MORE {
+  position: fixed;
+  margin-left: 51em;
+  top: auto;
+  bottom: 2em;
+  width: 14em;
+}
+
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#TITLE,
+body.scroll div#PAGE div#CONTENT,
+body.scroll div#PAGE div#FOOTER {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 6em;
+  padding-right: 6em;
+  width: 36em;
+}
+
+body.scroll div#PAGE div#TITLE {
+  margin-left: auto;
+  margin-right: auto;
+  width: 36em;
+}
+
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#FOOTER{
+  visibility: hidden;
+  height: 0px;
+}
+
+/* Espaces verticaux dans la structure */
+
+body.scroll div#PAGE div#CONTENT p {
+  margin-top: 0em;
+  margin-bottom: 0em;
+}
+
+body.scroll div#PAGE div#CONTENT h1,
+body.scroll div#PAGE div#CONTENT h2,
+body.scroll div#PAGE div#CONTENT h3,
+body.scroll div#PAGE div#CONTENT h4 {
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.2em;
+}
+
+body.scroll div#PAGE div#TITLE p#HEADLINE {
+  margin-top: 3em;
+  margin-bottom: 2em;
+}
+
+
+body.scroll div#PAGE div#TITLE p#LEGALISM {
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+}
+
+body.scroll div#PAGE div#CONTENT p span.title {
+  padding-right: 1em;
+}
+
+body.scroll div#PAGE div#CONTENT pre.reachme {
+  font-size: 110%;
+  letter-spacing: 105%;
+}
