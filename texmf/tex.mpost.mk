@@ -228,7 +228,7 @@ CLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx} ${_MPOST_LIST.${fig:T}}
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
-CLEANFILES+= ${item}.${MPOST_DEVICE.${device}}
+REALCLEANFILES+= ${item}.${MPOST_DEVICE.${device}}
 .endfor
 .endfor
 .endfor
