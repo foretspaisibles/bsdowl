@@ -43,7 +43,6 @@ DOCUMENT+= ${NOWEAVE:=.html}
 TEXFILES+= ${NOTANGLE}
 
 .include "noweb.main.mk"
-.include "bps.project.mk"
 .include "tex.files.main.mk"
 .include "latex.doc.pre.mk"
 .include "tex.init.mk"
@@ -54,3 +53,4 @@ TEXFILES+= ${NOTANGLE}
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
+.include "bps.project.mk"
