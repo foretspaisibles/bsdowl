@@ -63,6 +63,17 @@ TEXDOCNAME.${doc:T}?= ${TEXDOCNAME}
 .endfor
 .endif
 
+.if defined(TEXDRAFTSTAMP)&&!empty(TEXDRAFTSTAMP)
+.for doc in ${_TEX_DOC}
+.if defined(TEXDOCNAME.${doc:T})
+TEXDOCNAME.${doc:T}:= ${TEXDOCNAME.${doc:T}}${TEXDRAFTSTAMP}
+.else
+TEXDOCNAME.${doc:T} = ${doc:T}${TEXDRAFTSTAMP}
+.endif
+.endfor
+.endif
+
+
 do-build: do-build-doc
 do-build-doc: ${TEXDOC}
 
