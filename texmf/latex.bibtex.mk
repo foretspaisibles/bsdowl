@@ -93,7 +93,7 @@ ${_TEX_COOKIE}${doc:T}.bib: ${_TEX_COOKIE}${doc:T}.aux
 	${_BIBTEX_CMD} ${doc:R}
 	@${TOUCH} ${.TARGET}
 COOKIEFILES+= ${_TEX_COOKIE}${doc:T}.bib
-CLEANFILES+= ${doc:R}.bbl
+REALCLEANFILES+= ${doc:R}.bbl
 CLEANFILES+= ${doc:R}.blg
 .endfor
 .endif
