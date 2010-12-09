@@ -18,8 +18,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 .include "bps.init.mk"
-.include "bps.project.mk"
-.include "texmf.init.mk"
+.include "tex.init.mk"
 
 NOWEAVE_AUTODEFS = tex
 NOWEAVE_LATEX_WRAPPER = delay
@@ -40,8 +39,10 @@ SRCS.sampleart = ${NOTANGLE} sharticle.cls sampleart.tex
 
 FORMAT = latex
 DOCUMENT+= ${NOWEAVE:=.html}
+
 TEXFILES+= ${NOTANGLE}
 
+.include "bps.project.mk"
 .include "noweb.main.mk"
 .include "tex.files.main.mk"
 .include "latex.doc.pre.mk"
