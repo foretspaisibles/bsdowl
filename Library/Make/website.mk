@@ -1,17 +1,18 @@
 .include "bps.project.mk"
 
-WWWMODE = 644
-TEXDOCMODE = 644
+WWWMODE = 444
+TEXDOCMODE = 444
 
-WWWBASE = ${PROJECTBASE}/wwwobj
+WWWBASE?= ${PROJECTBASE}/wwwobj
 CLEANDIRS+= ${WWWBASE}
 
 WWWMAIN = main.sgml
+
 .MAKEFLAGS: WWWMAIN="${WWWMAIN}"
-
-.include "www.sgml.mk"
-
-publish: install
+.MAKEFLAGS: WWWMODE="${WWWMODE}"
+.MAKEFLAGS: TEXDOCMODE="${TEXDOCMODE}"
 
 do-publish:
-	${NADA}
+	${MAKE} PREFIX=${HOME} WWWBASE=../../bps-website all install
+
+.include "www.sgml.mk"
