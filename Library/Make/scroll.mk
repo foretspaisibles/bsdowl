@@ -1,5 +1,6 @@
 SRCS+= main.sgml
 SRCS+= head-css-global.sgml
+SRCS+= more-news.sgml
 
 SEARCH+= .
 SEARCH+= ${PROJECTBASE}/Website/style
