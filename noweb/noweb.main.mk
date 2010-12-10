@@ -191,6 +191,7 @@ __<noweb.main.mk>__:
 
 .SUFFIXES: .nw
 
+NOWEAVE_GROUP?= DOC
 NOWEAVE_DEVICE?= latex html
 NOWEAVE_CHUNKS?= latex
 NOWEAVE_INDEX?= yes
@@ -315,6 +316,16 @@ ${file}: ${NOWEB.${file:T}}
 #
 # Weaving
 #
+
+# Inscription des fichiers objets
+.for file in ${NOWEAVE}
+.for device in ${NOWEAVE_DEVICE:Nlatex:Ntex}
+${NOWEAVE_GROUP}+= ${file:T}${_NOWEAVE_DEVICE.suffix.${device}}
+.endfor
+.if !empty(NOWEAVE_DEVICE:Mlatex)||!empty(NOWEAVE_DEVICE:Mtex)
+DOCS+= ${file:T}
+.endif
+.endfor
 
 
 # Préparation des outils
