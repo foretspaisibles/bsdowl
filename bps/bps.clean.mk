@@ -96,25 +96,44 @@ do-realclean-realcleandirs:
 
 .if target(do-clean)
 clean: do-clean
+distclean: do-clean
+realclean: do-clean
 .endif
 
 .if target(do-distclean)
 distclean: do-distclean
+realclean: do-distclean
 .endif
 
 .if target(do-realclean)
 realclean: do-realclean
 .endif
 
-.if target(clean)
-distclean: clean
+.ORDER: do-realclean do-distclean do-clean
+
+#
+# Cookies
+#
+
+# A ``cookie'' is a peristant bit of information used my the
+# ``Makefile'' infrastructure to keep track of some event.
+# There is two kind of cookies: ordinary cookies and hard cookies.  An
+# ordinary cookie is removed by a simple `clean' while a hard
+# cookie remains until a `distclean' or a `realclean' happens.
+
+.if defined(COOKIEFILES)&&!empty(COOKIEFILES)
+do-clean-cookies:
+	@${RM} -f ${COOKIEFILES}
+
+do-clean: do-clean-cookies
 .endif
 
-.if target(distclean)
-realclean: distclean
-.endif
+.if defined(HARDCOOKIEFILES)&&!empty(HARDCOOKIEFILES)
+do-clean-hardcookies:
+	@${RM} -f ${HARDCOOKIEFILES}
 
-.ORDER: clean distclean realclean
+do-distclean: do-clean-hardcookies
+.endif
 
 .endif # !target(__<bps.clean.mk>__)
 
