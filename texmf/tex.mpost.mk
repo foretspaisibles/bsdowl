@@ -56,6 +56,8 @@ MPOST_DEVICE.${device} = ${MPOST_DEVICE.ps}
 .endfor
 .endif
 
+_MPOST_CLEAN?=
+
 _MPOST_FIG?=
 _MPOST_VARS+= MPINPUTS
 _MPOST_VARS+= MPTEX
@@ -86,15 +88,15 @@ _MPOST_FIG+=${fig}
 .endfor
 
 .for fig in ${_MPOST_FIG}
-.cookie.${fig:T}: ${fig}
+${COOKIEPREFIX}${fig:T}: ${fig}
 	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}.\1/p' ${.ALLSRC} > ${.TARGET}
-depend: .cookie.${fig:T}
-.if exists(.cookie.${fig:T})
-_MPOST_LIST.${fig:T}!= cat .cookie.${fig:T}
+depend: ${COOKIEPREFIX}${fig:T}
+.if exists(${COOKIEPREFIX}${fig:T})
+_MPOST_LIST.${fig:T}!= cat ${COOKIEPREFIX}${fig:T}
 .else
 _MPOST_LIST.${fig:T} =
 .endif
-COOKIEFILES+= .cookie.${fig:T}
+HARDCOOKIEFILES+= ${COOKIEPREFIX}${fig:T}
 .endfor
 
 #
@@ -222,7 +224,7 @@ ${item}.${MPOST_DEVICE.${device}}: ${item}
 #
 
 .for fig in ${_MPOST_FIG}
-CLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx} ${_MPOST_LIST.${fig:T}}
+DISTCLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx} ${_MPOST_LIST.${fig:T}}
 .endfor
 
 .for fig in ${_MPOST_FIG}
