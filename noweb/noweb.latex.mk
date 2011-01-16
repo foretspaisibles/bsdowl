@@ -27,7 +27,22 @@ NOWEAVE_LATEX_DEFS?= ${_BPS_TEXMFDIR}/tex/latex${_BPS_APPLICATIONDIR}/nwlatex.te
 
 FORMAT = latex
 
+#
+# TEXFILES
+#
+
+# The group TEXFILES holds the files produced by NOTANGLE.
+
+FILESGROUPS+= TEXFILES
+
+TEXFILESOWN?= ${SHAREOWN}
+TEXFILESGRP?= ${SHAREGRP}
+TEXFILESMODE?= ${SHAREMODE}
+TEXFILESDIR?= ${PREFIX}/share/texmf/latex${APPLICATIONDIR}
+
 TEXFILES+= ${NOTANGLE}
+
+TEXDOCDIR?= ${PREFIX}/share/texmf/doc/latex${APPLICATIONDIR}
 
 #
 # Stylesheet
