@@ -87,12 +87,12 @@ USE_BIBTEX?= no
 .for var in _TEX_DVI _TEX_PDF _TEX_PS
 .if defined(${var})&&!empty(${var})
 .for doc in ${${var}}
-${_TEX_COOKIE}${doc:T}.toc: ${_TEX_COOKIE}${doc:T}.bib
-${_TEX_COOKIE}${doc:T}.bib: ${_TEX_COOKIE}${doc:T}.aux
+${COOKIEPREFIX}${doc:T}.toc: ${COOKIEPREFIX}${doc:T}.bib
+${COOKIEPREFIX}${doc:T}.bib: ${COOKIEPREFIX}${doc:T}.aux
 	${INFO} 'Processing bibliography database information for ${doc:T}'
 	${_BIBTEX_CMD} ${doc:R}
 	@${TOUCH} ${.TARGET}
-COOKIEFILES+= ${_TEX_COOKIE}${doc:T}.bib
+HARDCOOKIEFILES+= ${COOKIEPREFIX}${doc:T}.bib
 REALCLEANFILES+= ${doc:R}.bbl
 CLEANFILES+= ${doc:R}.blg
 .endfor

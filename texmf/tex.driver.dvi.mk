@@ -149,19 +149,19 @@ _TEX_BUILD.${dvi:T}+=${_TEX_SRC.${dvi:T}}
 .undef _TEX_pass_last
 .for pass in ${MULTIPASS}
 .if defined(_TEX_pass_last)
-${_TEX_COOKIE}${dvi:T}.${pass}: ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
+${COOKIEPREFIX}${dvi:T}.${pass}: ${COOKIEPREFIX}${dvi:T}.${_TEX_pass_last}
 .endif
 _TEX_pass_last:= ${pass}
 .endfor
 .for pass in ${MULTIPASS}
-${_TEX_COOKIE}${dvi:T}.${pass}: ${_TEX_SRC.${dvi:T}}
+${COOKIEPREFIX}${dvi:T}.${pass}: ${_TEX_SRC.${dvi:T}}
 	${INFO} 'Multipass job for ${dvi:T} (${pass})'
 	${_TEX_BUILD.${dvi:T}}
 	@${RM} -f ${dvi}
 	@${TOUCH} ${.TARGET}
-COOKIEFILES+= ${_TEX_COOKIE}${dvi:T}.${pass}
+COOKIEFILES+= ${COOKIEPREFIX}${dvi:T}.${pass}
 .endfor
-${dvi}: ${_TEX_SRC.${dvi:T}} ${_TEX_COOKIE}${dvi:T}.${_TEX_pass_last}
+${dvi}: ${_TEX_SRC.${dvi:T}} ${COOKIEPREFIX}${dvi:T}.${_TEX_pass_last}
 	${INFO} 'Multipass job for ${dvi:T} (final)'
 	${_TEX_BUILD.${dvi:T}}
 .else
