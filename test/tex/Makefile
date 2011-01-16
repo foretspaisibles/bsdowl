@@ -1,17 +1,13 @@
-### Makefile -- Test tex.texdoc.mk and co.
+### Makefile -- Test the production of TeX documents
 
-DOCS = toto.tex
+DOCS = octonions.tex
 
-FIGS.toto = illustrations.mp
+FIGS = sketches.mp
+SRCS = macros.tex
 
-TEX = pdftex
-FORMAT.dvi = brid_dvips
-FORMAT.pdf = brid_pdf
+.MAKEFLAGS: -I../../bps
+.MAKEFLAGS: -I../../texmf
 
-SRCS = extra.tex
-
-TEXINPUTS.toto = .. :
-
-.include "tex.doc.mk"
+.include "latex.doc.mk"
 
 ### End of file `Makefile'
