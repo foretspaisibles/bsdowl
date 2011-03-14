@@ -13,6 +13,6 @@ WWWMAIN = main.sgml
 .MAKEFLAGS: TEXDOCMODE="${TEXDOCMODE}"
 
 do-publish:
-	${MAKE} PREFIX=${HOME} WWWBASE=../../bps-website all install
+	${MAKE} PREFIX=${HOME} WWWBASE=${PROJECTBASE}/../bps-website all install
 
 .include "www.sgml.mk"
