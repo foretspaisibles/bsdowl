@@ -3,4 +3,18 @@ Local Variables:
 sgml-parent-document: "index.sgml" "html" "body" "div"
 End Variables:
 -->
-<p>Yet to be written.</p>
+<h1>Using NOWEB to write TeX or LaTeX macros</h1>
+
+<p>Norman Ramsey's <a
+href="http://www.cs.tufts.edu/~nr/noweb/">NOWEB</a> literate
+programming tool can be used to write TeX or LaTeX macros.</p>
+
+<h2>The Makefile</h2>
+
+<p>The Makefile must declare several variables:</p>
+<ul>
+<li><em>NOWEB</em> enumerates your NOWEB files;</li>
+<li><em>NOTANGLE</em> enumerates the code files that need to be
+generated from the NOWEB files;</li>
+<li><em>NOWEAVE</em></li>
+</ul>
