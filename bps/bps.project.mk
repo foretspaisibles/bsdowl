@@ -171,12 +171,13 @@
 #   Comme publish, mais s'arrête juste avant la publication proprement
 #   dite.
 
-# shell:
+# subshell:
 #
-#   Ouvre un shell pour le développeur
+#   Ouvre un sous-shell pour le développeur
 #
 #   L'environnement du shell ouvert par cette cible contient les
 #   liaisons énumérées dans PROJECTENV.
+
 
 ### IMPLÉMENTATION
 
@@ -405,7 +406,7 @@ PROJECTLIBRARYMAKE = ${PROJECTBASE}/Mk
 
 
 #
-# Ouverture d'un shell pour le développeur
+# Ouverture d'un sous-shell pour le développeur
 #
 
 PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
@@ -415,7 +416,7 @@ PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
 # un `.' sont des chemins à traiter comme arguments pour `-I'.
 
 # La variable SHELL est définie dans l'environnement de l'utilisateur.
-shell:
+subshell:
 	${INFO} "Entering developper's subshell"
 	@${ENVTOOL} ${PROJECTENV} ${SHELL}
 	${INFO} "Exiting developper's subshell"
