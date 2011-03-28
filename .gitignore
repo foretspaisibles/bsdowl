@@ -1,0 +1,8 @@
+Makefile
+bps/bps.init.mk
+configure
+support/mp2eps
+support/mp2pdf
+support/mp2png
+texmf/tex.device.pdf.mk
+texmf/tex.driver.pdftex.mk
