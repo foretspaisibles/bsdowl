@@ -24,6 +24,9 @@
 # SCRIPT+= mp2pdf.sh
 # SCRIPT+= mp2png.sh
 #
+# SCRIPTLIB+= mp2pnglib.sh
+#
+#
 # TMPDIR = /var/run/tmp
 #
 # SCRIPT_CONFIGURE = PREFIX TMPDIR
@@ -98,6 +101,18 @@ ${script:T:.${ext}=}: ${script}
 
 CLEANFILES+= ${SCRIPT}
 FILESGROUPS+= SCRIPT
+
+#
+# Groupe de fichiers SCRIPTLIB
+#
+
+# Les membres de ce groupe de fichiers ne sont pas traiter pour le
+# remplacement des variables apparaissant dans SCRIPT_CONFIGURE.
+SCRIPTLIBMODE?= ${LIBMODE}
+SCRIPTLIBDIR?= ${LIBDIR}${APPLICATIONDIR}
+SCRIPTLIBOWN?= ${LIBOWN}
+SCRIPTLIBGRP?= ${LIBGRP}
+
 
 .include "bps.clean.mk"
 .include "bps.files.mk"
