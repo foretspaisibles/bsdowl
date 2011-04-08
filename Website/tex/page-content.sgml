@@ -270,8 +270,8 @@ Heck</a>, it might also be a good starting point for you.</p>
 you must be sure that the program TeX will find the bibliographic
 databases you enumerated in your document with <em>bibliography</em>
 statements.  It is customary to gather bibliographic databases in some
-directory, for instance <em>${HOME}/share/bin</em>.  To let bibtex
-find these files, it is enough to add ${HOME}/share/bin to the content
+directory, for instance <em>${HOME}/share/bib</em>.  To let bibtex
+find these files, it is enough to add <em>${HOME}/share/binb</em> to the content
 of the variable BIBINPUTS.  If your bibliographic databases are
 scattered among several directories, you just need to let each of them
 appear in the value of the variable BIBINPUTS:</p>
