@@ -195,3 +195,7 @@ div#TITLE p#LEGALISM {
   text-align: justify;
   color: #CCCCCC;
 }
+
+div#TITLE p#LEGALISM:hover {
+  color: black;
+}
