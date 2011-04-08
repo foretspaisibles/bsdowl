@@ -23,7 +23,7 @@ WPAGESDIR?= ${HOME}/Workshop/wpages
 
 .if exists(${WPAGESDIR}/style)
 update:
-	cd ${WPAGESDIR}/style && ${MAKE} PREFIX='${HOME}' WWWDIR='${.CURDIR}' all install
+	cd ${WPAGESDIR} && ${MAKE} PREFIX='${HOME}' WWWDIR='${.CURDIR}' all install
 .else
 update:
 	${FAIL} WPAGESDIR not found

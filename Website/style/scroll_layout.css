@@ -1,4 +1,4 @@
-/* layout.css -- Dimensions et positions pour les parchemins */
+/* scroll_layout.css -- Dimensions et positions pour les parchemins */
 
 /* SYNOPSIS
 body.scroll {
@@ -13,46 +13,48 @@ des unités relatives.
 */
 
 body.scroll,
-body.scroll div#page,
-body.scroll div#page div#header,
-body.scroll div#page div#footer,
-body.scroll div#page div#title,
-body.scroll div#page div#content,
-body.scroll div#more {
+body.scroll div#CANVAS,
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#FOOTER,
+body.scroll div#PAGE div#TITLE,
+body.scroll div#PAGE div#CONTENT {
   margin: 0px 0px 0px 0px;
 }
 
-body.scroll {
-  background: #336666;
+body.scroll div#CANVAS {
+  margin-left: auto;
+  margin-right: auto;
+  width: 65em;
+  margin-top: 6ex;
+  margin-bottom: 6ex;
 }
 
-body.scroll div#page {
-  position: absolute;
-  left: 6em;
-  right: auto;
+body.scroll div#PAGE {
+  margin-top: 0em;
+  margin-bottom: 0em;
+  padding-bottom: 6em;
+  top: 0em;
+  bottom: auto;
+  left: 0em;
+  right: 0em;
   width: 48em;
+  height: auto;
+  min-height: 100%;
   background: white;
-  border-style: outset;
-  border-width: thin;
 }
 
-body.scroll div#more {
+body.scroll div#MORE {
   position: fixed;
-  background: white;
-  left: 60em;
-  right: auto;
+  margin-left: 51em;
   top: auto;
   bottom: 2em;
   width: 14em;
-  padding: 2em;
-  border-style: outset;
-  border-width: thin;
 }
 
-body.scroll div#page div#header,
-body.scroll div#page div#title,
-body.scroll div#page div#content,
-body.scroll div#page div#footer {
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#TITLE,
+body.scroll div#PAGE div#CONTENT,
+body.scroll div#PAGE div#FOOTER {
   margin-left: auto;
   margin-right: auto;
   padding-left: 6em;
@@ -60,43 +62,50 @@ body.scroll div#page div#footer {
   width: 36em;
 }
 
-body.scroll div#page div#title {
+body.scroll div#PAGE div#TITLE {
   margin-left: auto;
   margin-right: auto;
   width: 36em;
 }
 
-body.scroll div#page div#header,
-body.scroll div#page div#footer{
+body.scroll div#PAGE div#HEADER,
+body.scroll div#PAGE div#FOOTER{
   visibility: hidden;
   height: 0px;
 }
 
 /* Espaces verticaux dans la structure */
 
-body.scroll div#page div#content p {
+body.scroll div#PAGE div#CONTENT p {
   margin-top: 0em;
   margin-bottom: 0em;
 }
 
-body.scroll div#page div#content h1,
-body.scroll div#page div#content h2,
-body.scroll div#page div#content h3 {
-  margin-top: 2em;
-  margin-bottom: 1em;
+body.scroll div#PAGE div#CONTENT h1,
+body.scroll div#PAGE div#CONTENT h2,
+body.scroll div#PAGE div#CONTENT h3,
+body.scroll div#PAGE div#CONTENT h4 {
+  margin-top: 1.2em;
+  margin-bottom: 0.5em;
+  padding-bottom: 0.2em;
 }
 
-body.scroll div#page div#content h4,
-body.scroll div#page div#content h5,
-body.scroll div#page div#content h6 {
-  display: -moz-run-in;
-  display: run-in;
-  text-indent: 0em;
-  margin-left: 0em;
-  margin-bottom: 0em;
-}
-
-body.scroll div#page div#title p#headline {
+body.scroll div#PAGE div#TITLE p#HEADLINE {
   margin-top: 3em;
   margin-bottom: 2em;
+}
+
+
+body.scroll div#PAGE div#TITLE p#LEGALISM {
+  margin-top: 20pt;
+  margin-bottom: 10pt;
+}
+
+body.scroll div#PAGE div#CONTENT p span.title {
+  padding-right: 1em;
+}
+
+body.scroll div#PAGE div#CONTENT pre.reachme {
+  font-size: 110%;
+  letter-spacing: 105%;
 }
