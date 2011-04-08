@@ -25,7 +25,7 @@
 .if !target(__<pallas>__)
 __<pallas>__:
 
-publish:
+do-publish:
 	cd Website; make all install PREFIX='${HOME}' WWWBASE='${HOME}/Workshop/Pages/bsdmakepscripts'
 
 .include "subdir.mk"
