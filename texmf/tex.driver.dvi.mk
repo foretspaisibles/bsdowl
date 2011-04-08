@@ -88,7 +88,11 @@ _TEX_SRC.${dvi:T}=${dvi:.dvi=.tex}
 .for dvi in ${_TEX_DVI}
 # On commence par calculer l'environnement d'éxécution
 .if defined(TEXINPUTS.${dvi:T})&&!empty(TEXINPUTS.${dvi:T})
-_TEX_ENV.${dvi:T}+= TEXINPUTS=${TEXINPUTS.${dvi:T}:Q:S/\\ /:/g}
+.if !defined(USE_STRICT_TEXINPUTS)|| ${USE_STRICT_TEXINPUTS} != yes
+_TEX_ENV.${dvi:T}+= TEXINPUTS=".:${TEXINPUTS.${dvi:T}:Q:S/\\ /:/g}:"
+.else
+_TEX_ENV.${dvi:T}+= TEXINPUTS="${TEXINPUTS.${dvi:T}:Q:S/\\ /:/g}"
+.endif
 .endif
 .if defined(TEXMFOUTPUT.${dvi:T})&&!empty(TEXMFOUTPUT.${dvi:T})
 _TEX_ENV.${dvi:T}+= TEXMFOUTPUT=${TEXMFOUTPUT.${dvi:T}:Q}
