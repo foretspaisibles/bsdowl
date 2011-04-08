@@ -1,7 +1,8 @@
 <!--
 Local Variables:
-sgml-parent-document: "index.sgml" "html" "body" "div"
-End Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
 -->
 <h1>Using NOWEB to write TeX or LaTeX macros</h1>
 

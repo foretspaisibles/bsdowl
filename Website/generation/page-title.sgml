@@ -1,7 +1,8 @@
 <!--
 Local Variables:
-sgml-parent-document: "index.sgml" "html" "body" "div" "div"
-End Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
 -->
 <p id="HEADLINE">Code generation</p>
 <p id="INTRODUCTION">BSD Make Pallàs Scripts supports the generation
