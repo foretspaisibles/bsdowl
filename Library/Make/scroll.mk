@@ -1,3 +1,6 @@
+
+WWWMAIN?= main.sgml
+
 SRCS+= main.sgml
 SRCS+= head-css-global.sgml
 SRCS+= more-news.sgml
