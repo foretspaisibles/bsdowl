@@ -1,5 +1,3 @@
-.include "bps.project.mk"
-
 WWWMODE = 444
 TEXDOCMODE = 444
 
@@ -13,6 +11,7 @@ WWWMAIN = main.sgml
 .MAKEFLAGS: TEXDOCMODE="${TEXDOCMODE}"
 
 do-publish:
-	${MAKE} PREFIX=${HOME} WWWBASE=${PROJECTBASE}/Pages/bsdmakepscripts all install
+	${MAKE} PREFIX=${HOME} WWWBASE=${WWWBASE} all install
 
+.include "bps.project.mk"
 .include "www.sgml.mk"
