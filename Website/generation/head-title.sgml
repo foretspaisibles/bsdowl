@@ -1,6 +1,7 @@
 <!--
 Local Variables:
-sgml-parent-document: "index.sgml" "html" "head" "title"
-End Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "head" "title" ())
+ispell-dictionary: "british-ise"
+End:
 -->
 Code generation

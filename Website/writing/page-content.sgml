@@ -1,10 +1,9 @@
 <!--
 Local Variables:
-sgml-parent-document: "index.sgml" "html" "body" "div"
-End Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
 -->
-
-
 <h1 id="makeintro">Introduction Make</h1>
 
 <p>Unix systems have a strong emphasis on files, and a typical work
