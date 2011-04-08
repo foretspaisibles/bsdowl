@@ -11,8 +11,8 @@ BSD Make Pallàs Scripts&nbsp;(BPS)&nbsp;to:</p>
 <li>produce simple documents and publish them on the file system;</li>
 <li>produce the bibliography of your LaTeX document with BIBTeX;</li>
 <li>produce figures for your document with METAPOST;</li>
-<li>deal with documents whose source spans across several directories;</li>
 <li>deal with documents having parts that need to be automatically generated.</li>
+<li>deal with documents whose source spans across several directories;</li>
 </ul>
 
 <h1>Foreword: working with TeX or LaTeX</h1>
@@ -90,7 +90,7 @@ larger.</p>
 
 <p>Before you clean up your working directory with the <em>make
 clean</em> mantra, you may wish to store the objects you created
-in some adequate place of the local filesystem.  This step is called
+in some adequate place of the local file system.  This step is called
 <em>installation</em> of your document, because it is analogous to the
 installation of a program you freshly compiled.  You require the
 installation of your document with the <em>make install</em> command,
@@ -114,14 +114,14 @@ install -o michi -g michi -m 440 script.dvi /home/michi/doc/report
 <p>In comparison with the manual approach for storing the object in a
 safe place with the <em>cp</em> command, you save retyping the target
 directory name the next time you update your document. Moreover, it eases
-the organization of your document sources library and scales to a
+the organisation of your document sources library and scales to a
 large number of documents, see <em>Working with a large number of
 documents</em> below.</p>
 
 
 <h2>Selecting an output format</h2>
 
-<p>The TeX toolchain is capable of producing electronic documents in
+<p>The TeX tool chain is capable of producing electronic documents in
 several formats. Commonly used formats are DVI, PostScript (PS) and
 PDF. The TEXDEVICE variable governs the format of documents produced
 with the help of latex.doc.mk. Its value is usually <em>dvi</em>, so
@@ -148,7 +148,7 @@ not have a real importance, as they are only displayed to the user.
 It is even possible to specify the same name several times!</p>
 
 <p>In the early stages of existence of a document, updates are likely to be
-frequent and it is thus desirable to avoid the lenghty multiple passes
+frequent and it is thus desirable to avoid the lengthy multiple passes
 processing.  BPS has a draft mode for this. To
 enable the draft mode, set make's variable DRAFT to yes, this is done
 by adding an appropriate statement in the Makefile, as shown by the
@@ -160,12 +160,12 @@ DOC = script.tex
 .include "latex.doc.mk"
 </pre>
 
-<p>The statement <em>DRAFT?=</em> is a special form of an assignement
+<p>The statement <em>DRAFT?=</em> is a special form of an assignment
 statement, that allows you to type <em>make DRAFT=no</em> at the shell
 prompt if you want to re-enable multipass processing of your job for
 one time.
 When you have finished polishing your manuscript, you can remove
-the DRAFT assignement from the Makefile, your paper is then ready for a last <em>make</em>
+the DRAFT assignment from the Makefile, your paper is then ready for a last <em>make</em>
 run producing the final version of your document.  If you are
 satisfied with it, you can <em>install</em> it.</p>
 
@@ -183,7 +183,7 @@ BPS might be here of some help.</p>
 <p>When the variable DRAFT is set to <em>yes</em> and the variable
 TEXDRAFTSTAMP is not initialised, it receives the value
 -${TEXDRAFTTIMESTAMP} where TEXDRAFTTIMESTAMP expands to the date when
-Make is run.  When the variable TEXDRAFTSTAMP is initalised and not
+Make is run.  When the variable TEXDRAFTSTAMP is initialised and not
 empty, its value is appended to the name of all document installed by
 latex.doc.mk or latex.doc.mk. If you do not want the name of the files
 to be modified, you just need to initialise TEXDRAFTSTAMP with an
@@ -246,14 +246,17 @@ FIGS+= illustr2.mp
 .include "latex.doc.mk"
 </pre>
 
-<p>Then type in <i>make</i> at the shell prompt. The latex.doc.mk will
+<p>Then type in <em>make</em> at the shell prompt. The latex.doc.mk will
 then figure out how many illustrations are present in each file, and
 produce the image files required by your TEXDEVICE.</p>
 
-<p><i>Discovering METAPOST.</i>
-If you do not know about METAPOST but are interested in discovering it, the
+<p><em>Discovering METAPOST.</em>
+It seems that many people do not know about METAPOST.  If it is true
+for you but are interested in discovering it, the
 first good news is that this program is included by many (if not all)
-TeX distributions. The second good news is that you can easily find
+TeX distributions, hence it is probably already available on your
+system.
+The second good news is that you can easily find
 plenty of information and examples of its use on the WWW. For instance
 the <a href="http://www.tug.org/metapost.html">TeX users group</a> has
 a page on its website devoted to this tool. The list you will find
@@ -306,7 +309,7 @@ on your own.</p>
 <p>While it is often a good idea to reserve a directory for each of
 your documents, you might have some reasons to keep several documents
 in the same directory.  You have your reasons and they are probably
-good ones, so BPS will do its best ot help you.</p>
+good ones, so BPS will do its best to help you.</p>
 
 <p>We assume that you have two documents whose sources are
 living in the same directory, let's say an article and an abridged version
@@ -329,11 +332,11 @@ SRCS.article.tex+= section2.tex
 </pre>
 
 
-<h2>Recalculating part of a document</h2>
+<h2>Automatically generating part of a document</h2>
 
 <p>Assume you are working on a document containing a table whose
 content is likely to change several times and will need to be
-updated.  Such a table coule be a budget:  when information on the
+updated.  Such a table could be a budget:  when information on the
 situation evolves, so does the budget.  It can be quite tedious to
 type in a table in LaTeX, and updating it might even be trickier.  In
 such a situation, it is probably a good idea to write a program
@@ -350,13 +353,19 @@ table. Here is your Makefile:</p>
 
 <pre class="file">
 DOC = galley.tex
-.include "latex.doc.mk"
 
 table.tex: gentable table.raw
 	./gentable < table.raw > table.tex
 
 REALCLEANFILES+= table.tex
+
+.include "latex.doc.mk"
 </pre>
+
+<p>The example assume that the <em>gentable</em> utility in the
+recipe above is a filter, hence input and output are defined with the
+help of shell redirections.  Other utilities may have other ways to
+define their input and output, a described by their respective manuals.</p>
 
 <p>If you send your files to someone else, he will maybe not want to
 run your program gentable, so it is better to list table.tex in
@@ -365,4 +374,63 @@ REALCLEANFILES than in CLEANFILES.</p>
 <p>Of course, you can compute some text or a METAPOST picture, or
 whatever, instead of a table!</p>
 
-<h2>Organizing long documents</h2>
+
+<h2>Source files spanning across several directories</h2>
+
+<p>Some workflows may prescribe that your source files are not located
+in a single directory, but disseminated across the file system.
+Imagine that your organisation uses a custom document class for its
+letters, where some picture appears.  You do not want to copy the
+picture file in each of the folders hosting your letters, nor do you
+want to have a symbolic link to the picture in each of your
+directories because the file is irrelevant to your work:  you just
+want to not even know anything about it.  The solution to this problem
+is to rely on the TEXINPUTS variable, its content is a list of
+directories searched by TeX for its input files.</p>
+
+<p>You can set the TEXINPUTS variable in your environment or in your
+Makefile, or even write a custom Makefile template including this
+setting.  The role of this variable for TeX is pretty much the same
+than the role of the environment variable PATH in your shell.</p>
+
+<p>Assume that the picture visually impersonating your organisation
+is in the <em>${HOME}/share/texmf/tex/organisation/visual.eps</em>, in
+order to let TeX look for files in the folder containing the picture,
+you write a TEXINPUTS statement in your Makefile, like this:</p>
+
+<pre class="file">
+DOC = galley.tex
+TEXINPUTS = ${HOME}/share/texmf/organisation
+.include "latex.doc.mk"
+</pre>
+
+<p>If you run <em>make</em> in the folder containing this Makefile, you
+will see something like this in your terminal:</p>
+
+<pre class="shell">
+$ make
+make build
+===> Multipass job for galley.dvi (aux)
+env TEXINPUTS=".:${HOME}/share/texmf/organization:" latex galley.tex
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4)
+...
+</pre>
+
+<p>Take a look at the TEXINPUTS assignment in the <em>env</em>
+command.  Its modification with respect to the declaration in your
+Makefile means that TeX will also look for files
+in the current directory (this what the initial dot stands for) and also in
+all standard TeX locations (this what the final colon stands for).</p>
+
+<p>If you want to have absolute control on the value of TEXINPUTS, you
+must add an assignment <em>USE_STRICT_TEXINPUTS=yes</em> in your
+Makefile.</p>
+
+<p>The supporting macros for METAPOST also understand TEXINPUTS and
+USE_STRICT_TEXINPUTS.  There is an analogous variable MPINPUTS
+governing the look up of METAPOST input files, it is accompanied with a
+USE_STRICT_MPINPUTS flag.  If you want to have your TeX program and
+your METAPOST program to be run with different values for TEXINPUTS,
+you can pass the correct value to METAPOST through the MPTEXINPUTS
+variable, this variable is also accompanied by a
+USE_STRICT_MPTEXINPUTS flag.</p>
