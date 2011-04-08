@@ -145,12 +145,24 @@ ${var}.${fig:T} = ${${var}}
 _MPOST_ENV.${fig:T}+= TEX=${MPTEX.${fig:T}:Q}
 .endif
 .if defined(MPINPUTS.${fig:T})&&!empty(MPINPUTS.${fig:T})
-_MPOST_ENV.${fig:T}+= MPINPUTS=${MPINPUTS.${fig:T}:Q:S/\\ /:/g}
+.if !defined(USE_STRICT_MPINPUTS)|| ${USE_STRICT_MPINPUTS} != yes
+_MPOST_ENV.${fig:T}+= MPINPUTS=".:${MPINPUTS.${fig:T}:Q:S/\\ /:/g}:"
+.else
+_MPOST_ENV.${fig:T}+= MPINPUTS="${MPINPUTS.${fig:T}:Q:S/\\ /:/g}"
+.endif
 .endif
 .if defined(MPTEXINPUTS.${fig:T})&&!empty(MPTEXINPUTS.${fig:T})
-_MPOST_ENV.${fig:T}+= TEXINPUTS=${MPTEXINPUTS.${fig:T}:Q:S/\\ /:/g}
+.if !defined(USE_STRICT_MPTEXINPUTS)|| ${USE_STRICT_MPTEXINPUTS} != yes
+_MPOST_ENV.${fig:T}+= TEXINPUTS=".:${MPTEXINPUTS.${fig:T}:Q:S/\\ /:/g}:"
+.else
+_MPOST_ENV.${fig:T}+= TEXINPUTS="${MPTEXINPUTS.${fig:T}:Q:S/\\ /:/g}"
+.endif
 .elif defined(TEXINPUTS.${fig:T})&&!empty(TEXINPUTS.${fig:T})
-_MPOST_ENV.${fig:T}+= TEXINPUTS=${TEXINPUTS.${fig:T}:Q:S/\\ /:/g}
+.if !defined(USE_STRICT_TEXINPUTS)|| ${USE_STRICT_TEXINPUTS} != yes
+_MPOST_ENV.${fig:T}+= TEXINPUTS=".:${TEXINPUTS.${fig:T}:Q:S/\\ /:/g}:"
+.else
+_MPOST_ENV.${fig:T}+= TEXINPUTS="${TEXINPUTS.${fig:T}:Q:S/\\ /:/g}"
+.endif
 .endif
 .if defined(TEXMFOUTPUT.${fig:T})&&!empty(TEXMFOUTPUT.${fig:T})
 _MPOST_ENV.${fig:T}+= TEXMFOUTPUT=${TEXMFOUTPUT.${fig:T}:Q}
