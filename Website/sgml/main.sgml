@@ -11,6 +11,7 @@
 <!ENTITY page-footer SYSTEM "page-footer.sgml">
 <!ENTITY page-title SYSTEM "page-title.sgml">
 <!ENTITY page-content SYSTEM "page-content.sgml">
+<!ENTITY copyright-statement SYSTEM "copyright-statement.sgml">
 <!ENTITY % with.head-css-local "IGNORE">
 <!ENTITY % with.more-news "IGNORE">
 <!ENTITY % with.more-ilink "IGNORE">
@@ -43,7 +44,7 @@
 </div><!-- more -->
 <div id="PAGE">
 <div id="HEADER">&page-header;</div>
-<div id="TITLE">&page-title;</div>
+<div id="TITLE">&page-title;<p id="LEGALISM">&copyright-statement;</p></div>
 <div id="CONTENT">&page-content;</div>
 <div id="FOOTER">&page-footer;</div>
 </div><!-- page -->
