@@ -71,6 +71,10 @@
 #  Les ordres de production énumérés par la variable _MAKE_USERTARGET
 #  (bps.usertarget.mk) sont automatiquement ajoutés à cette variable.
 
+# _SUBDIR_EXPORT
+#
+#  Liste des variables de Make à transmettre aux sous-processus
+
 
 ### IMPLÉMENTATION
 
@@ -102,6 +106,7 @@ ${SUBDIR}::
 	${INFO} "${.TARGET} (all)"
 	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
 
+.if defined(_SUBDIR_TARGET)&&!empty(_SUBDIR_TARGET)
 .for target in ${_SUBDIR_TARGET}
 do-${target}-subdir: _SUBDIR
 	${NOP}
@@ -109,6 +114,15 @@ do-${target}-subdir: _SUBDIR
 ${target}: do-${target}-subdir
 .endif
 .endfor
+.endif
+
+.if defined(_SUBDIR_EXPORT)&&!empty(_SUBDIR_EXPORT)
+.for export in ${_SUBDIR_EXPORT}
+.if empty(.MAKEFLAGS:M${export}=*)&&defined(${export})
+.MAKEFLAGS: ${export}="${${export}}"
+.endif
+.endfor
+.endif
 
 .endif # ${USE_SUBDIR} == yes
 .endif #!target(__<bps.subdir.mk>__)
