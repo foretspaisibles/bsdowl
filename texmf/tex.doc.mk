@@ -46,5 +46,6 @@
 
 .include "tex.doc.pre.mk"
 .include "tex.doc.main.mk"
+.include "tex.doc.post.mk"
 
 ### End of file `tex.doc.mk'
