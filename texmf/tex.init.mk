@@ -65,13 +65,26 @@ _TEX_AUX_SUFFIXES?= .log
 _TEX_DRIVERS+= ${_TEX_DRIVER.${device}}
 .endfor
 
+# Utilisation de MASTERDIR
+.if defined(MASTERDIR)&&!empty(MASTERDIR)
+TEXINPUTS+= ${MASTERDIR}
+MPINPUTS+= ${MASTERDIR}
+BIBINPUTS+= ${MASTERDIR}
+.PATH: ${MASTERDIR}
+.endif
+
 # Si la variable TEXINPUTS est définie, on utilise sa valeur pour
-# .PATH.tex, etc.
+# .PATH.tex, etc. De même avec MPTEXINPUTS.
 
 .SUFFIXES: ${_TEX_SUFFIXES}
 .if defined(TEXINPUTS)&&!empty(TEXINPUTS)
 .for suffix in ${_TEX_SUFFIXES}
 .PATH${suffix}: ${TEXINPUTS}
+.endfor
+.endif
+.if defined(MPTEXINPUTS)&&!empty(MPTEXINPUTS)
+.for suffix in ${_TEX_SUFFIXES}
+.PATH${suffix}: ${MPTEXINPUTS}
 .endfor
 .endif
 
