@@ -418,14 +418,15 @@ This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4)
 </pre>
 
 <p>Take a look at the TEXINPUTS assignment in the <em>env</em>
-command.  Its modification with respect to the declaration in your
-Makefile means that TeX will also look for files
-in the current directory (this what the initial dot stands for) and also in
-all standard TeX locations (this what the final colon stands for).</p>
+command.  Its difference with respect to the declaration in the
+Makefile above means that TeX will also look for files
+in the current directory (this is what the initial dot stands for) and
+all standard TeX locations (this is what the final colon stands for).</p>
 
 <p>If you want to have absolute control on the value of TEXINPUTS, you
 must add an assignment <em>USE_STRICT_TEXINPUTS=yes</em> in your
-Makefile.</p>
+Makefile.  If it sees this statement, BPS will refrain from adding the
+initial dot and the final colon to your TEXINPUTS declaration.</p>
 
 <p>The supporting macros for METAPOST also understand TEXINPUTS and
 USE_STRICT_TEXINPUTS.  There is an analogous variable MPINPUTS
