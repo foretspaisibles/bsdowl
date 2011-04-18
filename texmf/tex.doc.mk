@@ -44,12 +44,7 @@
 # Pour produire un fichier DVI qui est un intermédiaire pour DEVICE,
 # on ajoute donc DEVICE à la fin de JOBNAME pour l'éxécution.
 
-.include "tex.init.mk"
-.include "bps.init.mk"
-.include "tex.mpost.mk"
+.include "tex.doc.pre.mk"
 .include "tex.doc.main.mk"
-.include "bps.clean.mk"
-.include "bps.files.mk"
-.include "bps.usertarget.mk"
 
 ### End of file `tex.doc.mk'

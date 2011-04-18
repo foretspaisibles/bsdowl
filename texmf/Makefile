@@ -9,7 +9,9 @@
 FILES = texmf.init.mk
 
 FILES+= tex.init.mk
+FILES+= tex.doc.pre.mk
 FILES+= tex.doc.main.mk
+FILES+= tex.doc.post.mk
 FILES+= tex.doc.mk
 FILES+= tex.device.dvi.mk
 FILES+= tex.device.ps.mk
