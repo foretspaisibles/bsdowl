@@ -24,7 +24,7 @@ TEX.dvi = latex
 TEX.pdf = pdflatex
 
 MULTIPASS+= aux toc
-_TEX_AUX_SUFFIXES?= .log .aux .toc
+_TEX_AUX_SUFFIXES?= .log .aux .toc .out
 _TEX_SUFFIXES?= .tex .latex .cls .sty
 
 ### End of file `latex.doc.pre.mk'
