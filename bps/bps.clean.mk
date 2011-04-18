@@ -94,22 +94,6 @@ do-realclean-realcleandirs:
 	${RM} -f -r ${REALCLEANDIRS}
 .endif
 
-.if target(do-clean)
-clean: do-clean
-distclean: do-clean
-realclean: do-clean
-.endif
-
-.if target(do-distclean)
-distclean: do-distclean
-realclean: do-distclean
-.endif
-
-.if target(do-realclean)
-realclean: do-realclean
-.endif
-
-.ORDER: do-realclean do-distclean do-clean
 
 #
 # Cookies
@@ -134,6 +118,24 @@ do-clean-hardcookies:
 
 do-distclean: do-clean-hardcookies
 .endif
+
+
+.if target(do-clean)
+clean: do-clean
+distclean: do-clean
+realclean: do-clean
+.endif
+
+.if target(do-distclean)
+distclean: do-distclean
+realclean: do-distclean
+.endif
+
+.if target(do-realclean)
+realclean: do-realclean
+.endif
+
+.ORDER: do-realclean do-distclean do-clean
 
 .endif # !target(__<bps.clean.mk>__)
 
