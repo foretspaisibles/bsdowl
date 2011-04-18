@@ -26,10 +26,9 @@ The comments in many files must be edited until they reach a
 satisfactory state.  We pursue the following goals:
 
  eng	The comments shall all be in english, but in some places some
- 	french words persist.
+ 	french sentences persist.
 
- str	The comments shall all be structured the same way. We provide
-	a few templates hereafter.
+ str	The comments shall all be structured the same way.
 
 Here is a list of files and their state with respect to the
 achievement of these two goals.
