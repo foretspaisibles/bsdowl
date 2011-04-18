@@ -178,6 +178,14 @@
 #   L'environnement du shell ouvert par cette cible contient les
 #   liaisons énumérées dans PROJECTENV.
 
+# update:
+#
+#   Permet la mise à jour automatique des sources du projet
+#
+# Cette cible n'est associée à aucune rectette, mais l'utilisateur
+# peut en assigner une, s'il souahite automatiser automatiquement les
+# soruces de son projet.
+
 
 ### IMPLÉMENTATION
 
@@ -324,7 +332,7 @@ do-dist-projectdistdir:
 # Hospitalité
 #
 
-.for t in dist prepublish publish
+.for t in dist prepublish publish update
 .if target(pre-${t})
 ${t}: pre-${t}
 .endif
