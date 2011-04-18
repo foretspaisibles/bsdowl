@@ -189,8 +189,6 @@
 
 ### IMPLÉMENTATION
 
-.include "bps.subdir.mk"
-
 .if !target(__<bps.project.mk>__)
 __<bps.project.mk>__:
 
@@ -408,9 +406,14 @@ PROJECTLIBRARYMAKE = ${PROJECTBASE}/Mk
 .MAKEFLAGS: -I"${PROJECTLIBRARYMAKE}"
 .endif
 
+
 #
 # Reading project configuration
 #
+
+.if exists(${PROJECTLIBRARYMAKE}/project.mk)
+.include "${PROJECTLIBRARYMAKE}/project.mk"
+.endif
 
 
 #
@@ -430,5 +433,7 @@ subshell:
 	${INFO} "Exiting developper's subshell"
 
 .endif # !target(__<bps.project.mk>__)
+
+.include "bps.subdir.mk"
 
 ### End of file `bps.project.mk'
