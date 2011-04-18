@@ -1,7 +1,7 @@
-### latex.doc.mk -- Produce LaTeX documents
+### tex.doc.pre.mk -- Produce TeX documents
 
 # Author: Michaël Le Barbier Grünewald
-# Date: Dim  9 sep 2007 14:49:18 CEST
+# Date: sam 16 avr 2011 22:44:59 CEST
 # Lang: fr_FR.ISO8859-15
 
 # $Id$
@@ -17,13 +17,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-# Confer `tex.doc.mk'.
+.include "tex.init.mk"
+.include "bps.init.mk"
+.include "tex.mpost.mk"
 
-.include "latex.doc.pre.mk"
-.include "tex.doc.pre.mk"
-.include "tex.doc.main.mk"
-.include "latex.bibtex.mk"
-.include "tex.doc.post.mk"
-.include "latex.doc.post.mk"
-
-### End of file `latex.doc.mk'
+### End of file `tex.doc.pre.mk'
