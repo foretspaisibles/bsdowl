@@ -21,7 +21,7 @@
 ### SYNOPSIS
 
 # _MAKE_USERTARGET = configure depend build doc all install
-# _MAKE_USERTARGET+= clean distclean realclean
+# _MAKE_USERTARGET+= clean distclean realclean update
 # _MAKE_ALLSUBTARGET = configure depend build doc
 #
 # .include "bps.usertarget.mk"
