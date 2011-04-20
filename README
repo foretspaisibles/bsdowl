@@ -133,9 +133,8 @@ suivants:
     Pour le développement de macros LaTeX avec NOWEB
 
 
-Leurs fonctionnalités peuvent cependant encore évoluer, notamment pour
-améliorer le support des variables .PATH et .OBJDIR, qui n'est souvent que
-partiel.
+Leurs fonctionnalités évoluent et les suggestions de modifications
+sont les bienvenues.
 
 
 5.2 Modules inaboutis
