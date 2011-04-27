@@ -1,0 +1,22 @@
+<!--
+Local Variables:
+sgml-parent-document: ("../sgml/index.sgml" "html" "head" ("title"))
+End Variables:
+-->
+<style type="text/css" media="all">
+p#ACTION {
+  color: grey;
+  text-indent: 0pt;
+  text-decoration: none;
+  margin-top: 2ex;
+  font-size: smaller;
+  font-style: italic;
+}
+
+p#ACTION a,
+p#ACTION a:visited
+{
+  color: grey;
+  text-decoration: none;
+}
+</style>

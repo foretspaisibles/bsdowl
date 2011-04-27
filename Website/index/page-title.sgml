@@ -5,9 +5,18 @@ ispell-dictionary: "british-ise"
 End:
 -->
 <p id="HEADLINE">BSD Make Pallàs Scripts</p>
-<p id="INTRODUCTION"><p>BSD Make Pallàs Scripts is a group of BSD Make template files. They
+<p id="INTRODUCTION">BSD Make Pallàs Scripts is a group of BSD Make template files. They
 are written mich in the spirit of FreeBSD's Make template files, with
 portability in mind: they can also be used on GNU/Linux systems, Mac
 OS X and Sun Solaris. Currently available scripts may be used for
 OCaml projects and (La)TeX documents or macros.</p>
+
+<p id="ACTION">
+Latest release is &bps-current-version;
+&#8212;
+<a
+href="&bps-current-tarball-url;"
+>get tarball</a>
+&#8212;
+<a href="&bps-browse-source-code-url;">browse source code</a>
 </p>
