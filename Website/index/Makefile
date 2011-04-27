@@ -7,5 +7,6 @@ SRCS+= page-content.sgml
 SRCS+= more-ilink.sgml
 SRCS+= more-elink.sgml
 SRCS+= more-download.sgml
+SRCS+= head-css-local.sgml
 
 .include "scroll.mk"

@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-15"?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" [
+<!ENTITY bps-current-version "1.4">
+<!ENTITY bps-current-tarball-url "http://download.gna.org/bsdmakepscripts/bsdmakepscripts-&bps-current-version;.tar.bz2">
+<!ENTITY bps-current-tarball-name "bsdmakepscripts-&bps-current-version;.tar.bz2">
+<!ENTITY bps-browse-source-code-url "http://svn.gna.org/viewcvs/bsdmakepscripts/">
 <!ENTITY head-title SYSTEM "head-title.sgml">
 <!ENTITY head-css-global SYSTEM "head-css-global.sgml">
 <!ENTITY head-css-local SYSTEM "head-css-local.sgml">
