@@ -75,8 +75,8 @@ href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/INSTALL?view=auto"
 <h1 id="makeisntr">Downloading, installing and using</h1>
 
 <p>You shall download the latest source distribution: <a
-href="http://download.gna.org/bsdmakepscripts/bsdmakepscripts-1.3.tar.bz2"
->bsdmakepscripts-1.3.tar.bz2</a>. If you are running a Linux based
+href="&bps-current-tarball-url;"
+>&bps-current-tarball-name;</a>. If you are running a Linux based
 system, or any system but FreeBSD, NetBSD and MAC OS-X, you also shall
 consider getting Simon J. Garrety's following software: <a
 href="http://void.crufty.net/ftp/pub/sjg/bmake.tar.gz"
