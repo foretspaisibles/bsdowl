@@ -272,7 +272,7 @@ PROJECTDISTEXCLUDE+= ${f}
 # Fichiers à omettre dans l'archive
 #
 
-.for f in CVS .cvsignore .svn
+.for f in CVS .cvsignore .svn .gitignore .git
 .if exists(${f})
 PROJECTDISTEXCLUDE+=${f}
 .endif
