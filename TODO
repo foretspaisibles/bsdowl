@@ -12,6 +12,10 @@ List OpenSP as a suggested package, for `onsgmls', the SGML normalizer
 used to prepare WEB pages.
 *** nwlatex.css
 Fix installation path for `nwlatex.css'.
+** Installation
+*** FILESGRP
+Do not use the wheel group in some systems (Debian) that do not have
+one.
 
 * MODULES
 ** OCaml
@@ -19,6 +23,12 @@ The functionalities of these modules shall be reworked.  They lack
 support for many capabilities of the compiler.  Support for OBJDIR
 should also provide the opportunity to compile against different
 interfaces (with ocamlfind's predicate capability).
+
+** NOWEB
+The functionnalities of these modules shall be a bit cleaned up.  A
+notable point is the production of a LaTeX file (by weaving) that is
+part of a larger document.  We also want to improve the usability of
+NOWEB by other modules.
 
 * DOCUMENTATION
 ** Comments in files
@@ -127,3 +137,5 @@ We need a text illustrating:
 We need a text illustrating:
   * the preparation of a simple macro files;
   * the generation of a HTML version of the documentation.
+
+*** NOWEB base Maple macros
