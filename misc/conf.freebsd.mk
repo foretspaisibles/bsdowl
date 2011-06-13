@@ -27,7 +27,7 @@
 #  KERN		For kernel configuration files
 #  BOOT		For boot configuration files, in /boot
 #  CSUP		For csup configuration files, in /etc/csup
-#  FDI		For decive file informations used by HAL
+#  FDI		For device file informations used by HAL
 #  RC		For RC files used to boot the system
 #  KDE		For KDE configuration files
 #  XDM		For XDM configuration files, in ${LOCALBASE}/lib/X11/xdm
