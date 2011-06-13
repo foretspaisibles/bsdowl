@@ -54,7 +54,7 @@ achievement of these two goals.
   	  bps/bps.credentials.mk
   	  bps/bps.clean.mk
   	  bps/bps.autoconf.mk
-  	  bps/bps.project.mk
+ str	  bps/bps.project.mk
 
   	  www/www.files.mk
   	  www/www.sgml.mk
