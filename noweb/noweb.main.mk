@@ -246,12 +246,15 @@ NOWEAVE_LATEX_WRAPPER?= yes
 NOWEAVE_LATEX_DEFS?=
 NOWEAVE_LATEX_DEFS_FILE?= l2h.defs
 
+NOWEB_CLEAN?= realclean
+
 _NOTANGLE_TOOL?= notangle
 _NOWEAVE_TOOL?= noweave
 _NOWEAVE_SED?=
 
 _NOWEAVE_CHUNKS = tex latex troff custom
 _NOWEAVE_DEVICES = texte tex latex troff html
+#_NOWEAVE_OBJS =
 
 _NOTANGLE_VARS = NOWEB
 _NOTANGLE_VARS+= NOTANGLE_LINE_HINTS
@@ -264,6 +267,7 @@ _NOWEAVE_VARS+= NOWEAVE_FILTER
 _NOWEAVE_VARS+= NOWEAVE_MARKUP
 _NOWEAVE_VARS+= NOWEAVE_INDEX
 _NOWEAVE_VARS+= NOWEAVE_AUTODEFS
+_NOWEAVE_VARS+= NOWEAVE_MASTER
 _NOWEAVE_VARS+= _NOWEAVE_TOOL
 
 .for device in ${_NOWEAVE_DEVICES}
@@ -355,10 +359,15 @@ _NOTANGLE_TOOL.${file:T}+= -markup ${NOTANGLE_MARKUP.${file:T}}
 .if defined(NOTANGLE_FILTER.${file:T})&&!empty(NOTANGLE_FILTER.${file:T})
 _NOTANGLE_TOOL.${file:T}+= ${NOTANGLE_FILTER.${file:T}:C/^/-filter /g}
 .endif
-REALCLEANFILES+= ${file}
 ${file}: ${NOWEB.${file:T}}
 	${_NOTANGLE_TOOL.${file:T}} -R${.TARGET} ${.ALLSRC} | cpif ${.TARGET}
 .endfor
+
+do-clean-notangle:
+	${RM} -f ${NOTANGLE}
+
+do-${NOWEB_CLEAN}: do-clean-notangle
+
 
 #
 # Weaving
@@ -370,7 +379,12 @@ ${file}: ${NOWEB.${file:T}}
 ${NOWEAVE_GROUP}+= ${file:T}${_NOWEAVE_DEVICE.suffix.${device}}
 .endfor
 .if !empty(NOWEAVE_DEVICE:Mlatex)||!empty(NOWEAVE_DEVICE:Mtex)
+.if defined(NOWEAVE_MASTER.${file:T})&&!empty(NOWEAVE_MASTER.${file:T})
+DOCS+= ${NOWEAVE_MASTER.${file:T}}
+SRCS.${NOWEAVE_MASTER.${file:T}}+= ${file:T}${_NOWEAVE_DEVICE.suffix.latex}
+.else
 DOCS+= ${file:T}
+.endif
 .endif
 .endfor
 
@@ -391,6 +405,10 @@ _NOWEAVE_TOOL.${device}.${file:T}+= -filter ${_NOWEAVE_DEVICE.filter.${device}}
 .endif
 .endfor
 .endfor
+
+.if defined(NOWEAVE_MASTER)&&!empty(NOWEAVE_MASTER)
+NOWEAVE_LATEX_WRAPPER = no
+.endif
 
 
 # Préparation spécifique à LaTeX
@@ -480,12 +498,16 @@ _NOWEAVE_SED.${device}.${file}+= -e '2s%</head>%<link rel="stylesheet" title="Cl
 .if !empty(_NOWEAVE_SED.${device}.${file:T})
 _NOWEAVE_CMD.${device}.${file}+= | sed ${_NOWEAVE_SED.${device}.${file:T}}
 .endif
-
 _NOWEAVE_CMD.${device}.${file}+= | cpif ${.TARGET}
-CLEANFILES+= ${file}${_NOWEAVE_DEVICE.suffix.${device}}
+_NOWEAVE_OBJS+= ${file}${_NOWEAVE_DEVICE.suffix.${device}}
 ${file}${_NOWEAVE_DEVICE.suffix.${device}}: ${NOWEB.${file:T}}
 	${_NOWEAVE_CMD.${device}.${file}}
 .endfor
 .endfor
+
+do-clean-noweave:
+	${RM} -f ${_NOWEAVE_OBJS}
+
+do-${NOWEB_CLEAN}: do-clean-noweave
 
 .endif #!target(__<noweb.main.mk>__)
