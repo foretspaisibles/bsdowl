@@ -36,6 +36,14 @@
 #  the share of figure files across several files. Note that, in this case,
 #  figures should be put in a separate folder.
 
+# MPOST_TRANSLATE_NAMES (no)
+#
+#  Controls translation of picture names
+#
+#  Some macro packages do not work well with METAPOST picture names,
+#  ending aith a dot followed by a number.  If the falg is set to yes,
+#  we replace this final dot with a hyphen and add a `.mps' suffix.
+
 #
 # Pseudo-outils
 #
@@ -45,6 +53,8 @@ MPTEX?= ${TEX.dvi}
 MP2EPS?= mp2eps
 MP2PDF?= mp2pdf
 MP2PNG?= mp2png
+
+MPOST_TRANSLATE_NAMES?= no
 
 MPOST_DEVICE.dvi?= eps
 MPOST_DEVICE.ps?= eps
@@ -89,7 +99,11 @@ _MPOST_FIG+=${fig}
 
 .for fig in ${_MPOST_FIG}
 ${COOKIEPREFIX}${fig:T}: ${fig}
+.if ${MPOST_TRANSLATE_NAMES} == "no"
 	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}.\1/p' ${.ALLSRC} > ${.TARGET}
+.else
+	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}-\1.mps/p' ${.ALLSRC} > ${.TARGET}
+.endif
 depend: ${COOKIEPREFIX}${fig:T}
 .if exists(${COOKIEPREFIX}${fig:T})
 _MPOST_LIST.${fig:T}!= cat ${COOKIEPREFIX}${fig:T}
@@ -113,7 +127,11 @@ FIGS.${doc:T}+= ${FIGS}
 .if defined(FIGS.${doc:T})
 .for fig in ${FIGS.${doc:T}}
 .for device in ${TEXDEVICE}
+.if ${MPOST_TRANSLATE_NAMES} == "yes"
+SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:.mps=.${MPOST_DEVICE.${device}}}
+.else
 SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:=.${MPOST_DEVICE.${device}}}
+.endif
 .endfor
 .endfor
 .endif
@@ -204,6 +222,14 @@ _MPOST_BUILD.${fig:T} = ${MPOST}
 .for fig in ${_MPOST_FIG}
 ${_MPOST_LIST.${fig:T}}: ${fig}
 	${_MPOST_BUILD.${fig:T}} ${.ALLSRC}
+.if ${MPOST_TRANSLATE_NAMES} == "yes"
+	for f in ${_MPOST_LIST.${fig:T}}; do\
+	  a="$${f%.mps}"; \
+	  b="$${a%%-*}"; \
+	  c="$${a##*-}"; \
+	  mv -f "$$b.$$c" "$$f"; \
+	done
+.endif
 .endfor
 
 
@@ -222,9 +248,16 @@ ${_MPOST_LIST.${fig:T}}: ${fig}
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
+.if ${MPOST_TRANSLATE_NAMES} == "yes"
+.if !target(${item:.mps=.${MPOST_DEVICE.${device}}})
+${item:.mps=.${MPOST_DEVICE.${device}}}: ${item}
+	${MPOST_TOOL.${MPOST_DEVICE.${device}}} ${.ALLSRC}
+.endif
+.else
 .if !target(${item}.${MPOST_DEVICE.${device}})
 ${item}.${MPOST_DEVICE.${device}}: ${item}
 	${MPOST_TOOL.${MPOST_DEVICE.${device}}} ${.ALLSRC}
+.endif
 .endif
 .endfor
 .endfor
@@ -242,7 +275,11 @@ DISTCLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx} ${_MPOST_LIST.${fig:T}}
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
+.if ${MPOST_TRANSLATE_NAMES} == "yes"
+REALCLEANFILES+= ${item:.mps=.${MPOST_DEVICE.${device}}}
+.else
 REALCLEANFILES+= ${item}.${MPOST_DEVICE.${device}}
+.endif
 .endfor
 .endfor
 .endfor

@@ -55,7 +55,7 @@ mp2png_process()
     file=`mktemp mp2png.XXXXX`
     cp $1 $file
     mp2eps $file
-    gs -dNOPAUSE -sDEVICE=pngalpha -sOutputFile=$1.png -r${resolution}x${resolution} $file.eps
+    gs -dNOPAUSE -sDEVICE=pngalpha -sOutputFile=${1%.mps}.png -r${resolution}x${resolution} $file.eps
     rm $file $file.eps
 }
 

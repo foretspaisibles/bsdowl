@@ -62,7 +62,7 @@ is_no ()
 
 process_arg() {
     inputfile="$1";
-    basename=`basename $inputfile .mp`
+    basename=${inputfile%.mps}
     texbase=`mktemp ${basename}_XXXX`
     texfile=$texbase.tex
     epsfile=$basename.eps

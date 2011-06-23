@@ -249,7 +249,41 @@ FIGS+= illustr2.mp
 
 <p>Then type in <em>make</em> at the shell prompt. The latex.doc.mk will
 then figure out how many illustrations are present in each file, and
-produce the image files required by your TEXDEVICE.</p>
+produce the image files required by your TEXDEVICE.  For instance, if
+your TEXDEVICE is dvi, and illustr1.mp contains two figures
+introduced by beginfig(1) and beginfig(2), you end up with four files
+</p>
+
+<pre>
+illustr1.1
+illustr1.2
+illustr1.1.eps
+illustr1.2.eps
+</pre>
+
+<p>The first two files are intermediary files in PostScript format,
+and the last ones are Encapulated PostScript and suited for inclusion
+in your document.</p>
+
+<p><em>Note for graphics and graphicx packages users.</em>
+You are very likely to use the <em>graphics</em> or <em>graphicx</em>
+package defining commands for graphics inclusion.  These packages are
+puzzled by the names given by METAPOST to its output.  To correct
+this, you can say MPOST_TRANSLATE_NAMES="yes" in your Makefile.  This
+options reworks the names of the outputs of METAPOST, so they follow a
+scheme the two aforementioned packages can cope with.  When this
+option is active, the listing above becomes
+</p>
+<pre>
+illustr1-1.mps
+illustr1-2.mps
+illustr1-1.eps
+illustr1-2.eps
+</pre>
+<p>and using the <em>graphicx</em> package is as easy as it should be:</p>
+<pre>
+\includegraphics{illustr1-1}%
+</pre>
 
 <p><em>Discovering METAPOST.</em>
 It seems that many people do not know about METAPOST.  If it is true

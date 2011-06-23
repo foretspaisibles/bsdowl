@@ -73,7 +73,7 @@ mp2pdf_process()
     file=`mktemp mp2pdf.XXXXX`
     cp $1 $file
     mp2eps $file
-    epstopdf --outfile=$1.pdf $file.eps
+    epstopdf --outfile=${1%.mps}.pdf $file.eps
     rm $file $file.eps
 }
 
