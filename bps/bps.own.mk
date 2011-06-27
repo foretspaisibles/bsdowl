@@ -60,8 +60,8 @@ __<bps.own.mk>__:
 _OWN_DIRMODE?=	755
 _OWN_BINMODE?=	555
 _OWN_DTAMODE?=	444
-_OWN_OWN?=	root
-_OWN_GRP?=	wheel
+_OWN_OWN?=	${_BPS_SYSTEMOWN}
+_OWN_GRP?=	${_BPS_SYSTEMGRP}
 .else
 _OWN_DIRMODE?=	750
 _OWN_BINMODE?=	550
