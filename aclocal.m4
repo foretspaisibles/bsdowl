@@ -43,6 +43,10 @@
 # Check for a id program that understands -g -u and -n options. This is not the
 # case of Solaris' /usr/bin/id which is the first found on the path in some
 # configurations.
+#
+# If a suitable program is found, it can be used through the content
+# of the ID program.  If no such a program is found, the value of this
+# variable is `no`.
 AC_DEFUN([AC_PROG_ID],
 [AC_CACHE_CHECK([for id that handles -g, -u and -n], ac_cv_path_ID,
   [ac_cv_path_ID=no
