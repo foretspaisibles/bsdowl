@@ -143,7 +143,7 @@ document.  The latex.tex.mk module enforces multipass treatment of your manuscri
 because LaTeX needs this to produce correct cross references created
 with <em>label</em> and <em>ref</em> commands within your document.
 The doc.tex.mk module will not do multiple treatment of your
-manuscript unless you set the variable MULTIPASS to a list of name,
+manuscript unless you set the variable MULTIPASS to a list of names,
 each element giving its name to a pass.  The choice of these names does
 not have a real importance, as they are only displayed to the user.
 It is even possible to specify the same name several times!</p>
@@ -174,10 +174,12 @@ satisfied with it, you can <em>install</em> it.</p>
 objects you produced at some point of your work.  For instance,
 picture yourself sending a copy of your work to a friend.  Your friend
 will read your paper with attention and send you back his comments,
-but in meanwhile, you kept on improving your document.  When you
+but in the meanwhile, you kept on improving your document.  When you
 receive the comments of your friend, you will compare them to the
 document you sent him.  It is therefore useful to keep a copy of it.
-The best way to do this is probably to use a RCS, a software system
+The best way to do this is probably to use
+  a <a href="http://en.wikipedia.org/wiki/Revision_Control_System">RCS</a>,
+  a software system
 managing history of files.  If you do not use such a system,
 BPS might be here of some help.</p>
 
@@ -297,9 +299,8 @@ the <a href="http://www.tug.org/metapost.html">TeX users group</a> has
 a page on its website devoted to this tool. The list you will find
 there is pretty long, so let me add that I especially like the
 introduction written by <a
-href="http://remote.science.uva.nl/~heck/Courses/mptut.pdf">André
+href="http://staff.science.uva.nl/~heck/Courses/mptut.pdf">André
 Heck</a>, it might also be a good starting point for you.</p>
-
 
 
 <h2>Bibliography</h2>
@@ -309,7 +310,7 @@ you must be sure that the program TeX will find the bibliographic
 databases you enumerated in your document with <em>bibliography</em>
 statements.  It is customary to gather bibliographic databases in some
 directory, for instance <em>${HOME}/share/bib</em>.  To let bibtex
-find these files, it is enough to add <em>${HOME}/share/binb</em> to the content
+find these files, it is enough to add <em>${HOME}/share/bib</em> to the content
 of the variable BIBINPUTS.  If your bibliographic databases are
 scattered among several directories, you just need to let each of them
 appear in the value of the variable BIBINPUTS:</p>
@@ -325,7 +326,8 @@ BIBINPUTS+= ../morebib
 
 <p>Note that the <em>make clean</em> mantra will leave intact the BBL
 file produced by bibtex.  This is because you sometimes need to send
-this file to your publisher instead of a bibtex database.  Hence the
+this file to your publisher rather than an unprocessed
+bibtex database.  Hence the
 <em>make clean</em> or <em>make distclean</em> will leave you
 document's directory in the state you want to have it when you want to
 redistribute it. To get rid of the BBL file as well, you need to use
@@ -367,7 +369,7 @@ SRCS.article.tex+= section2.tex
 </pre>
 
 
-<h2>Automatically generating part of a document</h2>
+<h2>Automatically generating a part of a document</h2>
 
 <p>Assume you are working on a document containing a table whose
 content is likely to change several times and will need to be
@@ -407,8 +409,8 @@ run your program gentable, so it is better to list table.tex in
 REALCLEANFILES than in CLEANFILES.</p>
 
 <p>Of course, you can compute some text or a METAPOST picture, or
-whatever, instead of a table!</p>
-
+pretty-print a piece of code, or whatever, instead of generating a
+table!</p>
 
 <h2>Source files spanning across several directories</h2>
 
