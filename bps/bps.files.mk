@@ -157,7 +157,9 @@ FILESGROUPS+= FILES BIN DOC SHARE LIB
 
 .if !target(buildfiles)
 .for group in ${FILESGROUPS}
-buildfiles: ${${group}}
+buildfiles: buildfiles-${group:L}
+.PHONY: buildfiles-${group:L}
+buildfiles-${group:L}: ${${group}}
 .endfor
 .endif
 
@@ -177,14 +179,14 @@ installfiles:
 .PHONY: installfiles
 .for group in ${FILESGROUPS}
 .if defined(${group}) && !empty(${group})
-installfiles: installfiles_${group:L}
-.PHONY: installfiles_${group:L}
-installfiles_${group:L}:
+installfiles: installfiles-${group:L}
+.PHONY: installfiles-${group:L}
+installfiles-${group:L}:
 .for file in ${${group}}
-installfiles_${group:L}: installfiles_${group:L}_${file:T}
-installfiles_${group:L}_${file:T}: ${file}
+installfiles-${group:L}: installfiles-${group:L}-${file:T}
+installfiles-${group:L}-${file:T}: ${file}
 	${_${group}_INSTALL.${file:T}}
-.PHONY: installfiles_${group:L}_${file:T}
+.PHONY: installfiles-${group:L}-${file:T}
 .endfor #file in ${${group}}
 .endif #defined(${group})&&!empty(${group})
 .endfor #group in ${FILESGROUPS}
