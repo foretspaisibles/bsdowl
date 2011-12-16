@@ -38,13 +38,13 @@
 # MLAN		Facteur d'archives (bibliothèques) code natif
 # MLLB		Éditeur de liens code octet
 # MLLN		Éditeur de liens code natif
-# MLPO		Créateur de paquet code octet
-# MLPX		Créateur de paquet code natif
+# MLPB		Créateur de paquet code octet
+# MLPN		Créateur de paquet code natif
 
 .if !target(__<ocaml.tools.mk>__)
 __<ocaml.tools.mk>__:
 
-_OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPO MLPX
+_OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPB MLPN
 
 MLCB?= ocamlc -c
 MLCN?= ocamlopt -c
@@ -57,8 +57,8 @@ MLAB?= ocamlc -a
 MLAN?= ocamlopt -a
 MLLB?= ocamlc
 MLLN?= ocamlopt
-MLPO?= ${MLCB} -pack
-MLPX?= ${MLCN} -pack
+MLPB?= ocamlc -pack
+MLPN?= ocamlopt -pack
 
 .endif#!target(__<ocaml.tools.mk>__)
 
