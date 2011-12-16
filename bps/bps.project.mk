@@ -426,6 +426,12 @@ PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
 # cela, elle fait l'hypothèse que les termes commençant par un `/' ou
 # un `.' sont des chemins à traiter comme arguments pour `-I'.
 
+.if defined(PROJECTEXPORT)&&!empty(PROJECTEXPORT)
+.for v in ${PROJECTEXPORT}
+PROJECTENV+= $v="${$v}"
+.endfor
+.endif
+
 # La variable SHELL est définie dans l'environnement de l'utilisateur.
 subshell:
 	${INFO} "Entering developper's subshell"
