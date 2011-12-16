@@ -4,7 +4,7 @@ sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
 ispell-dictionary: "british-ise"
 End:
 -->
-<h1 id="makeintro">Introducting Make</h1>
+<h1 id="makeintro">Introducing Make</h1>
 
 <p>Work on Unix systems has a strong emphasis on files, and a typical work
 session with such a system involves the creation of files
