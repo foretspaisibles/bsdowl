@@ -85,12 +85,6 @@ _OCAML_CB+=${item:T}.cb
 LIBS.${item:T}.cb?=${LIBS:=.cma}
 LIBS.${item:T}.cn?=${LIBS:=.cmxa}
 .endif
-.if defined(LIBS.${item:T}.cb)&&!empty(LIBS.${item:T}.cb)
-MLLBADD.${item:T}.cb+=${LIBS.${item:T}.cb}
-.endif
-.if defined(LIBS.${item:T}.cn)&&!empty(LIBS.${item:T}.cn)
-MLLNADD.${item:T}.cn+=${LIBS.${item:T}.cn}
-.endif
 .endfor
 
 .include "ocaml.main.mk"
@@ -104,6 +98,9 @@ CLEANFILES+=${item}
 ${item}: ${item}.cn
 	${CP} ${item}.cn ${item}
 _OCAML_SRCS.${item}.cn=${.ALLSRC}
+.if !empty(LIBS.${item}.cn)
+${item}.cn: ${LIBS.${item}.cn}
+.endif
 .if !empty(SRCS.${item}.cn)
 ${item}.cn: ${SRCS.${item}.cn:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 .endif
@@ -112,6 +109,9 @@ ${item}.cn: ${SRCS.${item}.cn:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 ${item}: ${item}.cb
 	${CP} ${item}.cb ${item}
 _OCAML_SRCS.${item}.cb=${.ALLSRC}
+.if !empty(LIBS.${item}.cb)
+${item}.cb: ${LIBS.${item}.cb}
+.endif
 .if !empty(SRCS.${item}.cb)
 ${item}.cb: ${SRCS.${item}.cb:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
