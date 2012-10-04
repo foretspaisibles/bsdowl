@@ -74,9 +74,6 @@ TEXDOCNAME.${doc:T} = ${doc:T}${TEXDRAFTSTAMP}
 .endif
 
 
-do-build: do-build-doc
-do-build-doc: ${TEXDOC}
-
 #
 # Génération des dépendances
 #
@@ -101,5 +98,12 @@ ${doc}.${device}: ${SRCS.${doc:T}.${device}}
 .for driver in ${_TEX_DRIVERS}
 .include "tex.driver.${driver}.mk"
 .endfor
+
+#
+# Objectifs de production de documents
+#
+
+do-build: do-build-doc
+do-build-doc: ${TEXDOC}
 
 ### End of file `tex.doc.main.mk'
