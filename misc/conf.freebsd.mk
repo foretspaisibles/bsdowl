@@ -209,6 +209,14 @@ XDMMODE.Xwilling?= 555
 XDMMODE.${file:T}?= 555
 .endfor
 
+FILESGROUPS+= XDMPIXMAP
+XDMPIXMAPDIR?= ${LOCALBASE}/lib/X11/xdm/pixmaps
+XDMPIXMAPOWN?= ${BASEOWN}
+XDMPIXMAPGRP?= ${BASEGRP}
+XDMPIXMAPMODE?= 444
+
+
+
 # Images goes under ${XDMDIR}/pixmaps
 .for suffix in png gif jpg jpeg xpm
 .for file in ${XDM:M*.${suffix}}
