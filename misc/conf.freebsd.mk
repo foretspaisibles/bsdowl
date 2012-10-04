@@ -66,6 +66,12 @@ RCOWN?= ${BASEOWN}
 RCGRP?= ${BASEGRP}
 RCMODE?= 555
 
+.if defined(RC)&&!empty(RC)
+.if ${RC} == "f77"
+RC:=
+.endif
+.endif
+
 
 # PORT
 #
