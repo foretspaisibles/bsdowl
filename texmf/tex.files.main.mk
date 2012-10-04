@@ -28,7 +28,7 @@ TEXFILESDIR?= ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
 
 .if defined(TEXFILES)&&!empty(TEXFILES)
 post-install: post-install-mktexlsr
-post-install-mktexlsr:
+post-install-mktexlsr: .IGNORE
 	${MKTEXLSR} ${TEXMFDIR}
 .endif
 
