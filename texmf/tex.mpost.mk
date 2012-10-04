@@ -44,6 +44,17 @@
 #  ending aith a dot followed by a number.  If the falg is set to yes,
 #  we replace this final dot with a hyphen and add a `.mps' suffix.
 
+# MPOST_OBJECTS
+#
+#  List of Metapost objects
+#
+#  After evaluation of this file, the variable MPOST_OBJECTS contains
+#  the list of Metapost intermediary objects.
+
+# MPOST_LIBS
+#
+#  Libraries of Metapost macros.
+
 #
 # Pseudo-outils
 #
@@ -230,6 +241,10 @@ ${_MPOST_LIST.${fig:T}}: ${fig}
 	  mv -f "$$b.$$c" "$$f"; \
 	done
 .endif
+.if defined(MPOST_LIBS)&&!empty(MPOST_LIBS)
+${_MPOST_LIST.${fig:T}}: ${MPOST_LIBS}
+.endif
+MPOST_OBJECTS+= ${_MPOST_LIST.${fig:T}}
 .endfor
 
 
