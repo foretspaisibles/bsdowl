@@ -177,6 +177,9 @@
 #
 #   L'environnement du shell ouvert par cette cible contient les
 #   liaisons énumérées dans PROJECTENV.
+#
+#   Si cette variable est définie, entre dans le dossier SUBSHELLDIR
+#   avant d'éxécuter ce nouveau shell.
 
 # update:
 #
@@ -433,9 +436,10 @@ PROJECTENV+= $v="${$v}"
 .endif
 
 # La variable SHELL est définie dans l'environnement de l'utilisateur.
+SUBSHELLDIR?= .
 subshell:
 	${INFO} "Entering developper's subshell"
-	@${ENVTOOL} ${PROJECTENV} ${SHELL}
+	@cd ${SUBSHELLDIR}; ${ENVTOOL} ${PROJECTENV} ${SHELL}
 	${INFO} "Exiting developper's subshell"
 
 .endif # !target(__<bps.project.mk>__)
