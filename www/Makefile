@@ -1,10 +1,7 @@
 ### Makefile
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam  7 jul 2007 18:12:00 CEST
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 
 FILES = www.files.mk

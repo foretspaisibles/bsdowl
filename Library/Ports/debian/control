@@ -1,7 +1,7 @@
 Source: bsdmakepscripts
 Section: devel
 Priority: optional
-Maintainer: Michaël Le Barbier Grünewald <michael.le_barbier@laposte.net>
+Maintainer: Michael Grünewald <michipili@gmail.com>
 Build-Depends: debhelper (>= 7.0.50~), autotools-dev, pmake
 Standards-Version: 3.8.4
 Homepage: http://home.gna.org/bsdmakepscripts/

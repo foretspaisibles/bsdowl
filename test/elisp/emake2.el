@@ -1,6 +1,6 @@
 ;;; emake.el -- Emacs Support for make
 
-;; Author: Michaël Le Barbier Grünewald
+;; Author: Michael Grünewald
 ;; Date: Ven  4 mar 2005 09:30:43 CET
 ;; Description: function to run `make' from within emacs (using `compile')
 ;; Installation: Magic incantation to put in `dot-emacs'

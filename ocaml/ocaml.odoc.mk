@@ -1,15 +1,12 @@
 ### ocaml.odoc.mk -- Interface simple avec OCamldoc
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Dim aoû  5 10:21:05 CEST 2007
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2006-2009
+# Copyright (C) 2006-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which

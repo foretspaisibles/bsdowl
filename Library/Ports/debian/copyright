@@ -1,6 +1,6 @@
 This work was packaged for Debian by:
 
-    Michaël Le Barbier Grünewald <michael.le_barbier@laposte.net> on Wed, 01 Jun 2011 16:21:42 +0200
+    Michael Grünewald <michipili@gmail.com> on Wed, 01 Jun 2011 16:21:42 +0200
 
 It was downloaded from:
 
@@ -8,16 +8,16 @@ It was downloaded from:
 
 Upstream Author(s):
 
-    Michaël Le Barbier Grünewald <michael.le_barbier@laposte.net>
+    Michael Grünewald <michipili@gmail.com>
 
 Copyright:
 
-   Copyright (C) 2008-2011 Michaël Le Barbier Grünewald
+ Copyright (C) 2008-2011, 2013 Michael Grünewald
 
 
 The Debian packaging is:
 
-    Copyright (C) 2011 Michaël Le Barbier Grünewald <michael.le_barbier@laposte.net>
+ Copyright (C) 2011, 2013 Michael Grünewald
 
 # Please chose a license for your packaging work. If the program you package
 # uses a mainstream license, using the same license is the safest choice.

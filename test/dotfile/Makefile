@@ -1,10 +1,7 @@
 ### Makefile -- Test misc.dotfile.mk
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam  7 jul 2007 18:12:22 CEST
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 
 ### SYNOPSIS

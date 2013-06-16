@@ -1,10 +1,7 @@
 ### Makefile -- Collection de makefiles `noweb'
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam  3 oct 2009 19:09:28 CEST
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 FILES = noweb.main.mk
 FILES+= noweb.latex.mk

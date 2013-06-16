@@ -1,7 +1,5 @@
 #!/bin/sh
 
-# $Id$
-
 echo 'We prepare a new makefile'
 read -p 'filename: ' FILENAME
 read -p 'comment: ' COMMENT
@@ -17,16 +15,13 @@ changecom()dnl
 changequote(,)dnl
 ### __FILENAME__ -- __COMMENT__
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michaël GrÃ¼newald Grünewald
 # Date: __DATE__
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2009
+# Copyright (C) Michaël GrÃ¼newald Grünewald - 2009
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which

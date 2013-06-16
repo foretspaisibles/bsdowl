@@ -1,8 +1,7 @@
 ### csh.cshrc -- TCSH Resource Configuration Script
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Ven 26 jan 2007 19:32:47 CET
-# Lang: fr_FR.ISO8859-15
 
 setenv MAKEFLAGS "-I ${HOME}/share/mk"
 #setenv TEXMFCNF "${HOME}/share/texmf/web2c"

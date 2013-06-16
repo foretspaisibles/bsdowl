@@ -1,10 +1,7 @@
 INSTALL -- Notes à propos de l'installation
 
-Author: Michaël Le Barbier Grünewald
+Author: Michael Grünewald
 Date: Ven 10 fév 2006 16:50:40 GMT
-Lang: fr_FR.ISO8859-1
-
-$Id$
 
 
 Dans ce qui suit on note `make' le nom du programme `BSD Make' sur le

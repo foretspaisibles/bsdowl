@@ -2,16 +2,13 @@
 
 ### mp2png.sh -- Converts METAPOST output to PNG
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
-# Lang: fr_FR.ISO8859-15
-
-# $Id$
 
 
 # Global Variables:
 
-AUTHOR="Michaël Le Barbier Grünewald <michael.grunewald@laposte.net>"
+AUTHOR="Michael Grünewald <michael.grunewald@laposte.net>"
 COPYRIGHT="(c)2005"
 PROGNAME=`basename "$0"`
 
@@ -40,7 +37,7 @@ Notes:
  Typical resolution for screen viewing ranges from 72 to 100, for
  deskjet printers from 300 to 400, and for laserjet or other high
  quality device, from 600 to above.
-Author: Michaël Le Barbier Grünewald
+Author: Michael Grünewald
 Copyright: ${COPYRIGHT}
 EOF
 }

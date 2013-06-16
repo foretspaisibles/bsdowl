@@ -2,16 +2,13 @@
 
 ### mp2eps.sh -- Converts METAPOST output to PostScript
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
-# Lang: fr_FR.ISO8859-15
-
-# $Id$
 
 
 # Global Variables:
 
-AUTHOR="Michaël Le Barbier Grünewald <michael.grunewald@laposte.net>"
+AUTHOR="Michael Grünewald <michael.grunewald@laposte.net>"
 COPYRIGHT="(c)2005"
 PROGNAME=`basename "$0"`
 
@@ -33,7 +30,7 @@ Notes:
  The conversion is done thanks to TeX and epsf.tex.
  Pour des résultats optimaux, le fichier de sortie de MetaPost ne doit pas
  utiliser la fonctionnalité des prologues.
-Author: Michaël Le Barbier Grünewald
+Author: Michael Grünewald
 Copyright: ${COPYRIGHT}
 EOF
 }

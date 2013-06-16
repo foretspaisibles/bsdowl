@@ -1,8 +1,7 @@
 ;; dot.emacs -- Fichier de configuration EMACS -*- lisp -*-
 
-; Author: Michaël Le Barbier Grünewald
+; Author: Michael Grünewald
 ; Date: Sun Sep 10 11:37:56 CEST 2006
-; Lang: fr_FR.ISO8859-15
 
 ; Le programme EMACS est un éditeur de texte très populaire parmi les
 ; utilisateurs de systèmes UNIX. Le programme EMACS est un programme

@@ -1,15 +1,12 @@
 ### bps.autoconf.mk -- Support pour AUTOCONF
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Ven 18 avr 2008 09:59:39 CEST
-# Lang: fr_FR.ISO8859-1
-
-# $Id$
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2008-2009
+# Copyright (C) 2008-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which

@@ -1,15 +1,12 @@
 ### bps.credentials.mk -- Autorisation administrateur modules `make'.
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Sam 29 mar 2008 16:05:16 CET
-# Lang: fr_FR.ISO8859-15
-
-# $Id$
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2006-2009
+# Copyright (C) 2006-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which

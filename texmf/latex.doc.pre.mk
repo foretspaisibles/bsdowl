@@ -1,15 +1,12 @@
 ### latex.doc.pre.mk -- Produce LaTeX documents
 
-# Author: Michaël Le Barbier Grünewald
+# Author: Michael Grünewald
 # Date: Dim  9 sep 2007 14:49:18 CEST
-# Lang: fr_FR.ISO8859-15
-
-# $Id$
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2006-2009
+# Copyright (C) 2006-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
