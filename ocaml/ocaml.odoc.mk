@@ -20,10 +20,8 @@
 
 ### SYNOPSIS
 
-# Cette interface simple avec Ocmaldoc permet de produire des fichiers
-# `dump' ou une documentation HTML.
-#
-# Ce module n'est pas destiné à l'usager.
+# This simple interface with OCamldoc allows to produce documentation
+# dump files or a HTML manual.
 
 
 # USE_ODOC = yes
