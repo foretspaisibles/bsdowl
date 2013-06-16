@@ -9,7 +9,7 @@
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) Michaël Le Barbier Grünewald - 2006-2009
+# Copyright (C) Michaël Le Barbier Grünewald - 2006-2013
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -29,11 +29,11 @@
 
 ### DESCRIPTION
 
-# Ce module installe peut-être une cible do-depend pour générer les
-# listes de dépendances. Il installe une cible do-clean-depend pour
-# détruire ce fichier. Il installe peut-être une dépendance
-# do-clean: do-clean-depend (si do-clean existe).
+# Targets:
+# do-depend
+# do-clean-depend
 
+# Variables:
 
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:
@@ -48,7 +48,7 @@ __<ocaml.depend.mk>__:
 .endfor
 
 .depend:
-	ocamldep ${.ALLSRC} > ${.TARGET}
+	ocamldep ${MLFLAGS} ${.ALLSRC} > ${.TARGET}
 
 DISTCLEANFILES+= .depend
 
