@@ -1,10 +1,10 @@
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 23:01:35 CET
+# Date: dim 16 jui 2013 13:41:46 CEST
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
