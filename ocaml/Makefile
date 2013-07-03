@@ -23,6 +23,7 @@ FILES+= ocaml.tools.mk
 FILES+= ocaml.yacc.mk
 FILES+= ocaml.odoc.mk
 FILES+= ocaml.manual.mk
+FILES+= ocaml.toplevel.mk
 
 .include "project.mk"
 

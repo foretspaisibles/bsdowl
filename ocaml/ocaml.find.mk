@@ -28,23 +28,30 @@
 
 ### DESCRIPTION
 
-# Ce module détermine grâce à la présence d'une liaison pour l'une des
-# variables PACKAGES, PREDICATES ou USE_OCAMLFIND, si l'usager
-# souhaite utiliser ocamlfind. Dans ce cas, ce module les
-# pseudo-commandes pour la compilation et l'édition de lien avec
-# OCAMLFIND.
+# We provide virtual tools based on the ocamnlfind utility upon
+# explicit request of the user (USE_OCAMLFIND) or when idiosyncratic
+# variables are defined (PACKAGES, PREDICATES).
 
 
 .if !target(__<ocaml.find.mk>__)
 __<ocaml.find.mk>__:
 
+#
+# Detect idiosyncratic variables
+#
+
 .if defined(PACKAGES)&&!empty(PACKAGES)
-USE_OCAMLFIND=yes
+USE_OCAMLFIND?=yes
 .endif
 
 .if defined(PREDICATES)&&!empty(PREDICATES)
-USE_OCAMLFIND=yes
+USE_OCAMLFIND?=yes
 .endif
+
+
+#
+# Conditionally define virtual tools
+#
 
 USE_OCAMLFIND?=no
 
@@ -52,6 +59,7 @@ USE_OCAMLFIND?=no
 MLCB?= ocamlfind ocamlc -c
 MLCN?= ocamlfind ocamlopt -c
 OCAMLDOC?= ocamlfind ocamldoc
+OCAMLMKTOP?= ocamlfind ocamlmktop
 .if !empty(TARGET:Mbyte_code)
 MLCI?= ocamlfind ocamlc -c
 .else
@@ -61,7 +69,7 @@ MLLB?= ocamlfind ocamlc -linkpkg
 MLLN?= ocamlfind ocamlopt -linkpkg
 .endif
 
-.for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC
+.for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC OCAMLMKTOP
 .if defined(PACKAGES)&&!empty(PACKAGES)
 ${pseudo}+= -package "${PACKAGES}"
 .endif
