@@ -1,6 +1,9 @@
 Makefile
 bps/bps.init.mk
 configure
+autom4te.cache/
+config.log
+config.status
 support/mp2eps
 support/mp2pdf
 support/mp2png
