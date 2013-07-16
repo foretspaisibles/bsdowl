@@ -85,11 +85,19 @@
 #
 #   This file is copied in the HTML directory output.
 #
+#
 # ODOC_HTML_CSS_URL
 #   CSS name to use for the HTML output
 #
 #   This URL is written in the relevant files, but it must be
 #   available by other means.
+#
+#
+# ODOC_HTML_INTRO
+#   Intro name to the use for the HTML output
+#
+#   This file is pasted in the HTML output.
+
 
 
 ### RÉALISATION
@@ -246,11 +254,16 @@ ODOC_HTMLDIR?= /html
 .if !empty(ODOC_FORMAT:Mhtml)
 
 ODOC_HTML?= ${ODOC_NAME}_html
+ODOC_HTML_INTRO?=
 
 _ODOC_HTML_TOOL?= ${_ODOC_TOOL} -html
 
 .if defined(ODOC_HTML_CSS_URL)&&!empty(ODOC_HTML_CSS_URL)
 _ODOC_HTML_TOOL+= -css-style ${ODOC_HTML_CSS_URL}
+.endif
+
+.if defined(ODOC_HTML_INTRO)&&!empty(ODOC_HTML_INTRO)
+_ODOC_HTML_TOOL+= -intro ${ODOC_HTML_INTRO}
 .endif
 
 do-doc-odoc: ${ODOC_HTML}
