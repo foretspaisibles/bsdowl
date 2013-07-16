@@ -140,6 +140,16 @@ _OCAML_BUILD.${obj:T}+=${${var}.${obj:T}}
 
 .endif
 
+.if !empty(_OCAML_CMXA:M${obj})
+# We are producing a CMXA file
+clib:=${obj:C/.cmxa/.a/}
+.if !target(${clib})
+# The C library file will be produced by ocamlmklib
+${clib}: ${obj}
+	@${DO_NADA}
+.endif
+.undef clib
+.endif
 .if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))&&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))
 # We are not building a CMO nor a CMX file
 ${obj}:
