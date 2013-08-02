@@ -85,7 +85,7 @@
 #
 #   This file is copied in the HTML directory output.
 #
-#
+
 # ODOC_HTML_CSS_URL
 #   CSS name to use for the HTML output
 #
@@ -263,6 +263,7 @@ _ODOC_HTML_TOOL+= -css-style ${ODOC_HTML_CSS_URL}
 .endif
 
 .if defined(ODOC_HTML_INTRO)&&!empty(ODOC_HTML_INTRO)
+${ODOC_HTML}: ${ODOC_HTML_INTRO}
 _ODOC_HTML_TOOL+= -intro ${ODOC_HTML_INTRO}
 .endif
 
@@ -277,7 +278,7 @@ ${ODOC_HTML}: ${_OCAML_SRCS.${ODOC_NAME}:C/.ml[ily]*$/.cmi/}
 ${ODOC_HTML}:
 	${RM} -R -f ${ODOC_HTML}.temp ${ODOC_HTML}
 	${MKDIR} ${ODOC_HTML}.temp
-	${_ODOC_HTML_TOOL} -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi:N*.odoc}
+	${_ODOC_HTML_TOOL} -d ${ODOC_HTML}.temp ${.ALLSRC:N*.cmi:N*.odoc:N*.text}
 .if defined(ODOC_HTML_CSS_FILE)&&!empty(ODOC_HTML_CSS_FILE)
 	${CP} ${ODOC_HTML_CSS_FILE} ${ODOC_HTML}.temp/style.css
 .endif
