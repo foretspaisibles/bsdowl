@@ -53,7 +53,7 @@
 #  Libraries of Metapost macros.
 
 #
-# Pseudo-outils
+# Pseudo commands
 #
 
 MPOST?= mpost
@@ -61,8 +61,6 @@ MPTEX?= ${TEX.dvi}
 MP2EPS?= mp2eps
 MP2PDF?= mp2pdf
 MP2PNG?= mp2png
-
-MPOST_TRANSLATE_NAMES?= no
 
 MPOST_DEVICE.dvi?= eps
 MPOST_DEVICE.ps?= eps
@@ -86,7 +84,7 @@ MPOST_TOOL.pdf = ${MP2PDF}
 MPOST_TOOL.png = ${MP2PNG}
 
 #
-# Analyse des fichiers de figures
+# Analyse figure files
 #
 
 .for fig in ${FIGS}
@@ -105,13 +103,12 @@ _MPOST_FIG+=${fig}
 .endif
 .endfor
 
+# The variable _MPOST_FIG holds the list of figure files used by the
+# document.
+
 .for fig in ${_MPOST_FIG}
 ${COOKIEPREFIX}${fig:T}: ${fig}
-.if ${MPOST_TRANSLATE_NAMES} == "no"
-	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}.\1/p' ${.ALLSRC} > ${.TARGET}
-.else
 	@${SED} -n 's/^beginfig(\([0-9][0-9]*\)).*/${fig:.mp=}-\1.mps/p' ${.ALLSRC} > ${.TARGET}
-.endif
 depend: ${COOKIEPREFIX}${fig:T}
 .if exists(${COOKIEPREFIX}${fig:T})
 _MPOST_LIST.${fig:T}!= cat ${COOKIEPREFIX}${fig:T}
@@ -121,8 +118,12 @@ _MPOST_LIST.${fig:T} =
 HARDCOOKIEFILES+= ${COOKIEPREFIX}${fig:T}
 .endfor
 
+# For each figure file, the variable _MPOST_LIST.${fig:T} holds the
+# list of figures---if this list was once generated.
+
+
 #
-# Ajout des sources
+# Adding sources
 #
 
 .if defined(_TEX_DOC)&&!empty(_TEX_DOC)
@@ -135,11 +136,7 @@ FIGS.${doc:T}+= ${FIGS}
 .if defined(FIGS.${doc:T})
 .for fig in ${FIGS.${doc:T}}
 .for device in ${TEXDEVICE}
-.if ${MPOST_TRANSLATE_NAMES} == "yes"
-SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:.mps=.${MPOST_DEVICE.${device}}}
-.else
-SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:=.${MPOST_DEVICE.${device}}}
-.endif
+SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}}
 .endfor
 .endfor
 .endif
@@ -148,15 +145,11 @@ SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}:=.${MPOST_DEVICE.${device}}}
 .endif
 
 #
-# Création des lignes de commande pour METAPOST
+# Creating command lines
 #
 
-# Les fichiers METAPOST peuvent contenir des commandes TeX. Ils
-# doivent donc être éxécutés dans le même environnement que si le
-# fichier devait être traité par TeX.
-#
-# On passe donc les variables TEXINPUTS, TEXFORMATS, etc. dans
-# l'environnement du programme METAPOST.
+# METAPOST files can contain TeX commands.  We therefore have to
+# ensure, they are processed in a similar environment.
 
 .for var in ${_TEX_VARS} ${_MPOST_VARS}
 .for fig in ${FIGS}
@@ -202,7 +195,6 @@ _MPOST_ENV.${fig:T}+= TEXPOOL=${TEXPOOL.${fig:T}:q}
 .if defined(TFMFONTS.${fig:T})&&!empty(TFMFONTS.${fig:T})
 _MPOST_ENV.${fig:T}+= TFMFONTS=${TFMFONTS.${fig:T}:Q}
 .endif
-# On tient compte de l'environnement pour construire la ligne de commande
 .if defined(_MPOST_ENV.${fig:T})&&!empty(_MPOST_ENV.${fig:T})
 _MPOST_BUILD.${fig:T} = ${ENVTOOL} ${_MPOST_ENV.${fig:T}} ${MPOST}
 .else
@@ -211,11 +203,8 @@ _MPOST_BUILD.${fig:T} = ${MPOST}
 .endfor
 
 #
-# Chemins de recherche
+# Path for file lookup
 #
-
-# Si la variable MPINPUTS est définie, on utilise sa valeur pour
-# .PATH.mp.
 
 .SUFFIXES: .mp
 .if defined(MPINPUTS)&&!empty(MPINPUTS)
@@ -224,20 +213,12 @@ _MPOST_BUILD.${fig:T} = ${MPOST}
 
 
 #
-# Traitement des fichiers par METAPOST
+# Processing files
 #
 
 .for fig in ${_MPOST_FIG}
 ${_MPOST_LIST.${fig:T}}: ${fig}
 	${_MPOST_BUILD.${fig:T}} ${.ALLSRC}
-.if ${MPOST_TRANSLATE_NAMES} == "yes"
-	for f in ${_MPOST_LIST.${fig:T}}; do\
-	  a="$${f%.mps}"; \
-	  b="$${a%%-*}"; \
-	  c="$${a##*-}"; \
-	  mv -f "$$b.$$c" "$$f"; \
-	done
-.endif
 .if defined(MPOST_LIBS)&&!empty(MPOST_LIBS)
 ${_MPOST_LIST.${fig:T}}: ${MPOST_LIBS}
 .endif
@@ -246,30 +227,18 @@ MPOST_OBJECTS+= ${_MPOST_LIST.${fig:T}}
 
 
 #
-# Traitement ultérieur des fichiers
+# Post production
 #
 
-# Remarque: à cause de la boucle `for device', si plusieurs fichiers
-# PostScript sont produits, plusieurs recettes pour les figures EPS
-# sont potentiellement générées. On corrige ce comportement (définir
-# plusieurs recettes pour produire un ficheir donné est une erreur) en
-# testant l'existence d'une recette pour produire le fichier de
-# figure avant de proposer la recette générée automatiquement dans la
-# boucle.
+# This facility is not used any more, but remains there because it can
+# serve the user.
 
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
-.if ${MPOST_TRANSLATE_NAMES} == "yes"
 .if !target(${item:.mps=.${MPOST_DEVICE.${device}}})
 ${item:.mps=.${MPOST_DEVICE.${device}}}: ${item}
 	${MPOST_TOOL.${MPOST_DEVICE.${device}}} ${.ALLSRC}
-.endif
-.else
-.if !target(${item}.${MPOST_DEVICE.${device}})
-${item}.${MPOST_DEVICE.${device}}: ${item}
-	${MPOST_TOOL.${MPOST_DEVICE.${device}}} ${.ALLSRC}
-.endif
 .endif
 .endfor
 .endfor
@@ -281,18 +250,12 @@ ${item}.${MPOST_DEVICE.${device}}: ${item}
 #
 
 .for fig in ${_MPOST_FIG}
-DISTCLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx} ${_MPOST_LIST.${fig:T}}
+DISTCLEANFILES+= ${fig:.mp=.log} ${fig:.mp=.mpx}
 .endfor
 
 .for fig in ${_MPOST_FIG}
-.for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
-.if ${MPOST_TRANSLATE_NAMES} == "yes"
-REALCLEANFILES+= ${item:.mps=.${MPOST_DEVICE.${device}}}
-.else
-REALCLEANFILES+= ${item}.${MPOST_DEVICE.${device}}
-.endif
-.endfor
+REALCLEANFILES+= ${item}
 .endfor
 .endfor
 
