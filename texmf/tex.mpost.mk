@@ -259,6 +259,15 @@ REALCLEANFILES+= ${item}
 .endfor
 .endfor
 
+.for fig in ${_MPOST_FIG}
+.for device in ${TEXDEVICE}
+.for item in ${_MPOST_LIST.${fig:T}}
+REALCLEANFILES+= ${item:.mps=.${MPOST_DEVICE.${device}}}
+.endfor
+.endfor
+.endfor
+
+
 .for file in mpxerr.log mpxerr.tex texnum.mpx
 .if exists(${file})
 CLEANFILES+= ${file}
