@@ -259,7 +259,7 @@ REALCLEANFILES+= ${item}
 .endfor
 .endfor
 
-.for file in mpxerr.log mpxerr.tex
+.for file in mpxerr.log mpxerr.tex texnum.mpx
 .if exists(${file})
 CLEANFILES+= ${file}
 .endif
