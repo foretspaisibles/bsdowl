@@ -97,7 +97,12 @@
 #   Intro name to the use for the HTML output
 #
 #   This file is pasted in the HTML output.
-
+#
+#
+# ODOC_HTML_CHARSET
+#   Advertise the charset used in input files and the HTML output.
+#
+#   Examples: iso-8859-1, iso-8859-15, utf-8.
 
 
 ### RÉALISATION
@@ -255,8 +260,13 @@ ODOC_HTMLDIR?= /html
 
 ODOC_HTML?= ${ODOC_NAME}_html
 ODOC_HTML_INTRO?=
+ODOC_HTML_CHARSET?=
 
 _ODOC_HTML_TOOL?= ${_ODOC_TOOL} -html
+
+.if defined(ODOC_HTML_CHARSET)&&!empty(ODOC_HTML_CHARSET)
+_ODOC_HTML_TOOL+= -charset ${ODOC_HTML_CHARSET}
+.endif
 
 .if defined(ODOC_HTML_CSS_URL)&&!empty(ODOC_HTML_CSS_URL)
 _ODOC_HTML_TOOL+= -css-style ${ODOC_HTML_CSS_URL}
