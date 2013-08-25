@@ -56,7 +56,7 @@ _OCAML_SEARCHES=${SEARCHES:C/^/-I /}
 .endif
 
 .if defined(_OCAML_SEARCHES) && !empty(_OCAML_SEARCHES)
-.for tool in MLCI MLCB MLCN MLLB MLLN
+.for tool in MLCI MLCB MLCN MLLB MLLN MLDEP
 ${tool}FLAGS+=${_OCAML_SEARCHES}
 .endfor
 .endif

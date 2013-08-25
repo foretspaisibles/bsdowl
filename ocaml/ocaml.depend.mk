@@ -45,9 +45,9 @@ __<ocaml.depend.mk>__:
 .endfor
 
 .depend:
-	ocamldep ${MLFLAGS} ${.ALLSRC} > ${.TARGET}
+	ocamldep ${MLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
 
-DISTCLEANFILES+= .depend
+REALCLEANFILES+= .depend
 
 .if target(do-depend)
 do-depend: .depend
