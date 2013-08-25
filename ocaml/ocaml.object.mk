@@ -24,7 +24,7 @@
 ### DESCRIPTION
 
 # Déduit du contenu des variables _OCAML_ML et _OCAML_MLI les fichiers
-# objet à ajouter aux variables _OCAML_CM* .
+# objet à ajouter aux variables _OCAML_CM*.
 #
 # Positionne pour ces objets les variables _OCAML_SRCS.* .
 #

@@ -22,7 +22,7 @@
 # SRCS.prog1= src11.ml src12.ml sec13.mli
 # SRCS.prog2= src21.ml src22.ml
 # SRCS.lib1= mod1.ml lexer.mll parser.mly
-# .include
+# .include "ocaml.source.mk"
 
 ### DESCRIPTION
 
