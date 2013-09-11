@@ -1,4 +1,4 @@
-### ocaml.target.mk -- Normalisation de la variable TARGET
+### ocaml.target.mk -- Target variable
 
 # Author: Michael Grünewald
 # Date: Mar  5 avr 2005 10:31:04 GMT
@@ -17,28 +17,47 @@
 
 ### SYNOPSIS
 
+# This module reads the TARGET variable describing the kind of code
+# that shall be produced and defines several variables that can be
+# used as predicates in the sequel.
+#
+# A predicate is true if, and only if, the corresponding variable is
+# defined.
+
 #  TARGET = byte_code|native_code|both|bc|nc|byte|native
-# .include "ocaml.init.mk"
+# .include "ocaml.target.mk"
 
 
 ### DESCRIPTION
 
-# Ce module normalise la valeur de la variable TARGET.  Après
-# évaluation de ces directives, TARGET vaut l'une des valeurs
-# suivantes:
+# Variables:
 #
-#  byte_code
-#  native_code
-#  byte_code native_code
+# TARGET
+#   List of targeted code generators
 #
-# On teste la présence de byte_code avec
+#   If this variable contains one of the words byte_code, byte,
+#   or both, then the production of byte objects is required.
 #
-#  .if !empty(TARGET:Mbyte_code)
-#
-# etc.
-# On s'assure que la variable TARGET ait l'une des valeurs `both',
-# 'native_code' ou 'byte_code'.
+#   If this variable contains one of the words native_code, native
+#   or both, then the production of native objects is required.
 
+
+# Exports:
+#
+# _OCAML_COMPILE_BYTE
+#   Predicate telling if the production of byte objects is required
+#
+#
+# _OCAML_COMPILE_NATIVE
+#   Predicate telling if the production of native objects is required
+#
+#
+# _OCAML_COMPILE_NATIVE_ONLY
+#   Predicate telling if the production requirement narrows to native objects
+#
+#
+# _OCAML_COMPILE_BOTH
+#   Predicate telling if the production requirement includes both types
 
 .if !target(__<ocaml.target.mk>__)
 __<ocaml.target.mk>__:
@@ -47,44 +66,33 @@ __<ocaml.target.mk>__:
 # .cb CAML bytecode
 # .cn CAML native object
 
-
-#
-# Normalisation de la variable TARGET
-#
-
-# Après évaluation de ces directives, TARGET vaut
-#
-#  byte_code, native_code ou byte_code native_code
-#
-# On teste la présence de byte_code avec
-#
-#  .if !empty(TARGET:Mbyte_code)
-#
-# etc.
-# On s'assure que la variable TARGET ait l'une des valeurs `both',
-# 'native_code' ou 'byte_code'.
-
 .if !defined(TARGET) || empty(TARGET)
 TARGET = byte_code
+.endif
+
+.if !empty(TARGET:Mbyte_code)||!empty(TARGET:Mbyte) || !empty(TARGET:Mboth)
+_OCAML_COMPILE_BYTE= yes
 .else
-.if ${TARGET} == cb || ${TARGET} == byte || ${TARGET} == byte_code
-TARGET:= byte_code
-.elif ${TARGET} == cn  || ${TARGET} == native || ${TARGET} == native_code
-TARGET:= native_code
-.endif
-.if ${TARGET} == both
-TARGET:=byte_code native_code
-.endif
+.undef _OCAML_COMPILE_BYTE
 .endif
 
+.if !empty(TARGET:Mnative_code)||!empty(TARGET:Mnative) || !empty(TARGET:Mboth)
+_OCAML_COMPILE_NATIVE= yes
+.else
+.undef _OCAML_COMPILE_NATIVE
+.endif
 
-# TARGET est définie et n'est pas vide
+.if defined(_OCAML_COMPILE_NATIVE)&&defined(_OCAML_COMPILE_BYTE)
+_OCAML_COMPILE_BOTH=yes
+.else
+.undef _OCAML_COMPILE_BOTH
+.endif
 
-#.if !empty(TARGET:Nnative_code:Nbyte_code)
-#.error TARGET should be a subset of 'byte_code', 'native_code'. I think that TARGET=${TARGET}.
-#.endif
-
-# TARGET est une liste non vide d'éléments parmi byte_code native_code.
+.if defined(_OCAML_COMPILE_NATIVE)&&!defined(_OCAML_COMPILE_BYTE)
+_OCAML_COMPILE_NATIVE_ONLY=yes
+.else
+.undef _OCAML_COMPILE_NATIVE_ONLY
+.endif
 
 .endif #!target(__<ocaml.target.mk>__)
 

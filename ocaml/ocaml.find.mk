@@ -60,10 +60,10 @@ MLCB?= ocamlfind ocamlc -c
 MLCN?= ocamlfind ocamlopt -c
 OCAMLDOC?= ocamlfind ocamldoc
 OCAMLMKTOP?= ocamlfind ocamlmktop
-.if !empty(TARGET:Mbyte_code)
-MLCI?= ocamlfind ocamlc -c
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+MLCI?= ocamlfind ocamlopt -c
 .else
-MLCI?= ocamlfind ocamlopt
+MLCI?= ocamlfind ocamlc -c
 .endif
 MLLB?= ocamlfind ocamlc -linkpkg
 MLLN?= ocamlfind ocamlopt -linkpkg

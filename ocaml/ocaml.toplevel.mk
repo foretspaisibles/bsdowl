@@ -135,6 +135,9 @@ _TOPLEVEL_FLAGS+=-I ${item}
 .endfor
 .endif
 
+
+.if !defined(_OCAML_COMPILE_NATIVE_ONLY)
+
 .for file in ${SRCS}
 _OCAML_CMO+= ${file:.ml=.cmo}
 ${TOPLEVEL}: ${file:.ml=.cmo}
@@ -149,6 +152,11 @@ ${TOPLEVEL}:
 
 CLEANFILES+=    ${TOPLEVEL}
 BIN+=           ${TOPLEVEL}
+
+.else
+${TOPLEVEL}:
+	${DONADA}
+.endif
 
 .include "ocaml.main.mk"
 .include "bps.clean.mk"

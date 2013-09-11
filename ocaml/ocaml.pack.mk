@@ -37,7 +37,7 @@ _OCAML_PACK:=${PACK}
 
 .for pack in ${_OCAML_PACK}
 SRCS.${pack:T}?=${SRCS}
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 SRCS.${pack:T}.cmx?=${SRCS.${pack:T}}
 SRCS.${pack:T}.cmxa?=${pack}.cmx
 _OCAML_SRCS+=SRCS.${pack}.cmx
@@ -45,7 +45,7 @@ _OCAML_CMXA+=${pack:T}.cmxa
 _OCAML_PKX+=${pack:T}.cmx
 _OCAML_A+=${pack:T}.a
 .endif
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 SRCS.${pack:T}.cmo?=${SRCS.${pack:T}}
 SRCS.${pack:T}.cma?=${pack}.cmo
 _OCAML_SRCS+=SRCS.${pack}.cmo
@@ -61,14 +61,14 @@ _OCAML_PKO+=${pack:T}.cmo
 ### CIBLES ADMINISTRATIVES
 
 .for pack in ${_OCAML_PACK}
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 LIB+= ${pack}.cmxa ${pack}.a
 _OCAML_SRCS.${pack}.cmx=${.ALLSRC}
 _OCAML_SRCS.${pack}.cmxa=${.ALLSRC}
 ${pack}.cmx: ${SRCS.${pack:T}.cmx:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 ${pack}.cmxa: ${pack}.cmx
 .endif
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 LIB+= ${pack}.cma
 _OCAML_SRCS.${pack}.cmo=${.ALLSRC}
 _OCAML_SRCS.${pack}.cma=${.ALLSRC}

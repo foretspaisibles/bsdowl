@@ -44,13 +44,13 @@ _OCAML_LIB:=${LIBRARY}
 
 .for lib in ${_OCAML_LIB}
 SRCS.${lib:T}?=${SRCS}
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 SRCS.${lib:T}.cmxa?=${SRCS.${lib:T}}
 _OCAML_SRCS+=SRCS.${lib}.cmxa
 _OCAML_CMXA+=${lib:T}.cmxa
 _OCAML_A+=${lib:T}.a
 .endif
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 SRCS.${lib:T}.cma?=${SRCS.${lib:T}}
 _OCAML_SRCS+=SRCS.${lib}.cma
 _OCAML_CMA+=${lib:T}.cma
@@ -64,12 +64,12 @@ _OCAML_CMA+=${lib:T}.cma
 ### CIBLES ADMINISTRATIVES
 
 .for lib in ${_OCAML_LIB}
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 LIB+= ${lib}.cmxa ${lib}.a
 _OCAML_SRCS.${lib}.cmxa=${.ALLSRC}
 ${lib}.cmxa: ${SRCS.${lib}.cmxa:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 .endif
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 LIB+= ${lib}.cma
 _OCAML_SRCS.${lib:T}.cma=${.ALLSRC}
 ${lib}.cma: ${SRCS.${lib:T}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}

@@ -45,10 +45,10 @@ _OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPB MLPN
 
 MLCB?= ocamlc -c
 MLCN?= ocamlopt -c
-.if !empty(TARGET:Mbyte_code)
-MLCI?= ocamlc -c
-.else
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
 MLCI?= ocamlopt -c
+.else
+MLCI?= ocamlc -c
 .endif
 MLAB?= ocamlc -a
 MLAN?= ocamlopt -a

@@ -70,11 +70,11 @@ SRCS.${item:T} = ${SRCS}
 SRCS.${item:T}+= ${item}.ml
 .endif
 .endif
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 SRCS.${item:T}.cn?=${SRCS.${item:T}}
 _OCAML_CN+=${item:T}.cn
 .endif
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 SRCS.${item:T}.cb?=${SRCS.${item:T}}
 _OCAML_CB+=${item:T}.cb
 .endif
@@ -91,7 +91,7 @@ LIBS.${item:T}.cn?=${LIBS:=.cmxa}
 .for item in ${PROGRAM}
 BIN+=${item}
 CLEANFILES+=${item}
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 ${item}: ${item}.cn
 	${CP} ${item}.cn ${item}
 _OCAML_SRCS.${item}.cn=${.ALLSRC}
@@ -102,7 +102,7 @@ ${item}.cn: ${LIBS.${item}.cn}
 ${item}.cn: ${SRCS.${item}.cn:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 .endif
 .endif
-.if !empty(TARGET:Mbyte_code) && !target(${item})
+.if defined(_OCAML_COMPILE_BYTE) && !target(${item})
 ${item}: ${item}.cb
 	${CP} ${item}.cb ${item}
 _OCAML_SRCS.${item}.cb=${.ALLSRC}

@@ -52,7 +52,7 @@ _OCAML_CMI+=${if}
 
 .if !empty(_OCAML_ML)
 
-.if !empty(TARGET:Mbyte_code)
+.if defined(_OCAML_COMPILE_BYTE)
 .for unit in ${_OCAML_ML:.ml=.cmo}
 .if empty(_OCAML_CMO:M${unit})
 _OCAML_CMO+=${unit}
@@ -60,7 +60,7 @@ _OCAML_CMO+=${unit}
 .endfor
 .endif
 
-.if !empty(TARGET:Mnative_code)
+.if defined(_OCAML_COMPILE_NATIVE)
 .for unit in ${_OCAML_ML:.ml=.cmx}
 .if empty(_OCAML_CMX:M${unit})
 _OCAML_CMX+=${unit}
