@@ -142,10 +142,18 @@ PREFIX?= @prefix@
 
 ### FICHIER DE CONFIGURATION
 
-MAKEINITRC?= ${.CURDIR}/Makefile.inc
+MAKEINITRC?= Makefile.inc
 
-.if exists(${MAKEINITRC})
-.include "${MAKEINITRC}"
+.if exists(${.CURDIR}/${MAKEINITRC})
+.include "${.CURDIR}/${MAKEINITRC}"
+.endif
+
+.if defined(PROJECTBASE) && !empty(PROJECTBASE)
+.if ${PROJECTBASE} != ${.CURDIR}
+.if exists(${PROJECTBASE}/${MAKEINITRC})
+.include "${PROJECTBASE}/${MAKEINITRC}"
+.endif
+.endif
 .endif
 
 
