@@ -1,7 +1,7 @@
-### misc.script.mk -- A makefile to handle scripts
+### misc.script.mk -- Development of shell scripts
 
-# Auteur: Michael Grünewald
-# Date: Ven 10 fév 2006 10:40:49 GMT
+# Author: Michael Grünewald
+# Date: Fri 10 Feb 2006 10:40:49 GMT
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -26,62 +26,101 @@
 #
 # TMPDIR = /var/run/tmp
 #
-# SCRIPT_CONFIGURE = PREFIX TMPDIR
+# REPLACE = PREFIX TMPDIR
 #
 # .include "misc.script.mk"
 
 
 ### DESCRIPTION
 
-# Le module fournit des services pour l'installation des scripts. Les
-# scripts peuvent faire l'objet d'un prétraitement pour remplacer les
-# occurences de certaines variables d'installation par leur valeurs.
+# This modules handles the configuration and installation of
+# scripts.  The target language is the Bourne shell but other
+# scripting languages are supported as well.
+
+
+# Scripts and Libraries:
 #
-# Pour bénéficier de cette fonctionnalité, on définit la variable
-# SCRIPT_CONFIGURE. Dans l'exemple précédent, les séquences de
-# caractères @DESTDIR@ et @TMPDIR@ sont remplacées par leur valeur
-# selon make.
+# We consider two groups of files: script programs (SCRIPT) and script
+# libraries (SCRIPTLIB).
+
+
+# Configuration:
 #
-# La valeur des variables énumérées dans SCRIPT_CONFIGURE ne peut pas
-# contenir le caractère `|' (pipe). Comme le suggèrent les exemples,
-# cette fonctionnalité est principalement destinée à l'édition de
-# paramètres de chemins d'installation, aussi cette restriction est
-# sans importance.
+# We support configuration of scripts by allowing replacement
+# of some fixed strings in the file.  This completes the similar
+# feature of `autoconf`.  This replacement is only performed in
+# script programs and not in script libraries.
+
+
+# Variables:
+#
+# SCRIPT
+#   List of script programs to install
+#
+#   The variables BINDIR, BINMODE, BINOWN and BINGRP
+#   parametrise the installation.
+#
+#
+# SCRIPTLIB
+#   List of script libraries to install
+#
+#   The variables SCRIPTLIBDIR, SCRIPTLIBMODE, SCRIPTLIBOWN and
+#   SCRIPTLIBGRP parametrise the installation.
+#
+#   The SCRIPTLIBDIR variable defaults to
+#   `${SHAREDIR}${APPLICATIONDIR}` but other sensible locations could
+#   be `${LIBDIR}/perl5/5.12.4/${APPLICATIONDIR}`.
+#
+#
+# APPLICATION
+#   Name of the application
+#
+#   It must be a UNIX filename and can be defined to let script
+#   libraries be installed in an application specific subdirectory.
+#
+#
+# REPLACE
+#   List of variables to be replaced in the configuration step
+#
+#   The declaration `REPLACE=PREFIX` arranges so that the sequence
+#   `@prefix@` is replaced by the value of `PREFIX` known to `make`.
+#
+#   The case conversion should help to follow the different
+#   conventions used when writing makefiles and using autoconf.
+#
+#   The pipe character `|` must not appear in replacement text of the
+#   variables enumerated by REPLACE.
+
+
+### IMPLEMENTATION
 
 .if !target(__<misc.script.mk>__)
 __<misc.script.mk>__:
 
 .include "bps.init.mk"
 
-_SCRIPT_EXTS?= pl sh bash py sed awk
 
+#
+# Replacement of variables
+#
 
-# On recalcule la valeur de SCRIPT. Ce n'est pas un très bon style de
-# programmation, mais cela permet de présenter à l'utilisateur une
-# interface ressemblant à celles des autres modules.
-
-_SCRIPT_DECL:= ${SCRIPT}
-
-.undef SCRIPT
-.if defined(SCRIPT)
-.error We cannot keep going like this, you should let me undefine\
- the SCRIPT variable.
-.endif
-
-SCRIPTMODE?= ${BINMODE}
-SCRIPTDIR?= ${BINDIR}
-SCRIPTOWN?= ${BINOWN}
-SCRIPTGRP?= ${BINGRP}
-
-.if defined(SCRIPT_CONFIGURE)&&!empty(SCRIPT_CONFIGURE)
-.for var in ${SCRIPT_CONFIGURE}
-_SCRIPT_SED+= -e 's|@${var}@|${${var:S/|/\|/g}}|g'
+.if defined(REPLACE)&&!empty(REPLACE)
+.for var in ${REPLACE}
+_SCRIPT_SED+= -e 's|@${var:L}@|${${var:S/|/\|/g}}|g'
 .endfor
 .endif
 
+
+#
+# Script programs
+#
+
+_SCRIPT_EXTS?= pl sh bash py sed awk
+
 .for ext in ${_SCRIPT_EXTS}
-.for script in ${_SCRIPT_DECL:M*.${ext}}
-SCRIPT+= ${script:T:.${ext}=}
+.for script in ${SCRIPT:M*.${ext}}
+BIN+= ${script:T:.${ext}=}
+CLEANFILES+= ${script:T:.${ext}=}
 .if defined(_SCRIPT_SED)
 ${script:T:.${ext}=}: ${script}
 	${SED} ${_SCRIPT_SED} < ${.ALLSRC} > ${.TARGET}.output
@@ -93,22 +132,17 @@ ${script:T:.${ext}=}: ${script}
 .endfor
 .endfor
 
-# Nous avons recalculé la valeur de SCRIPT. Les fichiers source ne
-# figurent pas dans la variable SCRIPT.
-
-CLEANFILES+= ${SCRIPT}
-FILESGROUPS+= SCRIPT
 
 #
-# Groupe de fichiers SCRIPTLIB
+# Script libraries
 #
 
-# Les membres de ce groupe de fichiers ne sont pas traiter pour le
-# remplacement des variables apparaissant dans SCRIPT_CONFIGURE.
-SCRIPTLIBMODE?= ${LIBMODE}
-SCRIPTLIBDIR?= ${LIBDIR}${APPLICATIONDIR}
-SCRIPTLIBOWN?= ${LIBOWN}
-SCRIPTLIBGRP?= ${LIBGRP}
+SCRIPTLIBMODE?= ${SHAREMODE}
+SCRIPTLIBDIR?= ${SHAREDIR}
+SCRIPTLIBOWN?= ${SHAREOWN}
+SCRIPTLIBGRP?= ${SHAREGRP}
+
+FILESGROUPS+= SCRIPTLIB
 
 
 .include "bps.clean.mk"
