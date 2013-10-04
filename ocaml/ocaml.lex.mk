@@ -1,8 +1,7 @@
-### ocaml.lex.mk -- Analyseurs syntaxiques produits par ocamllex
+### ocaml.lex.mk -- Support for the OCaml lexer generator
 
 # Author: Michael Grünewald
-# Date: Mer  1 aoû 2007 11:38:01 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Wed Aug  1 11:38:01 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,8 +17,32 @@
 
 ### SYNOPSIS
 
+# .include "ocaml.lex.mk"
+
+
 ### DESCRIPTION
 
+# We analyse each list of sources appearing in _OCAML_SRCS and when we
+# spot an OCaml lexer input file, require it to be processed by
+# ocamllex.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
+
+
+# Variables:
+#
+#
+#  OCAMLLEX
+#   Command used to run the lexer generator
+#
+#
+#  _OCAML_MLL
+#   Detected lexers are added to this list
+#
+#
+#  _OMCAML_MLI
+#   Interfaces associated to detected lexers are added to this list
 
 .if !target(__<ocaml.lex.mk>__)
 __<ocaml.lex.mk>__:

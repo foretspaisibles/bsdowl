@@ -1,13 +1,12 @@
-### ocaml.source.mk -- SOURCE
+### ocaml.source.mk -- Scanning lists of source files
 
 # Author: Michael Grünewald
-# Date: Mer  1 aoû 2007 11:47:44 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Wed Aug  1 11:47:44 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2007-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -23,14 +22,21 @@
 # SRCS.prog1= src11.ml src12.ml sec13.mli
 # SRCS.prog2= src21.ml src22.ml
 # SRCS.lib1= mod1.ml lexer.mll parser.mly
+#
 # .include "ocaml.source.mk"
 
 ### DESCRIPTION
 
-# Ajuste les variables _OCAML_ML, _OCAML_MLI à partir des contenus des
-# variables SRCS.* dont la liste figure dans _OCAML_SRCS. Lorqu'un
-# fichier .ml est accompagné d'un fichier .mli, celui-ci est
-# automatiquement ajouté à _OCAML_MLI.
+# We scan the lists of sources files enumerated in _OCAML_SRCS and
+# assign their content to specialised lists (such as _OCAML_ML and
+# _OCAML_MLI are) accordinf to their type.
+#
+# Each time that we meet an implementation file, the correponding
+# interface file is appended to _OCAML_MLI.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user. (See ocaml.manual.mk for a
+# module producing HTML documentation.)
 
 .if !target(__<ocaml.source.mk>__)
 __<ocaml.source.mk>__:
@@ -42,14 +48,26 @@ __<ocaml.source.mk>__:
 # _OCAML_SOURCE+= _OCAML_C
 # _OCAML_SOURCE+= _OCAML_H
 
-# Si on utilise le modificateur M `match', le motif est tout ce qui le
-# suit, de sorte que le texte de remplacement de '${VAR:M*.${SUFFIX}}'
-# est toujours '}', l'analyse lexicale étant
+# REMARK(michipili) About the M modificator
 #
-#   ${<variable>}}
-#   <variable>=VAR:M*.${SUFFIX
+#  When we use the match `M` modificator in variable expansion, the
+#  pattern is *everything* that follows it.  For instance
 #
-# On ne peut donc pas utiliser cette construction.
+#    ${VAR:M*.${SUFFIX}}
+#
+#  is analysed as
+#
+#    ${<variable>}}
+#    <variable>=VAR:M*.${SUFFIX
+#
+#  and expands to a `}`.  But if we write things like
+#
+#    .for suffix in ${SUFFIX}
+#    ${VAR:M*.${suffix}}
+#    .endfor
+#
+#  then the expansion of ${suffix} precedes the expansion of the
+#  surrounding match modificator and we obtan the expected result.
 
 .for src in ${_OCAML_SRCS}
 .if defined(${src})
@@ -70,10 +88,6 @@ _OCAML_ML+=${unit}
 .endif
 .endfor
 
-# On ajoute les fichiers de description d'interface associés aux
-# fichiers de réalisation. Les doublons pouvant alors se créer (si
-# l'utilisateur a lui-même ajouté le fichier de description
-# d'interface) sont traités plus bas.
 
 .if defined(_OCAML_ML)&&!empty(_OCAML_ML)
 .for if in ${_OCAML_ML:.ml=.mli}

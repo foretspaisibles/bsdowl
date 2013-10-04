@@ -1,8 +1,8 @@
 ### ocaml.toplevel.mk -- Building custom toplevels
 
 # Author: Michael Grünewald
-# Date: dim 16 jui 2013 13:54:55 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sun Jun 16 13:54:55 CEST 2013
+# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -39,45 +39,45 @@
 # Variables:
 #
 #
-# TOPLEVEL
-#   UNIX file name of the generated toplevel
+#  TOPLEVEL
+#    UNIX file name of the generated toplevel
 #
 #
-# SEARCHES
-#   Lookup path for object files
+#  SEARCHES
+#    Lookup path for object files
 #
-#   Relative paths are interpreted from ${.OBJDIR}.
-#
-#
-# SRCS
-#   OCaml implementation files
+#    Relative paths are interpreted from ${.OBJDIR}.
 #
 #
-# LIBS
-#   OCaml library files
+#  SRCS
+#    OCaml implementation files
 #
 #
-# PKGS
-#   OCaml findlib packages
+#  LIBS
+#    OCaml library files
 #
 #
-# TOPLEVEL_CUSTOM
-#   Flag governing generation of a custom toplevel
+#  PKGS
+#    OCaml findlib packages
 #
 #
-# TOPLEVEL_COPT
-#   Pass the given options to the C compiler and linker
-#
-#   This forces TOPLEVEL_CUSTOM to yes.
+#  TOPLEVEL_CUSTOM
+#    Flag governing generation of a custom toplevel
 #
 #
-# TOPLEVEL_CLIB
-#   Pass the given library names to the C linker
+#  TOPLEVEL_COPT
+#    Pass the given options to the C compiler and linker
 #
-#   This forces TOPLEVEL_CUSTOM to yes.
+#    This forces TOPLEVEL_CUSTOM to yes.
+#
+#
+#  TOPLEVEL_CLIB
+#    Pass the given library names to the C linker
+#
+#    This forces TOPLEVEL_CUSTOM to yes.
 
 
-### RÉALISATION
+### IMPLEMENTATION
 
 .if !target(__<ocaml.toplevel.mk>__)
 __<ocaml.toplevel.mk>__:
@@ -156,7 +156,7 @@ BIN+=           ${TOPLEVEL}
 
 .else
 ${TOPLEVEL}:
-	${DONADA}
+	${INFO} Not building toplevel ${.TARGET} in native-only mode
 .endif
 
 .include "ocaml.main.mk"

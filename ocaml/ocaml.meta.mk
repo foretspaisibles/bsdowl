@@ -1,13 +1,13 @@
-### ocaml.meta.mk -- Fichiers META pour ocamlfind
+### ocaml.meta.mk -- Installation of META files
 
 # Author: Michael Grünewald
-# Date: Mer 30 jui 2010 16:02:10 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Wed Jun 30 16:02:10 CEST 2010
+# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2010, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -24,8 +24,10 @@
 
 ### DESCRIPTION
 
-# Ce module définit un groupe pour l'installation d'un fichier META,
-# pour le programme ocamlfind.
+# This module defines a file group for the installation of a META
+# file.  It recognises both a META and a META.in file and register the
+# META file for installation.
+
 
 .if !target(__<ocaml.meta.mk>__)
 __<ocaml.meta.mk>__:
@@ -40,6 +42,10 @@ METAGRP?= ${LIBGRP}
 METADIR?= ${LIBDIR}
 METAMODE?= ${LIBMODE}
 METANAME?= META
+
+.if exists(META)||exists(META.in)
+META= META
+.endif
 
 .include "bps.clean.mk"
 .include "bps.files.mk"

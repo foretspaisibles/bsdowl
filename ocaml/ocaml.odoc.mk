@@ -1,8 +1,7 @@
-### ocaml.odoc.mk -- Interface simple avec OCamldoc
+### ocaml.odoc.mk -- Simple interface to OCamldoc
 
 # Author: Michael Grünewald
-# Date: Dim aoû  5 10:21:05 CEST 2007
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sun Aug  5 10:21:05 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,10 +17,6 @@
 
 ### SYNOPSIS
 
-# This simple interface with OCamldoc allows to produce documentation
-# dump files or a HTML manual.
-
-
 # USE_ODOC = yes
 #
 # ODOC_NAME = uname
@@ -32,6 +27,13 @@
 
 ### DESCRIPTION
 
+# This simple interface with OCamldoc allows to produce documentation
+# dump files or a HTML manual.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user. (See ocaml.manual.mk for a
+# module producing HTML documentation.)
+
 # Targets:
 #
 # do-doc-odoc
@@ -41,72 +43,91 @@
 # Variables:
 #
 #
-# ODOC_NAME
-#   UNIX file name used to label objects
+#  ODOC_NAME
+#    UNIX file name used to label objects
 #
 #
+<<<<<<< HEAD
 # ODOC_SEARCH
 #   Lookup path for dump files
 #
 #   Relative paths are interpreted from ${.OBJDIR}. If this variable
 #   is uninitalized but the variable SEARCHES is, it receives the
 #   value of SEARCHES.
+=======
+#  ODOC_DIRS
+#    Lookup path for dump files
+#
+#    Relative paths are interpreted from ${.OBJDIR}. If this variable
+#    is uninitalized but the variable DIRS is, it receives the
+#    value of DIRS.
+>>>>>>> 8eb0339... fixup! Document synopis, describe targets and variables
 #
 #
-# ODOC_LOAD
-#   List of dump files to load
+#  ODOC_LOAD
+#    List of dump files to load
 #
 #
-# ODOC_HIDE
-#   List of modules to hide
+#  ODOC_HIDE
+#    List of modules to hide
 #
 #
-# ODOC_SORT
-#   Flag governing the sorting of the module list
+#  ODOC_SORT
+#    Flag governing the sorting of the module list
 #
 #
-# ODOC_KEEP_CODE
-#   Flag governing the keep of the code
+#  ODOC_KEEP_CODE
+#    Flag governing the keep of the code
 #
 #
-# ODOC_MERGE_INVERSE
-#   Flag governing the merge order inversion
+#  ODOC_MERGE_INVERSE
+#    Flag governing the merge order inversion
 #
 #
-# ODOC_INSTALL_DUMPS
-#   Flag governing the installation of the dumps
+#  ODOC_INSTALL_DUMPS
+#    Flag governing the installation of the dumps
+#
+<<<<<<< HEAD
+#   If this is set to yes, then ocamldoc dump files for the
+#   documentation are installed along the documentation and can be
+#   used in another job.  See the variables ODOC_SEARCH and ODOC_LOAD.
+=======
+#    If this is set to yes, then ocamldoc dump files for the
+#    documentation are installed along the documentation and can be
+#    used in another job.  See the variables ODOC_DIRS and ODOC_LOAD.
+>>>>>>> 8eb0339... fixup! Document synopis, describe targets and variables
 #
 #
-# ODOC_EXCLUDE
-#   List of modules to exclude
+#  ODOC_EXCLUDE
+#    List of modules to exclude
 #
 #
-# ODOC_HTML_CSS_FILE
-#   CSS file to use for the HTML output
+#  ODOC_HTML_CSS_FILE
+#    CSS file to use for the HTML output
 #
-#   This file is copied in the HTML directory output.
+#    This file is copied in the HTML directory output.
 #
+#
+#  ODOC_HTML_CSS_URL
+#    CSS name to use for the HTML output
+#
+#    This URL is written in the relevant files, but the module does not
+#    take any action to make this URL available.
+#
+#
+#  ODOC_HTML_INTRO
+#    Intro name to the use for the HTML output
+#
+#    This file is pasted in the HTML output.
+#
+#
+#  ODOC_HTML_CHARSET
+#    Advertise the charset used in input files and the HTML output.
+#
+#    Examples: iso-8859-1, iso-8859-15, utf-8.
 
-# ODOC_HTML_CSS_URL
-#   CSS name to use for the HTML output
-#
-#   This URL is written in the relevant files, but it must be
-#   available by other means.
-#
-#
-# ODOC_HTML_INTRO
-#   Intro name to the use for the HTML output
-#
-#   This file is pasted in the HTML output.
-#
-#
-# ODOC_HTML_CHARSET
-#   Advertise the charset used in input files and the HTML output.
-#
-#   Examples: iso-8859-1, iso-8859-15, utf-8.
 
-
-### RÉALISATION
+### IMPLEMENTATION
 
 .if !target(__<ocaml.odoc.mk>__)
 __<ocaml.odoc.mk>__:
@@ -139,7 +160,9 @@ ODOC_NAME?=${APPLICATION}
 .endif
 
 .if !defined(ODOC_NAME)||empty(ODOC_NAME)
-.error The ocaml.odoc.mk module expects ODOC_NAME to be set. A suitable value could also be guessed from the APPLICATION variable value.
+.error The ocaml.odoc.mk module expects ODOC_NAME to be set. \
+A suitable value could also be guessed from the APPLICATION variable \
+value, but you did not provide one.
 .endif
 
 .if defined(SEARCHES)&&!empty(SEARCHES)
@@ -149,7 +172,7 @@ ODOC_SEARCH+= ${SEARCHES}
 _OCAML_SRCS.${ODOC_NAME}?=
 
 #
-# Calcul des sources
+# Computing sources
 #
 
 .for src in ${_OCAML_SRCS}
@@ -175,7 +198,7 @@ _OCAML_SRCS.${ODOC_NAME}+= ${item}
 .endfor
 
 #
-# Ligne de commande
+# Building the command line
 #
 
 .if defined(_OCAML_SEARCHES)&&!empty(_OCAML_SEARCHES)
@@ -218,7 +241,7 @@ _ODOC_TOOL+=${_ODOC_FLAGS}
 .endif
 
 #
-# ODOC dump file
+# Handling ocaml dump files
 #
 
 .if !empty(ODOC_FORMAT:Modoc)
@@ -251,7 +274,7 @@ do-install-odoc: do-doc-odoc
 .endif # !empty(ODOC_FORMAT:Modoc)
 
 #
-# ODOC HTML Generation
+# Handling ocaml doc HTML documentation
 #
 
 ODOC_HTMLDIR?= /html

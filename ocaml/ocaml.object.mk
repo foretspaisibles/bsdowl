@@ -1,8 +1,7 @@
-### ocaml.object.mk -- Calcul des variables OBJECT
+### ocaml.object.mk -- Determines which objects are to build
 
 # Author: Michael Grünewald
-# Date: Mer  1 aoû 2007 11:37:14 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Wed Aug  1 11:37:14 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,18 +17,37 @@
 
 ### SYNOPSIS
 
-# OCAML_ML+= module.ml extra.ml
-# OCAML_MLI+= module.mli
+# _OCAML_ML+= module.ml
+# _OCAML_ML+= extra.ml
+# _OCAML_MLI+= module.mli
 # .include "ocaml.object.mk"
 
 ### DESCRIPTION
 
-# Déduit du contenu des variables _OCAML_ML et _OCAML_MLI les fichiers
-# objet à ajouter aux variables _OCAML_CM*.
+# We scan _OCAML_ML and _OCAML_MLI variables, determine which
+# objects are to be built and update _OCAML_CMI, _OCAML_CMO, OCAML_CMX,
+# _OCAML_O and CLEANFILES accordingly.
 #
-# Positionne pour ces objets les variables _OCAML_SRCS.* .
+# For each inferred object file, the variable _OCAML_SRCS.${object:T}
+# is appropriately filled.
 #
-# Ajoute ces objets à la variable CLEANFILES.
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
+
+# Variables:
+#
+#
+#  _OCAML_ML, _OCAML_MLI
+#   Lists of files to process
+#
+#
+#  _OCAML_CMI, _OCAML_CMO, OCAML_CMX, _OCAML_O
+#   Lists of inferred objects
+#
+#
+#  _OCAML_SRCS.*
+#   Lists of sources for inferred objects
+
 
 .if !target(__<ocaml.object.mk>__)
 __<ocaml.object.mk>__:

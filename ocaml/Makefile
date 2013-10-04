@@ -1,8 +1,7 @@
-### Makefile -- Développement avec Objective Caml
+### Makefile -- Developement of applications with Objective Caml
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 18:12:48 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 18:12:48 CEST 2007
 
 FILES+= ocaml.build.mk
 FILES+= ocaml.depend.mk

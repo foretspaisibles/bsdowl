@@ -1,13 +1,12 @@
-### ocaml.tools.mk -- Pseudo commandes pour CAML
+### ocaml.tools.mk -- Define virtual tools for OCaml
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 20:50:52 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 20:50:52 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2007-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -24,20 +23,57 @@
 
 ### DESCRIPTION
 
-# Ce module définit les pseudo-commande MLCB, MLCN, etc. indiquées
-# dans le tableau ci-dessous.
+# We define virtual tools to access the OCaml tools suite.  Some
+# modules adjust these variables (as ocaml.find.mk) or define more (as
+# ocaml.depend.mk).
 
-# MLCB		Compilateur code octet
-# MLCN		Compilateur code natif
-# MLCI		Compilateur d'interfaces
-#                rappelons que les fichiers d'interfaces préparés avec
-#                un compilateur peuvent être utilisés avec l'autre.
-# MLAB		Facteur d'archives (bibliothèques) code octet
-# MLAN		Facteur d'archives (bibliothèques) code natif
-# MLLB		Éditeur de liens code octet
-# MLLN		Éditeur de liens code natif
-# MLPB		Créateur de paquet code octet
-# MLPN		Créateur de paquet code natif
+# Variables:
+#
+#  MLCB (ocamlc)
+#   Bytecode compiler
+#
+#
+#  MLCN (ocamlopt)
+#   Native compiler
+#
+#
+#  MLCI (ocamlc or ocamlopt)
+#   Interface compiler
+#
+#   We use ocamlc to compile interface files or ocamlopt in the case
+#   where only native code executables are prepared.  The produced
+#   compiled interfaces should be identical.
+#
+#
+#  MLAB (ocamlc -a)
+#   Bytecode libraries packager
+#
+#
+#  MLAN (ocamlopt -a)
+#   Native libraries packager
+#
+#
+#  MLLB (ocamlc)
+#   Bytecode program linker
+#
+#
+#  MLLN (ocamlopt)
+#   Native program linker
+#
+#
+#  MLPB (ocamlc -pack)
+#   Bytecode packed module packager
+#
+#
+#  MLPN (ocamlopt -pack)
+#   Native packed module packager
+#
+#
+#  _OCAML_TOOLS
+#   The list of defined tools
+
+
+### IMPLEMENTATION
 
 .if !target(__<ocaml.tools.mk>__)
 __<ocaml.tools.mk>__:

@@ -1,8 +1,7 @@
-### ocaml.searches.mk -- Détermination du chemin de recherche
+### ocaml.dirs.mk -- Handling lookup paths
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 20:26:31 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 20:26:31 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,12 +17,6 @@
 
 ### SYNOPSIS
 
-# Ce module calcule la variable _OCAML_SEARCHES, c'est une liste
-# d'options pouvant être passée en argument des outils de compilation
-# OCAML.
-#
-# Ce module n'est pas destiné à l'usager.
-
 # SEARCHES+= ../library
 #
 # .include "ocaml.init.mk"
@@ -32,21 +25,37 @@
 
 ### DESCRIPTION
 
-# SEARCHES
-#  Liste de dossiers à consulter pour trouver les fichiers `cmi',
-#  `cmo', `cmx', `cma' et `cmxa'. Les termes de la liste sont exprimés
-#  relativement à .OBJDIR.
+# This module takes care of initialising the _OCAML_DIRS variable,
+# holding a private version of DIRS that can be pasten on the command
+# line.  It also knows where the standard library is installed.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
 
 
-.if !target(__<ocaml.searches.mk>__)
-__<ocaml.searches.mk>__:
+### DESCRIPTION
+
+# Variables:
+#
+#  DIRS
+#   Lookup path for OCaml object files
+#
+#   This list of paths is appended to OCaml suite's tools options and
+#   to Make's internal lookup paths.
+#
+#
+#  OCAMLROOTDIR
+#    Path to the standard library
+
+
+.if !target(__<ocaml.dirs.mk>__)
+__<ocaml.dirs.mk>__:
 
 .if defined(SEARCHES)&&!empty(SEARCHES)
 _OCAML_SEARCHES=${SEARCHES:C/^/-I /}
-# Les fichiers necessitant une recherche opérée par MAKE sont ceux
-# dont les suffixes sont: .cmo .cma .cmx .cmxa et .a. Les fichiers
-# dont le suffixe est .cmi n'apparaissent pas sur la ligne de
-# commande.
+# Compiled interfaces files probably never appear on the command line
+# and also probably do not need to be looked up by make, so the .cmi
+# suffix is omitted from the next list.
 #.PATH.cmi: ${SEARCHES}
 .PATH.cmo: ${SEARCHES}
 .PATH.cmx: ${SEARCHES}

@@ -1,13 +1,12 @@
-### ocaml.main.mk -- MAIN
+### ocaml.main.mk -- Main common file
 
 # Author: Michael Grünewald
-# Date: Mer  1 aoû 2007 09:28:08 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Wed Aug  1 09:28:08 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2007-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -18,8 +17,17 @@
 
 ### SYNOPSIS
 
+# .include "ocaml.main.mk"
+
+
 ### DESCRIPTION
 
+# This would-be mean file has for only job to define one entry point
+# slurping many other simpler files.  It is an important node in the
+# hierarchy but nothing per se.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
 
 .if !target(__<ocaml.main.mk>__)
 __<ocaml.main.mk>__:

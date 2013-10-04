@@ -1,8 +1,7 @@
-### ocaml.init.mk -- Initialisation pour les projets OCAML
+### ocaml.init.mk -- Common initialisation for OCaml projects
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 20:59:45 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 20:59:45 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -23,15 +22,31 @@
 
 ### DESCRIPTION
 
-# Ce module traite un certain nombre de directives dans des
-# sous-modules.
+# This modules is responsible for early initialisation of some
+# variables used by our OCaml framework. It defines _OCAML_OBJECT and
+# reads in several modules.
 #
-# Donne une définition de la variable _OCAML_OBJECT aussi utilisée
-# dans ocaml.build.mk .
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
 
-# La variable LIBDIR est initialisée automatiquement avec une valeur
-# dépendant d'APPLICATIONDIR. La variable APPLICATIONDIR est notamment
-# initialisée par `bps.project.mk'.
+# Variables:
+#
+#
+#  _OCAML_OBJECT
+#   The list of object groups handled by our framework
+#
+#
+#  LIBDIR
+#   The installation target for libraries
+#
+#   The value defined in `bps.own.mk` is suited for C libraries but not
+#   for OCaml objects that are rather installed in the same location as
+#   the standard library.
+#
+#   It takes into account the APPLICATIONDIR variable.
+
+
+### IMPLEMENTATION
 
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:

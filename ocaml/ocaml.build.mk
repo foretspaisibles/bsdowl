@@ -1,13 +1,12 @@
-### ocaml.build.mk -- Création des lignes de commandes
+### ocaml.build.mk -- Creating command lines for build
 
 # Author: Michael Grünewald
-# Date: Mar  5 avr 2005 10:31:04 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Tue Apr  5 10:31:04 CEST 2005
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2005-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -18,16 +17,13 @@
 
 ### SYNOPSIS
 
-# _OCAML_CMO=module1.cmo module2.cmo module3.cmo
-# _OCAML_CMX=module1.cmx module2.cmx module3.cmx
-# _OCAML_CMI=module1.cmi
-# _OCAML_CMA=library.cma
-# _OCAML_CMXA=library.cmxa
-# _OCAML_CB=prog1.cb
-# _OCAML_CN=prog1.cn
-#
-# OBJS.library.cma=module1.cmo module2.cmo module3.cmo
-# OBJS.library.cmxa=module1.cmx module2.cmx module3.cmx
+# _OCAML_CMO=	module1.cmo module2.cmo module3.cmo
+# _OCAML_CMX=	module1.cmx module2.cmx module3.cmx
+# _OCAML_CMI=	module1.cmi
+# _OCAML_CMA=	library.cma
+# _OCAML_CMXA=	library.cmxa
+# _OCAML_CB=	prog1.cb
+# _OCAML_CN=	prog1.cn
 #
 # .include "ocaml.init.mk"
 # .include "ocaml.build.mk"
@@ -35,66 +31,71 @@
 
 ### DESCRIPTION
 
-# Ce module fournit à ses clients des procédures pour la compilation
-# des unités apparaissant dans les diverses variables '_OCAML_*'. Les
-# unités concernées sont celles en '.cmx' '.cmo' '.cmi' '.cma' et
-# '.cmxa'.
-#
-# Pour chaque objet, la ligne de production est
+# We compute command lines for building all the objects listed in the
+# variables _OCAML_CMO, etc. listed above in the synopsis.  For each
+# object, the command line looks like
 #
 #  ${obj}:
 #	${_OCAML_BUILD.${obj:T}} ${.ALLSRC}
 #
+# We also write down the correct dependencies between interface and
+# implementation files and provide the appropriate recipe.  It is
+# necessary to tell how (not to) build the compiled implementation
+# file when writing lexers and parsers.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
 
 
-### RÉALISATION
+### IMPLEMENTATION
 
-_OCAML_CMI.cmd=MLCI
-_OCAML_CMI.obj=_OCAML_CMI
-_OCAML_CMI.var=MLCIFLAGS MLCFLAGS MLFLAGS
+# For all kind of object we define a structure holding the
+# pseudo-command, the ovject list and the flags to be added.
 
-_OCAML_CMO.cmd=MLCB
-_OCAML_CMO.obj=_OCAML_CMO
-_OCAML_CMO.var=MLCBFLAGS MLCFLAGS MLFLAGS
+_OCAML_CMI.cmd=	MLCI
+_OCAML_CMI.obj=	_OCAML_CMI
+_OCAML_CMI.var=	MLCIFLAGS MLCFLAGS MLFLAGS
 
-_OCAML_CMX.cmd=MLCN
-_OCAML_CMX.obj=_OCAML_CMX
-_OCAML_CMX.var=MLCNFLAGS MLCFLAGS MLFLAGS
+_OCAML_CMO.cmd=	MLCB
+_OCAML_CMO.obj=	_OCAML_CMO
+_OCAML_CMO.var=	MLCBFLAGS MLCFLAGS MLFLAGS
 
-_OCAML_CB.cmd=MLLB
-_OCAML_CB.obj=_OCAML_CB
-_OCAML_CB.var=MLLBFLAGS MLLFLAGS MLFLAGS MLLBADD
+_OCAML_CMX.cmd=	MLCN
+_OCAML_CMX.obj=	_OCAML_CMX
+_OCAML_CMX.var=	MLCNFLAGS MLCFLAGS MLFLAGS
 
-_OCAML_CN.cmd=MLLN
-_OCAML_CN.obj=_OCAML_CN
-_OCAML_CN.var=MLLNFLAGS MLLFLAGS MLFLAGS MLLNADD
+_OCAML_CB.cmd=	MLLB
+_OCAML_CB.obj=	_OCAML_CB
+_OCAML_CB.var=	MLLBFLAGS MLLFLAGS MLFLAGS MLLBADD
 
-_OCAML_CMA.cmd=MLAB
-_OCAML_CMA.obj=_OCAML_CMA
-_OCAML_CMA.var=MLABFLAGS MLAFLAGS MLFLAGS MLABADD
+_OCAML_CN.cmd=	MLLN
+_OCAML_CN.obj=	_OCAML_CN
+_OCAML_CN.var=	MLLNFLAGS MLLFLAGS MLFLAGS MLLNADD
+
+_OCAML_CMA.cmd=	MLAB
+_OCAML_CMA.obj=	_OCAML_CMA
+_OCAML_CMA.var=	MLABFLAGS MLAFLAGS MLFLAGS MLABADD
 
 _OCAML_CMXA.cmd=MLAN
 _OCAML_CMXA.obj=_OCAML_CMXA
 _OCAML_CMXA.var=MLANFLAGS MLAFLAGS MLFLAGS MLANADD
 
-_OCAML_PKO.cmd=MLPB
-_OCAML_PKO.obj=_OCAML_PKO
-_OCAML_PKO.var=MLCBFLAGS MLCFLAGS MLFLAGS
+_OCAML_PKO.cmd=	MLPB
+_OCAML_PKO.obj=	_OCAML_PKO
+_OCAML_PKO.var=	MLCBFLAGS MLCFLAGS MLFLAGS
 
-_OCAML_PKX.cmd=MLPN
-_OCAML_PKX.obj=_OCAML_PKX
-_OCAML_PKX.var=MLCNFLAGS MLCFLAGS MLFLAGS
+_OCAML_PKX.cmd=	MLPN
+_OCAML_PKX.obj=	_OCAML_PKX
+_OCAML_PKX.var=	MLCNFLAGS MLCFLAGS MLFLAGS
 
 #
-# Spécialisation des variables
+# Specialising variables
 #
 
-# On spécialise les variables associées aux différents objets, d'après
-# les prescriptions préceentes.
-#
-# Par exemple, pour les objets _OCAML_CN (éxécutables en code natif),
-# les variables MLLNFLAGS, MLLFLAGS, MLFLAGS et MLLNADD sont
-# spécialisées pour les membres apparaissant dans la liste _OCAML_CN.
+# We specialise variables associated to each preivously defined
+# structure.  For instance, each of the native code object listed in
+# _OCAML_CN gets its own specialised value for MLLNFLAGS, MLLFLAGS,
+# MLFLAGS and MLLNADD (all the variables listed in _OCAML_CN.var).
 
 .for thg in ${_OCAML_OBJECT}
 .for obj in ${${${thg}.obj}}
@@ -109,7 +110,7 @@ ${var}.${obj:T}=${${var}}
 .endfor
 
 #
-# Préparation de la ligne de commande
+# Building command lines
 #
 
 .for thg in ${_OCAML_OBJECT}
@@ -147,7 +148,7 @@ clib:=${obj:C/.cmxa/.a/}
 .if !target(${clib})
 # The C library file will be produced by ocamlmklib
 ${clib}: ${obj}
-	@${DO_NADA}
+	${NOP}
 .endif
 .undef clib
 .endif

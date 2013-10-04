@@ -1,13 +1,12 @@
-### ocaml.depend.mk
+### ocaml.depend.mk -- Dependency generator
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 20:40:59 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 20:40:59 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2013, 2013 Michael Grünewald
+# Copyright (C) 2007-2013, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -30,11 +29,29 @@
 
 ### DESCRIPTION
 
+# We use ocamldep(1) to generate file dependencies in .depend.  We
+# run ocamldep(1) on the sources listed in the Makefile.
+#
+# We need to be smart when handling lexers and parsers because in the
+# case of parsers, an interface will be supplied by ocamlyacc(1) if
+# the user did not write one.
+#
+# The case where we are only building native code objects also
+# deserves special treatments to avoid creating spurious bytecode
+# files.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
+
 # Targets:
+# .depend
 # do-depend
 # do-clean-depend
 
 # Variables:
+
+
+### IMPLEMENTATION
 
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:

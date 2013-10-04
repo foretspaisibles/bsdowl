@@ -1,8 +1,8 @@
-### ocaml.manual.mk -- Préparation de la référence HTML
+### ocaml.manual.mk -- Preparation of the HTML reference
 
 # Author: Michael Grünewald
-# Date: Lun 10 mar 2008 11:59:53 CET
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Mon Mar 10 11:59:53 CET 2008
+# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,26 +18,32 @@
 
 ### SYNOPSIS
 
-# Ce module permet de préparer une référence HTML à partir de fichiers
-# sources contenant des commentaires OCamldoc.
-
 # MANUAL = backend.odoc
 # MANUAL+= filter.odoc
 #
-# SEARCHES = backend_src
-# SEARCHES+= filter_src
+# DIRS = backend_src
+# DIRS+= filter_src
 #
 # .include "ocaml.manual.mk"
 
 
 ### DESCRIPTION
 
-# SEARCHES
-#  Liste de dossiers à consulter pour trouver les fichiers `odoc'. Les
-#   termes de la liste sont exprimés relativement à .OBJDIR.
+# This modules supports the prepration of a HTML reference out of
+# ocamldoc(1) dump files.  These files should prepared separately.
+
+# Variables:
+#
+#
+#  MANUAL
+#   List the ocamldoc files that should be processed
+#
+#
+#  DIRS
+#   List of paths that shall be searched for ocamldoc dump files
 
 
-### RÉALISATION
+### IMPLEMENTATION
 
 .include "bps.init.mk"
 

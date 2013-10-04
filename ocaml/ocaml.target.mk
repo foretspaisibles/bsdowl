@@ -1,13 +1,12 @@
-### ocaml.target.mk -- Target variable
+### ocaml.target.mk -- Prepare the TARGET variable
 
 # Author: Michael Grünewald
-# Date: Mar  5 avr 2005 10:31:04 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Tue Apr  5 12:31:04 CEST 2005
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2005-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -18,47 +17,51 @@
 
 ### SYNOPSIS
 
-# This module reads the TARGET variable describing the kind of code
-# that shall be produced and defines several variables that can be
-# used as predicates in the sequel.
-#
-# A predicate is true if, and only if, the corresponding variable is
-# defined.
-
 #  TARGET = byte_code|native_code|both|bc|nc|byte|native
 # .include "ocaml.target.mk"
 
 
 ### DESCRIPTION
 
+
+# This module reads the TARGET variable describing the kind of code
+# that shall be produced and defines several variables that can be
+# used as predicates in the sequel.
+#
+# A predicate is true if, and only if, the corresponding variable is
+# defined.
+#
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user. (See ocaml.manual.mk for a
+# module producing HTML documentation.)
+
+
 # Variables:
 #
-# TARGET
-#   List of targeted code generators
+#  TARGET
+#    List of targeted code generators
 #
-#   If this variable contains one of the words byte_code, byte,
-#   or both, then the production of byte objects is required.
+#    If this variable contains one of the words byte_code, byte,
+#    or both, then the production of byte objects is required.
 #
-#   If this variable contains one of the words native_code, native
-#   or both, then the production of native objects is required.
-
-
-# Exports:
-#
-# _OCAML_COMPILE_BYTE
-#   Predicate telling if the production of byte objects is required
+#    If this variable contains one of the words native_code, native
+#    or both, then the production of native objects is required.
 #
 #
-# _OCAML_COMPILE_NATIVE
-#   Predicate telling if the production of native objects is required
+#  _OCAML_COMPILE_BYTE
+#    Predicate telling if the production of byte objects is required
 #
 #
-# _OCAML_COMPILE_NATIVE_ONLY
-#   Predicate telling if the production requirement narrows to native objects
+#  _OCAML_COMPILE_NATIVE
+#    Predicate telling if the production of native objects is required
 #
 #
-# _OCAML_COMPILE_BOTH
-#   Predicate telling if the production requirement includes both types
+#  _OCAML_COMPILE_NATIVE_ONLY
+#    Predicate telling if the production requirement narrows to native objects
+#
+#
+#  _OCAML_COMPILE_BOTH
+#    Predicate telling if the production requirement includes both types
 
 .if !target(__<ocaml.target.mk>__)
 __<ocaml.target.mk>__:

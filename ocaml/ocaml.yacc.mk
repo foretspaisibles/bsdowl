@@ -1,13 +1,12 @@
-### ocaml.yacc.mk -- Analyseur syntaxiques
+### ocaml.yacc.mk -- Support for the OCaml parser generator
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 21:16:36 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 21:16:36 CEST 2007
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2007-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -24,12 +23,13 @@
 
 ### DESCRIPTION
 
-# Ajuste le contenu de _OCAML_MLY à partir de _OCAML_SRCS.
+
+# We analyse each list of sources appearing in _OCAML_SRCS and when we
+# spot an OCaml parser input file, require it to be processed by
+# ocamllex.
 #
-# Installe les cibles permettant la préparation des analyseurs
-# lexicaux.
-#
-# Ajuste les variables _OCAML_ML _OCAML_MLI et CLEANFILES.
+# This module is intended to be included by other modules rather than
+# to serve as is to the end user.
 
 .if !target(__<ocaml.yacc.mk>__)
 __<ocaml.yacc.mk>__:
