@@ -1,4 +1,4 @@
-### ocaml.odoc.mk -- Interface simple avec OCamldoc
+### ocaml.toplevel.mk -- Building custom toplevels
 
 # Author: Michael Grünewald
 # Date: dim 16 jui 2013 13:54:55 CEST
@@ -25,7 +25,7 @@
 # LIBS = unix
 # LIBS+= str
 #
-# .include "ocaml.odoc.mk"
+# .include "ocaml.toplevel.mk"
 
 
 ### DESCRIPTION
@@ -96,7 +96,7 @@ TOPLEVEL_CLIB?=
 
 OCAMLMKTOP?= ocamlmktop
 
-_TOPLEVEL_FLAGS=-custom -linkall -dllpath-all -linkpkg
+_TOPLEVEL_FLAGS=-custom -linkall
 
 #
 # Determining toplevel flags
