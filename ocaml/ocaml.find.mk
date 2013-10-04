@@ -1,8 +1,8 @@
-### ocaml.find.mk -- Ligne de commande avec ocamlfind
+### ocaml.find.mk -- Interface with ocamlfind
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 20:14:16 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 20:14:16 CEST 2007
+# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -19,9 +19,12 @@
 ### SYNOPSIS
 
 # USE_OCAMLFIND = yes
-# PACKAGES+= unix
-# PACKAGES+= nums
+#
+# PKGS+= unix
+# PKGS+= nums
+#
 # PREDICATES+= mt
+#
 # .include "ocaml.target.mk"
 # .include "ocaml.find.mk"
 # .include "ocaml.tools.mk"
@@ -29,9 +32,22 @@
 
 ### DESCRIPTION
 
-# We provide virtual tools based on the ocamnlfind utility upon
+# We provide virtual tools based on the ocamlfind utility upon
 # explicit request of the user (USE_OCAMLFIND) or when idiosyncratic
-# variables are defined (PACKAGES, PREDICATES).
+# variables are defined (PKGS, PREDICATES).
+
+# Variables:
+#
+# PKGS
+#  List of packages to use
+#
+#
+# PREDICATES
+#  List of predicates to use
+#
+#
+# USE_OCAMLFIND
+#  Flag governing the activation of ocamlfind
 
 
 .if !target(__<ocaml.find.mk>__)
@@ -41,7 +57,7 @@ __<ocaml.find.mk>__:
 # Detect idiosyncratic variables
 #
 
-.if defined(PACKAGES)&&!empty(PACKAGES)
+.if defined(PKGS)&&!empty(PKGS)
 USE_OCAMLFIND?=yes
 .endif
 
@@ -71,8 +87,8 @@ MLLN?= ocamlfind ocamlopt -linkpkg
 .endif
 
 .for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC OCAMLMKTOP
-.if defined(PACKAGES)&&!empty(PACKAGES)
-${pseudo}+= -package "${PACKAGES}"
+.if defined(PKGS)&&!empty(PKGS)
+${pseudo}+= -package "${PKGS}"
 .endif
 .if defined(PREDICATES)&&!empty(PREDICATES)
 ${pseudo}+= -predicates "${PREDICATES}"

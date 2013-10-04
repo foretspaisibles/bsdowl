@@ -57,7 +57,7 @@
 #   OCaml library files
 #
 #
-# PACKAGES
+# PKGS
 #   OCaml findlib packages
 #
 #
@@ -126,8 +126,8 @@ _TOPLEVEL_FLAGS+=-cclib -l${item}
 .endfor
 .endif
 
-.if defined(PACKAGES)&&!empty(PACKAGES)
-_TOPLEVEL_FLAGS+= -package "${PACKAGES}"
+.if defined(PKGS)&&!empty(PKGS)
+_TOPLEVEL_FLAGS+= -package "${PKGS}"
 .endif
 
 .if defined(SEARCHES)&&!empty(SEARCHES)

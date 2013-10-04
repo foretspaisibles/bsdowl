@@ -20,6 +20,24 @@ SUBDIR+=	newton
 SUBDIR+=	newton-doc
 SUBDIR+=	toplevel
 SUBDIR+=	basic
+SUBDIR+=	ocamlfind
+
+test-clean:
+	${MAKE} realclean
+
+test-base:
+	${MAKE} all
+	${MAKE} realclean
+
+test-doc:
+	${MAKE} doc
+	${MAKE} realclean
+
+test-parallel:
+	${MAKE} depend
+	${MAKE} -j4 build
+
+test: test-clean test-base test-doc test-parallel
 
 .include "bps.subdir.mk"
 
