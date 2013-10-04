@@ -1,3 +1,4 @@
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 ### bps.clean.mk -- Service pour l'effacement de fichiers
 
 # Auteur: Michael Grünewald

@@ -2,6 +2,7 @@
 
 # Author: Michael Grünewald
 # Date: Ven 10 fév 2006 16:51:08 GMT
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 FILES+=	bps.init.mk
 FILES+= bps.credentials.mk

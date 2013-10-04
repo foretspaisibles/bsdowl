@@ -2,6 +2,7 @@
 
 # Author: Michael Grünewald
 # Date: Sam  7 jul 2007 18:12:40 CEST
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 
 FILES+=	rox.init.mk

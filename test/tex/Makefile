@@ -1,3 +1,4 @@
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 ### Makefile -- Test the production of TeX documents
 
 DOCS = octonions.tex

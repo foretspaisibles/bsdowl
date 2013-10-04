@@ -15,13 +15,14 @@ changecom()dnl
 changequote(,)dnl
 ### __FILENAME__ -- __COMMENT__
 
-# Author: Michaël GrÃ¼newald Grünewald
+# Author: Michael GrÃ¼newald
 # Date: __DATE__
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSDMake PallÃ s Scripts (http://home.gna.org/bsdmakepscripts/)
+# This file is part of BSDMake PallÃ s Scripts
 #
-# Copyright (C) Michaël GrÃ¼newald Grünewald - 2009
+# Copyright (C) 2013 Michael GrÃ¼newald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which

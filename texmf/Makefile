@@ -2,6 +2,7 @@
 
 # Author: Michael Grünewald
 # Date: Sam  7 jul 2007 18:12:07 CEST
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 FILES = texmf.init.mk
 

@@ -2,6 +2,7 @@
 
 # Author: Michael Grünewald
 # Date: Dim  9 sep 2007 14:49:18 CEST
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
