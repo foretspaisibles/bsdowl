@@ -164,7 +164,9 @@ ${obj}:
 .else
 .if !target(${if})
 # The CMI file will be produced from the object
-${obj} ${if}:
+${if}: ${obj}
+	${NOP}
+${obj}:
 .else
 # The CMI file comes from a MLI that is previously built
 ${obj}: ${if}

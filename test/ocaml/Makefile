@@ -19,7 +19,8 @@ SUBDIR+=	wordcount-2
 SUBDIR+=	newton
 SUBDIR+=	newton-doc
 SUBDIR+=	toplevel
-SUBDIR+=	basic
+SUBDIR+=	basic-1
+SUBDIR+=	basic-2
 SUBDIR+=	ocamlfind
 
 test-clean:

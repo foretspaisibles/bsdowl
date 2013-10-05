@@ -12,3 +12,13 @@ wordcount-1/wordcount
 wordcount-1/wordcount.cb
 wordcount-2/wordcount
 wordcount-2/wordcount.cb
+basic-1/basic_lexer.ml
+basic-1/basic_parser.ml
+basic-1/basic_parser.mli
+basic-1/minibasic
+basic-1/minibasic.cb
+basic-2/basic_lexer.ml
+basic-2/basic_parser.ml
+basic-2/basic_parser.mli
+basic-2/minibasic
+basic-2/minibasic.cb

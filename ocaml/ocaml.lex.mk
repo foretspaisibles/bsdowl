@@ -58,8 +58,6 @@ _OCAML_MLI+=${if}
 .endfor
 .for lexer in ${_OCAML_MLL}
 
-${lexer:.mll=.cmo}: ${lexer:.mll=.cmi}
-
 ${lexer:.mll=.ml}: ${lexer}
 	${OCAMLLEX} -o ${.TARGET} ${.ALLSRC}
 

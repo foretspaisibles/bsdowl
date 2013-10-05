@@ -18,6 +18,9 @@
 
 ### SYNOPSIS
 
+# Define a rule to rebuild the .depend target. It uses the contents of
+# _OCAML_SRCS to populate the parents of `.depend`.
+
 # .depend: module1.ml
 # .depend: module1.mli
 # .depend: module2.mly
@@ -42,6 +45,25 @@ __<ocaml.depend.mk>__:
 .if exists(${item:.ml=.mli})
 .depend: ${item:.ml=.mli}
 .endif
+.if !empty(${thg}:M*mly)
+.for item in ${${thg}:M*.mly}
+.if !exists(${item:.mly=.mli})
+.depend: ${item:.mly=.mli}
+.endif
+.endfor
+.endif
+.endfor
+# This logic adds implementation files associated to lexers when they
+# are defined.  Does it belongs `ocaml.lex.mk`?
+.for item in ${${thg}:M*.mll}
+.if exists(${item:.mll=.mli})
+.depend: ${item:.mll=.mli}
+.endif
+.endfor
+# This logic adds implementation files associated to parsers. Does it
+# belongs `ocaml.yacc.mk`?
+.for item in ${${thg}:M*.mly}
+.depend: ${item:.mly=.mli}
 .endfor
 .endfor
 
