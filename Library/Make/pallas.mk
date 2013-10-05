@@ -24,10 +24,22 @@
 __<pallas>__:
 
 do-publish:
-	cd Website; make all install PREFIX='${HOME}' WWWBASE='${HOME}/Workshop/Pages/bsdmakepscripts'
+	cd Website; make all install PREFIX='${HOME}'
+	WWWBASE='${HOME}/Workshop/Pages/bsdmakepscripts'
+
+.MAKEFLAGS:	-I${.CURDIR}/Library/Make
+.for subdir in ${SUBDIR}
+.MAKEFLAGS: -I${.CURDIR}/${subdir}
+.endfor
+
 
 .include "subdir.mk"
-.include "../../bps/bps.project.mk"
+.include "bps.project.mk"
+
+.for prefix in ${PREFIX}
+_BPS_MAKEFLAGS:=	${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|:N-I${prefix}*}
+.endfor
+PROJECTENV+=	MAKEFLAGS="${_BPS_MAKEFLAGS}"
 
 .endif # !target(__<pallas>__)
 
