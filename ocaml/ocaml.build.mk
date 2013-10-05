@@ -192,7 +192,7 @@ ${obj}: ${if}
 ${obj}:
 .endif
 .endif
-	${_OCAML_BUILD.${obj:T}} ${.TARGET:C/.cm[xoi]/.ml/}
+	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:M*.ml}
 .endif
 .undef if
 

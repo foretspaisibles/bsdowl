@@ -40,7 +40,22 @@ test-parallel:
 	${MAKE} depend
 	${MAKE} -j4 build
 
-test: test-clean test-base test-doc test-parallel
+test-objdir:
+	${INSTALL_DIR} ${.CURDIR}/objdir
+	${ENVTOOL} MAKEOBJDIRPREFIX=${.CURDIR}/objdir ${MAKE}
+	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/.depend
+	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_lexer.ml
+	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.ml
+	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.mli
+	test -x ${.CURDIR}/objdir/${.CURDIR}/golden-ratio/golden-ratio
+
+CLEANDIRS+= ${.CURDIR}/objdir
+
+test: test-clean
+test: test-base
+test: test-doc
+test: test-parallel
+test: test-objdir
 
 .include "bps.subdir.mk"
 

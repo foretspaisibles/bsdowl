@@ -58,6 +58,7 @@ LIBDIR?=${PREFIX}/lib/ocaml/site-lib${APPLICATIONDIR}
 .endif
 
 
+.SUFFIXES: .ml .mli .mll .mly
 .SUFFIXES: .cmi .cmo .cmx .o .a .cma .cmxa
 
 _OCAML_OBJECT = _OCAML_CMI
