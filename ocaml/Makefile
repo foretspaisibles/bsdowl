@@ -7,7 +7,6 @@ FILES+= ocaml.build.mk
 FILES+= ocaml.depend.mk
 FILES+= ocaml.find.mk
 FILES+= ocaml.meta.mk
-FILES+= ocaml.flags.mk
 FILES+= ocaml.init.mk
 FILES+= ocaml.lex.mk
 FILES+= ocaml.lib.mk
