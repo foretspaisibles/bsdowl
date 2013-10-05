@@ -43,7 +43,7 @@
 #    UNIX file name of the generated toplevel
 #
 #
-#  SEARCHES
+#  DIRS
 #    Lookup path for object files
 #
 #    Relative paths are interpreted from ${.OBJDIR}.
@@ -130,8 +130,8 @@ _TOPLEVEL_FLAGS+=-cclib -l${item}
 _TOPLEVEL_FLAGS+= -package "${PKGS}"
 .endif
 
-.if defined(SEARCHES)&&!empty(SEARCHES)
-.for item in ${SEARCHES}
+.if defined(DIRS)&&!empty(DIRS)
+.for item in ${DIRS}
 _TOPLEVEL_FLAGS+=-I ${item}
 .endfor
 .endif

@@ -16,12 +16,14 @@
 
 SUBDIR=		wordcount-1
 SUBDIR+=	wordcount-2
+SUBDIR+=	fibonacci
 SUBDIR+=	newton
 SUBDIR+=	newton-doc
 SUBDIR+=	toplevel
 SUBDIR+=	basic-1
 SUBDIR+=	basic-2
 SUBDIR+=	ocamlfind
+SUBDIR+=	golden-ratio
 
 test-clean:
 	${MAKE} realclean

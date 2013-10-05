@@ -75,7 +75,7 @@ _OCAML_OBJECT+= _OCAML_PKX
 .include "ocaml.target.mk"
 .include "ocaml.find.mk"
 .include "ocaml.tools.mk"
-.include "ocaml.searches.mk"
+.include "ocaml.dirs.mk"
 
 .endif # !target(__<ocaml.init.mk>__)
 

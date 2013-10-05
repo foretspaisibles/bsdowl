@@ -47,21 +47,12 @@
 #    UNIX file name used to label objects
 #
 #
-<<<<<<< HEAD
-# ODOC_SEARCH
-#   Lookup path for dump files
-#
-#   Relative paths are interpreted from ${.OBJDIR}. If this variable
-#   is uninitalized but the variable SEARCHES is, it receives the
-#   value of SEARCHES.
-=======
 #  ODOC_DIRS
 #    Lookup path for dump files
 #
 #    Relative paths are interpreted from ${.OBJDIR}. If this variable
 #    is uninitalized but the variable DIRS is, it receives the
 #    value of DIRS.
->>>>>>> 8eb0339... fixup! Document synopis, describe targets and variables
 #
 #
 #  ODOC_LOAD
@@ -87,15 +78,9 @@
 #  ODOC_INSTALL_DUMPS
 #    Flag governing the installation of the dumps
 #
-<<<<<<< HEAD
-#   If this is set to yes, then ocamldoc dump files for the
-#   documentation are installed along the documentation and can be
-#   used in another job.  See the variables ODOC_SEARCH and ODOC_LOAD.
-=======
 #    If this is set to yes, then ocamldoc dump files for the
 #    documentation are installed along the documentation and can be
 #    used in another job.  See the variables ODOC_DIRS and ODOC_LOAD.
->>>>>>> 8eb0339... fixup! Document synopis, describe targets and variables
 #
 #
 #  ODOC_EXCLUDE
@@ -148,7 +133,7 @@ ODOC_MERGE?=
 ODOC_LOAD?=
 ODOC_HIDE?=
 ODOC_PREPROCESSOR?=
-ODOC_SEARCH?=
+ODOC_DIRS?=
 ODOC_VERBOSE?=no
 ODOC_EXCLUDE?=
 ODOC_INSTALL_DUMPS?=no
@@ -165,8 +150,8 @@ A suitable value could also be guessed from the APPLICATION variable \
 value, but you did not provide one.
 .endif
 
-.if defined(SEARCHES)&&!empty(SEARCHES)
-ODOC_SEARCH+= ${SEARCHES}
+.if defined(DIRS)&&!empty(DIRS)
+ODOC_DIRS+= ${DIRS}
 .endif
 
 _OCAML_SRCS.${ODOC_NAME}?=
@@ -201,8 +186,8 @@ _OCAML_SRCS.${ODOC_NAME}+= ${item}
 # Building the command line
 #
 
-.if defined(_OCAML_SEARCHES)&&!empty(_OCAML_SEARCHES)
-_ODOC_FLAGS+=${_OCAML_SEARCHES}
+.if defined(_OCAML_DIRS)&&!empty(_OCAML_DIRS)
+_ODOC_FLAGS+=${_OCAML_DIRS}
 .endif
 _ODOC_FLAGS+= -t "${ODOC_TITLE}"
 .if !empty(ODOC_INTRO)
@@ -231,7 +216,7 @@ _ODOC_FLAGS+= -pp ${ODOC_PREPROCESSOR}
 .endif
 .if !empty(ODOC_LOAD)
 .SUFFIXES: .odoc
-.PATH.odoc: ${ODOC_SEARCH}
+.PATH.odoc: ${ODOC_DIRS}
 _ODOC_FLAGS+= ${.ALLSRC:M*.odoc:S/^/-load /}
 .endif
 

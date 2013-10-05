@@ -17,10 +17,11 @@
 
 ### SYNOPSIS
 
-# SEARCHES+= ../library
+
+# DIRS+= ../library
 #
 # .include "ocaml.init.mk"
-# .include "ocaml.searches.mk"
+# .include "ocaml.dirs.mk"
 
 
 ### DESCRIPTION
@@ -51,18 +52,18 @@
 .if !target(__<ocaml.dirs.mk>__)
 __<ocaml.dirs.mk>__:
 
-.if defined(SEARCHES)&&!empty(SEARCHES)
-_OCAML_SEARCHES=${SEARCHES:C/^/-I /}
+.if defined(DIRS)&&!empty(DIRS)
+_OCAML_DIRS=${DIRS:C/^/-I /}
 # Compiled interfaces files probably never appear on the command line
 # and also probably do not need to be looked up by make, so the .cmi
 # suffix is omitted from the next list.
-#.PATH.cmi: ${SEARCHES}
-.PATH.cmo: ${SEARCHES}
-.PATH.cmx: ${SEARCHES}
-.PATH.cmxa: ${SEARCHES}
-.PATH.cma: ${SEARCHES}
-.PATH.a: ${SEARCHES}
-.PATH.o: ${SEARCHES}
+#.PATH.cmi: ${DIRS}
+.PATH.cmo: ${DIRS}
+.PATH.cmx: ${DIRS}
+.PATH.cmxa: ${DIRS}
+.PATH.cma: ${DIRS}
+.PATH.a: ${DIRS}
+.PATH.o: ${DIRS}
 .endif
 
 OCAMLROOTDIR?=/usr/local/lib/ocaml
@@ -73,12 +74,12 @@ OCAMLROOTDIR?=/usr/local/lib/ocaml
 .PATH.a: ${OCAMLROOTDIR}
 .PATH.o: ${OCAMLROOTDIR}
 
-.if defined(_OCAML_SEARCHES) && !empty(_OCAML_SEARCHES)
+.if defined(_OCAML_DIRS) && !empty(_OCAML_DIRS)
 .for tool in MLCI MLCB MLCN MLLB MLLN MLDEP
-${tool}FLAGS+=${_OCAML_SEARCHES}
+${tool}FLAGS+=${_OCAML_DIRS}
 .endfor
 .endif
 
-.endif # !target(__<ocaml.searches.mk>__)
+.endif # !target(__<ocaml.dirs.mk>__)
 
-### End of file `ocaml.searches.mk'
+### End of file `ocaml.dirs.mk'
