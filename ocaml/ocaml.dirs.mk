@@ -66,7 +66,10 @@ _OCAML_DIRS=${DIRS:C/^/-I /}
 .PATH.o: ${DIRS}
 .endif
 
-OCAMLROOTDIR?=/usr/local/lib/ocaml
+.if !defined(OCAMLROOTDIR)
+OCAMLROOTDIR!= ${MLCI} -where
+.endif
+
 .PATH.cmo: ${OCAMLROOTDIR}
 .PATH.cmx: ${OCAMLROOTDIR}
 .PATH.cmxa: ${OCAMLROOTDIR}
