@@ -46,6 +46,14 @@
 # This module is intended to be included by other modules rather than
 # to serve as is to the end user.
 
+# Variables:
+#
+#  WITH_DEBUG
+#   Knob controlling build of files with debug symbols
+#
+#   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
+#   MLCFLAGS and MLLFLAGS.
+
 
 ### IMPLEMENTATION
 
@@ -87,6 +95,16 @@ _OCAML_PKO.var=	MLCBFLAGS MLCFLAGS MLFLAGS
 _OCAML_PKX.cmd=	MLPN
 _OCAML_PKX.obj=	_OCAML_PKX
 _OCAML_PKX.var=	MLCNFLAGS MLCFLAGS MLFLAGS
+
+#
+# Processing knobs
+#
+
+.if defined(WITH_DEBUG)&&(${WITH_DEBUG} == yes)
+MLCFLAGS+= -g
+MLLFLAGS+= -g
+.endif
+
 
 #
 # Specialising variables
