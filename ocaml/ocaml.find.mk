@@ -82,11 +82,23 @@ USE_OCAMLFIND?=yes
 #
 
 USE_OCAMLFIND?=no
+WITH_PROFILE?=no
 
 .if ${USE_OCAMLFIND} == yes
 OCAMLDOC?= ocamlfind ocamldoc
 OCAMLMKTOP?= ocamlfind ocamlmktop
-.if !defined(WITH_PROFILE)||(${WITH_PROFILE != yes)
+.if ${WITH_PROFILE} == yes
+# Profiling case
+MLCB?= ocamlfind ocamlcp -c
+MLCN?= ocamlfind ocamloptp -c
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+MLCI?= ocamlfind ocamloptp -c
+.else
+MLCI?= ocamlfind ocamlcp -c
+.endif
+MLLB?= ocamlfind ocamlcp -linkpkg
+MLLN?= ocamlfind ocamloptp -linkpkg
+.else
 # Not profiling case
 MLCB?= ocamlfind ocamlc -c
 MLCN?= ocamlfind ocamlopt -c
@@ -98,19 +110,8 @@ MLCI?= ocamlfind ocamlc -c
 MLLB?= ocamlfind ocamlc -linkpkg
 MLLN?= ocamlfind ocamlopt -linkpkg
 .endif
-.else
-# Profiling case
-MLCB?= ocamlfind ocamlcp -c
-MLCN?= ocamlfind ocamloptp -c
-.if defined(_OCAML_COMPILE_NATIVE_ONLY)
-MLCI?= ocamlfind ocamloptp -c
-.else
-MLCI?= ocamlfind ocamlcp -c
 .endif
-MLLB?= ocamlfind ocamlcp -linkpkg
-MLLN?= ocamlfind ocamloptp -linkpkg
-.endif
-.endif
+
 
 .for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC OCAMLMKTOP
 .if defined(PKGS)&&!empty(PKGS)

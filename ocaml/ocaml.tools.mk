@@ -71,6 +71,14 @@
 #
 #  _OCAML_TOOLS
 #   The list of defined tools
+#
+#
+#  WITH_PROFILE (no)
+#   Knob controlling build of files with profiling information
+#
+#   Setting WITH_PROFILE to yes will enforce the use of the profiling
+#   front-ends to OCaml compilers.
+
 
 
 ### IMPLEMENTATION
@@ -80,6 +88,25 @@ __<ocaml.tools.mk>__:
 
 _OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPB MLPN
 
+WITH_PROFILE?= no
+
+.if ${WITH_PROFILE} == yes
+# Profiling case
+MLCB?= ocamlcp -c
+MLCN?= ocamloptp -c
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+MLCI?= ocamloptp -c
+.else
+MLCI?= ocamlcp -c
+.endif
+MLAB?= ocamlcp -a
+MLAN?= ocamloptp -a
+MLLB?= ocamlcp
+MLLN?= ocamloptp
+MLPB?= ocamlcp -pack
+MLPN?= ocamloptp -pack
+.else
+# Not profiling case
 MLCB?= ocamlc -c
 MLCN?= ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
@@ -93,6 +120,7 @@ MLLB?= ocamlc
 MLLN?= ocamlopt
 MLPB?= ocamlc -pack
 MLPN?= ocamlopt -pack
+.endif
 
 .endif#!target(__<ocaml.tools.mk>__)
 
