@@ -17,7 +17,6 @@ FILES+= ocaml.prog.mk
 FILES+= ocaml.dirs.mk
 FILES+= ocaml.source.mk
 FILES+= ocaml.target.mk
-FILES+= ocaml.template.mk
 FILES+= ocaml.tools.mk
 FILES+= ocaml.yacc.mk
 FILES+= ocaml.odoc.mk
