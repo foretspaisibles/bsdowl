@@ -36,10 +36,14 @@ do-publish:
 .include "subdir.mk"
 .include "bps.project.mk"
 
+# We remove pathes matching the installation prefix ${PREFIX} from the
+# MAKEFLAGS variable.
+
 .for prefix in ${PREFIX}
-_BPS_MAKEFLAGS:=	${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|:N-I${prefix}*}
+_BPS_MAKEFLAGS:=${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|:N-I${prefix}*}
 .endfor
-PROJECTENV+=	MAKEFLAGS="${_BPS_MAKEFLAGS}"
+
+PROJECTENV:=	${PROJECTENV:NMAKEFLAGS=*} MAKEFLAGS="${_BPS_MAKEFLAGS}"
 
 .endif # !target(__<pallas>__)
 
