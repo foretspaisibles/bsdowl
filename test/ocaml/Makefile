@@ -22,32 +22,40 @@ SUBDIR+=	newton-doc
 SUBDIR+=	toplevel
 SUBDIR+=	basic-1
 SUBDIR+=	basic-2
+SUBDIR+=	basic-3
+SUBDIR+=	basic-4
 SUBDIR+=	ocamlfind
-SUBDIR+=	golden-ratio
+SUBDIR+=	golden_ratio
+SUBDIR+=	miniproj-1
+SUBDIR+=	miniproj-2
+SUBDIR+=	miniproj-3
+
+
+TESTENV?=	${ENVTOOL} -i "PATH=${PATH}" "MAKEFLAGS=${MAKEFLAGS}"
 
 test-clean:
-	${MAKE} realclean
+	${TESTENV} ${MAKE} realclean
 
 test-base:
-	${MAKE} all
-	${MAKE} realclean
+	${TESTENV} ${MAKE} all
+	${TESTENV} ${MAKE} realclean
 
 test-doc:
-	${MAKE} doc
-	${MAKE} realclean
+	${TESTENV} ${MAKE} doc
+	${TESTENV} ${MAKE} realclean
 
 test-parallel:
-	${MAKE} depend
-	${MAKE} -j4 build
+	${TESTENV} ${MAKE} depend
+	${TESTENV} ${MAKE} -j4 build
 
 test-objdir:
 	${INSTALL_DIR} ${.CURDIR}/objdir
-	${ENVTOOL} MAKEOBJDIRPREFIX=${.CURDIR}/objdir ${MAKE}
+	${TESTENV} MAKEOBJDIRPREFIX=${.CURDIR}/objdir ${MAKE}
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/.depend
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_lexer.ml
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.ml
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.mli
-	test -x ${.CURDIR}/objdir/${.CURDIR}/golden-ratio/golden-ratio
+	test -x ${.CURDIR}/objdir/${.CURDIR}/golden_ratio/golden_ratio
 
 CLEANDIRS+= ${.CURDIR}/objdir
 

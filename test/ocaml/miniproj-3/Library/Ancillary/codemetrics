@@ -1,0 +1,3 @@
+#!/bin/sh
+: ${PROJECTBASE:?}
+find ${PROJECTBASE} -name '*.ml' | xargs wc
