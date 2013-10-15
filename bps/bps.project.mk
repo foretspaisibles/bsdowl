@@ -408,12 +408,26 @@ PROJECTLIBRARYMAKE = ${PROJECTBASE}/Mk
 .endif
 
 
+
 #
 # Reading project configuration
 #
 
 .if exists(${PROJECTLIBRARYMAKE}/project.mk)
 .include "${PROJECTLIBRARYMAKE}/project.mk"
+.endif
+
+
+#
+# Initialisation de PROJECTLIBRARYSHELL
+#
+
+.if !defined(PROJECTLIBRARYSHELL)
+.if defined(PROJECTLIBRARY) && exists(${PROJECTLIBRARY}/Ancillary)
+PROJECTLIBRARYSHELL = ${PROJECTLIBRARY}/Ancillary
+.elif defined(PROJECTBASE) && exists(${PROJECTBASE}/Ancillary)
+PROJECTLIBRARYSHELL = ${PROJECTBASE}/Ancillary)
+.endif
 .endif
 
 
@@ -432,6 +446,11 @@ PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
 PROJECTENV+= $v="${$v}"
 .endfor
 .endif
+
+.if defined(PROJECTLIBRARYSHELL)
+PROJECTENV+= PATH="${PROJECTLIBRARYSHELL}:${PATH}"
+.endif
+
 
 # La variable SHELL est définie dans l'environnement de l'utilisateur.
 SUBSHELLDIR?= .
