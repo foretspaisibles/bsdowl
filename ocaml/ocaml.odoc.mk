@@ -46,6 +46,9 @@
 #  ODOC_NAME
 #    UNIX file name used to label objects
 #
+#    This defaults to ${LIBRARY} or ${APPLICATION} if one of these
+#    variables is defined.
+#
 #
 #  ODOC_DIRS
 #    Lookup path for dump files
@@ -139,6 +142,10 @@ ODOC_EXCLUDE?=
 ODOC_INSTALL_DUMPS?=no
 
 OCAMLDOC?= ocamldoc
+
+.if defined(LIBRARY)&&!empty(LIBRARY)
+ODOC_NAME?=${LIBRARY}
+.endif
 
 .if defined(APPLICATION)&&!empty(APPLICATION)
 ODOC_NAME?=${APPLICATION}
