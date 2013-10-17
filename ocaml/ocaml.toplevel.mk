@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Sun Jun 16 13:54:55 CEST 2013
-# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
@@ -18,8 +17,6 @@
 
 ### SYNOPSIS
 
-# This simple interface with ocamlmktop allows you produce toplevels.
-
 # TOPLEVEL = toplevel
 # SRCS = initialize_toplevel.ml
 # LIBS = unix
@@ -29,6 +26,9 @@
 
 
 ### DESCRIPTION
+
+# This simple interface to `ocamlmktop` drives the production of
+# toplevels.
 
 # Targets:
 #

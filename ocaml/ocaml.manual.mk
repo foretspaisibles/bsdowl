@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Mon Mar 10 11:59:53 CET 2008
-# Cookie: DOCUMENTATION
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts

@@ -1,13 +1,12 @@
 ### ocaml.prog.mk -- Préparation de programmes avec Objective Caml
 
 # Author: Michael Grünewald
-# Date: Mar  5 avr 2005 10:31:04 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Tue Apr  5 12:31:04 CEST 2005
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2005-2009, 2013 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -46,6 +45,44 @@
 # in a single directory.
 
 ### DESCRIPTION
+
+# Variables:
+#
+#
+#  PROGRAM or PROG
+#   Name of the program
+#
+#   This can actually be a list of programs.  In this case the SRCS
+#   variables holds source files that will be compiled and linked to
+#   all programs and for each `program` the variable `SRCS.program`
+#   should specify files that will only be compiled and linked in
+#   `program`.
+#
+#
+#  SRCS
+#   Files that must be compiled and linked in the program
+#
+#   It can list implementation files, interface files, lexer and
+#   parser definitions. It is not necessary to specify interface file
+#   if an implementation is present.
+#
+#
+#  LIBS
+#   Libraries that must be linked in the program
+#
+#
+#  DIRS
+#   Directories that are searched for libraries or compiled modules
+#
+#
+#  PKGS
+#   OCamlfind packages that are used in the program
+#
+#
+#  BINOWN, BINGRP, BINMODE, BINDIR, BINNAME
+#   Parameters of the program installation
+#
+#   See `bps.own.mk` for a closer description of these variables.
 
 
 ### MAGIC STUFF
@@ -87,7 +124,7 @@ LIBS.${item:T}.cn?=${LIBS:=.cmxa}
 
 .include "ocaml.main.mk"
 
-### CIBLES ADMINISTRATIVES
+### AUXILLIARY TARGETS
 
 .for item in ${PROGRAM}
 BIN+=${item}
