@@ -1,64 +1,68 @@
 INDEX -- Guide through the Makefile Collection
 
 Author: Michael Grünewald
-Date: Ven 10 fév 2006 16:50:40 GMT
+Date: Fri Feb 10 2006 16:50:40 GMT
 
 
-Petit répertoire des ensembles de modules figurant dans la collection
-de fichiers de directives pour BSD Make nommée BSD Make Pallàs scripts.
+Project infrastructure
 
+Files and directories that are artifacts of the project
+infrastructure.
 
-AUTHORS		Personnes ayant contribué à BSD Make Pallàs scripts.
-COPYING		Licence d'utilisation et de distribution (GPL)
-INDEX		Ce répertoire
-INSTALL		Procédure d'installation
-INTRO		Description des méthodologies pour le code
-README		À propos de BSD Make et des Makefiles
-Makefile	Fichier de maintenance
-Library/Make	Directives BSD Make pour le projet
+AUTHORS		Contributors to BSD Make Pallàs scripts.
+COPYING		License, in english
+COPYING-FR	License, in french
+INDEX		This file
+INSTALL		Installation instruction
+README		General introduction
+Makefile.in	Master build directives
+Library/Make	Build directives library
 Library/Ancillary
-		Outils pour le développement
+		Developement scripts
+test		Test suite
+support		Ancillary programs needing installation
 
-ocaml		Projets avec Objective Caml
-text		Projets avec des formateurs de texte (p.ex. TeX)
-bps		Modules d'intérêt général (pour le codeur de directives make)
+Project tier-1
 
-misc		Modules divers
-rox		Projets d'actions pour ROX-Filer
-www		Publication sur le WWW
+Libraries of directives providing a complete functionality and a
+satisfying documentation.
 
+ocaml		OCaml projects
+		 See ocaml.prog.mk, ocaml.lib.mk. ocaml.toplevel.mk,
+		 ocaml.pack.mk and ocaml.manual.mk.
 
-bps -- Modules d'intérêt général
-
-Il s'agit d'une bibliothèque pour le codeur de directives make. Un
-module intéressant l'utilisateur est `bps.subdir.mk'.
-
-
-misc -- Modules divers
-
-Compilation des fichiers elisp, installation de fichiers de script, etc.
+texmf		Produce TeX documents
+		 See tex.doc.mk and latex.doc.mk
 
 
-ocaml -- Projets avec Objective Caml
+Project tier-2
 
-Préparation de programmes, de bibliothèques et de la documentation
-avec ocamldoc.
-
-
-rox -- Projets d'actions pour ROX-Filer
-
-Installation de scripts d'action pour étendre les possibilités du
-ROX-Filer.
+Libraries of directives providing a incomplete functionality or a
+unsatisfying documentation.
 
 
-text -- Projets avec des formateurs de texte (p.ex. TeX)
+bps		Generic macros (subdir, project, etc.)
+		 See bps.subdir.mk and bps.project.mk
 
-Préparation de documents avec TeX. Ces modules très flexibles peuvent
-être paramétrés pour tenir compte de différents formats,
-etc. Préparationde figures avec METAPOST. Les modules principaux sont
-`tex.doc.mk' et `latex.doc.mk'.
+		Needs proper documentation and test cases in order to
+		move to tier-1.
 
+www		Produce offline sites with a SGML normaliser
+		 See www.sgml.mk and www.files.mk
 
-www -- Publication sur le WWW
+		Needs proper documentation and test cases in order to
+		move to tier-1.
 
-Production et publication de fichiers sur le WWW.
+noewb		Prepare LaTeX macros with noweb
+		 See noweb.latex.mk
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.
+
+misc		Miscellaneous
+
+		Do not use a `misc` library but useful names in order
+		to move to tier-1.
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.
