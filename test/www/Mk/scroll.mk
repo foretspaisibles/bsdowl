@@ -1,5 +1,3 @@
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
-
 WWWMAIN?= main.sgml
 
 SRCS+= main.sgml
@@ -8,8 +6,8 @@ SRCS+= more-news.sgml
 SRCS+= copyright-statement.sgml
 
 SEARCH+= .
-SEARCH+= ${PROJECTBASE}/Website/style
-SEARCH+= ${PROJECTBASE}/Website/sgml
+SEARCH+= ${PROJECTBASE}/style
+SEARCH+= ${PROJECTBASE}/sgml
 
 SCROLL_INCLUSION = head-css-local
 SCROLL_INCLUSION+= more-news
