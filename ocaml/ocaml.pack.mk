@@ -89,7 +89,13 @@ _OCAML_PACK:=${PACK}
 
 .for pack in ${_OCAML_PACK}
 SRCS.${pack:T}?=${SRCS}
-_OCAML_PKI+=${pack:T}.cmi
+.if exists(${pack:T}.mli)
+_OCAML_CMI+=${pack:T}.cmi
+${pack:T}.cmo: ${pack:T}.cmi
+.elif !target(${pack:T}.cmi)
+${pack:T}.cmi: ${pack:T}.cmo
+	${NOP}
+.endif
 .if defined(_OCAML_COMPILE_NATIVE)
 SRCS.${pack:T}.cmx?=${SRCS.${pack:T}}
 SRCS.${pack:T}.cmxa?=${pack}.cmx
