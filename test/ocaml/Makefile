@@ -30,8 +30,14 @@ SUBDIR+=	miniproj-1
 SUBDIR+=	miniproj-2
 SUBDIR+=	miniproj-3
 
+#
+# Test setup
+#
 
-TESTENV?=	${ENVTOOL} -i "PATH=${PATH}" "MAKEFLAGS=${MAKEFLAGS}"
+TESTENV=	${ENVTOOL} -i "PATH=${PATH}"
+.for prefix in ${PREFIX}
+TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NAPPLICATION*:NPROJECT*:N-I${prefix}/share/mk}"
+.endfor
 
 test-clean:
 	${TESTENV} ${MAKE} realclean
