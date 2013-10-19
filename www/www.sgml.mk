@@ -88,7 +88,7 @@
 
 WWWNORMALIZE?= osgmlnorm -d
 WWWINPUT?= ascii
-WWWTIDY?= tidy -q -${WWWINPUT}
+WWWTIDY?= tidy4 -q -${WWWINPUT}
 
 .for variable in SEARCH CATALOG INCLUDE
 .if defined(${variable})&&!empty(${variable})
