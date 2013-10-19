@@ -74,7 +74,7 @@
 #   Il s'agit des entités de type paramètre dont la valeur doit être
 #   positionnée à INCLUDE.
 
-# SEARCH
+# DIRS
 #
 #   Énumère les dossiers de recherche
 
@@ -90,7 +90,7 @@ WWWNORMALIZE?= osgmlnorm -d
 WWWINPUT?= ascii
 WWWTIDY?= tidy4 -q -${WWWINPUT}
 
-.for variable in SEARCH CATALOG INCLUDE
+.for variable in DIRS CATALOG INCLUDE
 .if defined(${variable})&&!empty(${variable})
 .MAKEFLAGS: ${variable}='${${variable}}'
 .else
@@ -99,9 +99,9 @@ ${variable}=
 .endfor
 
 WWWNORMALIZETOOL = ${WWWNORMALIZE}
-.for search in ${SEARCH}
-WWWNORMALIZETOOL+= -D${search}
-.PATH.sgml: ${search}
+.for dir in ${DIRS}
+WWWNORMALIZETOOL+= -D${dir}
+.PATH.sgml: ${dir}
 .endfor
 .for catalog in ${CATALOG}
 WWWNORMALIZETOOL+= -c${catalog}

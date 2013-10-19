@@ -5,9 +5,9 @@ SRCS+= head-css-global.sgml
 SRCS+= more-news.sgml
 SRCS+= copyright-statement.sgml
 
-SEARCH+= .
-SEARCH+= ${PROJECTBASE}/style
-SEARCH+= ${PROJECTBASE}/sgml
+DIRS+= .
+DIRS+= ${PROJECTBASE}/style
+DIRS+= ${PROJECTBASE}/sgml
 
 SCROLL_INCLUSION = head-css-local
 SCROLL_INCLUSION+= more-news
