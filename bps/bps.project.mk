@@ -55,7 +55,7 @@
 #
 #   Nom du projet, par exemple: bsdmakepscript
 #
-#   Si cette variable n'est pas initialisée mais que APPLICATION,
+#   Si cette variable n'est pas initialisée mais que PACKAGE,
 #   PROJECT ou NAME l'est, cette variable est utilisée pour
 #   initialiser PROJECTNAME. En l'absence d'initialisation
 #   explicite, une valeur déduite du nom du répertoire racine du
@@ -196,8 +196,8 @@ __<bps.project.mk>__:
 #
 # Initialistion des variables
 #
-.if !defined(PROJECTNAME)&&defined(APPLICATION)
-PROJECTNAME = ${APPLICATION}
+.if !defined(PROJECTNAME)&&defined(PACKAGE)
+PROJECTNAME = ${PACKAGE}
 .endif
 .if !defined(PROJECTNAME)&&defined(PROJECT)
 PROJECTNAME = ${PROJECT}
@@ -205,14 +205,14 @@ PROJECTNAME = ${PROJECT}
 .if !defined(PROJECTNAME)&&defined(NAME)
 PROJECTNAME = ${NAME}
 .endif
-.if !defined(APPLICATION)&&defined(PROJECTNAME)
-APPLICATION = ${PROJECTNAME}
+.if !defined(PACKAGE)&&defined(PROJECTNAME)
+PACKAGE = ${PROJECTNAME}
 .endif
-# La définition possible de APPLICATIONDIR ci-dessous est redondante
+# La définition possible de PACKAGEDIR ci-dessous est redondante
 # de celle figurant dans `bps.init.mk' mais il se peut que la variable
-# APPLICATIONDIR ait tout-juste été définie.
-.if defined(APPLICATION)&&!empty(APPLICATION)
-APPLICATIONDIR?= /${APPLICATION}
+# PACKAGEDIR ait tout-juste été définie.
+.if defined(PACKAGE)&&!empty(PACKAGE)
+PACKAGEDIR?= /${PACKAGE}
 .endif
 .if !defined(PROJECTAUTHOR)&&defined(AUTHOR)
 PROJECTAUTHOR = ${AUTHOR}

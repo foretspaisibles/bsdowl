@@ -36,7 +36,7 @@ SUBDIR+=	miniproj-3
 
 TESTENV=	${ENVTOOL} -i "PATH=${PATH}"
 .for prefix in ${PREFIX}
-TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NAPPLICATION*:NPROJECT*:N-I${prefix}/share/mk}"
+TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NPACKAGE*:NPROJECT*:N-I${prefix}/share/mk}"
 .endfor
 
 test-clean:

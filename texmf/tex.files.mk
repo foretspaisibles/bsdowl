@@ -21,8 +21,8 @@
 # TEXFILES+= ts1lmvtt.fd
 # ...
 # FORMAT = latex
-# APPLICATION = lm
-# TEXDIR = ${TEXMFDIR}/tex/${FORMAT}${APPLICATIONDIR}
+# PACKAGE = lm
+# TEXDIR = ${TEXMFDIR}/tex/${FORMAT}${PACKAGEDIR}
 #
 # .include "tex.files.ml"
 
@@ -32,7 +32,7 @@
 # Ce module se charge de l'installation de fichiers de macros dans un
 # système TeX. La liste des fichiers à installer doit être émumérée
 # dans TEXFILES. Le répertoire de destination est calculé à partir de
-# la valeur des variables APPLICATION et FORMAT.
+# la valeur des variables PACKAGE et FORMAT.
 #
 # Le module réclame la mise-à-jour des bases de données `ls-R'
 # nécessaires.
@@ -53,7 +53,7 @@
 #  Ce nom est utilisé pour calculer le dossier d'installation
 #  TEXFILESDIR.
 
-# APPLICATION (misc)
+# PACKAGE (misc)
 #
 #  Application désignant les macros
 #

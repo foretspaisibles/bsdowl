@@ -43,7 +43,7 @@
 #   for OCaml objects that are rather installed in the same location as
 #   the standard library.
 #
-#   It takes into account the APPLICATIONDIR variable.
+#   It takes into account the PACKAGEDIR variable.
 
 
 ### IMPLEMENTATION
@@ -51,10 +51,10 @@
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:
 
-.if !defined(APPLICATIONDIR)||empty(APPLICATIONDIR)
-LIBDIR?=${PREFIX}/lib/ocaml${APPLICATIONDIR}
+.if !defined(PACKAGEDIR)||empty(PACKAGEDIR)
+LIBDIR?=${PREFIX}/lib/ocaml${PACKAGEDIR}
 .else
-LIBDIR?=${PREFIX}/lib/ocaml/site-lib${APPLICATIONDIR}
+LIBDIR?=${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
 .endif
 
 

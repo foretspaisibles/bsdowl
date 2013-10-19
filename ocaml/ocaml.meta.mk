@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# LIBDIR?= ${PREFIX}/lib/ocaml/site-lib${APPLICATIONDIR}
+# LIBDIR?= ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
 # .include "ocaml.meta.mk"
 
 

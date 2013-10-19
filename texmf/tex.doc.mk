@@ -16,7 +16,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 ### SYNOPSIS
-# APPLICATION = Cours/2de
+# PACKAGE = Cours/2de
 #
 # DOCS = lalala
 # DOCS+= lalali.tex

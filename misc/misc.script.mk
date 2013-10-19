@@ -69,11 +69,11 @@
 #   SCRIPTLIBGRP parametrise the installation.
 #
 #   The SCRIPTLIBDIR variable defaults to
-#   `${SHAREDIR}${APPLICATIONDIR}` but other sensible locations could
-#   be `${LIBDIR}/perl5/5.12.4/${APPLICATIONDIR}`.
+#   `${SHAREDIR}${PACKAGEDIR}` but other sensible locations could
+#   be `${LIBDIR}/perl5/5.12.4/${PACKAGEDIR}`.
 #
 #
-# APPLICATION
+# PACKAGE
 #   Name of the application
 #
 #   It must be a UNIX filename and can be defined to let script

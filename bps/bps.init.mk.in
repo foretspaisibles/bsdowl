@@ -30,8 +30,8 @@
 # Définit des pseudo-commandes CP, MV INSTALL, INSTALL_DIR,
 # SED_INPLACE, etc.;
 #
-# Définit une valeur pour APPLICATIONDIR sur la base de la valeur de
-# APPLICATION, si cette dernière a une valeur.
+# Définit une valeur pour PACKAGEDIR sur la base de la valeur de
+# PACKAGE, si cette dernière a une valeur.
 #
 # Définit des pseudo-commandes WARN, INFO, MESG, FAIL utilisées pour
 # le diagnostique.
@@ -83,16 +83,16 @@
 #
 #   Pseudo commandes.
 
-# APPLICATION APPLICATIONDIR
+# PACKAGE PACKAGEDIR
 #
 #   Nom de l'application préparée.
 #
-#   La variable APPLICATION peut être définie par le client. Lorsque
+#   La variable PACKAGE peut être définie par le client. Lorsque
 #   c'est le cas la Collection de Makefiles en tient compte dans
 #   certains endroits, notamment pour donner des noms de répertoires
-#   censés être appropriés. C'est en fait la variable APPLICATIONDIR qui
+#   censés être appropriés. C'est en fait la variable PACKAGEDIR qui
 #   joue ce rôle, on s'en sert par exemple pour définir
-#   SHAREDIR=/share${APPLICATIONDIR}, etc.
+#   SHAREDIR=/share${PACKAGEDIR}, etc.
 #
 #   SeeAlso: bps.own.mk bps.files.mk
 
@@ -111,11 +111,11 @@ __<bps.init.mk>__:
 # Ces déclarations ne tiennent pas compte de tous les paramètres
 # pouvant être passés au script `configure'.
 
-_BPS_APPLICATIONDIR?= /bps
+_BPS_PACKAGEDIR?= /bps
 _BPS_PREFIX?= @prefix@
-_BPS_DATADIR?= ${_BPS_PREFIX}/share${_BPS_APPLICATIONDIR}
-_BPS_DOCDIR?= ${_BPS_PREFIX}/share/doc${_BPS_APPLICATIONDIR}
-_BPS_LIBEXECDIR?= ${_BPS_PREFIX}/libexec${_BPS_APPLICATIONDIR}
+_BPS_DATADIR?= ${_BPS_PREFIX}/share${_BPS_PACKAGEDIR}
+_BPS_DOCDIR?= ${_BPS_PREFIX}/share/doc${_BPS_PACKAGEDIR}
+_BPS_LIBEXECDIR?= ${_BPS_PREFIX}/libexec${_BPS_PACKAGEDIR}
 _BPS_TEXMFDIR?= ${_BPS_PREFIX}/share/texmf
 
 _BPS_SYSTEMOWN?= @SYSTEMOWN@
@@ -200,14 +200,14 @@ COOKIEPREFIX?= .cookie.
 .MAIN:			all
 
 
-## APPLICATIONDIR
+## PACKAGEDIR
 
-.if !defined(APPLICATION)&&defined(PROJECT)&&!empty(PROJECT)
-APPLICATION = ${PROJECT}
+.if !defined(PACKAGE)&&defined(PROJECT)&&!empty(PROJECT)
+PACKAGE = ${PROJECT}
 .endif
 
-.if defined(APPLICATION)&&!empty(APPLICATION)
-APPLICATIONDIR?=	/${APPLICATION}
+.if defined(PACKAGE)&&!empty(PACKAGE)
+PACKAGEDIR?=	/${PACKAGE}
 .endif
 
 ## _MAKE_USERTARGET
@@ -228,7 +228,7 @@ _MAKE_ALLSUBTARGET+= configure depend build doc
 # Héritage de certaines variables
 #
 
-# Les valeurs des variables DESTDIR, PREFIX et APPLICATION sont
+# Les valeurs des variables DESTDIR, PREFIX et PACKAGE sont
 # exportées.
 
 .if empty(.MAKEFLAGS:MPREFIX=*)&&defined(PREFIX)
@@ -239,8 +239,8 @@ _MAKE_ALLSUBTARGET+= configure depend build doc
 .MAKEFLAGS: DESTDIR='${DESTDIR}'
 .endif
 
-.if empty(.MAKEFLAGS:MAPPLICATION=*)&&defined(APPLICATION)
-.MAKEFLAGS: APPLICATION='${APPLICATION}'
+.if empty(.MAKEFLAGS:MPACKAGE=*)&&defined(PACKAGE)
+.MAKEFLAGS: PACKAGE='${PACKAGE}'
 .endif
 
 .endif # !target(__<bps.init.mk>__)

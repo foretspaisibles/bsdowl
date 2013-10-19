@@ -46,7 +46,7 @@
 #  ODOC_NAME
 #    UNIX file name used to label objects
 #
-#    This defaults to ${LIBRARY} or ${APPLICATION} if one of these
+#    This defaults to ${LIBRARY} or ${PACKAGE} if one of these
 #    variables is defined.
 #
 #
@@ -147,13 +147,13 @@ OCAMLDOC?= ocamldoc
 ODOC_NAME?=${LIBRARY}
 .endif
 
-.if defined(APPLICATION)&&!empty(APPLICATION)
-ODOC_NAME?=${APPLICATION}
+.if defined(PACKAGE)&&!empty(PACKAGE)
+ODOC_NAME?=${PACKAGE}
 .endif
 
 .if !defined(ODOC_NAME)||empty(ODOC_NAME)
 .error The ocaml.odoc.mk module expects ODOC_NAME to be set. \
-A suitable value could also be guessed from the APPLICATION variable \
+A suitable value could also be guessed from the PACKAGE variable \
 value, but you did not provide one.
 .endif
 

@@ -144,7 +144,7 @@ ${pack}.cma: ${pack}.cmo
 LIB+= ${pack}.cmi
 .endfor
 
-LIBDIR=${PREFIX}/lib/ocaml${APPLICATIONDIR}
+LIBDIR=${PREFIX}/lib/ocaml${PACKAGEDIR}
 
 .include "bps.clean.mk"
 .include "bps.files.mk"
