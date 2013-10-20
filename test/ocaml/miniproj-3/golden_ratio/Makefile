@@ -22,8 +22,8 @@ LIBS+=		nums
 LIBS+=		newton
 LIBS+=		fibonacci
 
-DIRS=		${.CURDIR}/../newton
-DIRS+=		${.CURDIR}/../fibonacci
+DIRS=		${.OBJDIR}/../newton
+DIRS+=		${.OBJDIR}/../fibonacci
 
 
 .include "ocaml.prog.mk"

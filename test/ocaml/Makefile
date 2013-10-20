@@ -34,7 +34,9 @@ SUBDIR+=	miniproj-3
 # Test setup
 #
 
-TESTENV=	${ENVTOOL} -i "PATH=${PATH}"
+COMPILE?=	byte_code
+
+TESTENV=	${ENVTOOL} -i "PATH=${PATH}" "COMPILE=${COMPILE}"
 .for prefix in ${PREFIX}
 TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NPACKAGE*:NPROJECT*:N-I${prefix}/share/mk}"
 .endfor
@@ -53,6 +55,7 @@ test-doc:
 test-parallel:
 	${TESTENV} ${MAKE} depend
 	${TESTENV} ${MAKE} -j4 build
+	${TESTENV} ${MAKE} realclean
 
 test-objdir:
 	${INSTALL_DIR} ${.CURDIR}/objdir
@@ -62,6 +65,11 @@ test-objdir:
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.ml
 	test -r ${.CURDIR}/objdir/${.CURDIR}/basic-1/basic_parser.mli
 	test -x ${.CURDIR}/objdir/${.CURDIR}/golden_ratio/golden_ratio
+
+test-compile:
+	${TESTENV} COMPILE="byte_code" ${MAKE} test
+	${TESTENV} COMPILE="native_code" ${MAKE} test
+	${TESTENV} COMPILE="both" ${MAKE} test
 
 CLEANDIRS+= ${.CURDIR}/objdir
 
