@@ -81,7 +81,9 @@ _OCAML_CMXA?=
 _OCAML_A?=
 
 _OCAML_PACK:=${PACK}
+_OCAML_CAPITALISED_PACK!= awk -v pack="${_OCAML_PACK}" 'BEGIN{print(toupper(substr(pack,1,1)) substr(pack,2));exit}'
 
+MLCNFLAGS+= -for-pack ${_OCAML_CAPITALISED_PACK}
 
 #
 # Prepare source lists
@@ -92,9 +94,15 @@ SRCS.${pack:T}?=${SRCS}
 .if exists(${pack:T}.mli)
 _OCAML_CMI+=${pack:T}.cmi
 ${pack:T}.cmo: ${pack:T}.cmi
+${pack:T}.cmx: ${pack:T}.cmi
 .elif !target(${pack:T}.cmi)
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+${pack:T}.cmi: ${pack:T}.cmx
+	${NOP}
+.else
 ${pack:T}.cmi: ${pack:T}.cmo
 	${NOP}
+.endif
 .endif
 .if defined(_OCAML_COMPILE_NATIVE)
 SRCS.${pack:T}.cmx?=${SRCS.${pack:T}}
