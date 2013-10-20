@@ -24,7 +24,7 @@
 #
 # PREDICATES+= mt
 #
-# .include "ocaml.target.mk"
+# .include "ocaml.compile.mk"
 # .include "ocaml.find.mk"
 # .include "ocaml.tools.mk"
 

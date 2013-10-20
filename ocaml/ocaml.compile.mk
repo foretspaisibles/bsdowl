@@ -1,4 +1,4 @@
-### ocaml.target.mk -- Prepare the TARGET variable
+### ocaml.compile.mk -- Prepare the COMPILE variable
 
 # Author: Michael Grünewald
 # Date: Tue Apr  5 12:31:04 CEST 2005
@@ -17,14 +17,14 @@
 
 ### SYNOPSIS
 
-#  TARGET = byte_code|native_code|both|bc|nc|byte|native
-# .include "ocaml.target.mk"
+#  COMPILE = byte_code|native_code|both|bc|nc|byte|native
+# .include "ocaml.compile.mk"
 
 
 ### DESCRIPTION
 
 
-# This module reads the TARGET variable describing the kind of code
+# This module reads the COMPILE variable describing the kind of code
 # that shall be produced and defines several variables that can be
 # used as predicates in the sequel.
 #
@@ -38,7 +38,7 @@
 
 # Variables:
 #
-#  TARGET
+#  COMPILE
 #    List of targeted code generators
 #
 #    If this variable contains one of the words byte_code, byte,
@@ -63,24 +63,24 @@
 #  _OCAML_COMPILE_BOTH
 #    Predicate telling if the production requirement includes both types
 
-.if !target(__<ocaml.target.mk>__)
-__<ocaml.target.mk>__:
+.if !target(__<ocaml.compile.mk>__)
+__<ocaml.compile.mk>__:
 
 .SUFFIXES: .ml .mli .mll .mly .cmi .cmo .cma .cmx .cmxa .cb .cn
 # .cb CAML bytecode
 # .cn CAML native object
 
-.if !defined(TARGET) || empty(TARGET)
-TARGET = byte_code
+.if !defined(COMPILE) || empty(COMPILE)
+COMPILE = byte_code
 .endif
 
-.if !empty(TARGET:Mbyte_code)||!empty(TARGET:Mbyte) || !empty(TARGET:Mboth)
+.if !empty(COMPILE:Mbyte_code)||!empty(COMPILE:Mbyte) || !empty(COMPILE:Mboth)
 _OCAML_COMPILE_BYTE= yes
 .else
 .undef _OCAML_COMPILE_BYTE
 .endif
 
-.if !empty(TARGET:Mnative_code)||!empty(TARGET:Mnative) || !empty(TARGET:Mboth)
+.if !empty(COMPILE:Mnative_code)||!empty(COMPILE:Mnative) || !empty(COMPILE:Mboth)
 _OCAML_COMPILE_NATIVE= yes
 .else
 .undef _OCAML_COMPILE_NATIVE
@@ -98,6 +98,6 @@ _OCAML_COMPILE_NATIVE_ONLY=yes
 .undef _OCAML_COMPILE_NATIVE_ONLY
 .endif
 
-.endif #!target(__<ocaml.target.mk>__)
+.endif #!target(__<ocaml.compile.mk>__)
 
-### End of file `ocaml.target.mk'
+### End of file `ocaml.compile.mk'

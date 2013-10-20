@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# .include "ocaml.target.mk"
+# .include "ocaml.compile.mk"
 # .include "ocaml.tools.mk"
 
 

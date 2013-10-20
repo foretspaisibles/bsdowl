@@ -73,7 +73,7 @@ _OCAML_OBJECT+= _OCAML_CMXA
 _OCAML_OBJECT+= _OCAML_PKO
 _OCAML_OBJECT+= _OCAML_PKX
 
-.include "ocaml.target.mk"
+.include "ocaml.compile.mk"
 .include "ocaml.find.mk"
 .include "ocaml.tools.mk"
 .include "ocaml.dirs.mk"
