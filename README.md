@@ -76,7 +76,7 @@ of the distribution.
 
 ## Requirements
 
-BSD Make Pallàs Scripts works v1.4 at least in the following
+BSD Make Pallàs Scripts works at least in the following
 environments:
 
 - FreeBSD 9.0 and the base system program `make`;
@@ -93,7 +93,10 @@ the corresponding documentation.
 
 First of all, acquire the latest tarball `bsdmakepscripts-1.4.tar.bz2`
 and its signature `bsdmakepscripts-1.4.tar.bz2.sig` that you should
-verify.  Point a root shell to the directory containing the tarball:
+verify—alternatively, download the tip of the
+[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2)
+since v1.4 is very outdated.
+Point a root shell to the directory containing the tarball:
 
     # tar xjf bsdmakepscripts-1.4.tar.bz2
     # cd bsdmakepscripts-1.4
@@ -119,7 +122,9 @@ To the file `/etc/make.conf`.
 
 First of all, acquire the latest tarball `bsdmakepscripts-1.4.tar.bz2`
 and its signature `bsdmakepscripts-1.4.tar.bz2.sig` that you should
-verify.  Point a user shell to the directory containing the tarball:
+verify—alternatively, download the tip of the
+[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2)
+since v1.4 is very outdated.  Point a user shell to the directory containing the tarball:
 
     $ tar xjf bsdmakepscripts-1.4.tar.bz2
     $ cd bsdmakepscripts-1.4
