@@ -86,9 +86,9 @@ __<ocaml.depend.mk>__:
 
 .depend:
 .if !defined(_OCAML_COMPILE_NATIVE_ONLY)
-	ocamldep ${MLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
+	ocamldep ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
 .else
-	ocamldep -native ${MLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
+	ocamldep -native ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
 .endif
 
 REALCLEANFILES+= .depend

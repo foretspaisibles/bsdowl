@@ -49,10 +49,34 @@
 # Variables:
 #
 #  WITH_DEBUG
-#   Knob controlling build of files with debug symbols
+#   Build with debug symbols
 #
 #   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
-#   MLCFLAGS and MLLFLAGS.
+#   OCAMLCFLAGS and OCAMLLFLAGS.
+#
+#
+#  WITH_THREADS (no)
+#   Build with threads support
+#
+#
+#  WITH_VMTHREADS (no)
+#   Force VM-level scheduling of threads in byte-code programs
+#
+#
+#  WITH_CAMLP4 (no)
+#   Include the camlp4 directory during the build process
+#
+#
+#  WITH_COMPILERLIBS (no)
+#   Include the compiler libs directory during the build process
+#
+#
+#  USE_ANNOTATE (no)
+#   Generate annotate files to support use of type information in editors
+#
+#
+#  USE_CUSTOM (yes)
+#   Link byte-code programs in custome mode
 
 
 ### IMPLEMENTATION
@@ -60,49 +84,92 @@
 # For all kind of object we define a structure holding the
 # pseudo-command, the ovject list and the flags to be added.
 
-_OCAML_CMI.cmd=	MLCI
+_OCAML_CMI.cmd=	OCAMLCI
 _OCAML_CMI.obj=	_OCAML_CMI
-_OCAML_CMI.var=	MLCIFLAGS MLCFLAGS MLFLAGS
+_OCAML_CMI.var=	OCAMLCIFLAGS OCAMLCFLAGS OCAMLFLAGS
 
-_OCAML_CMO.cmd=	MLCB
+_OCAML_CMO.cmd=	OCAMLCB
 _OCAML_CMO.obj=	_OCAML_CMO
-_OCAML_CMO.var=	MLCBFLAGS MLCFLAGS MLFLAGS
+_OCAML_CMO.var=	OCAMLCBFLAGS OCAMLCFLAGS OCAMLFLAGS
 
-_OCAML_CMX.cmd=	MLCN
+_OCAML_CMX.cmd=	OCAMLCN
 _OCAML_CMX.obj=	_OCAML_CMX
-_OCAML_CMX.var=	MLCNFLAGS MLCFLAGS MLFLAGS
+_OCAML_CMX.var=	OCAMLCNFLAGS OCAMLCFLAGS OCAMLFLAGS
 
-_OCAML_CB.cmd=	MLLB
+_OCAML_CB.cmd=	OCAMLLB
 _OCAML_CB.obj=	_OCAML_CB
-_OCAML_CB.var=	MLLBFLAGS MLLFLAGS MLFLAGS MLLBADD
+_OCAML_CB.var=	OCAMLLBFLAGS OCAMLLFLAGS OCAMLFLAGS OCAMLLBADD
 
-_OCAML_CN.cmd=	MLLN
+_OCAML_CN.cmd=	OCAMLLN
 _OCAML_CN.obj=	_OCAML_CN
-_OCAML_CN.var=	MLLNFLAGS MLLFLAGS MLFLAGS MLLNADD
+_OCAML_CN.var=	OCAMLLNFLAGS OCAMLLFLAGS OCAMLFLAGS OCAMLLNADD
 
-_OCAML_CMA.cmd=	MLAB
+_OCAML_CMA.cmd=	OCAMLAB
 _OCAML_CMA.obj=	_OCAML_CMA
-_OCAML_CMA.var=	MLABFLAGS MLAFLAGS MLFLAGS MLABADD
+_OCAML_CMA.var=	OCAMLABFLAGS OCAMLAFLAGS OCAMLFLAGS OCAMLABADD
 
-_OCAML_CMXA.cmd=MLAN
+_OCAML_CMXA.cmd=OCAMLAN
 _OCAML_CMXA.obj=_OCAML_CMXA
-_OCAML_CMXA.var=MLANFLAGS MLAFLAGS MLFLAGS MLANADD
+_OCAML_CMXA.var=OCAMLANFLAGS OCAMLAFLAGS OCAMLFLAGS OCAMLANADD
 
-_OCAML_PKO.cmd=	MLPB
+_OCAML_PKO.cmd=	OCAMLPB
 _OCAML_PKO.obj=	_OCAML_PKO
-_OCAML_PKO.var=	MLPBFLAGS MLCFLAGS MLFLAGS
+_OCAML_PKO.var=	OCAMLPBFLAGS OCAMLCFLAGS OCAMLFLAGS
 
-_OCAML_PKX.cmd=	MLPN
+_OCAML_PKX.cmd=	OCAMLPN
 _OCAML_PKX.obj=	_OCAML_PKX
-_OCAML_PKX.var=	MLPNFLAGS MLCFLAGS MLFLAGS
+_OCAML_PKX.var=	OCAMLPNFLAGS OCAMLCFLAGS OCAMLFLAGS
 
 #
 # Processing knobs
 #
 
-.if defined(WITH_DEBUG)&&(${WITH_DEBUG} == yes)
-MLCFLAGS+= -g
-MLLFLAGS+= -g
+WITH_DEBUG?= no
+WITH_VMTHREADS?= no
+WITH_PROFILE?=no
+WITH_CAMLP4?= no
+WITH_COMPILERLIBS?= no
+
+.if ${WITH_VMTHREADS} == yes
+WITH_THREADS?= yes
+.else
+WITH_THREADS?= no
+.endif
+
+USE_ANNOTATE?= no
+USE_CUSTOM?= no
+
+
+.if ${WITH_DEBUG} == yes
+OCAMLCFLAGS+= -g
+OCAMLLFLAGS+= -g
+.endif
+
+.if ${WITH_THREADS} == yes
+.if (${WITH_PROFILE} == yes)&&defined(_OCAML_COMPILE_BYTE)
+.error Profiling of multithreaded byte code not supported by OCaml
+.elif ${WITH_VMTHREADS} == yes
+OCAMLCNFLAGS+= -threads
+OCAMLCBFLAGS+= -vmthreads
+.else
+OCAMLCFLAGS+= -threads
+.endif
+.endif
+
+.if ${WITH_CAMLP4} == yes
+DIRS+= ${OCAMLROOTDIR}/camlp4
+.endif
+
+.if ${WITH_COMPILERLIBS} == yes
+DIRS+= ${OCAMLROOTDIR}/compiler-libs
+.endif
+
+.if ${USE_ANNOTATE} == yes
+OCAMLCFLAGS+= -annot
+.endif
+
+.if ${USE_CUSTOM} == yes
+OCAMLLBFLAGS+= -custom
 .endif
 
 
@@ -112,8 +179,8 @@ MLLFLAGS+= -g
 
 # We specialise variables associated to each preivously defined
 # structure.  For instance, each of the native code object listed in
-# _OCAML_CN gets its own specialised value for MLLNFLAGS, MLLFLAGS,
-# MLFLAGS and MLLNADD (all the variables listed in _OCAML_CN.var).
+# _OCAML_CN gets its own specialised value for OCAMLLNFLAGS, OCAMLLFLAGS,
+# OCAMLFLAGS and OCAMLLNADD (all the variables listed in _OCAML_CN.var).
 
 .for thg in ${_OCAML_OBJECT}
 .for obj in ${${${thg}.obj}}

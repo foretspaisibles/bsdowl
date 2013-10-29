@@ -67,7 +67,7 @@ _OCAML_DIRS=${DIRS:C/^/-I /}
 .endif
 
 .if !defined(OCAMLROOTDIR)
-OCAMLROOTDIR!= ${MLCI} -where
+OCAMLROOTDIR!= ${OCAMLCI} -where
 .endif
 
 .PATH.cmo: ${OCAMLROOTDIR}
@@ -78,7 +78,7 @@ OCAMLROOTDIR!= ${MLCI} -where
 .PATH.o: ${OCAMLROOTDIR}
 
 .if defined(_OCAML_DIRS) && !empty(_OCAML_DIRS)
-.for tool in MLCI MLCB MLCN MLLB MLLN MLDEP
+.for tool in OCAMLCI OCAMLCB OCAMLCN OCAMLLB OCAMLLN OCAMLDEP
 ${tool}FLAGS+=${_OCAML_DIRS}
 .endfor
 .endif

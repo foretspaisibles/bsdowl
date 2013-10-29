@@ -29,15 +29,15 @@
 
 # Variables:
 #
-#  MLCB (ocamlc)
+#  OCAMLCB (ocamlc)
 #   Bytecode compiler
 #
 #
-#  MLCN (ocamlopt)
+#  OCAMLCN (ocamlopt)
 #   Native compiler
 #
 #
-#  MLCI (ocamlc or ocamlopt)
+#  OCAMLCI (ocamlc or ocamlopt)
 #   Interface compiler
 #
 #   We use ocamlc to compile interface files or ocamlopt in the case
@@ -45,27 +45,27 @@
 #   compiled interfaces should be identical.
 #
 #
-#  MLAB (ocamlc -a)
+#  OCAMLAB (ocamlc -a)
 #   Bytecode libraries packager
 #
 #
-#  MLAN (ocamlopt -a)
+#  OCAMLAN (ocamlopt -a)
 #   Native libraries packager
 #
 #
-#  MLLB (ocamlc)
+#  OCAMLLB (ocamlc)
 #   Bytecode program linker
 #
 #
-#  MLLN (ocamlopt)
+#  OCAMLLN (ocamlopt)
 #   Native program linker
 #
 #
-#  MLPB (ocamlc -pack)
+#  OCAMLPB (ocamlc -pack)
 #   Bytecode packed module packager
 #
 #
-#  MLPN (ocamlopt -pack)
+#  OCAMLPN (ocamlopt -pack)
 #   Native packed module packager
 #
 #
@@ -86,40 +86,48 @@
 .if !target(__<ocaml.tools.mk>__)
 __<ocaml.tools.mk>__:
 
-_OCAML_TOOLS+= MLCI MLCB MLCN MLAB MLAN MLLB MLLN MLPB MLPN
+_OCAML_TOOLS+= OCAMLCI
+_OCAML_TOOLS+= OCAMLCB
+_OCAML_TOOLS+= OCAMLCN
+_OCAML_TOOLS+= OCAMLAB
+_OCAML_TOOLS+= OCAMLAN
+_OCAML_TOOLS+= OCAMLLB
+_OCAML_TOOLS+= OCAMLLN
+_OCAML_TOOLS+= OCAMLPB
+_OCAML_TOOLS+= OCAMLPN
 
 WITH_PROFILE?= no
 
 .if ${WITH_PROFILE} == yes
 # Profiling case
-MLCB?= ocamlcp -c
-MLCN?= ocamloptp -c
+OCAMLCB?= ocamlcp -c
+OCAMLCN?= ocamloptp -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-MLCI?= ocamloptp -c
+OCAMLCI?= ocamloptp -c
 .else
-MLCI?= ocamlcp -c
+OCAMLCI?= ocamlcp -c
 .endif
-MLAB?= ocamlcp -a
-MLAN?= ocamloptp -a
-MLLB?= ocamlcp
-MLLN?= ocamloptp
-MLPB?= ocamlcp -pack
-MLPN?= ocamloptp -pack
+OCAMLAB?= ocamlcp -a
+OCAMLAN?= ocamloptp -a
+OCAMLLB?= ocamlcp
+OCAMLLN?= ocamloptp
+OCAMLPB?= ocamlcp -pack
+OCAMLPN?= ocamloptp -pack
 .else
 # Not profiling case
-MLCB?= ocamlc -c
-MLCN?= ocamlopt -c
+OCAMLCB?= ocamlc -c
+OCAMLCN?= ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-MLCI?= ocamlopt -c
+OCAMLCI?= ocamlopt -c
 .else
-MLCI?= ocamlc -c
+OCAMLCI?= ocamlc -c
 .endif
-MLAB?= ocamlc -a
-MLAN?= ocamlopt -a
-MLLB?= ocamlc
-MLLN?= ocamlopt
-MLPB?= ocamlc -pack
-MLPN?= ocamlopt -pack
+OCAMLAB?= ocamlc -a
+OCAMLAN?= ocamlopt -a
+OCAMLLB?= ocamlc
+OCAMLLN?= ocamlopt
+OCAMLPB?= ocamlc -pack
+OCAMLPN?= ocamlopt -pack
 .endif
 
 .endif#!target(__<ocaml.tools.mk>__)

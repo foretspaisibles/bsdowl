@@ -57,6 +57,10 @@
 #
 #   Setting WITH_PROFILE to yes will enforce the use of the profiling
 #   front-ends to OCaml compilers.
+#
+#
+#  WITH_THREADS (no)
+#   Build with threads support
 
 
 ### IMPLEMENTATION
@@ -89,31 +93,36 @@ OCAMLDOC?= ocamlfind ocamldoc
 OCAMLMKTOP?= ocamlfind ocamlmktop
 .if ${WITH_PROFILE} == yes
 # Profiling case
-MLCB?= ocamlfind ocamlcp -c
-MLCN?= ocamlfind ocamloptp -c
+OCAMLCB?= ocamlfind ocamlcp -c
+OCAMLCN?= ocamlfind ocamloptp -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-MLCI?= ocamlfind ocamloptp -c
+OCAMLCI?= ocamlfind ocamloptp -c
 .else
-MLCI?= ocamlfind ocamlcp -c
+OCAMLCI?= ocamlfind ocamlcp -c
 .endif
-MLLB?= ocamlfind ocamlcp -linkpkg
-MLLN?= ocamlfind ocamloptp -linkpkg
+OCAMLLB?= ocamlfind ocamlcp -linkpkg
+OCAMLLN?= ocamlfind ocamloptp -linkpkg
 .else
 # Not profiling case
-MLCB?= ocamlfind ocamlc -c
-MLCN?= ocamlfind ocamlopt -c
+OCAMLCB?= ocamlfind ocamlc -c
+OCAMLCN?= ocamlfind ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-MLCI?= ocamlfind ocamlopt -c
+OCAMLCI?= ocamlfind ocamlopt -c
 .else
-MLCI?= ocamlfind ocamlc -c
+OCAMLCI?= ocamlfind ocamlc -c
 .endif
-MLLB?= ocamlfind ocamlc -linkpkg
-MLLN?= ocamlfind ocamlopt -linkpkg
+OCAMLLB?= ocamlfind ocamlc -linkpkg
+OCAMLLN?= ocamlfind ocamlopt -linkpkg
 .endif
 .endif
 
 
-.for pseudo in MLCB MLCN MLCI MLLB MLLN OCAMLDOC OCAMLMKTOP
+.if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
+PKGS+= threads
+.endif
+
+
+.for pseudo in OCAMLCB OCAMLCN OCAMLCI OCAMLLB OCAMLLN OCAMLDOC OCAMLMKTOP
 .if defined(PKGS)&&!empty(PKGS)
 ${pseudo}+= -package "${PKGS}"
 .endif

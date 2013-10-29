@@ -83,7 +83,7 @@ _OCAML_A?=
 _OCAML_PACK:=${PACK}
 _OCAML_CAPITALISED_PACK!= awk -v pack="${_OCAML_PACK}" 'BEGIN{print(toupper(substr(pack,1,1)) substr(pack,2));exit}'
 
-MLCNFLAGS+= -for-pack ${_OCAML_CAPITALISED_PACK}
+OCAMLCNFLAGS+= -for-pack ${_OCAML_CAPITALISED_PACK}
 
 #
 # Prepare source lists
