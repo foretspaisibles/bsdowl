@@ -91,15 +91,14 @@ the corresponding documentation.
 
 ## Site-wide installation procedure
 
-First of all, acquire the latest tarball `bsdmakepscripts-1.4.tar.bz2`
-and its signature `bsdmakepscripts-1.4.tar.bz2.sig` that you should
+First of all, acquire the latest tarball `bsdmakepscripts-2.0.tar.bz2`
+and its signature `bsdmakepscripts-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2)
-since v1.4 is very outdated.
+[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2).
 Point a root shell to the directory containing the tarball:
 
-    # tar xjf bsdmakepscripts-1.4.tar.bz2
-    # cd bsdmakepscripts-1.4
+    # tar xjf bsdmakepscripts-2.0.tar.bz2
+    # cd bsdmakepscripts-2.0
 
 You now have to choose an installation prefix, say `/usr/local`, where
 the directives and a few helper scripts are installed:
@@ -120,14 +119,14 @@ To the file `/etc/make.conf`.
 
 ## User-specific installation procedure
 
-First of all, acquire the latest tarball `bsdmakepscripts-1.4.tar.bz2`
-and its signature `bsdmakepscripts-1.4.tar.bz2.sig` that you should
+First of all, acquire the latest tarball `bsdmakepscripts-2.0.tar.bz2`
+and its signature `bsdmakepscripts-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2)
-since v1.4 is very outdated.  Point a user shell to the directory containing the tarball:
+[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2).
+Point a user shell to the directory containing the tarball:
 
-    $ tar xjf bsdmakepscripts-1.4.tar.bz2
-    $ cd bsdmakepscripts-1.4
+    $ tar xjf bsdmakepscripts-2.0.tar.bz2
+    $ cd bsdmakepscripts-2.0
     $ ./configure --prefix=${HOME}
     $ make all
     $ make install
