@@ -126,10 +126,6 @@ _TOPLEVEL_FLAGS+=-cclib -l${item}
 .endfor
 .endif
 
-.if defined(PKGS)&&!empty(PKGS)
-_TOPLEVEL_FLAGS+= -package "${PKGS}"
-.endif
-
 .if defined(DIRS)&&!empty(DIRS)
 .for item in ${DIRS}
 _TOPLEVEL_FLAGS+=-I ${item}

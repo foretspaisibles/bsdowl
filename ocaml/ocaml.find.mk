@@ -90,7 +90,7 @@ WITH_PROFILE?=no
 
 .if ${USE_OCAMLFIND} == yes
 OCAMLDOC?= ocamlfind ocamldoc
-OCAMLMKTOP?= ocamlfind ocamlmktop
+OCAMLMKTOP?= ocamlfind ocamlmktop -linkpkg
 .if ${WITH_PROFILE} == yes
 # Profiling case
 OCAMLCB?= ocamlfind ocamlcp -c
