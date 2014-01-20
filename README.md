@@ -1,16 +1,13 @@
 # BSD Make Pallàs Scripts
 
-    Author: Michael Grünewald
-    Date: Fri 10 Feb 2006 16:50:40 GMT
-
 This collection of BSD Make directives can be used to create workflows
 including the following activities:
 
-- preparation and publication of TeX documents;
-- development of TeX macros with NOWEB;
-- development of OCaml software;
-- maintainance of a FreeBSD workstation configuration files;
-- preparation of a static website with ONSGMLS.
+- Preparation and publication of TeX documents;
+- Development of TeX macros with NOWEB;
+- Development of OCaml software;
+- Maintainance of a FreeBSD workstation configuration files;
+- Preparation of a static website with ONSGMLS.
 
 This README contains enough information to get you started. You
 will find more details on the
@@ -135,26 +132,26 @@ Ensure that `${HOME}/bin` is listed in your path and that the
 `MAKEFLAGS` variable contains the word `-I${HOME}/share/mk`.  If you
 are using `bash` or `sh` you can achieve this by appending the lines
 
-	PATH="${HOME}/bin:${PATH}"
-	MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I${HOME}/share/mk"
-	export PATH
-	export MAKEFLAGS
+    PATH="${HOME}/bin:${PATH}"
+    MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I${HOME}/share/mk"
+    export PATH
+    export MAKEFLAGS
 
 to your `~/.profile` or `~/.bashrc` file, depending on your
 configuration.  If you are using tcsh you can achieve this by
 appending the following lines
 
-	set -f path = ( $path $HOME/bin )
+    set -f path = ( $path $HOME/bin )
 
-	if ( $?MAKEFLAGS ) then
-	    set makeflags = ( $MAKEFLAGS )
-	else
-	    set makeflags = ()
-	endif
+    if ( $?MAKEFLAGS ) then
+        set makeflags = ( $MAKEFLAGS )
+    else
+        set makeflags = ()
+    endif
 
-	set -f makeflags = ( $makeflags "-I${HOME}/share/mk" )
-	setenv	MAKEFLAGS	"$makeflags"
-	unset makeflags
+    set -f makeflags = ( $makeflags "-I${HOME}/share/mk" )
+    setenv  MAKEFLAGS   "$makeflags"
+    unset makeflags
 
 to your `~/.cshrc` or `~/.tcshrc`, depending on your configuration.
 These two suggestions will work in typical cases but a special
@@ -171,9 +168,9 @@ your first version of your TeX source there.  We assume for this
 example that you called it `mylastarticle.tex`. Along your file,
 create a `Makefile` with the following contents:
 
-	DOCS = mylastarticle.tex
-	TEXDEVICE = pdf
-	.include "latex.doc.mk"
+    DOCS=       mylastarticle.tex
+    TEXDEVICE=  pdf
+    .include "latex.doc.mk"
 
 Then you can `make` your document and `make clean` it.  The line
 setting `TEXDEVICE` tells BSD Make Pallàs Scripts that you want to
@@ -181,21 +178,21 @@ actually use `pdflatex` but if you are happy with DVI output you can
 leave this line aside.  If your document requires a bibliography
 prepared by `bibtex` just set `USE_BIBTEX` to `yes` as in
 
-	DOCS = mylastarticle.tex
-	USE_BIBTEX = yes
-	TEXDEVICE = pdf
-	.include "latex.doc.mk"
+    DOCS=       mylastarticle.tex
+    USE_BIBTEX= yes
+    TEXDEVICE=  pdf
+    .include "latex.doc.mk"
 
 This will automatically process your bibliography database with
 `bibtex`.  If your bibliography database does not lie in the same
 directory as your article, you should tell BSD Make Pallàs Scripts its
 location:
 
-	DOCS = mylastarticle.tex
-	USE_BIBTEX = yes
-	BIBINPUTS = ${HOME}/share/texmf/bib
-	TEXDEVICE = pdf
-	.include "latex.doc.mk"
+    DOCS=       mylastarticle.tex
+    USE_BIBTEX= yes
+    BIBINPUTS=  ${HOME}/share/texmf/bib
+    TEXDEVICE=  pdf
+    .include "latex.doc.mk"
 
 Note that `make clean` will not remove the compiled bibliography, so
 that you can `clean` your directory before sending it to an editor or
@@ -206,16 +203,16 @@ BSD Make Pallàs Scripts can also take care of your METAPOST figures,
 If you use the `grahicx` package in LaTeX, all you need to do is to
 list your metapost source files in the `FIGS` variable:
 
-	DOCS = mylastarticle.tex
-	FIGS = desargues.mp
-	FIGS+= conics.mp
-	TEXDEVICE = pdf
-	.include "latex.doc.mk"
+    DOCS=       mylastarticle.tex
+    FIGS=       desargues.mp
+    FIGS+=      conics.mp
+    TEXDEVICE=  pdf
+    .include "latex.doc.mk"
 
 and METAPOST wil be called automatically the next time you `make` your
 document.  Please be sure to set
 
-	outputtemplate := "%j-%c.mps";
+    outputtemplate := "%j-%c.mps";
 
 in your METAPOST sources.  As for bibliographies, making `clean` will
 not remove your pictures but making `realclean` will.
@@ -236,22 +233,22 @@ and then consider a more complex case.
 Create a directory to hold your files and put your source there.
 Along the source, create a `Makefile` with the following content:
 
-	PROGRAM=    wordcount
-	.include "ocaml.prog.mk"
+    PROGRAM=    wordcount
+    .include "ocaml.prog.mk"
 
 ### Building
 
 You can now `make` your program and produce a `wordcount` binary.  The
 complete output of the make process looks like this:
 
-	$ make
-	make depend
-	ocamldep  wordcount.ml > .depend
-	make build
-	ocamlc -c -o wordcount.cmo wordcount.ml
-	ocamlc -o wordcount.cb wordcount.cmo
-	cp wordcount.cb wordcount
-	make doc
+    $ make
+    make depend
+    ocamldep  wordcount.ml > .depend
+    make build
+    ocamlc -c -o wordcount.cmo wordcount.ml
+    ocamlc -o wordcount.cb wordcount.cmo
+    cp wordcount.cb wordcount
+    make doc
 
 When you call `make` without argument it is the same thing as
 `make all` which decomposes as `make depend` and `make build` as you
@@ -264,34 +261,34 @@ Once you are satisfied with the results, you can install it with `make
 install`.  It will call `su` to gain root privileges and install your
 program under `/usr/local/bin` a value deduced from *PREFIX*
 
-	$ make install
-	===> Switching to root credentials for target (install)
-	Password:
-	/usr/bin/install -c -d /usr/local/bin
-	install -o root -g wheel -m 555 wordcount /usr/local/bin
+    $ make install
+    ===> Switching to root credentials for target (install)
+    Password:
+    /usr/bin/install -c -d /usr/local/bin
+    install -o root -g wheel -m 555 wordcount /usr/local/bin
 
 You can check the value of the *PREFIX* variable, or any other
 variable, with `make -V` as in
 
-	$ make -V PREFIX
-	/usr/local
+    $ make -V PREFIX
+    /usr/local
 
 If you want to install your program to another location like
 `${HOME}/bin` you only need to change the *PREFIX*.  You can make the
 change permanent by adding a `PREFIX=${HOME}` line to your `Makefile`:
 
-	PROGRAM=    wordcount
-	PREFIX=     ${HOME}
-	.include "ocaml.prog.mk"
+    PROGRAM=    wordcount
+    PREFIX=     ${HOME}
+    .include "ocaml.prog.mk"
 
 The order of variable declarations is not important but they have to
 come before the `.include` line.  It is also possible to use
 `PREFIX=${HOME}` just once by adding it on the command line without
 editing the `Makefile`:
 
-	make PREFIX=${HOME} install
-	/usr/bin/install -c -d /home/michael/bin
-	install -o michael -g michael -m 550 wordcount /home/michael/bin
+    make PREFIX=${HOME} install
+    /usr/bin/install -c -d /home/michael/bin
+    install -o michael -g michael -m 550 wordcount /home/michael/bin
 
 Note that since you have write access to the *PREFIX* directory, it is
 not necessary to gain root privileges for this installation.
@@ -301,21 +298,21 @@ not necessary to gain root privileges for this installation.
 
 Last you can remove object code from the directory with
 
-	$ make clean
-	rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
+    $ make clean
+    rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
 
 If you look closely, you will notice that the `.depend` file is not
 removed:
 
-	$ ls -A
-	.depend      Makefile     wordcount.ml
+    $ ls -A
+    .depend      Makefile     wordcount.ml
 
 This is on purpose, and if you also want to get rid of the `.depend`
 file you can use the more powerful mantra
 
-	$ make realclean
-	rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
-	rm -f  .depend
+    $ make realclean
+    rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
+    rm -f  .depend
 
 
 ### Several files and auxilary libraries
@@ -327,11 +324,11 @@ now consists of your main file `wordcount.ml` a library
 corresponding `Makefile`:
 
 
-	PROGRAM= 	wordcount
-	SRCS+=		mailreader.ml
-	SRCS+=		wordcount.ml
-	LIBS+=      unix
-	.include "ocaml.prog.mk"
+    PROGRAM=    wordcount
+    SRCS+=      mailreader.ml
+    SRCS+=      wordcount.ml
+    LIBS+=      unix
+    .include "ocaml.prog.mk"
 
 While dependencies between modules are computed with `ocamldep` so
 that modules are compiled as needed, the order in which the files are
@@ -371,3 +368,6 @@ published on GitHub and BitBucket.
 
 Pallàs Athéné is a Greek goddess of wisdom, mother of sciences and
 arts.  This software is gently dedicated to her.
+
+
+Michael Grünewald in Bonn, on January 20, 2014
