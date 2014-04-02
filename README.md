@@ -11,7 +11,10 @@ including the following activities:
 
 This README contains enough information to get you started. You
 will find more details on the
-[Wiki](https://bitbucket.org/michipili/bsdmakepscripts/wiki).
+[Wiki at Bickbucket](https://bitbucket.org/michipili/bsdmakepscripts/wiki)
+or the
+[Wiki at Github](https://github.com/michipili/bsdmakepscripts/wiki).
+
 
 The _Highlights_ section emphasizes important features of BSD Make
 Pallàs Scripts.  The _Installation_ details the installation procedure
