@@ -9,10 +9,4 @@ support/mp2pdf
 support/mp2png
 texmf/tex.device.pdf.mk
 texmf/tex.driver.pdftex.mk
-Website/generation/generation.html
-Website/guidelines/guidelines.html
-Website/index/index.html
-Website/ocaml/ocaml.html
-Website/tex/tex.html
-Website/writing/writing.html
-wwwobj/
+/Wiki/
