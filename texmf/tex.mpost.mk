@@ -269,7 +269,7 @@ REALCLEANFILES+= ${item:.mps=.${MPOST_DEVICE.${device}}}
 .endfor
 
 
-.for file in mpxerr.log mpxerr.tex texnum.mpx
+.for file in mpxerr.log mpxerr.tex texnum.mpx mptextmp.mp mptextmp.mpx
 .if exists(${file})
 CLEANFILES+= ${file}
 .endif
