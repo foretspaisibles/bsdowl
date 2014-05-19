@@ -219,7 +219,7 @@ _MPOST_BUILD.${fig:T} = ${MPOST}
 
 .for fig in ${_MPOST_FIG}
 ${_MPOST_LIST.${fig:T}}: ${fig}
-	${_MPOST_BUILD.${fig:T}} ${.ALLSRC}
+	${_MPOST_BUILD.${fig:T}} ${fig}
 .if defined(MPOST_LIBS)&&!empty(MPOST_LIBS)
 ${_MPOST_LIST.${fig:T}}: ${MPOST_LIBS}
 .endif
