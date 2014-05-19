@@ -5,7 +5,7 @@
 # Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 PROJECT = bsdmakepscripts
-VERSION = 2.0
+VERSION = 2.0.1
 AUTHOR = Michael Grünewald
 
 SUBDIR+= bps
