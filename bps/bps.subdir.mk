@@ -108,7 +108,7 @@ ${SUBDIR}::
 .for target in ${_SUBDIR_TARGET}
 do-${target}-subdir: _SUBDIR
 	${NOP}
-.if !target(${target}-switch-credentials)
+.if !target(${target}) && !target(${target}-switch-credentials)
 ${target}: do-${target}-subdir
 .endif
 .endfor
