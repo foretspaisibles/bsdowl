@@ -28,9 +28,7 @@
 
 ### DESCRIPTION
 
-# Installe des fichiers `dotfiles' .cshrc, .emacs, .gnus, etc., avec
-# comme source des noms visibles dot.cshrc, dot.emacs, dot.gnus, etc.
-
+# Install dotfiles.
 
 FILESGROUPS+= DOTFILE
 DOTFILEDIR?= ${HOME}
@@ -40,6 +38,8 @@ DOTFILEDIR?= ${HOME}
 DOTFILENAME.${item:T}=${item:C/^dot//}
 .endif
 .endfor
+
+USE_SWITCH_CREDENTIALS=no
 
 .include "bps.init.mk"
 .include "bps.clean.mk"
