@@ -1,13 +1,12 @@
-### bps.credentials.mk -- Autorisation administrateur modules `make'.
+### bps.credentials.mk -- Credential switch
 
 # Author: Michael Grünewald
-# Date: Sam 29 mar 2008 16:05:16 CET
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat 29 Mar 2008 16:05:16 CET
 
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2006-2009, 2013-2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -25,48 +24,43 @@
 
 ### DESCRIPTION
 
-# Propose d'utiliser `su' pour traiter la cible `install' ou d'autres
-# cibles énumérées dans la liste _SWITCH_CREDENTIALS_TARGETS.
+# Implement a credential switch which applies to the targets
+# enumerated in the _SWITCH_CREDENTIALS_TARGETS variable, e.g. install.
 
 #
-# Description des variables
+# Variable description
 #
 
 # USE_SWITCH_CREDENTIALS
 #
-#  Indique s'il faut utiliser ou non les privilèges de
-#  l'administrateur pour les cibles énuméréss dans
-#  _SWITCH_CREDENTIALS_TARGETS.
+#  Command the use of the switch credential functionality
 #
-#  Les valeurs possibles sont 'yes' et 'no'.
-#  La valeur implicte est 'yes'.
+#  Possible values are 'yes' or 'no', it defaults to 'yes'.
 
 # _SWITCH_CREDENTIALS_TARGETS
 #
-#  Énumération des cibles pour lesquelles l'élévation des privlèges
-#  est souhaitée.
+#  List of targets needing a credential switch
 #
-#  La valeur implcite est la liste vide, sauf si l'utilisateur courant
-#  n'est pas autorisé à écrire dans le dossier ${DESTDIR}${PREFIX},
-#  dans ce dernier cas la valeur implicite est la liste à un élément,
-#  'install'.
+#  It defaults to the empty list, except for the user is inable to
+#  write in ${DESTDIR}${PREFIX}, in which case the install target is
+#  added to this list.
 
 
-### IMPLÉMENTATION
+### IMPLEMENTATION
 
 .if !target(__<bps.credentials.mk>__)
 __<bps.credentials.mk>__:
 
 #
-# VARIABLES
+# Variables
 #
 
 USE_SWITCH_CREDENTIALS?= yes
 
 _SWITCH_CREDENTIALS_TARGETS?=
 
-# On ajoute la cible `install' lorsque l'utilisateur courant n'est pas
-# autorisé à écrire sous ${DESTDIR}${PREFIX}.
+# Add the `install` target if the current user is not allowed to write
+# under ${DESTDIR}${PREFIX}.
 
 _SWITCH_CREDENTIALS.install!= if [ ! -w /${DESTDIR}${PREFIX} ]; then echo install; else echo ''; fi
 
@@ -76,7 +70,7 @@ _SWITCH_CREDENTIALS_TARGETS+= ${_SWITCH_CREDENTIALS.install}
 
 
 #
-# Changement d'autorisation pour installer en tant que `root'
+# Credential switch
 #
 
 .if(${USE_SWITCH_CREDENTIALS} == yes)&&!(${UID} == 0)
