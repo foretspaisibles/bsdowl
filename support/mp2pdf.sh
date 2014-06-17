@@ -67,7 +67,7 @@ is_no ()
 
 mp2pdf_process()
 {
-    file
+    local file
     file=`mktemp mp2pdf.XXXXX`
     cp $1 $file
     mp2eps $file
