@@ -49,9 +49,21 @@
 #  After evaluation of this file, the variable MPOST_OBJECTS contains
 #  the list of Metapost intermediary objects.
 
+# MPOST_CONVERT_MPS (yes)
+#
+#  Control conversion of METAPOST encapsulated PostScript to device
+#
+#  The program pdfTeX is not able to include directly encapsulated
+#  PostScript and therefore require these files to be converted to
+#  PDF.  For LaTeX the graphicx package will take care of this
+#  conversion but other packages will need support.
+
 # MPOST_LIBS
 #
 #  Libraries of Metapost macros.
+
+
+MPOST_CONVERT_MPSTOPDF?= yes
 
 #
 # Pseudo commands
@@ -137,7 +149,13 @@ FIGS.${doc:T}+= ${FIGS}
 .if defined(FIGS.${doc:T})
 .for fig in ${FIGS.${doc:T}}
 .for device in ${TEXDEVICE}
+.if ${MPOST_CONVERT_MPS} == "yes"
+.for item in ${_MPOST_LIST.${fig:T}}
+SRCS.${doc:T}.${device}+= ${item:.mps=.${MPOST_DEVICE.${device}}}
+.endfor
+.else
 SRCS.${doc:T}.${device}+= ${_MPOST_LIST.${fig:T}}
+.endif
 .endfor
 .endfor
 .endif
