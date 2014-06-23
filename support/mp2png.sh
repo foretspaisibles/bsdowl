@@ -1,6 +1,6 @@
 #!/bin/sh
 
-### mp2png.sh -- Converts METAPOST output to PNG
+### mp2png.sh -- Convert METAPOST output to PNG
 
 # Author: Michael Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
@@ -9,8 +9,8 @@
 
 # Global Variables:
 
-AUTHOR="Michael Grünewald <michael.grunewald@laposte.net>"
-COPYRIGHT="(c)2005"
+AUTHOR="Michael Grünewald <michipili@gmail.com>"
+COPYRIGHT="©2005–2014"
 PROGNAME=`basename "$0"`
 
 resolution=1200
@@ -53,8 +53,13 @@ mp2png_process()
     file=`mktemp mp2png.XXXXX`
     cp $1 $file
     mp2eps $file
-    gs -dNOPAUSE -sDEVICE=pngalpha -sOutputFile=${1%.mps}.png -r${resolution}x${resolution} $file.eps
-    rm $file $file.eps
+    gs \
+	-dNOPAUSE \
+	-sDEVICE=pngalpha \
+	-sOutputFile=${1%.mps}.png \
+	-r${resolution}x${resolution} \
+	"$file.eps"
+    rm "$file" "$file.eps"
 }
 
 # Process Arguments

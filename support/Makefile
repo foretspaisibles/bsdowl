@@ -1,4 +1,4 @@
-### Makefile -- Scripts that converts DATA from one format to another
+### Makefile -- Support scripts for BSD Make Pallàs Scripts
 
 # Author: Michael Grünewald
 # Date: Ven  9 mai 2008 14:47:47 CEST
