@@ -49,7 +49,7 @@ INVALIDOPT() {
 
 mp2png_process()
 {
-    file
+    local file
     file=`mktemp mp2png.XXXXX`
     cp $1 $file
     mp2eps $file
