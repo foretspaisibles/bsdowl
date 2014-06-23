@@ -70,7 +70,7 @@ process_arg() {
 \input epsf
 \setbox0=\vbox{%
   \offinterlineskip
-  \epsfbox{$inputfile}%
+  \hbox to 0pt{\epsfbox{$inputfile}\hss}%
   \offinterlineskip
 }%
 \shipout\box0\relax
