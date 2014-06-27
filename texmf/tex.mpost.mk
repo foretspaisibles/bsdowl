@@ -34,14 +34,6 @@
 #  the share of figure files across several files. Note that, in this case,
 #  figures should be put in a separate folder.
 
-# MPOST_TRANSLATE_NAMES (no)
-#
-#  Controls translation of picture names
-#
-#  Some macro packages do not work well with METAPOST picture names,
-#  ending aith a dot followed by a number.  If the falg is set to yes,
-#  we replace this final dot with a hyphen and add a `.mps' suffix.
-
 # MPOST_OBJECTS
 #
 #  List of Metapost objects
