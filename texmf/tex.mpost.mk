@@ -241,9 +241,6 @@ MPOST_OBJECTS+= ${_MPOST_LIST.${fig:T}}
 # Post production
 #
 
-# This facility is not used any more, but remains there because it can
-# serve the user.
-
 .for fig in ${_MPOST_FIG}
 .for device in ${TEXDEVICE}
 .for item in ${_MPOST_LIST.${fig:T}}
