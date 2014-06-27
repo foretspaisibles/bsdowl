@@ -56,12 +56,12 @@ CLEANFILES+= ${file}
 .endif
 .endfor
 .for mod in ${_OCAML_MLY:.mly=.ml}
-.if empty(_OCAML_ML:M${mod})
+.if !defined(_OCAML_ML)||empty(_OCAML_ML:M${mod})
 _OCAML_ML+= ${mod}
 .endif
 .endfor
 .for if in ${_OCAML_MLY:.mly=.mli}
-.if empty(_OCAML_MLI:M${if})
+.if !defined(_OCAML_MLI)||empty(_OCAML_MLI:M${if})
 _OCAML_MLI+= ${if}
 .endif
 .endfor
