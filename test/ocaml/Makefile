@@ -37,9 +37,7 @@ SUBDIR+=	miniproj-3
 COMPILE?=	byte_code
 
 TESTENV=	${ENVTOOL} -i "PATH=${PATH}" "COMPILE=${COMPILE}"
-.for prefix in ${PREFIX}
-TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NPACKAGE*:NPROJECT*:N-I${prefix}/share/mk}"
-.endfor
+TESTENV+=	"MAKEFLAGS=${MAKEFLAGS:NPACKAGE*:NPROJECT*}"
 
 test-clean:
 	${TESTENV} ${MAKE} realclean

@@ -227,7 +227,7 @@ _OCAML_BUILD.${obj:T}+=${${var}.${obj:T}}
 
 .endif
 
-.if !empty(_OCAML_CMXA:M${obj})
+.if defined(_OCAML_CMXA)&&!empty(_OCAML_CMXA:M${obj})
 # We are producing a CMXA file
 clib:=${obj:C/.cmxa/.a/}
 .if !target(${clib})
