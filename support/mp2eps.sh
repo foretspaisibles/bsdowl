@@ -1,6 +1,6 @@
 #!/bin/sh
 
-### mp2eps.sh -- Converts METAPOST output to PostScript
+### mp2eps.sh -- Convert METAPOST output to PostScript
 
 # Author: Michael Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
@@ -9,8 +9,8 @@
 
 # Global Variables:
 
-AUTHOR="Michael Grünewald <michael.grunewald@laposte.net>"
-COPYRIGHT="(c)2005"
+AUTHOR="Michael Grünewald <michipili@gmail.com>"
+COPYRIGHT="©2005–2014"
 PROGNAME=`basename "$0"`
 
 # Ancillary functions
@@ -24,13 +24,13 @@ HELP()
 {
     cat - <<EOF
 Usage: $PROGNAME [-h] [file1 [file2 [...]]]
- Converts from MetaPost output to Encapsulated Postscript
+ Convert MetaPost output to encapsulated PostScript
 Options:
- -h helpme
+ -h Display a cheerful help message to you.
 Notes:
- The conversion is done thanks to TeX and epsf.tex.
- Pour des résultats optimaux, le fichier de sortie de MetaPost ne doit pas
- utiliser la fonctionnalité des prologues.
+ The conversion is done thanks to TeX and epsf.tex.  This tool is
+ useful to circumvent a bug in Ghostscript which does not interpret
+ correctly bounding boxes.
 Author: Michael Grünewald
 Copyright: ${COPYRIGHT}
 EOF
@@ -70,7 +70,7 @@ process_arg() {
 \input epsf
 \setbox0=\vbox{%
   \offinterlineskip
-  \epsfbox{$inputfile}%
+  \hbox to 0pt{\epsfbox{$inputfile}\hss}%
   \offinterlineskip
 }%
 \shipout\box0\relax

@@ -7,7 +7,7 @@
 # BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
 # This file is part of BSDMake Pallàs Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright (C) 2006-2009, 2013-2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -24,5 +24,7 @@ TEX.pdf = pdflatex
 MULTIPASS+= aux toc
 _TEX_AUX_SUFFIXES?= .log .aux .toc .out
 _TEX_SUFFIXES?= .tex .latex .cls .sty
+
+MPOST_CONVERT_MPS?= no
 
 ### End of file `latex.doc.pre.mk'
