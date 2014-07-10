@@ -55,7 +55,7 @@
 #  Libraries of Metapost macros.
 
 
-MPOST_CONVERT_MPSTOPDF?= yes
+MPOST_CONVERT_MPS?= yes
 
 #
 # Pseudo commands
