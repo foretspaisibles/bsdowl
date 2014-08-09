@@ -61,7 +61,10 @@
 #
 #  WITH_THREADS (no)
 #   Build with threads support
-
+#
+#
+#  WITH_VMTHREADS (no)
+#   Force VM-level scheduling of threads in byte-code programs
 
 ### IMPLEMENTATION
 
@@ -118,13 +121,22 @@ OCAMLLN?= ocamlfind ocamlopt -linkpkg
 
 
 .if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
+.if empty(PKGS:Mthreads)
 PKGS+= threads
+.endif
 .endif
 
 
 .for pseudo in OCAMLCB OCAMLCN OCAMLCI OCAMLLB OCAMLLN OCAMLDOC OCAMLMKTOP
 .if defined(PKGS)&&!empty(PKGS)
 ${pseudo}+= -package "${PKGS}"
+.endif
+.if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
+.if defined(WITH_VMTHREADS)&&(${WITH_VMTHREADS} == yes)
+${pseudo}+= -threads
+.else
+${pseudo}+= -vmthreads
+.endif
 .endif
 .if defined(PREDICATES)&&!empty(PREDICATES)
 ${pseudo}+= -predicates "${PREDICATES}"
