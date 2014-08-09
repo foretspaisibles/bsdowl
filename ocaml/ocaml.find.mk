@@ -121,7 +121,9 @@ OCAMLLN?= ocamlfind ocamlopt -linkpkg
 
 
 .if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
+.if empty(PKGS:Mthreads)
 PKGS+= threads
+.endif
 .endif
 
 
