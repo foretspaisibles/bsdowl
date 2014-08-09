@@ -187,6 +187,13 @@ _OCAML_SRCS.${ODOC_NAME}+= ${item}
 .endif
 .endfor
 .endif
+.if !empty(${src}:M*.mll)
+.for item in ${${src}:M*.mll:.mll=.mli}
+.if exists(${item})
+_OCAML_SRCS.${ODOC_NAME}+= ${item}
+.endif
+.endfor
+.endif
 .endfor
 
 #
