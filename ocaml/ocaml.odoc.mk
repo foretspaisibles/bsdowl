@@ -113,6 +113,10 @@
 #    Advertise the charset used in input files and the HTML output.
 #
 #    Examples: iso-8859-1, iso-8859-15, utf-8.
+#
+#
+#  ODOC_SHORT_FUNCTORS
+#    Use the short functor notation
 
 
 ### IMPLEMENTATION
@@ -140,6 +144,7 @@ ODOC_DIRS?=
 ODOC_VERBOSE?=no
 ODOC_EXCLUDE?=
 ODOC_INSTALL_DUMPS?=no
+ODOC_SHORT_FUNCTORS?=yes
 
 OCAMLDOC?= ocamldoc
 
@@ -209,6 +214,9 @@ _ODOC_FLAGS+= -intro ${ODOC_INTRO}
 .endif
 .if ${ODOC_VERBOSE} == yes
 _ODOC_FLAGS+= -v
+.endif
+.if ${ODOC_SHORT_FUNCTORS} == yes
+_ODOC_FLAGS+= -short-functors
 .endif
 .if ${ODOC_SORT} == yes
 _ODOC_FLAGS+= -sort
