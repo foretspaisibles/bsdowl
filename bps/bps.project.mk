@@ -247,13 +247,15 @@ PROJECTDISTDIR?= ${.OBJDIR}
 # Structures pour le module de compression
 #
 
-_PROJECT_COMPRESS_TOOLS?=bzip2 gzip
+_PROJECT_COMPRESS_TOOLS?=${_BPS_COMPRESS}
 _PROJECT_COMPRESS.suffix.none =
 _PROJECT_COMPRESS.suffix.gzip = .gz
 _PROJECT_COMPRESS.suffix.bzip2 = .bz2
+_PROJECT_COMPRESS.suffix.xz = .xz
 _PROJECT_COMPRESS.flag.none =
 _PROJECT_COMPRESS.flag.gzip = -z
 _PROJECT_COMPRESS.flag.bzip2 = -j
+_PROJECT_COMPRESS.flag.xz = -J
 
 
 #
