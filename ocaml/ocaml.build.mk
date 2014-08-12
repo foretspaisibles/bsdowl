@@ -22,8 +22,8 @@
 # _OCAML_CMI=	module1.cmi
 # _OCAML_CMA=	library.cma
 # _OCAML_CMXA=	library.cmxa
-# _OCAML_CB=	prog1.cb
-# _OCAML_CN=	prog1.cn
+# _OCAML_CB=	prog1.byte
+# _OCAML_CN=	prog1.native
 #
 # .include "ocaml.init.mk"
 # .include "ocaml.build.mk"
