@@ -78,8 +78,13 @@
 #
 #   Setting WITH_PROFILE to yes will enforce the use of the profiling
 #   front-ends to OCaml compilers.
-
-
+#
+#
+#  USE_OPTIMIZED_COMPILER
+#   Use optimized compilers
+#
+#   This is not compatible with the WITH_PROFILE knob, which will take
+#   precedence.
 
 ### IMPLEMENTATION
 
@@ -97,6 +102,11 @@ _OCAML_TOOLS+= OCAMLPB
 _OCAML_TOOLS+= OCAMLPN
 
 WITH_PROFILE?= no
+USE_OPTIMIZED_COMPILER?= no
+
+.if ${USE_OPTIMIZED_COMPILER} != no && ${WITH_PROFILE} != no
+.warning The USE_OPTIMIZED_COMPILER flag is superseded by WITH_PROFILE.
+.endif
 
 .if ${WITH_PROFILE} == yes
 # Profiling case
@@ -113,8 +123,23 @@ OCAMLLB?= ocamlcp
 OCAMLLN?= ocamloptp
 OCAMLPB?= ocamlcp -pack
 OCAMLPN?= ocamloptp -pack
+.elif ${USE_OPTIMIZED_COMPILER} == yes
+# Optimized compiler case
+OCAMLCB?= ocamlc.opt -c
+OCAMLCN?= ocamlopt.opt -c
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+OCAMLCI?= ocamlopt.opt -c
 .else
-# Not profiling case
+OCAMLCI?= ocamlc.opt -c
+.endif
+OCAMLAB?= ocamlc.opt -a
+OCAMLAN?= ocamlopt.opt -a
+OCAMLLB?= ocamlc.opt
+OCAMLLN?= ocamlopt.opt
+OCAMLPB?= ocamlc.opt -pack
+OCAMLPN?= ocamlopt.opt -pack
+.else
+# Normal case
 OCAMLCB?= ocamlc -c
 OCAMLCN?= ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
