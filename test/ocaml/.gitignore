@@ -1,7 +1,7 @@
 *.o
 *.a
-*.cb
-*.cn
+*.byte
+*.native
 *.cmo
 *.cmx
 basic/basic_lexer.ml

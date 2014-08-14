@@ -66,9 +66,7 @@
 .if !target(__<ocaml.compile.mk>__)
 __<ocaml.compile.mk>__:
 
-.SUFFIXES: .ml .mli .mll .mly .cmi .cmo .cma .cmx .cmxa .cb .cn
-# .cb CAML bytecode
-# .cn CAML native object
+.SUFFIXES: .ml .mli .mll .mly .cmi .cmo .cma .cmx .cmxa .byte .native
 
 .if !defined(COMPILE) || empty(COMPILE)
 COMPILE = byte_code
