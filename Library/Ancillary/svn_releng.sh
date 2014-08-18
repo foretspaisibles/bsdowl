@@ -6,10 +6,10 @@
 # Date: Jeu 13 mar 2008 23:01:35 CET
 # Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -28,12 +28,12 @@
 # Configuration
 #
 
-releng_project='bsdmakepscripts'
+releng_project='bsdowl'
 releng_sum_tools='md5 sha256'
 releng_repository="$REPOSITORY"
 releng_subversion='/usr/local/bin/svn'
 releng_tmpdir="/tmp"
-releng_target="file://$HOME/export/bsdmakepscripts/"
+releng_target="file://$HOME/export/bsdowl/"
 
 #
 # Constantes

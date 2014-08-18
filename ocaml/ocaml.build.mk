@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Tue Apr  5 10:31:04 CEST 2005
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2005-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -22,8 +22,8 @@
 # _OCAML_CMI=	module1.cmi
 # _OCAML_CMA=	library.cma
 # _OCAML_CMXA=	library.cmxa
-# _OCAML_CB=	prog1.cb
-# _OCAML_CN=	prog1.cn
+# _OCAML_CB=	prog1.byte
+# _OCAML_CN=	prog1.native
 #
 # .include "ocaml.init.mk"
 # .include "ocaml.build.mk"

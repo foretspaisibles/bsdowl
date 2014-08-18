@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Tue Apr  5 12:31:04 CEST 2005
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2005-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -109,16 +109,16 @@ SRCS.${item:T}+= ${item}.ml
 .endif
 .endif
 .if defined(_OCAML_COMPILE_NATIVE)
-SRCS.${item:T}.cn?=${SRCS.${item:T}}
-_OCAML_CN+=${item:T}.cn
+SRCS.${item:T}.native?=${SRCS.${item:T}}
+_OCAML_CN+=${item:T}.native
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-SRCS.${item:T}.cb?=${SRCS.${item:T}}
-_OCAML_CB+=${item:T}.cb
+SRCS.${item:T}.byte?=${SRCS.${item:T}}
+_OCAML_CB+=${item:T}.byte
 .endif
 .if defined(LIBS)&&!empty(LIBS)
-LIBS.${item:T}.cb?=${LIBS:=.cma}
-LIBS.${item:T}.cn?=${LIBS:=.cmxa}
+LIBS.${item:T}.byte?=${LIBS:=.cma}
+LIBS.${item:T}.native?=${LIBS:=.cmxa}
 .endif
 .endfor
 
@@ -130,25 +130,25 @@ LIBS.${item:T}.cn?=${LIBS:=.cmxa}
 BIN+=${item}
 CLEANFILES+=${item}
 .if defined(_OCAML_COMPILE_NATIVE)
-${item}: ${item}.cn
-	${CP} ${item}.cn ${item}
-_OCAML_SRCS.${item}.cn=${.ALLSRC}
-.if !empty(LIBS.${item}.cn)
-${item}.cn: ${LIBS.${item}.cn}
+${item}: ${item}.native
+	${CP} ${item}.native ${item}
+_OCAML_SRCS.${item}.native=${.ALLSRC}
+.if !empty(LIBS.${item}.native)
+${item}.native: ${LIBS.${item}.native}
 .endif
-.if !empty(SRCS.${item}.cn)
-${item}.cn: ${SRCS.${item}.cn:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
+.if !empty(SRCS.${item}.native)
+${item}.native: ${SRCS.${item}.native:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
 .endif
 .endif
 .if defined(_OCAML_COMPILE_BYTE) && !target(${item})
-${item}: ${item}.cb
-	${CP} ${item}.cb ${item}
-_OCAML_SRCS.${item}.cb=${.ALLSRC}
-.if !empty(LIBS.${item}.cb)
-${item}.cb: ${LIBS.${item}.cb}
+${item}: ${item}.byte
+	${CP} ${item}.byte ${item}
+_OCAML_SRCS.${item}.byte=${.ALLSRC}
+.if !empty(LIBS.${item}.byte)
+${item}.byte: ${LIBS.${item}.byte}
 .endif
-.if !empty(SRCS.${item}.cb)
-${item}.cb: ${SRCS.${item}.cb:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
+.if !empty(SRCS.${item}.byte)
+${item}.byte: ${SRCS.${item}.byte:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
 .endif
 .endfor

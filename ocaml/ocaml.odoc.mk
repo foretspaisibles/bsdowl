@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Sun Aug  5 10:21:05 CEST 2007
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -113,6 +113,10 @@
 #    Advertise the charset used in input files and the HTML output.
 #
 #    Examples: iso-8859-1, iso-8859-15, utf-8.
+#
+#
+#  ODOC_SHORT_FUNCTORS
+#    Use the short functor notation
 
 
 ### IMPLEMENTATION
@@ -140,6 +144,7 @@ ODOC_DIRS?=
 ODOC_VERBOSE?=no
 ODOC_EXCLUDE?=
 ODOC_INSTALL_DUMPS?=no
+ODOC_SHORT_FUNCTORS?=yes
 
 OCAMLDOC?= ocamldoc
 
@@ -209,6 +214,9 @@ _ODOC_FLAGS+= -intro ${ODOC_INTRO}
 .endif
 .if ${ODOC_VERBOSE} == yes
 _ODOC_FLAGS+= -v
+.endif
+.if ${ODOC_SHORT_FUNCTORS} == yes
+_ODOC_FLAGS+= -short-functors
 .endif
 .if ${ODOC_SORT} == yes
 _ODOC_FLAGS+= -sort

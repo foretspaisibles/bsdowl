@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:50:52 CEST 2007
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2007-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -78,8 +78,13 @@
 #
 #   Setting WITH_PROFILE to yes will enforce the use of the profiling
 #   front-ends to OCaml compilers.
-
-
+#
+#
+#  USE_OPTIMIZED_COMPILER
+#   Use optimized compilers
+#
+#   This is not compatible with the WITH_PROFILE knob, which will take
+#   precedence.
 
 ### IMPLEMENTATION
 
@@ -97,6 +102,11 @@ _OCAML_TOOLS+= OCAMLPB
 _OCAML_TOOLS+= OCAMLPN
 
 WITH_PROFILE?= no
+USE_OPTIMIZED_COMPILER?= no
+
+.if ${USE_OPTIMIZED_COMPILER} != no && ${WITH_PROFILE} != no
+.warning The USE_OPTIMIZED_COMPILER flag is superseded by WITH_PROFILE.
+.endif
 
 .if ${WITH_PROFILE} == yes
 # Profiling case
@@ -113,8 +123,23 @@ OCAMLLB?= ocamlcp
 OCAMLLN?= ocamloptp
 OCAMLPB?= ocamlcp -pack
 OCAMLPN?= ocamloptp -pack
+.elif ${USE_OPTIMIZED_COMPILER} == yes
+# Optimized compiler case
+OCAMLCB?= ocamlc.opt -c
+OCAMLCN?= ocamlopt.opt -c
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+OCAMLCI?= ocamlopt.opt -c
 .else
-# Not profiling case
+OCAMLCI?= ocamlc.opt -c
+.endif
+OCAMLAB?= ocamlc.opt -a
+OCAMLAN?= ocamlopt.opt -a
+OCAMLLB?= ocamlc.opt
+OCAMLLN?= ocamlopt.opt
+OCAMLPB?= ocamlc.opt -pack
+OCAMLPN?= ocamlopt.opt -pack
+.else
+# Normal case
 OCAMLCB?= ocamlc -c
 OCAMLCN?= ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)

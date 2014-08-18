@@ -4,10 +4,10 @@
 # Date: Sam 19 avr 2008 16:27:56 CEST
 # Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2008-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -247,13 +247,15 @@ PROJECTDISTDIR?= ${.OBJDIR}
 # Structures pour le module de compression
 #
 
-_PROJECT_COMPRESS_TOOLS?=bzip2 gzip
+_PROJECT_COMPRESS_TOOLS?=${_BPS_COMPRESS}
 _PROJECT_COMPRESS.suffix.none =
 _PROJECT_COMPRESS.suffix.gzip = .gz
 _PROJECT_COMPRESS.suffix.bzip2 = .bz2
+_PROJECT_COMPRESS.suffix.xz = .xz
 _PROJECT_COMPRESS.flag.none =
 _PROJECT_COMPRESS.flag.gzip = -z
 _PROJECT_COMPRESS.flag.bzip2 = -j
+_PROJECT_COMPRESS.flag.xz = -J
 
 
 #

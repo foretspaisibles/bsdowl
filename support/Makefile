@@ -1,4 +1,4 @@
-### Makefile -- Support scripts for BSD Make Pallàs Scripts
+### Makefile -- Support scripts for BSD Owl Scripts
 
 # Author: Michael Grünewald
 # Date: Ven  9 mai 2008 14:47:47 CEST

@@ -13,14 +13,16 @@ AUTHORS		Contributors to BSD Make Pallàs scripts.
 COPYING		License, in english
 COPYING-FR	License, in french
 INDEX		This file
-INSTALL		Installation instruction
-README		General introduction
+INSTALL		See README.md for installation
+README.md	General introduction
 Makefile.in	Master build directives
 Library/Make	Build directives library
 Library/Ancillary
 		Developement scripts
+Library/Logo	Logo
 test		Test suite
 support		Ancillary programs needing installation
+
 
 Project tier-1
 

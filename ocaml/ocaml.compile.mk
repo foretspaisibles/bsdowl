@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Tue Apr  5 12:31:04 CEST 2005
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2005-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -66,9 +66,7 @@
 .if !target(__<ocaml.compile.mk>__)
 __<ocaml.compile.mk>__:
 
-.SUFFIXES: .ml .mli .mll .mly .cmi .cmo .cma .cmx .cmxa .cb .cn
-# .cb CAML bytecode
-# .cn CAML native object
+.SUFFIXES: .ml .mli .mll .mly .cmi .cmo .cma .cmx .cmxa .byte .native
 
 .if !defined(COMPILE) || empty(COMPILE)
 COMPILE = byte_code

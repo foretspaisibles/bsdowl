@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Sam 12 sep 2009 13:02:08 CEST
 
-# Copyright (C) 2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without

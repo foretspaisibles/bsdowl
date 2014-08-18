@@ -5,7 +5,7 @@ ispell-dictionary: "british-ise"
 End:
 -->
 <p id="HEADLINE">Code generation</p>
-<p id="INTRODUCTION">BSD Make Pallàs Scripts supports the generation
+<p id="INTRODUCTION">BSD Owl Scripts supports the generation
 of source files with Norman Ramsey's NOWEB literate programming tool.
 For now, this functionality is restricted to the preparation of TeX or
 LaTeX macros.</p>

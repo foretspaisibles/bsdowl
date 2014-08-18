@@ -1,7 +1,7 @@
 #!/usr/bin/make -f
 # -*- makefile -*-
 
-MAKETOOL=env -u MAKELEVEL -u MAKEFLAGS -u MFLAGS /usr/bin/pmake DESTDIR=${CURDIR}/debian/bsdmakepscripts
+MAKETOOL=env -u MAKELEVEL -u MAKEFLAGS -u MFLAGS /usr/bin/pmake DESTDIR=${CURDIR}/debian/bsdowl
 
 %:
 	dh "$@"

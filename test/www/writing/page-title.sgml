@@ -4,8 +4,8 @@ sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
 ispell-dictionary: "british-ise"
 End:
 -->
-<p id="HEADLINE">BSD Make Pallàs Scripts</p>
-<p id="INTRODUCTION">BSD Make Pallàs Scripts is a small group of BSD
+<p id="HEADLINE">BSD Owl Scripts</p>
+<p id="INTRODUCTION">BSD Owl Scripts is a small group of BSD
 Make directive files. Modules are written in the spirit of FreeBSD's
 project files.
 

@@ -3,10 +3,10 @@
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:14:16 CEST 2007
 
-# BSDMake Pallàs Scripts (http://home.gna.org/bsdmakepscripts/)
-# This file is part of BSDMake Pallàs Scripts
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# Copyright (C) 2006-2009, 2013 Michael Grünewald
+# Copyright © 2005–2014 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -90,32 +90,56 @@ USE_OCAMLFIND?=yes
 
 USE_OCAMLFIND?=no
 WITH_PROFILE?=no
+USE_OPTIMIZED_COMPILER?=no
 
 .if ${USE_OCAMLFIND} == yes
-OCAMLDOC?= ocamlfind ocamldoc
-OCAMLMKTOP?= ocamlfind ocamlmktop -linkpkg
+.if !defined(USE_OCAMLFIND_COMMANDS)
+.if ${WITH_PROFILE} == no && ${USE_OPTIMIZED_COMPILER} == yes
+USE_OCAMLFIND_COMMANDS=yes
+OCAMLFIND_OCAMLC=ocamlc.opt
+OCAMLFIND_OCAMLOPT=ocamlopt.opt
+.endif
+.endif
+
+USE_OCAMLFIND_COMMANDS?=no
+.if ${USE_OCAMLFIND_COMMANDS} == yes
+.if !defined(OCAMLFIND_COMMANDS)
+OCAMLFIND_OCAMLC?=ocamlc
+OCAMLFIND_OCAMLOPT?=ocamlopt
+OCAMLFIND_COMMANDS+=ocamlc=${OCAMLFIND_OCAMLC}
+OCAMLFIND_COMMANDS+=ocamlopt=${OCAMLFIND_OCAMLOPT}
+OCAMLFIND?=${ENVTOOL} OCAMLFIND_COMMANDS="${OCAMLFIND_COMMANDS}" ocamlfind
+.else
+.endif
+.endif
+OCAMLFIND?=ocamlfind
+.endif
+
+.if ${USE_OCAMLFIND} == yes
+OCAMLDOC?= ${OCAMLFIND} ocamldoc
+OCAMLMKTOP?= ${OCAMLFIND} ocamlmktop -linkpkg
 .if ${WITH_PROFILE} == yes
 # Profiling case
-OCAMLCB?= ocamlfind ocamlcp -c
-OCAMLCN?= ocamlfind ocamloptp -c
+OCAMLCB?= ${OCAMLFIND} ocamlcp -c
+OCAMLCN?= ${OCAMLFIND} ocamloptp -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-OCAMLCI?= ocamlfind ocamloptp -c
+OCAMLCI?= ${OCAMLFIND} ocamloptp -c
 .else
-OCAMLCI?= ocamlfind ocamlcp -c
+OCAMLCI?= ${OCAMLFIND} ocamlcp -c
 .endif
-OCAMLLB?= ocamlfind ocamlcp -linkpkg
-OCAMLLN?= ocamlfind ocamloptp -linkpkg
+OCAMLLB?= ${OCAMLFIND} ocamlcp -linkpkg
+OCAMLLN?= ${OCAMLFIND} ocamloptp -linkpkg
 .else
 # Not profiling case
-OCAMLCB?= ocamlfind ocamlc -c
-OCAMLCN?= ocamlfind ocamlopt -c
+OCAMLCB?= ${OCAMLFIND} ocamlc -c
+OCAMLCN?= ${OCAMLFIND} ocamlopt -c
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
-OCAMLCI?= ocamlfind ocamlopt -c
+OCAMLCI?= ${OCAMLFIND} ocamlopt -c
 .else
-OCAMLCI?= ocamlfind ocamlc -c
+OCAMLCI?= ${OCAMLFIND} ocamlc -c
 .endif
-OCAMLLB?= ocamlfind ocamlc -linkpkg
-OCAMLLN?= ocamlfind ocamlopt -linkpkg
+OCAMLLB?= ${OCAMLFIND} ocamlc -linkpkg
+OCAMLLN?= ${OCAMLFIND} ocamlopt -linkpkg
 .endif
 .endif
 
