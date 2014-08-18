@@ -40,7 +40,7 @@ specifications <em>Make scripts,</em> it is possible to gather them in
 libraries of scripts solving problems occuring in related
 situations.</p>
 
-<p>BSD Make Pallàs Scripts is a collection of such
+<p>BSD Owl Scripts is a collection of such
 libraries. They can be used to ease the development of OCaml
 software, the production of TeX and LaTeX documents, and a couple of
 other things.</p>
@@ -68,8 +68,8 @@ NetBSD's bmake works fine under many Linux based systems. You can get
 source files for it at <a
 href="http://void.crufty.net/ftp/pub/sjg/">Simon J. Gerraty's</a>, see
 build instructions in the <a
-href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/INSTALL?view=auto"
->INSTALL</a> file of BSD Make Pallàs Scripts distribution.</p>
+href="http://svn.gna.org/viewcvs/bsdowl/trunk/INSTALL?view=auto"
+>INSTALL</a> file of BSD Owl Scripts distribution.</p>
 
 
 <h1 id="makeisntr">Downloading, installing and using</h1>
@@ -85,7 +85,7 @@ href="http://void.crufty.net/ftp/pub/sjg/mk.tar.gz"
 >mk.tar.gz</a>.</p>
 
 <p>See the <a
-href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/INSTALL?view=auto"
+href="http://svn.gna.org/viewcvs/bsdowl/trunk/INSTALL?view=auto"
 >INSTALL</a> file in the source distribution for installation
 instructions. In a few words, you need to copy the script files in
 some directory and arrange so that your Make program knows about
@@ -106,7 +106,7 @@ Scripts:</p>
    are not&nbsp;(yet) supported.</li>
 
   <li><a href="generation.html">code generation</a> presents some code
-   generation tools and their integration in BSD Make Pallàs Scripts,
+   generation tools and their integration in BSD Owl Scripts,
    M4 and Norman Ramsey's <a href="http://www.cs.tufts.edu/~nr/noweb/"
    >NOWEB</a> are supported;</li>
 
@@ -116,18 +116,18 @@ Scripts:</p>
 
   <li><a href="writing.html">writing Makefiles</a> discusses the art
    of writing Makefiles, it assumes you already know the basics and
-   focuses on techniques used in BSD Make Pallàs Scripts.</li>
+   focuses on techniques used in BSD Owl Scripts.</li>
 
 </ul>
 
 <p><em>Important Note:</em> As this is the case for most software
-products, improper use of BSD Make Pallàs Scripts may lead to data
+products, improper use of BSD Owl Scripts may lead to data
 loss or other random disagreement, you are on your own! See also the <a
-href="http://svn.gna.org/viewcvs/bsdmakepscripts/trunk/COPYING?view=auto"
+href="http://svn.gna.org/viewcvs/bsdowl/trunk/COPYING?view=auto"
 >COPYING</a> file shipped with the sources, where condition of
 utilisation are stated.</p>
 
-<h1>Software supporting BSD Make Pallàs Scripts</h1>
+<h1>Software supporting BSD Owl Scripts</h1>
 
 <p>Some software come with handy scripts using BSD Make Pallàs
 Scripts, we list these friends here:</p>
@@ -147,7 +147,7 @@ Scripts, we list these friends here:</p>
 </ul>
 
 
-<h1>BSD Make Pallàs Scripts is a Gna! hosted project</h1>
+<h1>BSD Owl Scripts is a Gna! hosted project</h1>
 
 <pre>
 Registration Date: Tuesday 03/11/2008 at 20:35

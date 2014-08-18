@@ -1,5 +1,5 @@
 cookies="SYNOPSIS TARGET VARIABLE EN DOCUMENTATION"
-wiki="$HOME/Wiki/bsdmakepscripts"
+wiki="$HOME/Wiki/bsdowl"
 
 make_report()
 {

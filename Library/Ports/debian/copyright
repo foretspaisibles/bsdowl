@@ -4,7 +4,7 @@ This work was packaged for Debian by:
 
 It was downloaded from:
 
-    http://home.gna.org/bsdmakepscripts/
+    https://bitbucket.org/michipili/bsdowl
 
 Upstream Author(s):
 
@@ -12,12 +12,12 @@ Upstream Author(s):
 
 Copyright:
 
- Copyright (C) 2008-2011, 2013 Michael Grünewald
+ Copyright © 2005–2014 Michael Grünewald
 
 
 The Debian packaging is:
 
- Copyright (C) 2011, 2013 Michael Grünewald
+ Copyright © 2005–2014 Michael Grünewald
 
 # Please chose a license for your packaging work. If the program you package
 # uses a mainstream license, using the same license is the safest choice.

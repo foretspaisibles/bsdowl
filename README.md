@@ -1,4 +1,4 @@
-# BSD Make Pallàs Scripts
+# BSD Owl Scripts
 
 This collection of BSD Make directives can be used to create workflows
 including the following activities:
@@ -11,9 +11,9 @@ including the following activities:
 
 This README contains enough information to get you started. You
 will find more details on the
-[Wiki at Bickbucket](https://bitbucket.org/michipili/bsdmakepscripts/wiki)
+[Wiki at Bickbucket](https://bitbucket.org/michipili/bsdowl/wiki)
 or the
-[Wiki at Github](https://github.com/michipili/bsdmakepscripts/wiki).
+[Wiki at Github](https://github.com/michipili/bsdowl/wiki).
 
 
 The _Highlights_ section emphasizes important features of BSD Make
@@ -34,7 +34,7 @@ could help you.
 
 ## Portability
 
-BSD Make Pallàs Scripts (BPS) is written with portability in mind, it
+BSD Owl Scripts (BPS) is written with portability in mind, it
 can be used with several operating systems and flavours of make:
 
 - FreeBSD's Make, the successor of `pmake`;
@@ -66,7 +66,7 @@ And for OCaml projects, this list is:
 
 ## Free software
 
-BSD Make Pallàs Scripts is free software: copying it and
+BSD Owl Scripts is free software: copying it and
 redistributing it is very much welcome under conditions of the
 CeCILL-B licence agreement, found in the COPYING and COPYING-FR files
 of the distribution.
@@ -76,7 +76,7 @@ of the distribution.
 
 ## Requirements
 
-BSD Make Pallàs Scripts works at least in the following
+BSD Owl Scripts works at least in the following
 environments:
 
 - FreeBSD 9.0 and the base system program `make`;
@@ -85,20 +85,20 @@ environments:
 - Debian 7.0 and the third-party program `bmake`.
 
 Some special features require extra software being installed on the
-system where BSD Make Pallàs Scripts is used.  This is advertised in
+system where BSD Owl Scripts is used.  This is advertised in
 the corresponding documentation.
 
 
 ## Site-wide installation procedure
 
-First of all, acquire the latest tarball `bsdmakepscripts-2.0.tar.bz2`
-and its signature `bsdmakepscripts-2.0.tar.bz2.sig` that you should
+First of all, acquire the latest tarball `bsdowl-2.0.tar.bz2`
+and its signature `bsdowl-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2).
+[development branch](https://bitbucket.org/michipili/bsdowl/get/master.tar.bz2).
 Point a root shell to the directory containing the tarball:
 
-    # tar xjf bsdmakepscripts-2.0.tar.bz2
-    # cd bsdmakepscripts-2.0
+    # tar xjf bsdowl-2.0.tar.bz2
+    # cd bsdowl-2.0
 
 You now have to choose an installation prefix, say `/usr/local`, where
 the directives and a few helper scripts are installed:
@@ -119,14 +119,14 @@ To the file `/etc/make.conf`.
 
 ## User-specific installation procedure
 
-First of all, acquire the latest tarball `bsdmakepscripts-2.0.tar.bz2`
-and its signature `bsdmakepscripts-2.0.tar.bz2.sig` that you should
+First of all, acquire the latest tarball `bsdowl-2.0.tar.bz2`
+and its signature `bsdowl-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdmakepscripts/get/master.tar.bz2).
+[development branch](https://bitbucket.org/michipili/bsdowl/get/master.tar.bz2).
 Point a user shell to the directory containing the tarball:
 
-    $ tar xjf bsdmakepscripts-2.0.tar.bz2
-    $ cd bsdmakepscripts-2.0
+    $ tar xjf bsdowl-2.0.tar.bz2
+    $ cd bsdowl-2.0
     $ ./configure --prefix=${HOME}
     $ make all
     $ make install
@@ -165,7 +165,7 @@ configuration will require arrangements.
 
 ## Getting started with a LaTeX document
 
-Here is how BSD Make Pallàs Scripts can help you to write your new
+Here is how BSD Owl Scripts can help you to write your new
 article.  First of all, create a directory to hold your files and put
 your first version of your TeX source there.  We assume for this
 example that you called it `mylastarticle.tex`. Along your file,
@@ -176,7 +176,7 @@ create a `Makefile` with the following contents:
     .include "latex.doc.mk"
 
 Then you can `make` your document and `make clean` it.  The line
-setting `TEXDEVICE` tells BSD Make Pallàs Scripts that you want to
+setting `TEXDEVICE` tells BSD Owl Scripts that you want to
 actually use `pdflatex` but if you are happy with DVI output you can
 leave this line aside.  If your document requires a bibliography
 prepared by `bibtex` just set `USE_BIBTEX` to `yes` as in
@@ -188,7 +188,7 @@ prepared by `bibtex` just set `USE_BIBTEX` to `yes` as in
 
 This will automatically process your bibliography database with
 `bibtex`.  If your bibliography database does not lie in the same
-directory as your article, you should tell BSD Make Pallàs Scripts its
+directory as your article, you should tell BSD Owl Scripts its
 location:
 
     DOCS=       mylastarticle.tex
@@ -202,7 +202,7 @@ that you can `clean` your directory before sending it to an editor or
 the arXiv.  To get rid of the compiled bibliography, use the more
 powerful `make realclean` mantra.
 
-BSD Make Pallàs Scripts can also take care of your METAPOST figures,
+BSD Owl Scripts can also take care of your METAPOST figures,
 If you use the `grahicx` package in LaTeX, all you need to do is to
 list your metapost source files in the `FIGS` variable:
 
@@ -223,7 +223,7 @@ not remove your pictures but making `realclean` will.
 
 ## Getting started with an OCaml program
 
-Here is how BSD Make Pallàs Scripts can help you to compile a simple
+Here is how BSD Owl Scripts can help you to compile a simple
 OCaml program `wordcount`, your own implementation of the UNIX `wc(1)`
 utility.
 

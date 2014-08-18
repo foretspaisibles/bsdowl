@@ -4,7 +4,7 @@
 # Date: Ven 10 fév 2006 16:50:40 GMT
 # Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
-PROJECT = bsdmakepscripts
+PROJECT = bsdowl
 VERSION = 2.1
 AUTHOR = Michael Grünewald
 
@@ -21,6 +21,6 @@ PREFIX?= @prefix@
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .MAKEFLAGS: -I${.CURDIR}/bps
 
-.include "pallas.mk"
+.include "bsdowl.mk"
 
 ### End of file `Makefile'

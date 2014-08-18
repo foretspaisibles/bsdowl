@@ -20,15 +20,15 @@ les systèmes basés sur Linux), il s'agit de `bmake'.
 
 Les sources sont distribuées sur Gna!:
 
-  http://download.gna.org/bsdmakepscripts/bsdmakepscripts-1.2.tar.bz2
+  http://download.gna.org/bsdowl/bsdowl-1.2.tar.bz2
 
 
 1.2 Installation
 
 La procédure d'installation utilise la séquence habituelle:
 
-  % tar xjf bsdmakepscripts-1.2.tar.bz2
-  % cd bsdmakepscripts-1.2
+  % tar xjf bsdowl-1.2.tar.bz2
+  % cd bsdowl-1.2
   % ./configure --prefix=$HOME
   % make all
   % make install
@@ -65,12 +65,12 @@ autre version de tar, par exemple gtar (GNU tar), traitant
 correctement cette option soit installée sur votre système. Si ce
 n'est pas le cas, vous pouvez déployer l'archive en deux temps:
 
-  bunzip2 ~/distfiles/bsdmakepscripts-1.2.tar.bz2
-  tar xf ~/distfiles/bsdmakepscripts-1.2.tar
+  bunzip2 ~/distfiles/bsdowl-1.2.tar.bz2
+  tar xf ~/distfiles/bsdowl-1.2.tar
 
 Si votre système n'est pas apte à traiter la compression BZIP2,
 c'est-à-dire si vous ne pouvez pas trouver de commande bunzip2, vous
-pouvez vous rabattre sur l'archive bsdmakepscripts-1.2.tar.gz.
+pouvez vous rabattre sur l'archive bsdowl-1.2.tar.gz.
 
 Si le script `configure' ne termine pas correctement, envoyez-moi un
 mail pour m'en avertir.

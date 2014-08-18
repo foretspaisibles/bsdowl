@@ -7,7 +7,7 @@ End:
 <h1>Summary</h1>
 
 <p>On this page, you will learn how to use
-BSD Make Pallàs Scripts&nbsp;(BPS)&nbsp;to:</p>
+BSD Owl Scripts&nbsp;(BPS)&nbsp;to:</p>
 <ul>
 <li>produce simple documents and publish them on the file system;</li>
 <li>produce the bibliography of your LaTeX document with BIBTeX;</li>
