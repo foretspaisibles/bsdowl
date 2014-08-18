@@ -23,10 +23,6 @@
 .if !target(__<bsdowl>__)
 __<bsdowl>__:
 
-do-publish:
-	cd Website; make all install PREFIX='${HOME}'
-	WWWBASE='${HOME}/Workshop/Pages/bsdowl'
-
 .MAKEFLAGS:	-I${.CURDIR}/Library/Make
 .for subdir in ${SUBDIR}
 .MAKEFLAGS: -I${.CURDIR}/${subdir}
