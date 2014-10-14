@@ -62,7 +62,7 @@ develop and deploy in heterogeneous environment.
 ## Advanced features
 
 Here is a short list of advanced features that will make you love
-using BPS for your papers written with TeX:
+using BSD Owl Scripts for your papers written with TeX:
 
 - Support TeX documents split in multiple directories;
 - Support figure generation with METAPOST;
