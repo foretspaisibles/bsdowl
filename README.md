@@ -17,7 +17,7 @@ It is well tested under:
 - Debian Jessie and newer
 
 It is hoped to function well under several other operating systems
-such as NetBSD, OpenBSD or even Cygwin. See our
+such as NetBSD, OpenBSD and other Linuces. See our
 [compatibility list](wiki/Compatibility) on the wiki.
 
 This README contains enough information to get you started. You
@@ -43,17 +43,20 @@ could help you.
 
 # Highlights
 
-## Portability
+## Compatibility
 
-BSD Owl Scripts (BPS) is written with portability in mind, it
-can be used with several operating systems and flavours of make:
+We aim at providing a highly portable build system targetting modern
+UNIX systems.  It is already well tested under:
+- Mac OS X, version 10.6.8 and above
+- FreeBSD, version 9.0 and above
+- Debian Jessie and newer
 
-- FreeBSD's Make, the successor of `pmake`;
-- Mac OS X's Make, `bsdmake`;
-- NetBSD's Make, `bmake`, also available on Linux systems.
+It is hoped to function well under several other operating systems
+such as NetBSD, OpenBSD or even Cygwin. See our
+[compatibility list](wiki/Compatibility) on the wiki.
 
-This means that projects managed with BPS are easy to develop and
-deploy in heterogeneous environment.
+This means that projects managed with BSD Owl Scripts are easy to
+develop and deploy in heterogeneous environment.
 
 
 ## Advanced features
