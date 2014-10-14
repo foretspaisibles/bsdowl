@@ -68,7 +68,8 @@ And for OCaml projects, this list is:
 
 BSD Owl Scripts is free software: copying it and
 redistributing it is very much welcome under conditions of the
-CeCILL-B licence agreement, found in the COPYING and COPYING-FR files
+[CeCILL-B][1] licence agreement, found in the [COPYING][2]
+and [COPYING-FR][3] files
 of the distribution.
 
 
@@ -374,3 +375,7 @@ arts.  This software is gently dedicated to her.
 
 
 Michael Grünewald in Bonn, on January 20, 2014
+
+   [1]: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
+   [2]: COPYING
+   [3]: COPYING-FR
