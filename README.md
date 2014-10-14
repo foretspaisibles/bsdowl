@@ -1,13 +1,24 @@
 # BSD Owl Scripts
 
-This collection of BSD Make directives can be used to create workflows
-including the following activities:
+This collection of BSD Make directives aims at providing a highly
+portable build system targetting modern UNIX systems and supporting
+common or less command languages.
 
+It can already be used to:
 - Preparation and publication of TeX documents;
 - Development of TeX macros with NOWEB;
 - Development of OCaml software;
 - Maintainance of a FreeBSD workstation configuration files;
 - Preparation of a static website with ONSGMLS.
+
+It is well tested under:
+- Mac OS X, version 10.6.8 and above
+- FreeBSD, version 9.0 and above
+- Debian Jessie and newer
+
+It is hoped to function well under several other operating systems
+such as NetBSD, OpenBSD or even Cygwin. See our
+[compatibility list](wiki/Compatibility) on the wiki.
 
 This README contains enough information to get you started. You
 will find more details on the
