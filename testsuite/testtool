@@ -1,0 +1,114 @@
+#!/bin/sh
+
+### testtool -- Test Suite Tool
+
+# Author: Michael Grünewald
+# Date: Fri Oct 17 14:58:32 CEST 2014
+
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+test_basename=$(basename "$0")
+test_curdir=$(pwd)
+test_tmpdir=$(mktemp -d -t "${test_basename}") || exit 73
+test_destdir="${test_tmpdir}/dest"
+test_objdir="${test_tmpdir}/obj"
+
+
+test_make()
+{
+    local destdir
+    destdir="$1"
+    shift
+    /opt/local/bin/bmake \
+        PREFIX="/usr/local" \
+        DESTDIR="$destdir" \
+        "$@"
+}
+
+test_tmpdir_clean()
+{
+    cd "${test_curdir}"
+    if [ -n "${test_tmpdir}" ]; then
+        rm -R -f "${test_tmpdir}"
+    fi
+}
+
+trap test_tmpdir_clean EXIT SIGINT SIGQUIT SIGABRT
+
+
+# test_plan DIRECTORY
+#  Search for tests in DIRECTORY and prepare a testplan
+#
+# The testplan is a tabular output having the following format:
+#
+#   KIND|ID|ARGUMENTS
+
+test_plan()
+{
+    local id makefile directory expected savedifs
+    find "$1" -name 'Test*.mk' | while read makefile; do
+        id=$(basename "${makefile%.mk}")
+        directory=$(dirname "${makefile}")
+        expected="${makefile%.mk}.mtree"
+        printf 'install|%s|%s|%s|%s\n' \
+            "$id" "$directory" "$makefile" "$expected"
+    done
+}
+
+
+# test_perform
+#  Perform the plan test provided on standard input
+
+test_perform()
+{
+    local method id argv
+    while IFS='|' read method id argv; do
+        savedifs="$IFS"
+        IFS='|'
+        set -- $argv
+        IFS="$savedifs"
+        eval test_perform_$method "$id" "$@"
+    done
+}
+
+# test_perform_install ID DIRECTORY MAKEFILE EXPECTEDMTREE
+#  Run an install test
+#
+# The test process is as follows:
+#   1. Change directory to DIRECTORY.
+#   2. Build and install software using MAKEFILE.
+#   3. Compare the result to EXPECTEDMTREE.
+#
+# The test will fail if at least one of the following is true:
+#   1. The DIRECTORY cannot be changed to.
+#   2. Building the software using MAKEFILE fails.
+#   3. Resulting tree does not match EXPECTEDMTREE.
+
+test_perform_install()
+{
+    local status
+    install -d "${test_destdir}/$1"
+    cd "$2" \
+        && test_make "${test_destdir}/$1" -f "$3" depend \
+        && test_make "${test_destdir}/$1" -f "$3" build \
+        && test_make "${test_destdir}/$1" -f "$3" install \
+        && cd "${test_destdir}/$1" \
+        && mtree -k mode -f "$4"
+    status="$?"
+    cd "${test_curdir}"
+    rm -r -f "${test_destdir}/$1"
+    return "$status"
+}
+
+test_plan "${test_curdir}" | test_perform
+
+### End of file `testtool'

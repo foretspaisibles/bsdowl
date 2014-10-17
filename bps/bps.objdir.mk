@@ -87,7 +87,6 @@ USE_OBJDIR?=no
 #
 # User targets
 #
-
 .if ${USE_OBJDIR} == yes
 
 _MAKE_USERTARGET+= obj
@@ -106,8 +105,10 @@ do-obj:
 distclean:
 	@rm -Rf ${.OBJDIR}
 .endif
-
-.endif # USE_OBJDIR
+.else # USE_OBJDIR == no
+obj:
+	${NOP}
+.endif
 
 .endif # !target(__<bps.objdir.mk>__)
 

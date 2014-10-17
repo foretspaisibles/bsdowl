@@ -15,8 +15,14 @@ SUBDIR+= noweb
 SUBDIR+= misc
 SUBDIR+= www
 SUBDIR+= support
+SUBDIR+= testsuite
 
 PREFIX?= @prefix@
+
+PROJECTDISTEXCLUDE=	Wiki
+
+test: .PHONY
+	@(cd testsuite && ${MAKE} test)
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .MAKEFLAGS: -I${.CURDIR}/bps
