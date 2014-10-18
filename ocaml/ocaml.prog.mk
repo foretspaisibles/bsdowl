@@ -98,6 +98,15 @@ PROGRAM?= ${PROG}
 .error The ocaml.prog.mk module expects you to set the PROGRAM or the PROG variable to a sensible value.
 .endif
 
+.for item in ${PROGRAM}
+.if exists(${PROGRAM}.1)
+MAN+=${PROGRAM}.1
+.endif
+.if exists(${PROGRAM}.8)
+MAN+=${PROGRAM}.8
+.endif
+.endfor
+
 ## DU MODE SINGLETON AU MODE ENSEMBLE
 
 .for item in ${PROGRAM}
@@ -153,6 +162,7 @@ ${item}.byte: ${SRCS.${item}.byte:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
 .endfor
 
+.include "bps.man.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
