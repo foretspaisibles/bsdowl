@@ -406,7 +406,9 @@ PROJECTLIBRARYMAKE = ${PROJECTBASE}/Mk
 
 .if defined(PROJECTLIBRARYMAKE)
 .MAKEFLAGS: PROJECTLIBRARYMAKE="${PROJECTLIBRARYMAKE}"
-.MAKEFLAGS: -I"${PROJECTLIBRARYMAKE}"
+.if empty(.MAKEFLAGS:M${PROJECTLIBRARYMAKE})
+.MAKEFLAGS: -I ${PROJECTLIBRARYMAKE}
+.endif
 .endif
 
 
@@ -437,7 +439,7 @@ PROJECTLIBRARYSHELL = ${PROJECTBASE}/Ancillary)
 # Ouverture d'un sous-shell pour le développeur
 #
 
-PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
+#PROJECTENV = MAKEFLAGS="${.MAKEFLAGS:C|-I||:C|^/|-I/|:C|^\.|-I.|}"
 # La substitution de la variable MAKEFLAGS est modifiée pour que les
 # options de type `-I' de make apparaissent sous forme compacte. Pour
 # cela, elle fait l'hypothèse que les termes commençant par un `/' ou
