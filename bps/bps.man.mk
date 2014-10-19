@@ -22,6 +22,14 @@
 
 ### DESCRIPTION
 
+# This library defines targets to build and install manual pages and
+# hooks them to the build and installation processes.
+#
+# The list of manual pages to install must be conveyed by MAN. Other
+# variables can be used to configure the process, as described
+# hereafter.
+
+
 ### VARIABLES
 
 # DESTDIR [not set]
