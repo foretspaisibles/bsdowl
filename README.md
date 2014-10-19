@@ -115,15 +115,16 @@ You now have to choose an installation prefix, say `/usr/local`, where
 the directives and a few helper scripts are installed:
 
     # ./configure --prefix=/usr/local
-    # make all
-    # make install
+    # make -r all
+    # make -r install
 
-Ensure that `/usr/local/bin` is listed in the path for each system
-user.  Ensure that `/usr/local/share/mk` is listed in the search path
+To let BSD Make know about bsdowl, you then need to
+ensure that `/usr/local/bin` is listed in the path for each system
+user and that `/usr/local/share/mk` is listed in the search path
 for your compatible make program, this is usually done by adding the
 line
 
-    .MAKEFLAGS: -I/usr/local/share/mk
+    .MAKEFLAGS: -I /usr/local/share/mk
 
 To the file `/etc/make.conf`.
 
@@ -139,15 +140,16 @@ Point a user shell to the directory containing the tarball:
     $ tar xjf bsdowl-2.0.tar.bz2
     $ cd bsdowl-2.0
     $ ./configure --prefix=${HOME}
-    $ make all
-    $ make install
+    $ env MAKEFLAGS= make -r all
+    $ env MAKEFLAGS= make -r install
 
-Ensure that `${HOME}/bin` is listed in your path and that the
-`MAKEFLAGS` variable contains the word `-I${HOME}/share/mk`.  If you
+To let BSD Make know about bsdowl, you then need to
+ensure that `${HOME}/bin` is listed in your path and that the
+`MAKEFLAGS` variable contains `-I ${HOME}/share/mk`.  If you
 are using `bash` or `sh` you can achieve this by appending the lines
 
     PATH="${HOME}/bin:${PATH}"
-    MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I${HOME}/share/mk"
+    MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I ${HOME}/share/mk"
     export PATH
     export MAKEFLAGS
 
@@ -163,12 +165,12 @@ appending the following lines
         set makeflags = ()
     endif
 
-    set -f makeflags = ( $makeflags "-I${HOME}/share/mk" )
-    setenv  MAKEFLAGS   "$makeflags"
+    set makeflags = ( $makeflags "-I ${HOME}/share/mk" )
+    setenv MAKEFLAGS   "$makeflags"
     unset makeflags
 
 to your `~/.cshrc` or `~/.tcshrc`, depending on your configuration.
-These two suggestions will work in typical cases but a special
+These two suggestions will work in typical cases but some special
 configuration will require arrangements.
 
 
