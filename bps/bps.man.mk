@@ -28,6 +28,10 @@
 # The list of manual pages to install must be conveyed by MAN. Other
 # variables can be used to configure the process, as described
 # hereafter.
+#
+# Manual pages are automatically installed in the adequate
+# subdirectory based on their suffix.  However, the list of recognised
+# suffixes is finite and held by the MANSECTIONS variable.
 
 
 ### VARIABLES
