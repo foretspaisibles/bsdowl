@@ -1,8 +1,7 @@
-### bps.objdir.mk -- Utilisation de OBJDIR
+### bps.objdir.mk -- Path to the directory where the targets are built
 
 # Author: Michael Grünewald
-# Date: Sam 15 mar 2008 20:51:30 CET
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat 15 Mar 2008 20:51:30 CET
 
 # BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -23,55 +22,56 @@
 
 ### DESCRIPTION
 
-# Le programme BSD Make dispose de certaines fonctionnalités
-# permettant de produire le code objet dans un répertoire différent de
-# celui contenant le code source. Ce module propose une interface
-# simplifiée vers ces fonctionnalités.
+# The BSD Make program will chdir(2) to the `.OBJDIR` before executing
+# any targets and each child process starts with that as its current
+# working directory.
 #
-# Note: Plus que tout autre, ce module de directives peut entraîner la
-#   perte de données par son utilisation maladroite.
+# The build system can then be configured to build targets in a
+# directory distinct from sources and dependent of the current
+# build architecture and configuration.
 
-#
-# Description des variables
-#
 
-# MAKE_OBJDIR
-# MAKE_OBJDIRPREFIX
+### VARIABLES
+
+# MAKEOBJDIRPREFIX [not set]
+# MAKEOBJDIR [not set]
 # USE_OBJDIR
 
-### IMPLÉMENTATION
+### TARGETS
+
+# do-obj
+
+### IMPLEMENTATION
 
 .if !target(__<bps.objdir.mk>__)
 __<bps.objdir.mk>__:
 
 #
-# Contrôle de MAKEOBJDIRPREFIX et MAKEOBJDIR
+# Verify MAKEOBJDIRPREFIX and MAKEOBJDIR
 #
 
-# On vérifie que les variables MAKEOBJDIRPREFIX et MAKEOBJDIR n'ont
-# pas été positionnées sur la ligne de commande ou dans le fichier de
-# directives (cf. make(1), .OBJDIR).
+# The variables MAKEOBJDIRPREFIX and MAKEOBJDIR can be set in the
+# environment or on the command line but should not be set in a file.
+# If one these variables is set in a file, we terminate with an
+# appropriate error message.
 
-_MAKE_OBJDIRPREFIX!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-	${.MAKEFLAGS:MMAKEOBJDIRPREFIX=*} -f /dev/null -V MAKEOBJDIRPREFIX nothing
+_MAKE_CHECKOBJDIR=	${ENVTOOL} -i PATH=${PATH} ${MAKE} -f /dev/null
+_MAKE_OBJDIRPREFIX!=	${_MAKE_CHECKOBJDIR} -V MAKEOBJDIRPREFIX
+_MAKE_OBJDIR!=		${_MAKE_CHECKOBJDIR} -V MAKEOBJDIR
 
 .if !empty(_MAKE_OBJDIRPREFIX)
-.error MAKEOBJDIRPREFIX can only be set in environment, not as a global\
-	(in make.conf(5)) or command-line variable.
+.error MAKEOBJDIRPREFIX can be set in environment or as a command-line\
+ variable but not as a global variable.
 .endif
-
-_MAKE_OBJDIR!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
-       ${.MAKEFLAGS:MMAKEOBJDIR=*} -f /dev/null -V MAKEOBJDIR nothing
 
 .if !empty(_MAKE_OBJDIR)
-.error MAKEOBJDIR can only be set in environment, not as a global\
-       (in bps.conf(5)) or command-line variable.
+.error MAKEOBJDIR can be set in environment or as a command-line\
+ variable but not as a global variable.
 .endif
-
-
 
 .undef _MAKE_OBJDIRPREFIX
 .undef _MAKE_OBJDIR
+.undef _MAKE_CHECKOBJDIR
 
 
 #
@@ -79,9 +79,9 @@ _MAKE_OBJDIR!= ${ENVTOOL} -i PATH=${PATH} ${MAKE} \
 #
 
 .if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-USE_OBJDIR?= yes
+USE_OBJDIR?=yes
 .else
-USE_OBJDIR?= no
+USE_OBJDIR?=no
 .endif
 
 #
@@ -89,14 +89,17 @@ USE_OBJDIR?= no
 #
 
 .if ${USE_OBJDIR} == yes
+
 _MAKE_USERTARGET+= obj
 _MAKE_ALLSUBTARGET+= obj
 
+.if !target(do-obj)
 do-obj:
 .if defined(MAKEOBJDIRPREFIX)
 	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
 .elif defined(MAKEOBJDIR)
 	${INSTALL_DIR} ${MAKEOBJDIR}
+.endif
 .endif
 
 .if ${.OBJDIR} != ${.CURDIR}
