@@ -30,7 +30,7 @@
 # MAN [not set]
 #  Manual pages to be installed.
 #
-# MANDIR [${SHAREDIR}/man/man]
+# MANDIR [${PREFIX}/share/man]
 #  Base path for manual installation.
 #
 # MANOWN [${SHAREOWN}]
