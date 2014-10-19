@@ -51,11 +51,14 @@
 
 ### TARGETS
 
-# do-build-man
+# buildman
 #  Filter and compress manual pages.
 #
-# do-install-man
+# installman
 #  Install manual pages.
+#
+# installmandirs
+#  Install directories hosting manual pages.
 
 
 ### IMPLEMENTATION
@@ -83,6 +86,7 @@ do-install:		installmandirs
 do-install:		installman
 
 buildman:		.PHONY
+installmandirs:		.PHONY
 installman:		.PHONY
 
 .if defined(MAN) && !empty(MAN)
