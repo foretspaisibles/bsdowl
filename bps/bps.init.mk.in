@@ -221,7 +221,7 @@ _MAKE_ALLSUBTARGET?=
 .include "bps.autoconf.mk"
 .include "bps.credentials.mk"
 
-_MAKE_USERTARGET+= configure depend build doc all install
+_MAKE_USERTARGET+= configure obj depend build doc all install
 _MAKE_USERTARGET+= test clean distclean realclean
 _MAKE_ALLSUBTARGET+= configure depend build doc
 
