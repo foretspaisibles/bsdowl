@@ -8,6 +8,7 @@ FILES+=	bps.init.mk
 FILES+= bps.credentials.mk
 FILES+= bps.objdir.mk
 FILES+=	bps.own.mk
+FILES+= bps.man.mk
 FILES+= bps.usertarget.mk
 FILES+=	bps.clean.mk
 FILES+=	bps.subdir.mk
