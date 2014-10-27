@@ -10,6 +10,13 @@ AC_PROG_ID()
 SYSTEMOWN=root
 SYSTEMGRP=`$ID -gn $SYSTEMOWN`
 #
+# Check for BSD Make
+#
+AC_CHECK_PROG([has_bmake], [bmake], [yes], [no])
+if test "x$has_bmake" = 'xno' && test \! $(uname) = 'FreeBSD'; then
+ AC_MSG_ERROR([*** BSD Make not found.])
+fi
+#
 # Determine compression tools
 #
 define([CHECK_TAR_OPTION], [dnl
