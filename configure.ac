@@ -13,8 +13,8 @@ SYSTEMGRP=`$ID -gn $SYSTEMOWN`
 # Determine compression tools
 #
 define([CHECK_TAR_OPTION], [dnl
-printf 'checking whether tar -$1 works...'
-if tar c$1f /dev/null /dev/null >&- 2>&-; then
+printf 'checking whether tar -$1 works... '
+if tar c$1f /dev/null /dev/null >/dev/null 2>&1; then
 	$2=yes
 else
 	$2=no
