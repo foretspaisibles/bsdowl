@@ -3,8 +3,7 @@
 ### mp2png.sh -- Convert METAPOST output to PNG
 
 # Author: Michael Grünewald
-# Date: Sam 10 déc 2005 09:58:48 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat 10 Dec 2005 09:58:48 GMT
 
 
 # Global Variables:
@@ -13,7 +12,11 @@ AUTHOR="Michael Grünewald <michipili@gmail.com>"
 COPYRIGHT="©2005–2014"
 PROGNAME=`basename "$0"`
 
+# resolution [1200]
+#  Resolution of PostScript rendering.
+
 resolution=1200
+
 
 # Ancillary functions
 
@@ -24,15 +27,15 @@ prerr()
 
 HELP()
 {
-    cat - <<EOF
+    iconv -f utf-8 <<EOF
 Usage: $PROGNAME [-h] [-r resolution] [file1 [file2 [...]]]
- Converts from MetaPost output to PNG
+ Convert from METAPOST output to PNG
 Options:
  -r RESOLUTION [$resolution]
     Indicate a resolution, in dot per inches. See Notes below.
  -h Display a cheerful help message to you.
 Notes:
- The conversion is done thanks to TeX and epsf.tex.
+ The conversion is done thanks to GraphicsMagick.
  The program will not work if you use the prologue facility (if you
  do not know about it, this is probably ok).
  Typical resolution for screen viewing ranges from 72 to 100, for
@@ -49,18 +52,9 @@ INVALIDOPT() {
 
 mp2png_process()
 {
-    local file
-    file=`mktemp mp2png.XXXXX`
-    cp $1 $file
-    mp2eps $file
-    gs \
-	-dNOPAUSE \
-	-sDEVICE=pngalpha \
-	-sOutputFile=${1%.mps}.png \
-	-r${resolution}x${resolution} \
-	"$file.eps"
-    rm "$file" "$file.eps"
+    gm convert -density "$resolution" "$1" "${1%.mps}.png"
 }
+
 
 # Process Arguments
 
@@ -72,7 +66,8 @@ while getopts "hr:" OPTION; do
     esac
 done
 
-shift `expr $OPTIND - 1`
+shift $(expr $OPTIND - 1)
+
 
 # Let's roll
 

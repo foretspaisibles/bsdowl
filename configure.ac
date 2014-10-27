@@ -8,13 +8,27 @@ AC_PROG_MKDIR_P()
 AC_PROG_SED()
 AC_PROG_ID()
 SYSTEMOWN=root
-SYSTEMGRP=`$ID -gn $SYSTEMOWN`
+SYSTEMGRP=$($ID -gn $SYSTEMOWN)
+#
+# Check for GraphicsMagick
+#
+AC_CHECK_PROG([has_gm], [gm], [yes], [no])
+if test "x$has_gm" = 'xno'; then
+  AC_MSG_ERROR([*** GraphicsMagick not found.])
+fi
+#
+# Check for BSD Make
+#
+AC_CHECK_PROG([has_bmake], [bmake], [yes], [no])
+if test "x$has_bmake" = 'xno' && test \! $(uname) = 'FreeBSD'; then
+ AC_MSG_ERROR([*** BSD Make not found.])
+fi
 #
 # Determine compression tools
 #
 define([CHECK_TAR_OPTION], [dnl
-printf 'checking whether tar -$1 works...'
-if tar c$1f /dev/null /dev/null >&- 2>&-; then
+printf 'checking whether tar -$1 works... '
+if tar c$1f /dev/null /dev/null >/dev/null 2>&1; then
 	$2=yes
 else
 	$2=no

@@ -3,8 +3,7 @@
 ### mp2eps.sh -- Convert METAPOST output to PostScript
 
 # Author: Michael Grünewald
-# Date: Sam 10 déc 2005 09:58:48 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat 10 Dec 2005 09:58:48 GMT
 
 
 # Global Variables:
@@ -12,6 +11,7 @@
 AUTHOR="Michael Grünewald <michipili@gmail.com>"
 COPYRIGHT="©2005–2014"
 PROGNAME=`basename "$0"`
+
 
 # Ancillary functions
 
@@ -22,9 +22,9 @@ prerr()
 
 HELP()
 {
-    cat - <<EOF
+    iconv -f utf-8 <<EOF
 Usage: $PROGNAME [-h] [file1 [file2 [...]]]
- Convert MetaPost output to encapsulated PostScript
+ Convert METAPOST output to encapsulated PostScript
 Options:
  -h Display a cheerful help message to you.
 Notes:
@@ -60,10 +60,10 @@ is_no ()
 
 process_arg() {
     inputfile="$1";
-    basename=${inputfile%.mps}
-    texbase=`mktemp ${basename}_XXXX`
-    texfile=$texbase.tex
-    epsfile=$basename.eps
+    basename="${inputfile%.mps}"
+    texbase=$(mktemp ${basename}_XXXX)
+    texfile="$texbase.tex"
+    epsfile="$basename.eps"
 
     cat > $texfile <<EOF
 \nopagenumbers
@@ -77,12 +77,14 @@ process_arg() {
 \end
 EOF
 
-    tex $texfile
-    dvips $DVIPS_OPTS -E -j -o $epsfile $texbase
-    rm -f $texbase*
+    tex "$texfile"
+    dvips $DVIPS_OPTS -E -j -o "$epsfile" "$texbase"
+    rm -f "$texbase"*
 }
 
+
 # Process Arguments
+
 DEBUG=no
 while getopts "Dh" OPTION; do
     case $OPTION in
@@ -98,7 +100,7 @@ else
     echo Debugging 1>&2
 fi
 
-shift `expr $OPTIND - 1`
+shift $(expr $OPTIND - 1)
 
 for arg in "$@"; do process_arg "$arg"; done
 
