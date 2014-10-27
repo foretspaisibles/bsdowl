@@ -3,8 +3,7 @@
 ### mp2png.sh -- Convert METAPOST output to PNG
 
 # Author: Michael Grünewald
-# Date: Sam 10 déc 2005 09:58:48 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat 10 Dec 2005 09:58:48 GMT
 
 
 # Global Variables:
@@ -13,7 +12,11 @@ AUTHOR="Michael Grünewald <michipili@gmail.com>"
 COPYRIGHT="©2005–2014"
 PROGNAME=`basename "$0"`
 
+# resolution [1200]
+#  Resolution of PostScript rendering.
+
 resolution=1200
+
 
 # Ancillary functions
 
@@ -24,9 +27,9 @@ prerr()
 
 HELP()
 {
-    cat - <<EOF
+    iconv -f utf-8 <<EOF
 Usage: $PROGNAME [-h] [-r resolution] [file1 [file2 [...]]]
- Converts from MetaPost output to PNG
+ Convert from METAPOST output to PNG
 Options:
  -r RESOLUTION [$resolution]
     Indicate a resolution, in dot per inches. See Notes below.
@@ -52,6 +55,7 @@ mp2png_process()
     gm convert -density "$resolution" "$1" "${1%.mps}.png"
 }
 
+
 # Process Arguments
 
 while getopts "hr:" OPTION; do
@@ -62,7 +66,8 @@ while getopts "hr:" OPTION; do
     esac
 done
 
-shift `expr $OPTIND - 1`
+shift $(expr $OPTIND - 1)
+
 
 # Let's roll
 

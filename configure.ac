@@ -8,7 +8,7 @@ AC_PROG_MKDIR_P()
 AC_PROG_SED()
 AC_PROG_ID()
 SYSTEMOWN=root
-SYSTEMGRP=`$ID -gn $SYSTEMOWN`
+SYSTEMGRP=$($ID -gn $SYSTEMOWN)
 #
 # Check for GraphicsMagick
 #
