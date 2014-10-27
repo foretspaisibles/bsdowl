@@ -51,7 +51,7 @@
 #   See `bps.own.mk` for a closer description of these variables. If
 #   the PACKAGE library is set, then LIBDIR will appropriately be
 #   initialised to ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
-#   instead of {PREFIX}/lib/ocaml.
+#   instead of ${PREFIX}/lib/ocaml.
 
 
 ### IMPLEMENTATION
