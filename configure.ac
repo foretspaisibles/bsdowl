@@ -10,6 +10,13 @@ AC_PROG_ID()
 SYSTEMOWN=root
 SYSTEMGRP=`$ID -gn $SYSTEMOWN`
 #
+# Check for GraphicsMagick
+#
+AC_CHECK_PROG([has_gm], [gm], [yes], [no])
+if test "x$has_gm" = 'xno'; then
+  AC_MSG_ERROR([*** GraphicsMagick not found.])
+fi
+#
 # Determine compression tools
 #
 define([CHECK_TAR_OPTION], [dnl

@@ -32,7 +32,7 @@ Options:
     Indicate a resolution, in dot per inches. See Notes below.
  -h Display a cheerful help message to you.
 Notes:
- The conversion is done thanks to TeX and epsf.tex.
+ The conversion is done thanks to GraphicsMagick.
  The program will not work if you use the prologue facility (if you
  do not know about it, this is probably ok).
  Typical resolution for screen viewing ranges from 72 to 100, for
@@ -49,17 +49,7 @@ INVALIDOPT() {
 
 mp2png_process()
 {
-    local file
-    file=`mktemp mp2png.XXXXX`
-    cp $1 $file
-    mp2eps $file
-    gs \
-	-dNOPAUSE \
-	-sDEVICE=pngalpha \
-	-sOutputFile=${1%.mps}.png \
-	-r${resolution}x${resolution} \
-	"$file.eps"
-    rm "$file" "$file.eps"
+    gm convert -density "$resolution" "$1" "${1%.mps}.png"
 }
 
 # Process Arguments
