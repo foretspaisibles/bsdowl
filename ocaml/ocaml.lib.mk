@@ -59,13 +59,6 @@
 .include "bps.init.mk"
 .include "ocaml.init.mk"
 
-# We do not support the LIB short name, because it clashes with a file
-# installation group.
-#
-# .if defined(LIB)&&!empty(LIB)
-# LIBRARY?= ${LIB}
-# .endif
-
 .if !defined(LIBRARY)||empty(LIBRARY)
 .error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
 .endif
