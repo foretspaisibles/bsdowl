@@ -1,0 +1,18 @@
+#!/usr/bin/make -f
+MAKETOOL=bmake -r DESTDIR=$$(pwd)/debian/bsdowl
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	${MAKETOOL} build
+
+override_dh_auto_install:
+	${MAKETOOL} install
+	dh_installman
+
+override_dh_auto_clean:
+	${MAKETOOL} distclean
+
+override_dh_auto_test:
+	: Do nada

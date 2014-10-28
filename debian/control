@@ -1,0 +1,28 @@
+Source: bsdowl
+Maintainer: Michael Grünewald <michipili@gmail.com>
+Section: devel
+Priority: optional
+Standards-Version: 3.9.5
+Build-Depends: debhelper (>= 9), bmake, graphicsmagick
+
+Package: bsdowl
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, bmake
+Description: Highly portable build system targeting modern UNIX systems
+ This collection of BSD Make directives aims at providing a highly
+ portable build system targeting modern UNIX systems and supporting
+ common or less command languages.
+ .
+ It can already be used to:
+ .
+   - Preparation and publication of TeX documents;
+   - Development of TeX macros with NOWEB;
+   - Development of OCaml software;
+   - Maintenance of a FreeBSD workstation configuration files;
+   - Preparation of a static website with ONSGMLS.
+ .
+ It is well tested under:
+ .
+   - Mac OS X, version 10.6.8 and above
+   - FreeBSD, version 9.0 and above
+   - Debian Jessie and newer

@@ -1,0 +1,5 @@
+bsdowl (2.2.1-1) UNRELEASED; urgency=medium
+
+  * Initial release. (Closes: #760592)
+
+ -- Michael Grünewald <michipili@gmail.com>  Fri, 05 Sep 2014 16:39:49 +0200
