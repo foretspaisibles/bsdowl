@@ -4,7 +4,7 @@
 # Auteur: Michael Grünewald
 # Date: Ven 10 fév 2006 10:40:49 GMT
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald

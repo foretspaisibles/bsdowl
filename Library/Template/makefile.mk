@@ -19,7 +19,7 @@ changequote(,)dnl
 # Date: __DATE__
 # Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald

@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Sat Oct  5 20:47:48 CEST 2013
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
