@@ -1,4 +1,3 @@
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 ### bps.own.mk -- Variables pour les utilisateurs, groupes, permissions ...
 
 # Auteur: Michael Grünewald

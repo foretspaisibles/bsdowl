@@ -1,4 +1,3 @@
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 WWW+= modern.css
 WWW+= modern_sz.css
 

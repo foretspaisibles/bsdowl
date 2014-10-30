@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Sam  7 jul 2007 18:12:00 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 
 FILES = www.files.mk

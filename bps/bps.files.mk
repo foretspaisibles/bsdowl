@@ -1,4 +1,3 @@
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 ### bps.files.mk -- Service générique d'installation
 
 # Auteur: Michael Grünewald

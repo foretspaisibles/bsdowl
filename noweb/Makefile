@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Sam  3 oct 2009 19:09:28 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 FILES = noweb.main.mk
 FILES+= noweb.latex.mk
