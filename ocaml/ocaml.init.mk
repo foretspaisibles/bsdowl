@@ -52,9 +52,9 @@
 __<ocaml.init.mk>__:
 
 .if !defined(PACKAGEDIR)||empty(PACKAGEDIR)
-LIBDIR?=${PREFIX}/lib/ocaml${PACKAGEDIR}
+LIBDIR?=${libdir}/ocaml${PACKAGEDIR}
 .else
-LIBDIR?=${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
+LIBDIR?=${libdir}/ocaml/site-lib${PACKAGEDIR}
 .endif
 
 

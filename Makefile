@@ -1,7 +1,7 @@
-### project.mk
+### Makefile -- BSD Owl
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Ven 10 fév 2006 16:50:40 GMT
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,17 +14,23 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+SUBDIR+=		bps
+SUBDIR+=		ocaml
+SUBDIR+=		texmf
+SUBDIR+=		noweb
+SUBDIR+=		misc
+SUBDIR+=		www
+SUBDIR+=		support
+SUBDIR+=		testsuite
 
-.include "../../bps/bps.init.mk"
-.include "../../texmf/tex.files.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
-.include "../../misc/misc.script.mk"
+PROJECTDISTEXCLUDE=	Wiki
 
-### End of file `project.mk'
+test: .PHONY
+	@(cd testsuite && ${MAKE} test)
+
+.MAKEFLAGS: -I${.CURDIR}/Library/Make
+.MAKEFLAGS: -I${.CURDIR}/bps
+
+.include "bsdowl.mk"
+
+### End of file `Makefile'

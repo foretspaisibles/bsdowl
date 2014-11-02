@@ -14,7 +14,6 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-
 .include "../../bps/bps.subdir.mk"
 
 ### End of file `subdir.mk'

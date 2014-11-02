@@ -1,4 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
+AC_SUBST([version], [3.0-pre])
 AC_INIT(bps/Makefile)
 AC_PROG_AWK()
 AC_PROG_GREP()
@@ -53,5 +54,5 @@ fi
 AC_SUBST([COMPRESS])
 AC_SUBST([SYSTEMOWN])
 AC_SUBST([SYSTEMGRP])
-AC_OUTPUT(Makefile)
+AC_OUTPUT(Makefile.inc)
 AC_OUTPUT(bps/bps.init.mk)

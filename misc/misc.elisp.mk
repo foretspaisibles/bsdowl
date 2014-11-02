@@ -40,7 +40,7 @@
 FILESGROUPS+= ELISP
 ELISP_INSTALL_SRC = yes
 
-ELISPDIR?= ${PREFIX}/share/emacs/site-lisp
+ELISPDIR?= ${datarootdir}/emacs/site-lisp
 ELISPC?= emacs -batch -f batch-byte-compile
 
 .if defined (SRCS) && !empty(SRCS:M*.el)

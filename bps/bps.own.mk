@@ -67,22 +67,25 @@ _OWN_OWN?=	${USER}
 _OWN_GRP?=	${GROUP}
 .endif
 
-BINDIR?=	${PREFIX}/bin
+BINDIR?=	${bindir}
 BINMODE?=	${_OWN_BINMODE}
 BINOWN?=	${_OWN_OWN}
 BINGRP?=	${_OWN_GRP}
 
-LIBDIR?=	${PREFIX}/lib
+LIBDIR?=	${libdir}${PACKAGEDIR}
 LIBMODE?=	${_OWN_DTAMODE}
 LIBOWN?=	${_OWN_OWN}
 LIBGRP?=	${_OWN_GRP}
 
-SHAREDIR?=	${PREFIX}/share${PACKAGEDIR}
+SHAREDIR?=	${datadir}${PACKAGEDIR}
 SHAREMODE?=	${_OWN_DTAMODE}
 SHAREOWN?=	${_OWN_OWN}
 SHAREGRP?=	${_OWN_GRP}
 
-DOCDIR?=	${PREFIX}/share/doc${PACKAGEDIR}
+# Note that the value of docdir already mentions PACKAGEDIR, as stated
+# in the GNU coding standards, against which we do not want to fight.
+
+DOCDIR?=	${docdir}
 DOCMODE?=	${_OWN_DTAMODE}
 DOCOWN?=	${_OWN_OWN}
 DOCGRP?=	${_OWN_GRP}

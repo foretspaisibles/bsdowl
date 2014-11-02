@@ -107,20 +107,65 @@ __<bps.init.mk>__:
 
 ### INSTALLATION DE BPS
 
-# Ces déclarations ne tiennent pas compte de tous les paramètres
-# pouvant être passés au script `configure'.
+_BPS_PACKAGEDIR?=	/bps
+_BPS_SYSTEMOWN?=	@SYSTEMOWN@
+_BPS_SYSTEMGRP?=	@SYSTEMGRP@
 
-_BPS_PACKAGEDIR?= /bps
-_BPS_PREFIX?= @prefix@
-_BPS_DATADIR?= ${_BPS_PREFIX}/share${_BPS_PACKAGEDIR}
-_BPS_DOCDIR?= ${_BPS_PREFIX}/share/doc${_BPS_PACKAGEDIR}
-_BPS_LIBEXECDIR?= ${_BPS_PREFIX}/libexec${_BPS_PACKAGEDIR}
-_BPS_TEXMFDIR?= ${_BPS_PREFIX}/share/texmf
+_BPS_COMPRESS?=		@COMPRESS@
 
-_BPS_SYSTEMOWN?= @SYSTEMOWN@
-_BPS_SYSTEMGRP?= @SYSTEMGRP@
+_BPS_PREFIX?=		@prefix@
+_BPS_EXEC_PREFIX?=	@exec_prefix@
+_BPS_BINDIR?=		@bindir@
+_BPS_SBINDIR?=		@sbindir@
+_BPS_LIBEXECDIR?=	@libexecdir@
+_BPS_DATAROOTDIR?=	@datarootdir@
+_BPS_DATADIR?=		@datadir@
+_BPS_SYSCONFDIR?=	@sysconfdir@
+_BPS_SHAREDSTATEDIR?=	@sharedstatedir@
+_BPS_LOCALSTATEDIR?=	@localstatedir@
+_BPS_RUNSTATEDIR?=	@runstatedir@
+_BPS_INCLUDEDIR?=	@includedir@
+_BPS_DOCDIR?=		@docdir@
+_BPS_INFODIR?=		@infodir@
+_BPS_LIBDIR?=		@libdir@
+_BPS_LOCALEDIR?=	@localedir@
+_BPS_MANDIR?=		@mandir@
 
-_BPS_COMPRESS?= @COMPRESS@
+# The definitions of prefix, exec_prefix and datarootdir are
+# mandatory, since they are used in the replacement text of autoconf
+# substitution above.
+
+prefix?=		${_BPS_PREFIX}
+exec_prefix?=		${_BPS_EXEC_PREFIX}
+datarootdir?=		${_BPS_DATAROOTDIR}
+
+# The definitions of the remaining directory variables used by
+# autoconf is useful, so that projects using autoconf and projects not
+# using autoconf can use similar initialisation values for their own
+# installation directories.  Also, it useful to have these variables
+# because both ocaml.lib module and c.lib use the variable LIBDIR
+# which should be derived from libdir in different manners.
+
+bindir?=		${exec_prefix}/bin
+sbindir?=		${exec_prefix}/sbin
+libexecdir?=		${exec_prefix}/libexec
+datadir?=		${datarootdir}
+sysconfdir?=		${prefix}/etc
+sharedstatedir?=	${prefix}/com
+localstatedir?=		${prefix}/var
+runstatedir?=		${localstatedir}/run
+includedir?=		${prefix}/include
+docdir?=		${datarootdir}/doc${PACKAGEDIR}
+htmdir?=		${docdir}
+dvidir?=		${docdir}
+pdfdir?=		${docdir}
+psdir?=			${docdir}
+djvudir?=		${docdir}
+infodir?=		${datarootdir}/info
+libdir?=		${exec_prefix}/lib
+localedir?=		${datarootdir}/locale
+mandir?=		${datarootdir}/man
+
 
 ### PSEUDO COMMANDES (BOOTSTRAP)
 
@@ -136,6 +181,7 @@ USER!= ${ID} -n -u
 .if !defined(GROUP)
 GROUP!= ${ID} -n -g
 .endif
+
 
 ### DOSSIER D'INSTALLATION
 
