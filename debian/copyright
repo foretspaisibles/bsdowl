@@ -5,6 +5,8 @@ Source: https://bitbucket.org/michipili/bsdowl
 
 Files: *
 Copyright: 2005-2014 Michael Grünewald <michipili@gmail.com>
+Comment: The CeCILL-B license is a BSD-like license, adapted to the French law.
+ See <http://www.cecill.info/> for more information.
 License: CeCILL-B
  CeCill-B FREE SOFTWARE LICENSE AGREEMENT
  .
