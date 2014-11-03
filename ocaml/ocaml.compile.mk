@@ -38,7 +38,7 @@
 
 # Variables:
 #
-#  COMPILE
+#  COMPILE [byte_code]
 #    List of targeted code generators
 #
 #    If this variable contains one of the words byte_code, byte,
