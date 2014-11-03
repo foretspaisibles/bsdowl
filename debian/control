@@ -4,6 +4,8 @@ Section: devel
 Priority: optional
 Standards-Version: 3.9.5
 Build-Depends: debhelper (>= 9), bmake, graphicsmagick
+Vcs-Git: git://github.com/michipili/bsdowl.git
+Vcs-Browser: https://github.com/michipili/bsdowl/tree/debian
 
 Package: bsdowl
 Architecture: all
