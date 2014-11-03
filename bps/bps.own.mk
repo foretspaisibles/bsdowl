@@ -90,6 +90,11 @@ DOCMODE?=	${_OWN_DTAMODE}
 DOCOWN?=	${_OWN_OWN}
 DOCGRP?=	${_OWN_GRP}
 
+MANDIR?=	${mandir}
+MANMODE?=	${_OWN_DTAMODE}
+MANOWN?=	${_OWN_OWN}
+MANGRP?=	${_OWN_GRP}
+
 .endif #!target(__<bps.own.mk>__)
 
 ### End of file `bps.own.mk'
