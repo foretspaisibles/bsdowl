@@ -1,3 +1,2 @@
 version=3
-opts=filenamemangle=s/.+\/v?(\d\S*)\.tar\.gz/<project>-$1\.tar\.gz/ \
-  https://github.com/michipili/bsdowl/tags .*/v?(\d\S*)\.tar\.gz
+opts=pgpsigurlmangle=s/$/.sig/ https://github.com/michipili/bsdowl/releases (?:.*/)?bsdowl-([\d\.]+).tar.(?:gz|bz2|xz)
