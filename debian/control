@@ -13,9 +13,9 @@ Depends: ${shlibs:Depends}, ${misc:Depends}, bmake
 Description: Highly portable build system targeting modern UNIX systems
  This collection of BSD Make directives aims at providing a highly
  portable build system targeting modern UNIX systems and supporting
- common or less command languages.
+ common or less common languages.
  .
- It can already be used to:
+ It can already be used for:
  .
    - Preparation and publication of TeX documents;
    - Development of TeX macros with NOWEB;
