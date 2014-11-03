@@ -1,7 +1,7 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
 Upstream-Name: bsdowl
 Upstream-Contact: Michael Grünewald <michipili@gmail.com>
-Source: https://bitbucket.org/michipili/bsdowl
+Source: https://github.com/michipili/bsdowl
 
 Files: *
 Copyright: 2005-2014 Michael Grünewald <michipili@gmail.com>
