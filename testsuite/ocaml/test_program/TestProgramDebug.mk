@@ -1,7 +1,7 @@
-### Makefile -- Test features of module ocaml.prog
+### TestProgramDebug.mk -- Counting characters and lines in a file
 
 # Author: Michael Grünewald
-# Date: Thu Oct  3 22:42:23 CEST 2013
+# Date: Tue Nov  4 07:42:39 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=	TestProgram
-TEST+=	TestProgramNative
-TEST+=	TestProgramNoObjDir
-TEST+=	TestProgramDebug
+WITH_DEBUG=	yes
+.include "TestProgram.mk"
 
-.include "test.mk"
-
-### End of file `TestProgram.mk'
+### End of file `TestProgramDebug.mk'
