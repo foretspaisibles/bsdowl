@@ -1,5 +1,5 @@
 /Makefile.inc
-bps/bps.init.mk
+bps/bps.bpsconfig.mk
 configure
 autom4te.cache/
 config.log
