@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_SUBST([version], [3.0-pre])
 AC_INIT(bps/Makefile)
+version='3.0-pre'
 AC_PROG_AWK()
 AC_PROG_GREP()
 AC_PROG_INSTALL()
@@ -51,6 +51,7 @@ fi
 if test "${USE_XZ}" = "yes"; then
 	COMPRESS="${COMPRESS}${COMPRESS:+ }xz"
 fi
+AC_SUBST([version])
 AC_SUBST([COMPRESS])
 AC_SUBST([SYSTEMOWN])
 AC_SUBST([SYSTEMGRP])
