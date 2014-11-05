@@ -27,6 +27,9 @@
 
 ### VARIABLES
 
+# _BPS_VERSION [@version@]
+#  The installed version of BPS.
+#
 # _BPS_PREFIX [@prefix@]
 #  Installation prefix of the bsdowl package.
 #
@@ -119,6 +122,8 @@
 
 .if !target(__<bps.bpsconfig.mk>__)
 __<bps.bpsconfig.mk>__:
+
+_BPS_VERSION=		@version@
 
 _BPS_PREFIX?=		@prefix@
 _BPS_EXEC_PREFIX?=	@exec_prefix@
