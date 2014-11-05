@@ -305,6 +305,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc
 .include "bps.package.mk"
 .include "bps.architecture.mk"
 .include "bps.configuration.mk"
+.include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
 .include "bps.credentials.mk"

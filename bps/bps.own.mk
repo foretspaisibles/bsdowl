@@ -1,7 +1,7 @@
-### bps.own.mk -- Variables pour les utilisateurs, groupes, permissions ...
+### bps.own.mk -- Ownership information for canonical file groups
 
 # Auteur: Michael Grünewald
-# Date: Ven 10 fév 2006 10:40:49 GMT
+# Date: Ven Feb 10 2006 10:40:49 GMT
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,45 +15,21 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
-# .include "bps.own.mk"
-
-
 ### DESCRIPTION
 
+# This file provides ownership information for the canonical file
+# groups BIN, LIB, SHARE, DOC and MAN.
 
-# Ce module définit pour ses clients des paramètres pour
-# l'installation des objets, soit leur emplacement, leur propiétaire,
-# leur groupe et leur droits d'accès.
+### IMPLEMENTATION
 
-# Pour les valeurs implictes de ces paramètes, le module distingue le
-# cas de l'utilisateur root des autres. Dans le premier cas, il estime
-# que `root' souahite installer des programmes pour qu'ils soient
-# disponibles pour tous les utilisateurs de la machine, ce qui se
-# traduit dans le choix des permissions et de PREFIX, et dans l'autre
-# cas il estime que les objets sont destinés à une utilisation privée,
-# ce qui est également reflété par les permissions et PREFIX.
-
-# Variable BINDIR BINOWN BINGRP BINMODE
-# Ces variables décrivent le site d'accueil BINDIR, le propriétaire
-# (BINOWN, BINGRP) et les droits d'accès (BINMODE) pour les objets
-# du groupe BIN. Les objets de ce groupe sont des objets binaires
-# exécutables, résulat d'un assemblage et d'une édition de liens, ou
-# parfois un fichier interprèté (script).
-#
-# D'autres groupes sont définis dans ce module, soit BIN, SHARE, DOC,
-# LIB, dont le nom est semble-t-il assez explicite.
-#  Nota: hier(7) définit le type de fichier à placer dans SHAREDIR.
-#  SeeAlso: bsd.own.mk, bsd.files.mk, hier(7).
-
-
-### IMPLÉMENTATION
+.if !target(__<bps.init.mk>__)
+.error bps.own.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.own.mk>__)
 __<bps.own.mk>__:
 
-.if defined(UID)&&(${UID} == 0)
+.if ${UID} == 0
 _OWN_DIRMODE?=	755
 _OWN_BINMODE?=	555
 _OWN_DTAMODE?=	444
