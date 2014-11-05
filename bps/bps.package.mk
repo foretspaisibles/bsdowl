@@ -15,11 +15,6 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
-# .include "bps.package.mk"
-
-
 ### DESCRIPTION
 
 # This file manages variables carrying package information.
@@ -63,6 +58,9 @@
 #  keyword identifying the type of the external resource and `resource`
 #  is its symbolic name.
 
+.if !target(__<bps.init.mk>__)
+.error bps.package.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.package.mk>__)&&!defined(SRCDIR)
 __<bps.package.mk>__:

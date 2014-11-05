@@ -19,7 +19,6 @@
 
 # CONFIGURE = Makefile.in
 # CONFIGURE+= header.in
-# .include "bps.autoconf.mk"
 
 ### DESCRIPTION
 
@@ -48,6 +47,10 @@
 #
 #  Si ils existent, les fichiers `Makefile.in' et `Makefile.inc.in' sont
 #  automatiquement ajoutés à cette énumération.
+
+.if !target(__<bps.init.mk>__)
+.error bps.autoconf.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.autoconf.mk>__)
 __<bps.autoconf.mk>__:

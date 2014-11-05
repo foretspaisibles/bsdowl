@@ -15,10 +15,6 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
-# .include "bps.configuration.mk"
-
 ### DESCRIPTION
 
 # Manage package build configurations.
@@ -50,6 +46,10 @@
 #   processing the file ${CONFIGURATION}.mk.
 #
 #   It is not and error if the file does not exist.
+
+.if !target(__<bps.init.mk>__)
+.error bps.configuration.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.configuration.mk>__)&&defined(CONFIGURATION)
 __<bps.configuration.mk>__:

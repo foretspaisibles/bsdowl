@@ -120,6 +120,10 @@
 
 ### IMPLEMENTATION
 
+.if !target(__<bps.init.mk>__)
+.error bps.bpsconfig.mk cannot be included directly.
+.endif
+
 .if !target(__<bps.bpsconfig.mk>__)
 __<bps.bpsconfig.mk>__:
 

@@ -15,11 +15,6 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
-# .include "bps.objdir.mk"
-
-
 ### DESCRIPTION
 
 # The BSD Make program will chdir(2) to the `.OBJDIR` before executing
@@ -42,6 +37,10 @@
 # do-obj
 
 ### IMPLEMENTATION
+
+.if !target(__<bps.init.mk>__)
+.error bps.objdir.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.objdir.mk>__)
 __<bps.objdir.mk>__:

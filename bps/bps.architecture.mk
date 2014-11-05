@@ -15,10 +15,6 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
-# .include "bps.architecute.mk"
-
 ### DESCRIPTION
 
 # Handle architecture information and configuration files.  If a
@@ -43,6 +39,10 @@
 #
 # PACKAGELIBRARYARCHITECTURE [${SRCDIR}/Library/Configuration]
 #  A directory where architecture configuration files are stored.
+
+.if !target(__<bps.init.mk>__)
+.error bps.architecture.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.architecture.mk>__)&&defined(ARCHITECTURE)
 __<bps.architecture.mk>__:
