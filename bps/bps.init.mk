@@ -272,22 +272,11 @@ GROUP!=			${ID} -n -g
 
 
 #
-# Variables holding files to clean
-#
-
-CLEANFILES?=
-CLEANDIRS?=
-DISTCLEANFILES?=
-DISTCLEANDIRS?=
-REALCLEANFILES?=
-REALCLEANDIRS?=
-
-
-#
 # Prefix used for cookies
 #
 
 COOKIEPREFIX?=		.cookie.
+
 
 #
 # Set _MAKE_USERTARGET and _MAKE_ALLSUBTARGET
