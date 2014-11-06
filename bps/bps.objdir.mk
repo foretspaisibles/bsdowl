@@ -89,9 +89,10 @@ USE_OBJDIR?=no
 .if ${USE_OBJDIR} == yes
 
 .if !target(do-obj)
+obj: do-obj
 do-obj:
 .if defined(MAKEOBJDIRPREFIX)
-	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
+	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}${.CURDIR}
 .elif defined(MAKEOBJDIR)
 	${INSTALL_DIR} ${MAKEOBJDIR}
 .endif
@@ -102,6 +103,7 @@ distclean: cleanobjdir
 cleanobjdir:
 	@${RM} -Rf ${.OBJDIR}
 .endif
+
 .else # USE_OBJDIR == no
 obj:
 	${NOP}
