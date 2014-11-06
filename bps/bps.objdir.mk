@@ -98,8 +98,9 @@ do-obj:
 .endif
 
 .if ${.OBJDIR} != ${.CURDIR}
-distclean:
-	@rm -Rf ${.OBJDIR}
+distclean: cleanobjdir
+cleanobjdir:
+	@${RM} -Rf ${.OBJDIR}
 .endif
 .else # USE_OBJDIR == no
 obj:
