@@ -125,8 +125,10 @@ installfiles: installfiles-${group:tl}
 installfiles-${group:tl}:
 .for file in ${${group}}
 installfiles-${group:tl}: installfiles-${group:tl}-${file:T}
+.if !target(installfiles-${group:tl}-${file:T})
 installfiles-${group:tl}-${file:T}: ${file}
 	${INSTALL_${group}.${file:T}}
+.endif
 .PHONY: installfiles-${group:tl}-${file:T}
 .endfor #file in ${${group}}
 .endif #defined(${group})&&!empty(${group})
