@@ -88,9 +88,6 @@ USE_OBJDIR?=no
 #
 .if ${USE_OBJDIR} == yes
 
-_MAKE_USERTARGET+= obj
-_MAKE_ALLSUBTARGET+= obj
-
 .if !target(do-obj)
 do-obj:
 .if defined(MAKEOBJDIRPREFIX)
