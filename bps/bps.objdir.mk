@@ -88,27 +88,36 @@ USE_OBJDIR?=no
 #
 .if ${USE_OBJDIR} == yes
 
-_MAKE_USERTARGET+= obj
-_MAKE_ALLSUBTARGET+= obj
-
 .if !target(do-obj)
+obj: do-obj
 do-obj:
 .if defined(MAKEOBJDIRPREFIX)
-	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}/${.CURDIR}
+	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}${.CURDIR}
 .elif defined(MAKEOBJDIR)
 	${INSTALL_DIR} ${MAKEOBJDIR}
 .endif
 .endif
 
 .if ${.OBJDIR} != ${.CURDIR}
-distclean:
-	@rm -Rf ${.OBJDIR}
+distclean: cleanobjdir
+cleanobjdir:
+	@${RM} -Rf ${.OBJDIR}
 .endif
+
 .else # USE_OBJDIR == no
 obj:
 	${NOP}
 .endif
 
 .endif # !target(__<bps.objdir.mk>__)
+
+
+.if !target(display-objdir)
+display-objdir:
+	${INFO} 'Display objdir information'
+.for displayvar in .CURDIR .OBJDIR USE_OBJDIR MAKEOBJDIR MAKEOBJDIRPREFIX
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.endif
 
 ### End of file `bps.objdir.mk'

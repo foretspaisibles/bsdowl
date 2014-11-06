@@ -94,12 +94,7 @@ MANTOOL?=		${MANCOMPRESSCMD}
 .endif
 
 do-build:		buildman
-do-install:		installmandirs
-do-install:		installman
-
 buildman:		.PHONY
-installmandirs:		.PHONY
-installman:		.PHONY
 
 .if defined(MAN) && !empty(MAN)
 .for section in ${MANSECTIONS}
@@ -108,20 +103,12 @@ MANDIR.${man:T}=	${MANDIR}/man${section}
 .endfor
 .endfor
 
-installmandirs:
-.for section in ${MANSECTIONS}
-.if !empty(MAN:M*.${section})
-	@${INSTALL_DIR} ${DESTDIR}${MANDIR}/man${section}
-.endif
-.endfor
-
 .for man in ${MAN}
 CLEANFILES+=		${man}${MANCOMPRESSEXT}
 ${man}${MANCOMPRESSEXT}: ${man}
 	${MANTOOL} < ${.ALLSRC} > ${.TARGET}
 buildman: ${man}${MANCOMPRESSEXT}
-installman: installman-${man:T}
-installman-${man:T}: ${man}${MANCOMPRESSEXT} .PHONY
+installfiles-man-${man:T}: ${man}${MANCOMPRESSEXT} .PHONY
 	${MANINSTALL} ${.ALLSRC} ${DESTDIR}${MANDIR.${man:T}}
 .endfor
 .endif
