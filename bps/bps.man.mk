@@ -42,7 +42,7 @@
 # MAN [not set]
 #  Manual pages to be installed.
 #
-# MANDIR [${PREFIX}/share/man]
+# MANDIR [${mandir}]
 #  Base path for manual installation.
 #
 # MANOWN [${SHAREOWN}]
@@ -78,7 +78,7 @@
 .if !target(__<bps.man.mk>__)
 __<bps.man.mk>__:
 
-MANDIR?=		${PREFIX}/share/man
+MANDIR?=		${mandir}
 MANMODE?=		${SHAREMODE}
 MANOWN?=		${SHAREOWN}
 MANGRP?=		${SHAREGRP}

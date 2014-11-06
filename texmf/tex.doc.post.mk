@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: sam 16 avr 2011 22:46:34 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

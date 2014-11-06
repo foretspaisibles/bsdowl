@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Jeu 13 mar 2008 21:58:28 CET
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,10 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE = bps
-SCRIPTDIR = ${_BPS_LIBEXEC}
-SHAREDIR = ${_BPS_DATADIR}
-FILESDIR = ${_BPS_PREFIX}/share/mk
+PACKAGE=		bsdowl
+PACKAGEDIR=		/${PACKAGE}
+SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
+SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
+FILESDIR?=		${SHAREDIR}
 
 .include "../../bps/bps.init.mk"
 .include "../../texmf/tex.files.mk"

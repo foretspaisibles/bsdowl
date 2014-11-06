@@ -1,7 +1,7 @@
-### insert_licence.sh
+### Makefile -- BSD Owl
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 23:01:35 CET
+# Date: Ven 10 fév 2006 16:50:40 GMT
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,9 +14,23 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-find ../../ -name '*.mk' | while read item; do
-    printf 'Modifiying %s\n' $item
-    ex $item < insert_licence.ed
-done
+SUBDIR+=		bps
+SUBDIR+=		ocaml
+SUBDIR+=		texmf
+SUBDIR+=		noweb
+SUBDIR+=		misc
+SUBDIR+=		www
+SUBDIR+=		support
+SUBDIR+=		testsuite
 
-### End of file `insert_licence.sh'
+PROJECTDISTEXCLUDE=	Wiki
+
+test: .PHONY
+	@(cd testsuite && ${MAKE} test)
+
+.MAKEFLAGS: -I${.CURDIR}/Library/Make
+.MAKEFLAGS: -I${.CURDIR}/bps
+
+.include "bsdowl.mk"
+
+### End of file `Makefile'

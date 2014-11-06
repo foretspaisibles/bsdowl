@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Fri Feb 10 17:59:16 2006
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -41,7 +40,7 @@
 FILESGROUPS+= ELISP
 ELISP_INSTALL_SRC = yes
 
-ELISPDIR?= ${PREFIX}/share/emacs/site-lisp
+ELISPDIR?= ${datarootdir}/emacs/site-lisp
 ELISPC?= emacs -batch -f batch-byte-compile
 
 .if defined (SRCS) && !empty(SRCS:M*.el)

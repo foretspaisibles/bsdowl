@@ -18,7 +18,7 @@ PROGRAM=	wordcount
 
 test:
 	test -x ${DESTDIR}${BINDIR}/wordcount
-	test -f ${DESTDIR}${PREFIX}/share/man/man1/wordcount.1.gz
+	test -f ${DESTDIR}${MANDIR}/man1/wordcount.1.gz
 
 .include "ocaml.prog.mk"
 

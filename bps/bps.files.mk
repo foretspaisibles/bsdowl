@@ -1,8 +1,7 @@
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
-### bps.files.mk -- Service générique d'installation
+### bps.files.mk -- Installation routines for file groups
 
 # Auteur: Michael Grünewald
-# Date: Ven 10 fév 2006 10:40:49 GMT
+# Date: Ven Feb 10 2006 10:40:49 GMT
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,143 +14,94 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-
 ### SYNOPSIS
 
-# TYPE1+= file1.type1
-# TYPE1+= file2.type1
-# TYPE2 = file.type
-#
-# TYPE1MODE.file1.type1 = 444
-# TYPE1NAME.file2.type1 = fancyname
-#
-# FILESGROUPS =	TYPE1 TYPE2
-# TYPE1OWN = owner
-# TYPE1GRP = group
-# TYPE1DIR = ${X11PREFIX}/directory		# Will respect ${DESTDIR}
-# TYPE1MODE = 400
-#
-# .include "bps.init.mk"
-# .include "bps.files.mk"
-# .include "bps.usertarget.mk"
+# FILESGROUPS+=		PLOPFIZZ
+# PLOPFIZZDIR=		${datadir}${PACKAGEDIR}
+# PLOPFIZZMODE=		${SHAREMODE}
+# PLOPFIZZOWN=		${SHAREOWN}
+# PLOPFIZZGRP=		${SHAREGRP}
+# PLOPFIZZ=		data.pf other.pf
+# PLOPFIZZMODE.data.pf=	400
 
 
 ### DESCRIPTION
 
-# Le module `bps.files.mk' propose une procédure générique
-# d'installation pour les modules clients.
+# This file defines for its clients some routines for installing
+# products on the file system, allowing to setup their emplacement,
+# owner, groups and access rights.
 #
-# Le module `bps.files.mk' définit une notion de groupe d'objets,
-# chaque groupe d'objet correspond à un ensemble de paramètres pour
-# l'installation, soit l'emplacement, le propriétaire les droits
-# d'accès et le nom; et à une liste d'objets. Pour chaque objet membre
-# d'un groupe, des paramètres individuels peuvent êtres définis
-# (cf. PARAMÈTRES INDIVIDUELS infra).
+# There is six canonical files groups, FILES, BIN, LIB, SHARE, DOC and
+# MAN but more groups can easily be added. The installation parameters
+# for these five file groups are defined by bps.own.mk, this
+# definition distinguish the case when make runs with administrative
+# rights or as a regular user.
 #
-# Le module `bps.files.mk' définit encore des cibles/procédures
-# `buildfiles' `installdirs' et `installfiles' à moins que celles-ci
-# ne soient déjà définies par le client. Ceci permet au client
-# d'utiliser des mécanismes spécifiques pour réaliser ces tâches
-# lorsque les actions proposées par le module `bps.files.mk' se
-# révèlent inappropriées.
-#
-# Le module `bps.files.mk' complète le graphe des dépendances en
-# affirmant que `buildfiles' est un prérequis pour `all' et
-# `installfiles'. Le module tient également compte des
-# cibles/procédures preinstall et postinstall lorsqu'elles existent.
-
-# Nota: ce fichier est dérivé de bsd.files.mk, distribué avec le
-#  système FreeBSD.
+# The installation procedures defined here are take the DESTDIR
+# variable in account.
 
 
-#
-# Description des variables
-#
+### VARIABLES
 
-# FILESGROUPS
+# FILESGROUPS [FILES BIN LIB DOC SHARE MAN]
+#  The list of files groups.
 #
-#  Énumération des groupes de fichiers réclamant la prise en charge de
-#  leur installation par le module `bps.files.mk'.
+# ${group}DIR
+#  The directory, relative to ${DESTDIR}, for items of ${group}.
+#
+# ${group}MODE
+#  The access mode for items of ${group}.
+#
+# ${group}OWN
+#  The owner for items of ${group}.
+#
+# ${group}GRP
+#  The group for items of ${group}.
 
+# ${group}DIR.${file:T} [${${group}DIR}]
+#  The installation directory for ${file}, relative to ${DESTDIR}.
+#
+# ${group}NAME.${file:T} [not set]
+#  The name to use when installing ${file}.
+#
+# ${group}OWN.${file:T} [${${group}OWN}]
+#  The owner to use when installing ${file}.
+#
+# ${group}GRP.${file:T} [${${group}GRP}]
+#  The group to use when installing ${file}.
+#
+# ${group}MODE.${file:T} [${${group}MODE}]
+#  The access mode to use when installing ${file}.
+#
+# COPYTREE_${group} [oneliner-script]
+#  A command used to copy file trees.
+#
+#   A typical use is
+#     cd ${SRCDIR}/doc && ${COPYTREE_SHARE} . ${DOCDIR} "! -name *\.orig"
+#
+#   The first argument is a path, usually '.' where to call find on,
+#   the second argument is the destination directory and the last
+#   argument is optional and is a find(1) predicate.
 
-#
-# Paramètres individuels
-#
+### TARGETS
 
-# Les paramètres de la procédure d'installation du fichier '${file}'
-# appartenant au groupe '${group}' sont décrites ici.
-
-# ${group}DIR.${file:T}
+# installdirs
+#  A target creating target directories required by all groups.
 #
-#  Le dossier d'installation pour ${file}, relativement à
-#  ${DESTDIR}. Si ce dossier n'existe sa création est réclamée par la
-#  cible 'installdirs'.
-#
-#  La valeur implicite pour cette variable est ${group}DIR.
-
-# ${group}NAME.${file:T}
-#
-#  Le nom d'installation pour ${file}, si celui-ci est différent de
-#  celui de ${file}.
-#
-#  La valeur implicite pour cette variable est ${group}NAME. Remarquons
-#  que si ${group}NAME est définie, alors tous les fichiers membres du
-#  groupe ${group} sont installés au même emplacement; on ne
-#  positionne donc la variable ${group}NAME que lorsque ce groupe ne
-#  peut compter qu'un seul membre.
-
-# ${group}OWN.${file:T}
-#
-#  Le propriétaire de ${file:T}.
-#
-#  La valeur implicite pour cette variable est ${group}OWN.
-
-# ${group}GRP.${file:T}
-#
-#  Le groupe propriétaire de ${file:T}.
-#
-#  La valeur implicite pour cette variable est ${group}GRP.
-
-# ${group}MODE.${file:T}
-#
-#  Le mode d'accès de ${file:T}. Voir chmod(2).
-#
-#  La valeur implicite pour cette variable est ${group}MODE.
+# installfiles, installfiles-${group}
+#  A target requiring installation of files in ${group} or in all groups.
 
 
-#
-# Définir de nouveaux groupes
-#
-
-# Définir de nouveaux groupes est très simple, comme le montre le
-# petit exemple suivant.
-#
-# Pour créer un groupe SCRIPT, on reporte les déclarations suivantes
-# dans un fichier de directives:
-#
-#   FILESGROUPS+= SCRIPT
-#   SCRIPTDIR?= ${BINDIR}
-#   SCRIPTOWN?= ${BINOWN}
-#   SCRIPTGRP?= ${BINGRP}
-#   SCRIPTMODE?= ${BINMODE}
-#
-# On peut bien entendu initialiser à sa guise les paramètres
-# d'installation pour le groupe SCRIPT, le choix fait ici donne
-# cependant un exemple réaliste.
-
-
-### IMPLÉMENTATION
+### IMPLEMENTATION
 
 .if !target(__<bps.files.mk>__)
 __<bps.files.mk>__:
 
 .if !target(__<bps.init.mk>__)
-.error Module bps.files.mk require bps.init.mk for proper processing.
+.error bps.files.mk cannot be included directly.
 .endif
 
-FILESGROUPS+= FILES BIN DOC SHARE LIB
-
-.include "bps.own.mk"
+FILESGROUPS+=		FILES BIN DOC SHARE LIB MAN
 
 .if !target(buildfiles)
 .for group in ${FILESGROUPS}
@@ -164,13 +114,6 @@ buildfiles-${group:L}: ${${group}}
 do-build: buildfiles
 do-install: installdirs
 do-install: installfiles
-
-## PROCÉDURE D'INSTALLATION
-
-# La procédure d'installation est située avant le calcul des variables
-# ${_${group}_INSTALL.${file:T}} pour déterminer correctement la liste
-# des répertoires devant être crées, à partir des variables GROUPDIR
-# et GROUPDIR.specialisation.
 
 .if !target(installfiles)
 installfiles:
@@ -207,41 +150,93 @@ installdirs:
 installfiles: buildfiles
 
 
-## CALCUL DES PARAMÈTRES D'INSTALLATION
+#
+# Compute installation parameters
+#
 
 .for group in ${FILESGROUPS}
+
+${group}OWN?=		${SHAREOWN}
+${group}GRP?=		${SHAREGRP}
+${group}MODE?=		${SHAREMODE}
+${group}DIR?=		${SHAREDIR}
+
+# Macro to install a file with the correct permissions
+INSTALL_${group}?=	${INSTALL} -o ${${group}OWN}\
+			-g ${${group}GRP} -m ${${group}MODE}
+
+# Macro for copying entire directory tree with correct permissions
+.if ${UID} == 0
+COPYTREE_${group}=\
+	${SH} -c '(${FIND} -d $$1 $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
+		${CHOWN} -Rh ${${group}OWN}:${${group}GRP} $$2 &&\
+		${FIND} -d $$1 $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
+		${FIND} -d $$1 $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
+		-- COPYTREE_${group}
+.else
+COPYTREE_${group}=\
+	${SH} -c '(${FIND} -d $$0 $$2 | ${CPIO} -dumpl $$1 >/dev/null 2>&1) &&\
+		${FIND} -d $$0 $$2 -type d -exec ${CHMOD} 755 $$1/{} \; &&\
+		${FIND} -d $$0 $$2 -type f -exec ${CHMOD} ${${group}MODE} $$1/{} \;'\
+		-- COPYTREE_${group}
+.endif
+
 .if defined(${group}) && !empty(${group})
-${group}OWN?=	${SHAREOWN}
-${group}GRP?=	${SHAREGRP}
-${group}MODE?=	${SHAREMODE}
-${group}DIR?=	${SHAREDIR}
-# Nota: le module bsd.files.mk propose BINDIR comme répertoire
-#  implicite pour l'installation.
 .for file in ${${group}}
 .for record in DIR OWN GRP MODE
 ${group}${record}.${file:T}?=${${group}${record}}
 .endfor
+
 .if defined(${group}NAME)
 ${group}NAME.${file:T}?=${${group}NAME}
 .endif
-.if !defined(_${group}_INSTALL.${file:T})
-_${group}_INSTALL.${file:T}=${INSTALL}\
--o ${${group}OWN.${file:T}}\
--g ${${group}GRP.${file:T}}\
--m ${${group}MODE.${file:T}}\
-${.ALLSRC}
+
+.if !defined(INSTALL_${group}.${file:T})
+INSTALL_${group}.${file:T}=${INSTALL}\
+	-o ${${group}OWN.${file:T}}\
+	-g ${${group}GRP.${file:T}}\
+	-m ${${group}MODE.${file:T}}\
+	${.ALLSRC}
 .if defined(${group}NAME.${file:T})
-_${group}_INSTALL.${file:T}+=\
-${DESTDIR}${${group}DIR.${file:T}}/${${group}NAME.${file:T}}
+INSTALL_${group}.${file:T}+=\
+	${DESTDIR}${${group}DIR.${file:T}}/${${group}NAME.${file:T}}
 .else
-_${group}_INSTALL.${file:T}+=\
-${DESTDIR}${${group}DIR.${file:T}}
+INSTALL_${group}.${file:T}+=\
+	${DESTDIR}${${group}DIR.${file:T}}
 .endif
 .endif
+
 .endfor #file in ${${group}}
 .endif #defined(${group})&&!empty(${group})
 .endfor #group in ${FILESGROUPS}
 
 .endif #!target(__<bps.files.mk>__)
+
+#
+# Display debugging information
+#
+
+.if !target(display-files)
+display-files:
+	${INFO} 'Display file groups information'
+	${MESG} "DESTDIR=${DESTDIR}"
+	${MESG} "FILESGROUPS=${FILESGROUPS}"
+.for group in ${FILESGROUPS}
+.for displayvar in ${group} ${group}DIR ${group}OWN ${group}GRP ${group}MODE\
+	INSTALL_${group} COPYTREE_${group}
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.if defined(${group})&&!empty(${group})
+.for file in ${group}
+.for displayvar in ${group}DIR.${file:T} ${group}OWN.${file:T}\
+	${group}GRP.${file:T} ${group}MODE.${file:T} ${group}NAME.${file:T}
+.if defined(${displayvar})
+	${MESG} "${displayvar}=${${displayvar}}"
+.endif
+.endfor
+.endfor
+.endif
+.endfor
+.endif
 
 ### End of file `bps.files.mk'

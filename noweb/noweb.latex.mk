@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Sam  3 oct 2009 19:10:53 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -17,11 +16,13 @@
 
 .include "bps.init.mk"
 
+TEXMFDIR?= ${datarootdir}/texmf
+
 NOWEAVE_GROUP?= DOC
 NOWEAVE_AUTODEFS = tex
 NOWEAVE_LATEX_WRAPPER = delay
 
-NOWEAVE_LATEX_DEFS?= ${_BPS_TEXMFDIR}/tex/latex${_BPS_PACKAGEDIR}/nwlatex.tex
+NOWEAVE_LATEX_DEFS?= ${_BPS_DATAROOTDIR}/texmf/tex/latex${_BPS_PACKAGEDIR}/nwlatex.tex
 
 FORMAT = latex
 
@@ -36,11 +37,11 @@ FILESGROUPS+= TEXFILES
 TEXFILESOWN?= ${SHAREOWN}
 TEXFILESGRP?= ${SHAREGRP}
 TEXFILESMODE?= ${SHAREMODE}
-TEXFILESDIR?= ${PREFIX}/share/texmf/latex${PACKAGEDIR}
+TEXFILESDIR?= ${TEXMFDIR}/tex/latex${PACKAGEDIR}
 
 TEXFILES+= ${NOTANGLE}
 
-TEXDOCDIR?= ${PREFIX}/share/texmf/doc/latex${PACKAGEDIR}
+TEXDOCDIR?= ${TEXMFDIR}/doc/latex${PACKAGEDIR}
 
 #
 # Stylesheet

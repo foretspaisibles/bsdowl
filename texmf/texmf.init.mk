@@ -2,7 +2,6 @@
 
 # Author: Michael Grünewald
 # Date: Dim  4 oct 2009 11:59:26 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -18,7 +17,7 @@
 .if !target(__<texmf.init.mk>__)
 __<texmf.init.mk>__:
 
-TEXMFDIR?= ${PREFIX}/share/texmf
+TEXMFDIR?= ${datarootdir}/texmf
 WEB2CDIR?= ${TEXMFDIR}/web2c
 
 .endif #!target(__<texmf.init.mk>__)

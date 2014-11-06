@@ -4,7 +4,6 @@
 
 # Author: Michael Grünewald
 # Date: Sam 10 déc 2005 09:58:48 GMT
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
 
 
 # Global Variables:

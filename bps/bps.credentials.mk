@@ -18,8 +18,6 @@
 ### SYNOPSIS
 
 # USE_SWITCH_CREDENTIALS = yes
-#
-# .include "bps.credentials.mk"
 
 
 ### DESCRIPTION
@@ -47,6 +45,10 @@
 
 
 ### IMPLEMENTATION
+
+.if !target(__<bps.init.mk>__)
+.error bps.credentials.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.credentials.mk>__)
 __<bps.credentials.mk>__:
