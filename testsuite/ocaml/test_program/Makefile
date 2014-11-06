@@ -17,6 +17,7 @@
 TEST=	TestProgram
 TEST+=	TestProgramNative
 TEST+=	TestProgramDebug
+TEST+=	TestProgramProfile
 TEST+=	TestProgramMultiple
 
 # The test TestProgramNoObjDir must be at the end of the list, because
