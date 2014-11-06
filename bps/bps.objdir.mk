@@ -111,4 +111,13 @@ obj:
 
 .endif # !target(__<bps.objdir.mk>__)
 
+
+.if !target(display-objdir)
+display-objdir:
+	${INFO} 'Display objdir information'
+.for displayvar in .CURDIR .OBJDIR USE_OBJDIR MAKEOBJDIR MAKEOBJDIRPREFIX
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.endif
+
 ### End of file `bps.objdir.mk'
