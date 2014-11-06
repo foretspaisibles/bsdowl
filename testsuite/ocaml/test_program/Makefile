@@ -16,8 +16,15 @@
 
 TEST=	TestProgram
 TEST+=	TestProgramNative
-TEST+=	TestProgramNoObjDir
 TEST+=	TestProgramDebug
+TEST+=	TestProgramMultiple
+
+# The test TestProgramNoObjDir must be at the end of the list, because
+# it builds its objects in ${.CURDIR} and these objects would be found
+# by all tests following it.  Actually, this test should be built in
+# its own directory.
+
+TEST+=	TestProgramNoObjDir
 
 .include "test.mk"
 
