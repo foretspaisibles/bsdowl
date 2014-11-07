@@ -19,33 +19,36 @@
 
 # Manage package build configurations.
 
-### VARIABLES
-
-# CONFIGURATION [not set]
-#  The name of a configuration build file to be read.
+# Variables:
 #
-#   If CONFIGURATION is set, we try to read the file
-#   ${CONFIGURATION}.mk and issue an error if this cannot be done.
-#   If a file ${CONFIGURATION}_${ARCHITECTURE}.mk also exits, it is
-#   also processed.
+#  CONFIGURATION [not set]
+#    The name of a configuration build file to be read.
 #
-#   The files are to be read from the PACKAGELIBRARYCONFIGURATION
-#   directory.
+#    If CONFIGURATION is set, we try to read the file
+#    ${CONFIGURATION}.mk and issue an error if this cannot be done.
+#    If a file ${CONFIGURATION}_${ARCHITECTURE}.mk also exits, it is
+#    also processed.
 #
-# CONFIGURATIONDIR [/${CONFIGURATION} but only if CONFIGURATION is set]
-#  A path element used to build a directory name dependant of configuration.
+#    The files are to be read from the PACKAGELIBRARYCONFIGURATION
+#    directory.
 #
-# PACKAGELIBRARYCONFIGURATION [${SRCDIR}/Library/Configuration]
-#  A directory where configuration files are stored.
 #
-# ARCHITECTURE [not set]
-#  A string identifying the architecture for which the project is built.
+#  CONFIGURATIONDIR [/${CONFIGURATION} but only if CONFIGURATION is set]
+#    A path element used to build a directory name dependant of configuration.
 #
-#   If set, we try to read the file
-#   ${CONFIGURATION}_${ARCHITECTURE}.mk, which happens after
-#   processing the file ${CONFIGURATION}.mk.
 #
-#   It is not and error if the file does not exist.
+#  PACKAGELIBRARYCONFIGURATION [${SRCDIR}/Library/Configuration]
+#    A directory where configuration files are stored.
+#
+#
+#  ARCHITECTURE [not set]
+#    A string identifying the architecture for which the project is built.
+#
+#    If set, we try to read the file
+#    ${CONFIGURATION}_${ARCHITECTURE}.mk, which happens after
+#    processing the file ${CONFIGURATION}.mk.
+#
+#    It is not and error if the file does not exist.
 
 .if !target(__<bps.init.mk>__)
 .error bps.configuration.mk cannot be included directly.

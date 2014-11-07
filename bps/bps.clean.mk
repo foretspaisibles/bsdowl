@@ -27,57 +27,67 @@
 # .include "bps.clean.mk"
 
 
-### VARIABLES
+# Variables:
+#
+#  CLEANFILES [not set]
+#    The list of files that should be removed by a clean.
+#
+#
+#  CLEANDIRS [not set]
+#    The list of directories that should be removed by a clean.
+#
+#
+#  DISTCLEANFILES [not set]
+#    The list of files that should be removed by a distclean.
+#
+#
+#  DISTCLEANDIRS [not set]
+#    The list of directories that should be removed by a distclean.
+#
+#
+#  REALCLEANFILES [not set]
+#    The list of files that should be removed by a realclean.
+#
+#
+#  REALCLEANDIRS [not set]
+#    The list of directories that should be removed by a realclean.
+#
+#
+#  COOKIEPREFIX [.cookie.]
+#    A path element used to build cookie names.
+#
+#
+#  COOKIEFILES [not set]
+#    The list of cookie files that should be removed by a clean.
+#
+#
+#  HARDCOOKIEFILES [not set]
+#    The list of cookie files that should be removed by a distclean.
 
-# CLEANFILES [not set]
-#  The list of files that should be removed by a clean.
-#
-# CLEANDIRS [not set]
-#  The list of directories that should be removed by a clean.
-#
-# DISTCLEANFILES [not set]
-#  The list of files that should be removed by a distclean.
-#
-# DISTCLEANDIRS [not set]
-#  The list of directories that should be removed by a distclean.
-#
-# REALCLEANFILES [not set]
-#  The list of files that should be removed by a realclean.
-#
-# REALCLEANDIRS [not set]
-#  The list of directories that should be removed by a realclean.
-#
-# COOKIEPREFIX [.cookie.]
-#  A path element used to build cookie names.
-#
-# COOKIEFILES [not set]
-#  The list of cookie files that should be removed by a clean.
-#
-# HARDCOOKIEFILES [not set]
-#  The list of cookie files that should be removed by a distclean.
 
-
-### TARGETS
-
-# clean, do-clean, do-clean-cleanfiles, do-clean-cleandirs
-#  Targets related to a clean job.
+# Targets:
 #
-#   Targets pre-clean and post-clean are created by the
-#   bps.usertarget.mk file and might be used to hook the clean target.
-#   If new targets are to be added to the clean target, the
-#   recommanded way is to define a new target using the naming scheme
-#   do-clean-cleanthings and to add the corresponding dependency to
-#   do-clean.
+#  clean, do-clean, do-clean-cleanfiles, do-clean-cleandirs
+#    Targets related to a clean job.
 #
-# distclean, do-distclean, do-distclean-cleanfiles, do-distclean-cleandirs
-#  Targets related to a distclean job.
+#    Targets pre-clean and post-clean are created by the
+#    bps.usertarget.mk file and might be used to hook the clean target.
+#    If new targets are to be added to the clean target, the
+#    recommanded way is to define a new target using the naming scheme
+#    do-clean-cleanthings and to add the corresponding dependency to
+#    do-clean.
 #
-#   Similar comments as for clean apply.
 #
-# realclean, do-realclean, do-realclean-cleanfiles, do-realclean-cleandirs
-#  Targets related to a realclean job.
+#  distclean, do-distclean, do-distclean-cleanfiles, do-distclean-cleandirs
+#    Targets related to a distclean job.
 #
-#   Similar comments as for clean apply.
+#    Similar comments as for clean apply.
+#
+#
+#  realclean, do-realclean, do-realclean-cleanfiles, do-realclean-cleandirs
+#    Targets related to a realclean job.
+#
+#    Similar comments as for clean apply.
 
 
 .if !target(__<bps.clean.mk>__)

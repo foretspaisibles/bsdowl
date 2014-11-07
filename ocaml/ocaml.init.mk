@@ -1,4 +1,4 @@
-### ocaml.init.mk -- Common initialisation for OCaml projects
+### ocaml.init.mk -- Common initialisation for OCaml modules
 
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:59:45 CEST 2007

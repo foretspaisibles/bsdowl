@@ -25,95 +25,123 @@
 # This file defines variables whose values were set at configuration
 # time.
 
-### VARIABLES
 
-# _BPS_VERSION [@version@]
-#  The installed version of BPS.
+# Variables:
 #
-# _BPS_PREFIX [@prefix@]
-#  Installation prefix of the bsdowl package.
+#  _BPS_VERSION [@version@]
+#    The installed version of BPS.
 #
-# _BPS_EXEC_PREFIX [@exec_prefix@]
-#  Installation prefix for binaries of the bsdowl package.
 #
-# _BPS_BINDIR [@bindir@]
-#  Directory for bsdowl executable programs that users can run.
+#  _BPS_PREFIX [@prefix@]
+#    Installation prefix of the bsdowl package.
 #
-# _BPS_SBINDIR [@sbindir@]
-#  Directory for bsdowl executable programs used by sysadmins.
 #
-# _BPS_LIBEXECDIR [@libexecdir@]
-#  Directory for bsdowl executable programs to be run by other programs.
+#  _BPS_EXEC_PREFIX [@exec_prefix@]
+#    Installation prefix for binaries of the bsdowl package.
 #
-# _BPS_DATAROOTDIR [@datarootdir@]
-#  Root for read-only architecture-independent bsdowl data files.
 #
-# _BPS_DATADIR [@datadir@]
-#  Directory for read-only architecture-independent bsdowl data files.
+#  _BPS_BINDIR [@bindir@]
+#    Directory for bsdowl executable programs that users can run.
 #
-# _BPS_SYSCONFDIR [@sysconfdir@]
-#  Directory for read-only bsdowl data files that pertain to a single host.
 #
-# _BPS_SHAREDSTATEDIR [@sharedstatedir@]
-#  Directory for runtime architecture-independent bsdowl data files.
+#  _BPS_SBINDIR [@sbindir@]
+#    Directory for bsdowl executable programs used by sysadmins.
 #
-# _BPS_LOCALSTATEDIR [@localstatedir@]
-#  Directory for runtime host-specific bsdowl data files.
 #
-# _BPS_RUNSTATEDIR [@runstatedir@]
-#  Directory for volatile host-specific bsdowl data files.
+#  _BPS_LIBEXECDIR [@libexecdir@]
+#    Directory for bsdowl executable programs to be run by other programs.
 #
-# _BPS_INCLUDEDIR [@includedir@]
-#  Directory for bsdowl header files to be included by user.
 #
-# _BPS_DOCDIR [@docdir@]
-#  Directory for documentation files (other than Info) for bsdowl.
+#  _BPS_DATAROOTDIR [@datarootdir@]
+#    Root for read-only architecture-independent bsdowl data files.
 #
-# _BPS_INFODIR [@infodir@]
-#  Directory for the Info files for bsdowl.
 #
-# _BPS_LIBDIR [@libdir@]
-#  Directory for bsdowl object files and libraries of object code.
+#  _BPS_DATADIR [@datadir@]
+#    Directory for read-only architecture-independent bsdowl data files.
 #
-# _BPS_LOCALEDIR [@localedir@]
-#  Directory for locale-specific message catalogs for bsdowl.
 #
-# _BPS_MANDIR [@mandir@]
-#  Top-level directory for installing the man pages for bsdowl.
+#  _BPS_SYSCONFDIR [@sysconfdir@]
+#    Directory for read-only bsdowl data files that pertain to a single host.
 #
-# _BPS_LN_S [@LN_S@]
-#  The preferred command to do or emulate a soft link.
 #
-# _BPS_MKDIR_P [@MKDIR_P@]
-#  The preferred command to make a directory and maybe its parents.
+#  _BPS_SHAREDSTATEDIR [@sharedstatedir@]
+#    Directory for runtime architecture-independent bsdowl data files.
 #
-# _BPS_INSTALL [@INSTALL@]
-#  The preferred command to install files.
 #
-# _BPS_AWK [@AWK@]
-#  The preferred awk program.
+#  _BPS_LOCALSTATEDIR [@localstatedir@]
+#    Directory for runtime host-specific bsdowl data files.
 #
-# _BPS_GREP [@GREP@]
-#  The preferred grep program.
 #
-# _BPS_SED [@SED@]
-#  The preferred sed program.
+#  _BPS_RUNSTATEDIR [@runstatedir@]
+#    Directory for volatile host-specific bsdowl data files.
 #
-# _BPS_ID [@ID@]
-#  A id command that handles -g, -u and -n
 #
-# _BPS_SYSTEMOWN [@SYSTEMOWN@]
-#  The owner of system files.
+#  _BPS_INCLUDEDIR [@includedir@]
+#    Directory for bsdowl header files to be included by user.
 #
-# _BPS_SYSTEMGRP [@SYSTEMGRP@]
-#  The group of system files.
 #
-# _BPS_COMPRESS [@COMPRESS@]
-#  The list of available compression methods.
+#  _BPS_DOCDIR [@docdir@]
+#    Directory for documentation files (other than Info) for bsdowl.
+#
+#
+#  _BPS_INFODIR [@infodir@]
+#    Directory for the Info files for bsdowl.
+#
+#
+#  _BPS_LIBDIR [@libdir@]
+#    Directory for bsdowl object files and libraries of object code.
+#
+#
+#  _BPS_LOCALEDIR [@localedir@]
+#    Directory for locale-specific message catalogs for bsdowl.
+#
+#
+#  _BPS_MANDIR [@mandir@]
+#    Top-level directory for installing the man pages for bsdowl.
+#
+#
+#  _BPS_LN_S [@LN_S@]
+#    The preferred command to do or emulate a soft link.
+#
+#
+#  _BPS_MKDIR_P [@MKDIR_P@]
+#    The preferred command to make a directory and maybe its parents.
+#
+#
+#  _BPS_INSTALL [@INSTALL@]
+#    The preferred command to install files.
+#
+#
+#  _BPS_AWK [@AWK@]
+#    The preferred awk program.
+#
+#
+#  _BPS_GREP [@GREP@]
+#    The preferred grep program.
+#
+#
+#  _BPS_SED [@SED@]
+#    The preferred sed program.
+#
+#
+#  _BPS_ID [@ID@]
+#    A id command that handles -g, -u and -n
+#
+#
+#  _BPS_SYSTEMOWN [@SYSTEMOWN@]
+#    The owner of system files.
+#
+#
+#  _BPS_SYSTEMGRP [@SYSTEMGRP@]
+#    The group of system files.
+#
+#
+#  _BPS_COMPRESS [@COMPRESS@]
+#    The list of available compression methods.
 
 
-### TARGETS
-
+# Targets:
+#
 # display-bpsconfig
 #  Display values of variables defined in this module.
 

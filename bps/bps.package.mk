@@ -20,43 +20,49 @@
 # This file manages variables carrying package information.
 
 
-### VARIABLES
-
-# SRCDIR [${.CURDIR:T}, inherited]
-#  The root of the source-tree of our package.
+# Variables:
 #
-# PACKAGE [last component of SRCDIR, inherited]
-#  The name of our package.
+#  SRCDIR [${.CURDIR:T}, inherited]
+#    The root of the source-tree of our package.
 #
-#   This name should be a valid Unix identifier, without spaces. If
-#   it is not set, the last component of SRCDIR is used for this.
 #
-# PACKAGEDIR [/${PACKAGE}, inherited]
-#  A path element which can be used to build paths specific to our package.
+#  PACKAGE [last component of SRCDIR, inherited]
+#    The name of our package.
 #
-# VERSION [0.1.0-current, inherited]
-#  The version of our package.
+#    This name should be a valid Unix identifier, without spaces. If
+#    it is not set, the last component of SRCDIR is used for this.
 #
-# OFFICER [${EMAIL} or ${USER}@${HOST}, inherited]
-#  The release engineering officer.
 #
-#   This identifies the GPG key used to sign tarballs and other
-#   distributed files.
+#  PACKAGEDIR [/${PACKAGE}, inherited]
+#    A path element which can be used to build paths specific to our package.
 #
-# MODULE [not set]
-#  The list of modules belonging to the package.
 #
-#   The list consists of pairs `module:path` where `module` is a BSD Owl
-#   module like `ocaml.prog` or `latex.doc` or `c.lib` and path is the
-#   path to the directory corresponding to the module with respect to
-#   `${SRCDIR}`, the root of our source tree.
+#  VERSION [0.1.0-current, inherited]
+#    The version of our package.
 #
-# EXTERNAL [not set]
-#  The list of external dependencies of the package.
 #
-#  The list consists of pair `consumer:resource` where `consumer` is a
-#  keyword identifying the type of the external resource and `resource`
-#  is its symbolic name.
+#  OFFICER [${EMAIL} or ${USER}@${HOST}, inherited]
+#    The release engineering officer.
+#
+#    This identifies the GPG key used to sign tarballs and other
+#    distributed files.
+#
+#
+#  MODULE [not set]
+#    The list of modules belonging to the package.
+#
+#    The list consists of pairs `module:path` where `module` is a BSD Owl
+#    module like `ocaml.prog` or `latex.doc` or `c.lib` and path is the
+#    path to the directory corresponding to the module with respect to
+#    `${SRCDIR}`, the root of our source tree.
+#
+#
+#  EXTERNAL [not set]
+#    The list of external dependencies of the package.
+#
+#   The list consists of pair `consumer:resource` where `consumer` is a
+#   keyword identifying the type of the external resource and `resource`
+#   is its symbolic name.
 
 .if !target(__<bps.init.mk>__)
 .error bps.package.mk cannot be included directly.

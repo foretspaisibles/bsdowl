@@ -20,133 +20,169 @@
 # .include "bps.init.mk"
 
 
-### VARIABLES
-
-# MAKEINITRC [Makefile.inc]
-#  The name of a file sitting in SRCDIR which might be included
+# Variables:
 #
-# _BPS_PACKAGEDIR [/bsdowl]
-#  A path element identifying our package.
+#  MAKEINITRC [Makefile.inc]
+#    The name of a file sitting in SRCDIR which might be included
 #
-# prefix, exec_prefix, datarootdir, bindir, sbindir, libexecdir,
-# datadir, sysconfdir, sharedstatedir, localstatedir, runstatedir
-# includedir, docdir, htmdir, dvidir, pdfdir, psdir, djvudir,
-# infodir, libdir, localedir, mandir
-#  Directory variables.
 #
-#   All these directory variables receive default values based on the
-#   installation prefix used by bsdowl.  These variables can however
-#   easily be set in ${SRCDIR}/Makefile.inc by your configuration
-#   procedure.
+#  _BPS_PACKAGEDIR [/bsdowl]
+#    A path element identifying our package.
 #
-# DESTDIR [not set]
-#   A directory to prepend to PREFIX, only when copying files.
 #
-# PREFIX [${prefix}]
-#  The installation prefix of the package.
+#  prefix, exec_prefix, datarootdir, bindir, sbindir, libexecdir,
+#  datadir, sysconfdir, sharedstatedir, localstatedir, runstatedir
+#  includedir, docdir, htmdir, dvidir, pdfdir, psdir, djvudir,
+#  infodir, libdir, localedir, mandir
+#    Directory variables.
 #
-#   Ususally `/usr /usr/local`, `/opt/local` or `/home/joeuser`.  It
-#   must be set at configuration time.
+#    All these directory variables receive default values based on the
+#    installation prefix used by bsdowl.  These variables can however
+#    easily be set in ${SRCDIR}/Makefile.inc by your configuration
+#    procedure.
 #
-# ID [configured value]
-#  The command used to query the user database.
 #
-# UID [$(id -u)]
-#  The uid of the current user.
+#  DESTDIR [not set]
+#    A directory to prepend to PREFIX, only when copying files.
 #
-# USER [$(id -n -u)]
-#  The symbolic name of the current user.
 #
-# GROUP [$(id -n -g)]
-#  The symbolic group of the current user.
+#  PREFIX [${prefix}]
+#    The installation prefix of the package.
 #
-# ENVTOOL [env]
-#  The command used to run a program in a custom environment.
+#    Ususally `/usr /usr/local`, `/opt/local` or `/home/joeuser`.  It
+#    must be set at configuration time.
 #
-# CP [cp]
-#  The command used to copy files.
 #
-# RM [rm]
-#  The command used to remove files.
+#  ID [configured value]
+#    The command used to query the user database.
 #
-# MV [mv]
-#  The command used to rename files.
 #
-# LN_S [${BPS_LN_S}]
-#  The command used to create symbolic links.
+#  UID [$(id -u)]
+#    The uid of the current user.
 #
-# MKDIR [mkdir]
-#  The command used to create directories.
 #
-# MKDIR_P [${_BPS_MKDIR_P}]
-#  The command used to create paths.
+#  USER [$(id -n -u)]
+#    The symbolic name of the current user.
 #
-# TAR [tar]
-#  The tape archiver.
 #
-# INSTALL [${_BPS_INSTALL}]
-#  The BSD-install-like command used to install files.
+#  GROUP [$(id -n -g)]
+#    The symbolic group of the current user.
 #
-# INSTALL_DIR [${INSTALL} -d]
-#  The variant of install used to create directories.
 #
-# AWK [${_BPS_AWK}]
-#  An awk programm.
+#  ENVTOOL [env]
+#    The command used to run a program in a custom environment.
 #
-# GREP [${_BPS_GREP}]
-#  A grep programm.
 #
-# SED [${_BPS_SED}]
-#  A sed programm.
+#  CP [cp]
+#    The command used to copy files.
 #
-# SED_INPLACE [${SED} -i .orig]
-#  The sed command used for inplace edition.
 #
-# TOUCH [touch]
-#  A touch command.
+#  RM [rm]
+#    The command used to remove files.
 #
-# ECHO [echo]
-#  An echo program.
 #
-# INFO [@echo '===>']
-#  The command used to output information messages.
+#  MV [mv]
+#    The command used to rename files.
 #
-# WARN [@>&2 echo 'Warning:']
-#  The command used to output warning messages.
 #
-# FAIL [@>&2 echo 'Failure:']
-#  The command used to output failure messages.
+#  LN_S [${BPS_LN_S}]
+#    The command used to create symbolic links.
 #
-# MESG [@echo]
-#  The command used to display random messages.
 #
-# NOP [@: do nada]
-#  A command that does nothinf, a no-op.
+#  MKDIR [mkdir]
+#    The command used to create directories.
 #
-# SU [su]
-#  The command used to gain administrator credentials.
 #
-# SH [/bin/sh]
-#  The path to the bourne shell.
+#  MKDIR_P [${_BPS_MKDIR_P}]
+#    The command used to create paths.
 #
-# CHOWN [chown]
-#  The command to change ownerhsip of files.
 #
-# CHMOD [chmod]
-#  The command to change access mode of files.
+#  TAR [tar]
+#    The tape archiver.
 #
-# FIND [find]
-#  The command used to find files matching criterias.
 #
-# CPIO [cpio]
-#  The command used to copy file trees.
+#  INSTALL [${_BPS_INSTALL}]
+#    The BSD-install-like command used to install files.
 #
-# _MAKE_USERTARGET [configure obj depend build doc all
-#  install test clean distclean realclean benchmark]
-#  The list of targets that are defined by every module.
 #
-# _MAKE_ALLSUBTARGET [configure depend build doc]
-#  The list of subtargets of the all target.
+#  INSTALL_DIR [${INSTALL} -d]
+#    The variant of install used to create directories.
+#
+#
+#  AWK [${_BPS_AWK}]
+#    An awk programm.
+#
+#
+#  GREP [${_BPS_GREP}]
+#    A grep programm.
+#
+#
+#  SED [${_BPS_SED}]
+#    A sed programm.
+#
+#
+#  SED_INPLACE [${SED} -i .orig]
+#    The sed command used for inplace edition.
+#
+#
+#  TOUCH [touch]
+#    A touch command.
+#
+#
+#  ECHO [echo]
+#    An echo program.
+#
+#
+#  INFO [@echo '===>']
+#    The command used to output information messages.
+#
+#
+#  WARN [@>&2 echo 'Warning:']
+#    The command used to output warning messages.
+#
+#
+#  FAIL [@>&2 echo 'Failure:']
+#    The command used to output failure messages.
+#
+#
+#  MESG [@echo]
+#    The command used to display random messages.
+#
+#
+#  NOP [@: do nada]
+#    A command that does nothinf, a no-op.
+#
+#
+#  SU [su]
+#    The command used to gain administrator credentials.
+#
+#
+#  SH [/bin/sh]
+#    The path to the bourne shell.
+#
+#  CHOWN [chown]
+#    The command to change ownerhsip of files.
+#
+#
+#  CHMOD [chmod]
+#    The command to change access mode of files.
+#
+#
+#  FIND [find]
+#    The command used to find files matching criterias.
+#
+#
+#  CPIO [cpio]
+#    The command used to copy file trees.
+#
+#
+#  _MAKE_USERTARGET [configure obj depend build doc all
+#    install test clean distclean realclean benchmark]
+#    The list of targets that are defined by every module.
+#
+#
+#  _MAKE_ALLSUBTARGET [configure depend build doc]
+#    The list of subtargets of the all target.
 
 
 ### IMPLEMENTATION

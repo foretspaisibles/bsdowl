@@ -1,4 +1,4 @@
-### ocaml.build.mk -- Creating command lines for build
+### ocaml.build.mk -- Build rules for OCaml modules
 
 # Author: Michael Grünewald
 # Date: Tue Apr  5 10:31:04 CEST 2005

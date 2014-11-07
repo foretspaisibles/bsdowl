@@ -1,4 +1,4 @@
-### ocaml.depend.mk -- Dependency generator
+### ocaml.depend.mk -- Dependency generator for OCaml modules
 
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:40:59 CEST 2007

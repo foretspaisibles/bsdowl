@@ -26,15 +26,17 @@
 # build architecture and configuration.
 
 
-### VARIABLES
+# Variables:
+#
+#  MAKEOBJDIRPREFIX [not set]
+#  MAKEOBJDIR [not set]
+#  USE_OBJDIR [set by initialisation strategy]
 
-# MAKEOBJDIRPREFIX [not set]
-# MAKEOBJDIR [not set]
-# USE_OBJDIR
-
-### TARGETS
-
-# do-obj
+# Targets:
+#
+#  obj, do-obj
+#  clean-objdir
+#  display-objdir
 
 ### IMPLEMENTATION
 

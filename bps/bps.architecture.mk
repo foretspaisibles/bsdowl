@@ -22,23 +22,26 @@
 # should define ARCHITECTURE_AVAILABLE the list of supported
 # architectures and set ARCHITECTURE to one element of this list.
 
-## VARIABLES
-
-# ARCHITECTURE [not set]
-#  A string identifying the architecture for which the project is built.
+# Variables:
 #
-#   If this variable is set, we try to read the file
-#   ${PACKAGELIBRARYARCHITECTURE}/${ARCHITECTURE}.mk and issue an error
-#   if the file cannot be read.
+#  ARCHITECTURE [not set]
+#    A string identifying the architecture for which the project is built.
 #
-# ARCHITECTUREDIR [/${ARCHITECTURE}, only if ARCHITECTURE is set]
-#  A path element used to build a directory name dependant of architecture.
+#    If this variable is set, we try to read the file
+#    ${PACKAGELIBRARYARCHITECTURE}/${ARCHITECTURE}.mk and issue an error
+#    if the file cannot be read.
 #
-# ARCHITECTURE_AVAILABLE [${ARCHITECTURE}, only if ARCHITECTURE is set]
-#  The list of available architectures.
 #
-# PACKAGELIBRARYARCHITECTURE [${SRCDIR}/Library/Configuration]
-#  A directory where architecture configuration files are stored.
+#  ARCHITECTUREDIR [/${ARCHITECTURE}, only if ARCHITECTURE is set]
+#    A path element used to build a directory name dependant of architecture.
+#
+#
+#  ARCHITECTURE_AVAILABLE [${ARCHITECTURE}, only if ARCHITECTURE is set]
+#    The list of available architectures.
+#
+#
+#  PACKAGELIBRARYARCHITECTURE [${SRCDIR}/Library/Configuration]
+#    A directory where architecture configuration files are stored.
 
 .if !target(__<bps.init.mk>__)
 .error bps.architecture.mk cannot be included directly.

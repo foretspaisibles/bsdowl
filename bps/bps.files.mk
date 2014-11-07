@@ -41,55 +41,66 @@
 # variable in account.
 
 
-### VARIABLES
+# Variables:
+#
+#  FILESGROUPS [FILES BIN LIB DOC SHARE MAN]
+#    The list of files groups.
+#
+#
+#  ${group}DIR
+#    The directory, relative to ${DESTDIR}, for items of ${group}.
+#
+#
+#  ${group}MODE
+#    The access mode for items of ${group}.
+#
+#
+#  ${group}OWN
+#    The owner for items of ${group}.
+#
+#
+#  ${group}GRP
+#    The group for items of ${group}.
+#
+#
+#  ${group}DIR.${file:T} [${${group}DIR}]
+#    The installation directory for ${file}, relative to ${DESTDIR}.
+#
+#
+#  ${group}NAME.${file:T} [not set]
+#    The name to use when installing ${file}.
+#
+#
+#  ${group}OWN.${file:T} [${${group}OWN}]
+#    The owner to use when installing ${file}.
+#
+#
+#  ${group}GRP.${file:T} [${${group}GRP}]
+#    The group to use when installing ${file}.
+#
+#
+#  ${group}MODE.${file:T} [${${group}MODE}]
+#    The access mode to use when installing ${file}.
+#
+#
+#  COPYTREE_${group} [oneliner-script]
+#    A command used to copy file trees.
+#
+#    A typical use is
+#      cd ${SRCDIR}/doc && ${COPYTREE_SHARE} . ${DOCDIR} "! -name *\.orig"
+#
+#    The first argument is a path, usually '.' where to call find on,
+#    the second argument is the destination directory and the last
+#    argument is optional and is a find(1) predicate.
 
-# FILESGROUPS [FILES BIN LIB DOC SHARE MAN]
-#  The list of files groups.
-#
-# ${group}DIR
-#  The directory, relative to ${DESTDIR}, for items of ${group}.
-#
-# ${group}MODE
-#  The access mode for items of ${group}.
-#
-# ${group}OWN
-#  The owner for items of ${group}.
-#
-# ${group}GRP
-#  The group for items of ${group}.
 
-# ${group}DIR.${file:T} [${${group}DIR}]
-#  The installation directory for ${file}, relative to ${DESTDIR}.
+# Targets:
 #
-# ${group}NAME.${file:T} [not set]
-#  The name to use when installing ${file}.
+#  installdirs
+#    A target creating target directories required by all groups.
 #
-# ${group}OWN.${file:T} [${${group}OWN}]
-#  The owner to use when installing ${file}.
-#
-# ${group}GRP.${file:T} [${${group}GRP}]
-#  The group to use when installing ${file}.
-#
-# ${group}MODE.${file:T} [${${group}MODE}]
-#  The access mode to use when installing ${file}.
-#
-# COPYTREE_${group} [oneliner-script]
-#  A command used to copy file trees.
-#
-#   A typical use is
-#     cd ${SRCDIR}/doc && ${COPYTREE_SHARE} . ${DOCDIR} "! -name *\.orig"
-#
-#   The first argument is a path, usually '.' where to call find on,
-#   the second argument is the destination directory and the last
-#   argument is optional and is a find(1) predicate.
-
-### TARGETS
-
-# installdirs
-#  A target creating target directories required by all groups.
-#
-# installfiles, installfiles-${group}
-#  A target requiring installation of files in ${group} or in all groups.
+#  installfiles, installfiles-${group}
+#    A target requiring installation of files in ${group} or in all groups.
 
 
 ### IMPLEMENTATION
