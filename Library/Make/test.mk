@@ -24,11 +24,20 @@ distclean: clean
 realclean: distclean
 
 MAKETEST=		${ENVTOOL}
+MAKETEST+=		-u SRCDIR
+MAKETEST+=		-u PACKAGE
+MAKETEST+=		-u PACKAGEDIR
+MAKETEST+=		-u OFFICER
+MAKETEST+=		-u VERSION
+MAKETEST+=		-u MODULE
+MAKETEST+=		-u EXTERNAL
 MAKETEST+=		DESTDIR='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
 MAKETEST+=		PREFIX='/usr/local'
 MAKETEST+=		USE_SWITCH_CREDENTIALS='no'
 MAKETEST+=		MAKEOBJDIRPREFIX='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
 MAKETEST+=		PACKAGELIBRARYCONFIGURATION='${SRCDIR}/testsuite/Library/Configuration'
+MAKETEST+=		BSDOWLSRCDIR='${SRCDIR}'
+MAKETEST+=		TESTDIR='${.CURDIR:C,${SRCDIR}/testsuite,,}/${.ALLSRC:M*.mk:C/.mk$//}'
 MAKETEST+=		${MAKE}
 
 .for test in ${TEST}
@@ -37,18 +46,18 @@ do-test: do-test-${test}
 do-test-${test}: ${test}.done
 ${test}.done: ${test}.mk
 	${INFO} ${_SUBDIR_PREFIX}${test} '(test)'
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} clean
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} obj
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} depend
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} build
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} install
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} test
+	${MAKETEST} -f ${.ALLSRC:M*.mk} clean
+	${MAKETEST} -f ${.ALLSRC:M*.mk} obj
+	${MAKETEST} -f ${.ALLSRC:M*.mk} depend
+	${MAKETEST} -f ${.ALLSRC:M*.mk} build
+	${MAKETEST} -f ${.ALLSRC:M*.mk} install
+	${MAKETEST} -f ${.ALLSRC:M*.mk} test
 	touch ${test}.done
 do-clean: do-clean-${test}
 do-clean-${test}: ${test}.mk .PHONY
 	${INFO} ${_SUBDIR_PREFIX}${test} '(clean)'
 	@${RM} -f ${test}.done
-	${MAKETEST} TESTDIR="/${test}" -f ${.ALLSRC:M*.mk} realclean
+	${MAKETEST} -f ${.ALLSRC:M*.mk} realclean
 .else
 .error ${test}: Test is not defined.
 .endif
