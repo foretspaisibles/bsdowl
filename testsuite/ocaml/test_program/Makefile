@@ -29,4 +29,4 @@ TEST+=	TestProgramNoObjDir
 
 .include "test.mk"
 
-### End of file `TestProgram.mk'
+### End of file `Makefile'
