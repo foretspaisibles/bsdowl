@@ -81,6 +81,15 @@
 #
 #  WITH_PROFILE [no]
 #   Build with profiling information
+#
+#
+#  USES [not set]
+#    Supported options are debug and profile
+#
+#
+#  MODULE [not set]
+#    The list of modules in our software package
+
 
 THISMODULE=		langc.prog
 
@@ -92,6 +101,7 @@ PROGRAM?=		${PROG}
 .error The langc.prog.mk module expects you to set the PROGRAM or the PROG variable to a sensible value.
 .endif
 
+PRODUCT=		${PROGRAM}
 _PACKAGE_CANDIDATE=	${PROGRAM}
 
 .include "langc.init.mk"

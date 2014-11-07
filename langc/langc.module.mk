@@ -15,9 +15,9 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
-
 ### DESCRIPTION
+
+# Take into account other modules of the package.
 
 .if !defined(THISMODULE)
 .error langc.module.mk cannot be included directly.
@@ -32,8 +32,11 @@ DIRS+=			${SRCDIR}/${module_path}
 
 .for module_path in ${_MODULE_langc.lib_ARGS}
 DIRS+=			${SRCDIR}/${module_path}
-LIBS+=			UnknownLibrary(${module_path})
 .endfor
+
+.if ${THISMODULE} == langc.prog
+LIBS+=			${PRODUCT_langc.lib}
+.endif
 
 .endif # !target(__<langc.module.mk>__)
 
