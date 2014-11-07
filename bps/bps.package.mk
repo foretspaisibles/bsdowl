@@ -73,6 +73,13 @@ __<bps.package.mk>__:
 
 SRCDIR:=		${.CURDIR}
 
+
+.if !defined(PACKAGE)&&defined(_PACKAGE_CANDIDATE)
+.if ${_PACKAGE_CANDIDATE:[#]} == 1
+PACKAGE=		${_PACKAGE_CANDIDATE}
+.endif
+.endif
+
 .if !defined(PACKAGE)
 PACKAGE=		${SRCDIR:T}
 .endif
