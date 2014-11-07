@@ -22,7 +22,7 @@
 
 # Variables:
 #
-#  SRCDIR [${.CURDIR:T}, inherited]
+#  SRCDIR [${.CURDIR}, inherited]
 #    The root of the source-tree of our package.
 #
 #
