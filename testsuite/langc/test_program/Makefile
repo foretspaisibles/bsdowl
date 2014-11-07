@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### Makefile -- Test features of module langc.prog
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Fri Nov  7 10:15:10 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TEST=	TestProgram
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
-
-.include "subdir.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

@@ -22,8 +22,12 @@
 
 # Variables:
 #
-#  SRCDIR [${.CURDIR:T}, inherited]
+#  SRCDIR [${.CURDIR}, inherited]
 #    The root of the source-tree of our package.
+#
+#
+#  WRKDIR [${.OBJDIR}, inherited]
+#    The roor of the objdir-tree of our package.
 #
 #
 #  PACKAGE [last component of SRCDIR, inherited]
@@ -72,6 +76,14 @@
 __<bps.package.mk>__:
 
 SRCDIR:=		${.CURDIR}
+WRKDIR:=		${.OBJDIR}
+
+
+.if !defined(PACKAGE)&&defined(_PACKAGE_CANDIDATE)
+.if ${_PACKAGE_CANDIDATE:[#]} == 1
+PACKAGE=		${_PACKAGE_CANDIDATE}
+.endif
+.endif
 
 .if !defined(PACKAGE)
 PACKAGE=		${SRCDIR:T}
@@ -93,6 +105,7 @@ MODULE?=
 EXTERNAL?=
 
 .export SRCDIR
+.export WRKDIR
 .export PACKAGE
 .export PACKAGEDIR
 .export VERSION

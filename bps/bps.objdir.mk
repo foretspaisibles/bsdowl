@@ -101,7 +101,7 @@ do-obj:
 .endif
 
 .if ${.OBJDIR} != ${.CURDIR}
-distclean: cleanobjdir
+do-distclean: cleanobjdir
 cleanobjdir:
 	@${RM} -Rf ${.OBJDIR}
 .endif

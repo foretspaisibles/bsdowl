@@ -91,7 +91,7 @@ __<ocaml.depend.mk>__:
 	ocamldep -native ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
 .endif
 
-REALCLEANFILES+= .depend
+DISTCLEANFILES+=	.depend
 
 .if target(do-depend)
 do-depend: .depend

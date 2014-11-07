@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### langc.lib.mk -- Prepare C libraries
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Fri Nov  7 09:04:57 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,9 +15,13 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
+### SYNOPSIS
 
-.include "subdir.mk"
+### DESCRIPTION
 
-### End of file `Makefile'
+.if !target(__<langc.lib.mk>__)
+__<langc.lib.mk>__:
+
+.endif # !target(__<langc.lib.mk>__)
+
+### End of file `langc.lib.mk'

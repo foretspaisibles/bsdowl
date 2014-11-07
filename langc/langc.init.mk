@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### langc.init.mk -- Common initialisation for C modules
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Fri Nov  7 09:06:28 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,9 +15,22 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
+### SYNOPSIS
 
-.include "subdir.mk"
+### DESCRIPTION
 
-### End of file `Makefile'
+.if !defined(THISMODULE)
+.error langc.init.mk cannot be included directly.
+.endif
+
+.if !target(__<langc.init.mk>__)
+__<langc.init.mk>__:
+
+.include "bps.init.mk"
+.include "langc.uses.mk"
+.include "langc.module.mk"
+.include "langc.external.mk"
+
+.endif # !target(__<langc.init.mk>__)
+
+### End of file `langc.init.mk'

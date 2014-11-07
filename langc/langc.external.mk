@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### langc.external.mk -- Use external resources
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Fri Nov  7 14:58:35 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,9 +15,17 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
+### SYNOPSIS
 
-.include "subdir.mk"
+### DESCRIPTION
 
-### End of file `Makefile'
+.if !defined(THISMODULE)
+.error langc.external.mk cannot be included directly.
+.endif
+
+.if !target(__<langc.external.mk>__)
+__<langc.external.mk>__:
+
+.endif # !target(__<langc.external.mk>__)
+
+### End of file `langc.external.mk'

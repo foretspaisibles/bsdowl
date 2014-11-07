@@ -17,6 +17,7 @@
 SUBDIR+=		bps
 SUBDIR+=		ocaml
 SUBDIR+=		texmf
+SUBDIR+=		langc
 SUBDIR+=		noweb
 SUBDIR+=		misc
 SUBDIR+=		www
