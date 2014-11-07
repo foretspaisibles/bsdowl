@@ -17,6 +17,9 @@
 FILES+=	bps.init.mk
 FILES+=	bps.bpsconfig.mk
 FILES+= bps.package.mk
+FILES+= bps.uses.mk
+FILES+= bps.module.mk
+FILES+= bps.external.mk
 FILES+= bps.architecture.mk
 FILES+= bps.configuration.mk
 FILES+= bps.credentials.mk
