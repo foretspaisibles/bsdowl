@@ -29,7 +29,7 @@
 # and do not want ship these modules as a library, you can use the
 # following:
 #
-# PROG=		client server
+# PROGRAM=	client server
 # SRCS=		protocol.ml
 # LIBS=		unix
 #
@@ -51,42 +51,42 @@
 #
 #
 #  PROGRAM [not set]
-#   Name of the program
+#    Name of the program
 #
-#   This can actually be a list of programs.  In this case the SRCS
-#   variables holds source files that will be compiled and linked to
-#   all programs and for each `program` the variable `SRCS.program`
-#   should specify files that will only be compiled and linked in
-#   `program`.
+#    This can actually be a list of programs.  In this case the SRCS
+#    variables holds source files that will be compiled and linked to
+#    all programs and for each `program` the variable `SRCS.program`
+#    should specify files that will only be compiled and linked in
+#    `program`.
 #
-#   If PACKAGE is not defined, it will be guessed from PROGRAM if this
-#   is a single word or from the last component of SRCDIR otherwise.
+#    If PACKAGE is not defined, it will be guessed from PROGRAM if this
+#    is a single word or from the last component of SRCDIR otherwise.
 #
 #
 #  SRCS
-#   Files that must be compiled and linked in the program
+#    Files that must be compiled and linked in the program
 #
-#   It can list implementation files, interface files, lexer and
-#   parser definitions. It is not necessary to specify interface file
-#   if an implementation is present.
+#    It can list implementation files, interface files, lexer and
+#    parser definitions. It is not necessary to specify interface file
+#    if an implementation is present.
 #
 #
 #  LIBS
-#   Libraries that must be linked in the program
+#    Libraries that must be linked in the program
 #
 #
 #  DIRS
-#   Directories that are searched for libraries or compiled modules
+#    Directories that are searched for libraries or compiled modules
 #
 #
 #  PKGS
-#   OCamlfind packages that are used in the program
+#    OCamlfind packages that are used in the program
 #
 #
 #  BINOWN, BINGRP, BINMODE, BINDIR, BINNAME
-#   Parameters of the program installation
+#    Parameters of the program installation
 #
-#   See `bps.own.mk` for a closer description of these variables.
+#    See `bps.own.mk` for a closer description of these variables.
 #
 #
 #  COMPILE [byte_code]
@@ -100,40 +100,40 @@
 #
 #
 #  WITH_DEBUG [no]
-#   Build with debug symbols
+#    Build with debug symbols
 #
-#   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
-#   OCAMLCFLAGS and OCAMLLFLAGS.
+#    Setting WITH_DEBUG to yes will add the `-g` flag to the variables
+#    OCAMLCFLAGS and OCAMLLFLAGS.
 #
 #
 #  WITH_PROFILE [no]
-#   Build with profiling information
+#    Build with profiling information
 #
-#   The profiling of mulithreded byte-code is not supported by OCaml.
+#    The profiling of mulithreded byte-code is not supported by OCaml.
 #
 #
 #  WITH_THREADS [no]
-#   Build with threads support
+#    Build with threads support
 #
 #
 #  WITH_VMTHREADS [no]
-#   Force VM-level scheduling of threads in byte-code programs
+#    Force VM-level scheduling of threads in byte-code programs
 #
 #
 #  WITH_CAMLP4 [no]
-#   Include the camlp4 directory during the build process
+#    Include the camlp4 directory during the build process
 #
 #
 #  WITH_COMPILERLIBS [no]
-#   Include the compiler libs directory during the build process
+#    Include the compiler libs directory during the build process
 #
 #
 #  USE_ANNOTATE [no]
-#   Generate annotate files to support use of type information in editors
+#    Generate annotate files to support use of type information in editors
 #
 #
 #  USE_CUSTOM [yes]
-#   Link byte-code programs in custom mode
+#    Link byte-code programs in custom mode
 
 
 
