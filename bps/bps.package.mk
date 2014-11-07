@@ -26,6 +26,10 @@
 #    The root of the source-tree of our package.
 #
 #
+#  WRKDIR [${.OBJDIR}, inherited]
+#    The roor of the objdir-tree of our package.
+#
+#
 #  PACKAGE [last component of SRCDIR, inherited]
 #    The name of our package.
 #
@@ -72,6 +76,7 @@
 __<bps.package.mk>__:
 
 SRCDIR:=		${.CURDIR}
+WRKDIR:=		${.OBJDIR}
 
 
 .if !defined(PACKAGE)&&defined(_PACKAGE_CANDIDATE)
@@ -100,6 +105,7 @@ MODULE?=
 EXTERNAL?=
 
 .export SRCDIR
+.export WRKDIR
 .export PACKAGE
 .export PACKAGEDIR
 .export VERSION
