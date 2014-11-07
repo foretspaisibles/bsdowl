@@ -26,6 +26,13 @@
 .if !target(__<langc.init.mk>__)
 __<langc.init.mk>__:
 
+#
+# Archive manager
+#
+
+AR?=			ar
+ARFLAGS?=		-cru
+
 .include "bps.init.mk"
 .include "langc.uses.mk"
 .include "langc.module.mk"
