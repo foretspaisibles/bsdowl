@@ -1,7 +1,7 @@
-### Makefile -- Test features of module langc.prog
+### TestProgramDebug.mk -- The obnoxious hello world program
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:15:10 CET 2014
+# Date: Fri Nov  7 19:58:45 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=	TestProgram
-TEST+=	TestProgramDebug
-TEST+=	TestProgramProfile
+WITH_DEBUG=		yes
+.include "TestProgram.mk"
 
-.include "test.mk"
-
-### End of file `Makefile'
+### End of file `TestProgram.mk'

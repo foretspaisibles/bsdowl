@@ -34,8 +34,19 @@ WITH_DEBUG=		yes
 .if defined(_USES_profile_ARGS)
 WITH_PROFILE=		yes
 .endif
-
 .endif
+
+WITH_DEBUG?=		no
+WITH_PROFILE?=		no
+
+.if ${WITH_DEBUG} == yes
+CFLAGS+=		-g
+.endif
+
+.if ${WITH_PROFILE} == yes && !empty(CC:M*gcc*)
+CFLAGS+=		-p
+.endif
+
 .endif # !target(__<langc.uses.mk>__)
 
 ### End of file `langc.uses.mk'
