@@ -38,6 +38,10 @@
 # to serve as is to the end user. (See ocaml.manual.mk for a
 # module producing HTML documentation.)
 
+.if !defined(THISMODULE)
+.error ocaml.source.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.source.mk>__)
 __<ocaml.source.mk>__:
 

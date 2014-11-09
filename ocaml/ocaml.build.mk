@@ -78,6 +78,10 @@
 #  USE_CUSTOM (yes)
 #   Link byte-code programs in custome mode
 
+.if !defined(THISMODULE)
+.error ocaml.build.mk cannot be included directly.
+.endif
+
 
 ### IMPLEMENTATION
 

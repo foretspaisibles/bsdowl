@@ -17,11 +17,11 @@
 
 ### SYNOPSIS
 
-# MANUAL = backend.odoc
-# MANUAL+= filter.odoc
+# MANUAL=		backend.odoc
+# MANUAL+=		filter.odoc
 #
-# DIRS = backend_src
-# DIRS+= filter_src
+# DIRS=			backend_src
+# DIRS+=		filter_src
 #
 # .include "ocaml.manual.mk"
 
@@ -29,7 +29,10 @@
 ### DESCRIPTION
 
 # This modules supports the prepration of a HTML reference out of
-# ocamldoc(1) dump files.  These files should prepared separately.
+# ocamldoc(1) dump files.  These files should be prepared
+# separately. A software package can prepare at most a ocaml.manual
+# module.  This is because the main product is named after the
+# package it belongs to.
 
 # Variables:
 #
@@ -44,20 +47,25 @@
 
 ### IMPLEMENTATION
 
-.include "bps.init.mk"
+THISMODULE=		ocaml.manual
+PRODUCT=		${ODOC_HTML}
+
+.include "ocaml.init.mk"
 
 .if defined(MANUAL)&&!empty(MANUAL)
-ODOC_FORMAT = html
+
+ODOC_FORMAT=		html
 .for module in ${MANUAL}
-ODOC_LOAD+= ${module}
+ODOC_LOAD+=		${module}
 .endfor
 
-USE_ODOC = yes
+USE_ODOC=		yes
 
 .include "ocaml.odoc.mk"
+
 .endif
 
-.include "bps.own.mk"
+.include "bps.files.mk"
 .include "bps.usertarget.mk"
 
 ### End of file `ocaml.manual.mk'

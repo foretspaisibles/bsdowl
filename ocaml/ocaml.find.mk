@@ -68,6 +68,10 @@
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.find.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.find.mk>__)
 __<ocaml.find.mk>__:
 

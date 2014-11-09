@@ -48,31 +48,39 @@
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.init.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:
 
-.if !defined(PACKAGEDIR)||empty(PACKAGEDIR)
-LIBDIR?=${libdir}/ocaml${PACKAGEDIR}
-.else
-LIBDIR?=${libdir}/ocaml/site-lib${PACKAGEDIR}
-.endif
+.include "bps.init.mk"
 
+.if !defined(PACKAGEDIR)||empty(PACKAGEDIR)
+LIBDIR?=		${libdir}/ocaml
+.else
+LIBDIR?=		${libdir}/ocaml/site-lib${PACKAGEDIR}
+.endif
 
 .SUFFIXES: .ml .mli .mll .mly
 .SUFFIXES: .cmi .cmo .cmx .o .a .cma .cmxa
 
-_OCAML_OBJECT = _OCAML_CMI
-_OCAML_OBJECT+= _OCAML_CMO
-_OCAML_OBJECT+= _OCAML_CMX
-_OCAML_OBJECT+= _OCAML_O
-_OCAML_OBJECT+= _OCAML_A
-_OCAML_OBJECT+= _OCAML_CB
-_OCAML_OBJECT+= _OCAML_CN
-_OCAML_OBJECT+= _OCAML_CMA
-_OCAML_OBJECT+= _OCAML_CMXA
-_OCAML_OBJECT+= _OCAML_PKO
-_OCAML_OBJECT+= _OCAML_PKX
+_OCAML_OBJECT=		_OCAML_CMI
+_OCAML_OBJECT+=		_OCAML_CMO
+_OCAML_OBJECT+=		_OCAML_CMX
+_OCAML_OBJECT+=		_OCAML_O
+_OCAML_OBJECT+=		_OCAML_A
+_OCAML_OBJECT+=		_OCAML_CB
+_OCAML_OBJECT+=		_OCAML_CN
+_OCAML_OBJECT+=		_OCAML_CMA
+_OCAML_OBJECT+=		_OCAML_CMXA
+_OCAML_OBJECT+=		_OCAML_PKO
+_OCAML_OBJECT+=		_OCAML_PKX
 
+.include "ocaml.uses.mk"
+.include "ocaml.module.mk"
+.include "ocaml.external.mk"
 .include "ocaml.compile.mk"
 .include "ocaml.find.mk"
 .include "ocaml.tools.mk"

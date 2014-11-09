@@ -3,6 +3,27 @@
 # Author: Michael Grünewald
 # Date: Sat Jul  7 18:12:48 CEST 2007
 
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+# The ocaml subsystem defines the following modules:
+# - ocaml.prog -- Prepare OCaml programs
+# - ocaml.lib -- Prepare OCaml libraries
+# - ocaml.pack -- Prepare packed OCaml libraries
+# - ocaml.meta -- Prepare OCaml findlib META files
+# - ocaml.toplevel -- Prepare OCaml toplevels
+
+FILES+= ocaml.uses.mk
+FILES+= ocaml.module.mk
+FILES+= ocaml.external.mk
 FILES+= ocaml.build.mk
 FILES+= ocaml.depend.mk
 FILES+= ocaml.find.mk

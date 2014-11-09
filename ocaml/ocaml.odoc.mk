@@ -17,10 +17,10 @@
 
 ### SYNOPSIS
 
-# USE_ODOC = yes
+# USE_ODOC=		yes
 #
-# ODOC_NAME = uname
-# _OCAML_SRCS.${ODOC_NAME} = file_a.mli file_b.mli
+# ODOC_NAME=		uname
+# _OCAML_SRCS.${ODOC_NAME}=file_a.mli file_b.mli
 #
 # .include "ocaml.odoc.mk"
 
@@ -44,126 +44,130 @@
 #
 #
 #  ODOC_NAME
-#    UNIX file name used to label objects
+#   UNIX file name used to label objects
 #
-#    This defaults to ${LIBRARY} or ${PACKAGE} if one of these
-#    variables is defined.
+#   This defaults to ${LIBRARY} or ${PACKAGE} if one of these
+#   variables is defined.
 #
 #
 #  ODOC_DIRS
-#    Lookup path for dump files
+#   Lookup path for dump files
 #
-#    Relative paths are interpreted from ${.OBJDIR}. If this variable
-#    is uninitalized but the variable DIRS is, it receives the
-#    value of DIRS.
+#   Relative paths are interpreted from ${.OBJDIR}. If this variable
+#   is uninitalized but the variable DIRS is, it receives the
+#   value of DIRS.
 #
 #
 #  ODOC_LOAD
-#    List of dump files to load
+#   List of dump files to load
 #
 #
-#  ODOC_HIDE
-#    List of modules to hide
+#  ODOC_HIDE [not set]
+#   List of modules to hide
 #
 #
-#  ODOC_SORT
-#    Flag governing the sorting of the module list
+#  ODOC_SORT [no]
+#   Flag governing the sorting of the module list
 #
 #
-#  ODOC_KEEP_CODE
-#    Flag governing the keep of the code
+#  ODOC_KEEP_CODE [no]
+#   Flag governing the keep of the code
 #
 #
-#  ODOC_MERGE_INVERSE
-#    Flag governing the merge order inversion
+#  ODOC_MERGE_INVERSE [no]
+#   Flag governing the merge order inversion
 #
 #
 #  ODOC_INSTALL_DUMPS
-#    Flag governing the installation of the dumps
+#   Flag governing the installation of the dumps
 #
-#    If this is set to yes, then ocamldoc dump files for the
-#    documentation are installed along the documentation and can be
-#    used in another job.  See the variables ODOC_DIRS and ODOC_LOAD.
+#   If this is set to yes, then ocamldoc dump files for the
+#   documentation are installed along the documentation and can be
+#   used in another job.  See the variables ODOC_DIRS and ODOC_LOAD.
 #
 #
 #  ODOC_EXCLUDE
-#    List of modules to exclude
+#   List of modules to exclude
 #
 #
 #  ODOC_HTML_CSS_FILE
-#    CSS file to use for the HTML output
+#   CSS file to use for the HTML output
 #
-#    This file is copied in the HTML directory output.
+#   This file is copied in the HTML directory output.
 #
 #
 #  ODOC_HTML_CSS_URL
-#    CSS name to use for the HTML output
+#   CSS name to use for the HTML output
 #
-#    This URL is written in the relevant files, but the module does not
-#    take any action to make this URL available.
+#   This URL is written in the relevant files, but the module does not
+#   take any action to make this URL available.
 #
 #
 #  ODOC_HTML_INTRO
-#    Intro name to the use for the HTML output
+#   Intro name to the use for the HTML output
 #
-#    This file is pasted in the HTML output.
+#   This file is pasted in the HTML output.
 #
 #
 #  ODOC_HTML_CHARSET
-#    Advertise the charset used in input files and the HTML output.
+#   Advertise the charset used in input files and the HTML output.
 #
-#    Examples: iso-8859-1, iso-8859-15, utf-8.
+#   Examples: iso-8859-1, iso-8859-15, utf-8.
 #
 #
 #  ODOC_SHORT_FUNCTORS
-#    Use the short functor notation
+#   Use the short functor notation
 
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.odoc.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.odoc.mk>__)
 __<ocaml.odoc.mk>__:
 
-USE_ODOC?= no
+USE_ODOC?=		no
 
 .if ${USE_ODOC} == yes
 
 do-doc: do-doc-odoc
 
-ODOC_TITLE?=I am too lazy to set the title
+ODOC_TITLE?=		I am too lazy to set the title
 ODOC_INTRO?=
-ODOC_FORMAT?=odoc html
-ODOC_SORT?=no
-ODOC_KEEP_CODE?=no
-ODOC_MERGE_INVERSE=?no
+ODOC_FORMAT?=		odoc html
+ODOC_SORT?=		no
+ODOC_KEEP_CODE?=	no
+ODOC_MERGE_INVERSE=?	no
 ODOC_MERGE?=
 ODOC_LOAD?=
 ODOC_HIDE?=
 ODOC_PREPROCESSOR?=
 ODOC_DIRS?=
-ODOC_VERBOSE?=no
+ODOC_VERBOSE?=		no
 ODOC_EXCLUDE?=
-ODOC_INSTALL_DUMPS?=no
-ODOC_SHORT_FUNCTORS?=yes
+ODOC_INSTALL_DUMPS?=	no
+ODOC_SHORT_FUNCTORS?=	yes
 
-OCAMLDOC?= ocamldoc
+OCAMLDOC?=		ocamldoc
 
 .if defined(LIBRARY)&&!empty(LIBRARY)
-ODOC_NAME?=${LIBRARY}
+ODOC_NAME?=		${LIBRARY}
 .endif
 
 .if defined(PACKAGE)&&!empty(PACKAGE)
-ODOC_NAME?=${PACKAGE}
+ODOC_NAME?=		${PACKAGE}
 .endif
 
 .if !defined(ODOC_NAME)||empty(ODOC_NAME)
-.error The ocaml.odoc.mk module expects ODOC_NAME to be set. \
-A suitable value could also be guessed from the PACKAGE variable \
-value, but you did not provide one.
+.error The ocaml.odoc.mk module expects ODOC_NAME to be set.\
+	A suitable value could also be guessed from the PACKAGE\
+	variable value, but you did not provide one.
 .endif
 
 .if defined(DIRS)&&!empty(DIRS)
-ODOC_DIRS+= ${DIRS}
+ODOC_DIRS+=		${DIRS}
 .endif
 
 _OCAML_SRCS.${ODOC_NAME}?=
@@ -208,38 +212,38 @@ _OCAML_SRCS.${ODOC_NAME}+= ${item}
 .if defined(_OCAML_DIRS)&&!empty(_OCAML_DIRS)
 _ODOC_FLAGS+=${_OCAML_DIRS}
 .endif
-_ODOC_FLAGS+= -t "${ODOC_TITLE}"
+_ODOC_FLAGS+=-t "${ODOC_TITLE}"
 .if !empty(ODOC_INTRO)
-_ODOC_FLAGS+= -intro ${ODOC_INTRO}
+_ODOC_FLAGS+=-intro ${ODOC_INTRO}
 .endif
 .if ${ODOC_VERBOSE} == yes
-_ODOC_FLAGS+= -v
+_ODOC_FLAGS+=-v
 .endif
 .if ${ODOC_SHORT_FUNCTORS} == yes
-_ODOC_FLAGS+= -short-functors
+_ODOC_FLAGS+=-short-functors
 .endif
 .if ${ODOC_SORT} == yes
-_ODOC_FLAGS+= -sort
+_ODOC_FLAGS+=-sort
 .endif
 .if ${ODOC_KEEP_CODE} == yes
-_ODOC_FLAGS+= -keep-code
+_ODOC_FLAGS+=-keep-code
 .endif
 .if ${ODOC_MERGE_INVERSE} == yes
-_ODOC_FLAGS+= -inv-merge-ml-mli
+_ODOC_FLAGS+=-inv-merge-ml-mli
 .endif
 .if !empty(ODOC_MERGE)
-_ODOC_FLAGS+= -m${ODOC_MERGE}
+_ODOC_FLAGS+=-m${ODOC_MERGE}
 .endif
 .if !empty(ODOC_HIDE)
-_ODOC_FLAGS+= -hide ${ODOC_HIDE:Q:S/\\ /,/g}
+_ODOC_FLAGS+=-hide ${ODOC_HIDE:Q:S/\\ /,/g}
 .endif
 .if !empty(ODOC_PREPROCESSOR)
-_ODOC_FLAGS+= -pp ${ODOC_PREPROCESSOR}
+_ODOC_FLAGS+=-pp ${ODOC_PREPROCESSOR}
 .endif
 .if !empty(ODOC_LOAD)
 .SUFFIXES: .odoc
 .PATH.odoc: ${ODOC_DIRS}
-_ODOC_FLAGS+= ${.ALLSRC:M*.odoc:S/^/-load /}
+_ODOC_FLAGS+=${.ALLSRC:M*.odoc:S/^/-load /}
 .endif
 
 _ODOC_TOOL=${OCAMLDOC}
@@ -253,9 +257,11 @@ _ODOC_TOOL+=${_ODOC_FLAGS}
 
 .if !empty(ODOC_FORMAT:Modoc)
 
-ODOCDIR?= ${DOCDIR}/odoc
+ODOCDIR?=		${DOCDIR}/odoc
 
-ODOC=${ODOC_NAME}.odoc
+ODOC=			${ODOC_NAME}.odoc
+
+PRODUCT+=		${ODOC}
 
 .if !empty(ODOC_LOAD)
 ${ODOC_HTML}: ${ODOC_LOAD}
@@ -272,9 +278,9 @@ do-doc-odoc: ${ODOC}
 
 .if ${ODOC_INSTALL_DUMPS} == yes
 do-install-odoc: do-doc-odoc
-	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP} \
+	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP}\
 	  ${DESTDIR}${ODOCDIR}
-	${INSTALL} -o ${DOCOWN} -g ${DOCGRP} -m ${DOCMODE} \
+	${INSTALL} -o ${DOCOWN} -g ${DOCGRP} -m ${DOCMODE}\
 	  ${ODOC} ${DESTDIR}${ODOCDIR}
 .endif
 
@@ -284,28 +290,28 @@ do-install-odoc: do-doc-odoc
 # Handling ocaml doc HTML documentation
 #
 
-ODOC_HTMLDIR?= /html
+ODOC_HTMLDIR?=		/html
 # The place where are installed HTML document under DOCDIR.
 
 .if !empty(ODOC_FORMAT:Mhtml)
 
-ODOC_HTML?= ${ODOC_NAME}_html
+ODOC_HTML?=		${ODOC_NAME}_html
 ODOC_HTML_INTRO?=
 ODOC_HTML_CHARSET?=
 
-_ODOC_HTML_TOOL?= ${_ODOC_TOOL} -html
+_ODOC_HTML_TOOL?=	${_ODOC_TOOL} -html
 
 .if defined(ODOC_HTML_CHARSET)&&!empty(ODOC_HTML_CHARSET)
-_ODOC_HTML_TOOL+= -charset ${ODOC_HTML_CHARSET}
+_ODOC_HTML_TOOL+=-charset ${ODOC_HTML_CHARSET}
 .endif
 
 .if defined(ODOC_HTML_CSS_URL)&&!empty(ODOC_HTML_CSS_URL)
-_ODOC_HTML_TOOL+= -css-style ${ODOC_HTML_CSS_URL}
+_ODOC_HTML_TOOL+=-css-style ${ODOC_HTML_CSS_URL}
 .endif
 
 .if defined(ODOC_HTML_INTRO)&&!empty(ODOC_HTML_INTRO)
 ${ODOC_HTML}: ${ODOC_HTML_INTRO}
-_ODOC_HTML_TOOL+= -intro ${ODOC_HTML_INTRO}
+_ODOC_HTML_TOOL+=-intro ${ODOC_HTML_INTRO}
 .endif
 
 do-doc-odoc: ${ODOC_HTML}
@@ -327,10 +333,10 @@ ${ODOC_HTML}:
 
 do-install-odoc: do-install-odoc-html
 do-install-odoc-html: do-doc-odoc
-	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP} \
+	${INSTALL_DIR} -o ${DOCOWN} -g ${DOCGRP}\
 	  ${DESTDIR}${DOCDIR}${ODOC_HTMLDIR}
-	${INSTALL} -o ${DOCOWN} -g ${DOCGRP} -m ${DOCMODE} \
-	  ${ODOC_HTML}/* ${DESTDIR}${DOCDIR}${ODOC_HTMLDIR}
+	(cd ${ODOC_HTML} &&\
+	  ${COPYTREE_DOC} . ${DESTDIR}${DOCDIR}${ODOC_HTMLDIR})
 
 do-clean-odoc: do-clean-odoc-html
 do-clean-odoc-html:
