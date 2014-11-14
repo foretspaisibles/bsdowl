@@ -59,6 +59,9 @@
 #
 # MANFILTER [not set]
 #  Filter processing raw man pages before compressing or installing.
+#
+# DIRS [not set]
+#  Directories that are searched for manual pages
 
 
 ### TARGETS
@@ -86,6 +89,14 @@ MANSECTIONS?=		1 2 3 4 5 6 7 8 9 n l
 MANINSTALL?=		${INSTALL} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
 MANCOMPRESSCMD?=	gzip
 MANCOMPRESSEXT?=	.gz
+
+.SUFFIXES: ${MANSECTIONS:S@^@.@}
+
+.if defined(DIRS)
+.for mansection in ${MANSECTIONS}
+.PATH.${mansection}: ${DIRS}
+.endfor
+.endif
 
 .if defined(MANFILTER)
 MANTOOL?=		( ${MANFILTER} | ${MANCOMPRESSCMD} )

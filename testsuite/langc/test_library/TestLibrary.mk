@@ -24,6 +24,8 @@ SRCS+=			rational_print.c
 
 MAN=			librational.3
 
+DIRS=			${TESTSRCDIR}/librational
+
 test:
 	test -f ${DESTDIR}${LIBDIR}/librational.a
 	test -f ${DESTDIR}${INCLUDEDIR}/rational.h
