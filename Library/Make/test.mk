@@ -42,17 +42,17 @@ MAKETEST+=		TESTSRCDIR='${SRCDIR}/testsuite/src'
 MAKETEST+=		TESTDIR='${.CURDIR:C,${SRCDIR}/testsuite,,}/${.ALLSRC:M*.mk:C/.mk$//}'
 MAKETEST+=		${MAKE}
 
+TESTSEQUENCE?=		clean obj depend build install
+
 .for test in ${TEST}
 .if exists(${test}.mk)
 do-test: do-test-${test}
 do-test-${test}: ${test}.done
 ${test}.done: ${test}.mk
 	${INFO} ${_SUBDIR_PREFIX}${test} '(test)'
-	${MAKETEST} -f ${.ALLSRC:M*.mk} clean
-	${MAKETEST} -f ${.ALLSRC:M*.mk} obj
-	${MAKETEST} -f ${.ALLSRC:M*.mk} depend
-	${MAKETEST} -f ${.ALLSRC:M*.mk} build
-	${MAKETEST} -f ${.ALLSRC:M*.mk} install
+.for step in ${TESTSEQUENCE}
+	${MAKETEST} -f ${.ALLSRC:M*.mk} ${step}
+.endfor
 	${MAKETEST} -f ${.ALLSRC:M*.mk} test
 	touch ${test}.done
 do-clean: do-clean-${test}
