@@ -1,7 +1,7 @@
-### Makefile -- Test features of module langc.lib
+### TestLibraryDebug.mk -- A very simple static library
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 21:51:23 CET 2014
+# Date: Fri Nov 14 10:22:07 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=	TestLibrary
-TEST+=	TestLibraryDebug
-TEST+=	TestLibraryProfile
+WITH_DEBUG=yes
+.include "TestLibrary.mk"
 
-.include "test.mk"
-
-### End of file `Makefile'
+### End of file `TestLibraryDebug.mk'
