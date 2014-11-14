@@ -336,6 +336,8 @@ SUBDIR+=		${MODULE:C@.*\:@@}
 
 .include "bps.subdir.mk"
 
+obj: do-obj-subdir
+
 .endif # !target(__<bps.project.mk>__)
 
 ### End of file `bps.project.mk'
