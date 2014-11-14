@@ -86,7 +86,7 @@ MANMODE?=		${SHAREMODE}
 MANOWN?=		${SHAREOWN}
 MANGRP?=		${SHAREGRP}
 MANSECTIONS?=		1 2 3 4 5 6 7 8 9 n l
-MANINSTALL?=		${INSTALL} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
+INSTALL_MAN?=		${INSTALL} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
 MANCOMPRESSCMD?=	gzip
 MANCOMPRESSEXT?=	.gz
 
@@ -120,7 +120,7 @@ ${man}${MANCOMPRESSEXT}: ${man}
 	${MANTOOL} < ${.ALLSRC} > ${.TARGET}
 buildman: ${man}${MANCOMPRESSEXT}
 installfiles-man-${man:T}: ${man}${MANCOMPRESSEXT} .PHONY
-	${MANINSTALL} ${.ALLSRC} ${DESTDIR}${MANDIR.${man:T}}
+	${INSTALL_MAN} ${.ALLSRC} ${DESTDIR}${MANDIR.${man:T}}
 .endfor
 .endif
 
