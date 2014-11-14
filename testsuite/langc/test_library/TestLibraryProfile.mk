@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for C language modules
+### TestLibraryProfile.mk -- A very simple static library
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:14:14 CET 2014
+# Date: Fri Nov 14 10:22:07 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+WITH_PROFILE=yes
+.include "TestLibrary.mk"
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-
-.include "subdir.mk"
-
-### End of file `Makefile'
+### End of file `TestLibraryProfile.mk'
