@@ -11,6 +11,14 @@ AC_PROG_ID()
 SYSTEMOWN=root
 SYSTEMGRP=$($ID -gn $SYSTEMOWN)
 #
+# Check for GPG
+#
+AC_CHECK_PROG([has_gpg], [gpg], [yes], [no])
+if test "x$has_gpg" = 'xno'; then
+  AC_MSG_ERROR([*** GPG not found.])
+fi
+AC_SUBST([GPG], [gpg])
+#
 # Check for GraphicsMagick
 #
 AC_CHECK_PROG([has_gm], [gm], [yes], [no])
