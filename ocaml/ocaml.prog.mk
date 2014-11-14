@@ -152,13 +152,9 @@ PROGRAM?=${PROG}
 
 .include "ocaml.init.mk"
 
-.for item in ${PROGRAM}
-.if exists(${PROGRAM}.1)
-MAN+=${PROGRAM}.1
-.endif
-.if exists(${PROGRAM}.8)
-MAN+=${PROGRAM}.8
-.endif
+.for program in ${PROGRAM}
+_MAN_AUTO+=		${program}.1
+_MAN_AUTO+=		${program}.8
 .endfor
 
 #

@@ -100,9 +100,7 @@ _PACKAGE_CANDIDATE=	${LIBRARY}
 # Prepare manual pages
 #
 
-.if exists(lib${LIBRARY}.3)&&empty(MAN:Mlib${LIBRARY}.3)
-MAN+=		lib${LIBRARY}.3
-.endif
+_MAN_AUTO+=		lib${LIBRARY}.3
 
 
 #

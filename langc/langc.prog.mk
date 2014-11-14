@@ -112,12 +112,8 @@ _PACKAGE_CANDIDATE=	${PROGRAM}
 #
 
 .for program in ${PROGRAM}
-.if exists(${program}.1)&&empty(MAN:M${program}.1)
-MAN+=		${program}.1
-.endif
-.if exists(${program}.8)&&empty(MAN:M${program}.8)
-MAN+=		${program}.8
-.endif
+_MAN_AUTO+=		${program}.1
+_MAN_AUTO+=		${program}.8
 .endfor
 
 

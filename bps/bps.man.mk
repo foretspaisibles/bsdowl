@@ -62,6 +62,9 @@
 #
 # DIRS [not set]
 #  Directories that are searched for manual pages
+#
+# _MAN_AUTO [not set]
+#  List of manual pages automatically added to MAN if they exist
 
 
 ### TARGETS
@@ -93,8 +96,14 @@ MANCOMPRESSEXT?=	.gz
 .SUFFIXES: ${MANSECTIONS:S@^@.@}
 
 .if defined(DIRS)
-.for mansection in ${MANSECTIONS}
-.PATH.${mansection}: ${DIRS}
+.PATH:			${DIRS}
+.endif
+
+.if defined(_MAN_AUTO)
+.for man in ${_MAN_AUTO}
+.if exists(${man})&&empty(MAN:M${man})
+MAN+=			${man}
+.endif
 .endfor
 .endif
 
