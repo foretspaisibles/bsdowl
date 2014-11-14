@@ -144,8 +144,8 @@ lib${LIBRARY}.a:	${OBJS}
 # Display debugging information
 #
 
-.if !target(display-prog)
-display-prog: .PHONY
+.if !target(display-lib)
+display-lib: .PHONY
 	${INFO} 'Display langc program information'
 .for displayvar in PROGRAM MAN SRCS LIBS DIRS MODULE EXTERNAL USES
 	${MESG} "${displayvar}=${${displayvar}}"
