@@ -43,7 +43,7 @@
 
 # Variables:
 #
-#  FILESGROUPS [FILES BIN LIB DOC SHARE MAN]
+#  FILESGROUPS [FILES BIN LIB INCLUDE DOC SHARE MAN]
 #    The list of files groups.
 #
 #
@@ -112,7 +112,7 @@ __<bps.files.mk>__:
 .error bps.files.mk cannot be included directly.
 .endif
 
-FILESGROUPS+=		FILES BIN DOC SHARE LIB MAN
+FILESGROUPS+=		FILES BIN LIB INCLUDE DOC SHARE MAN
 
 .if !target(buildfiles)
 .for group in ${FILESGROUPS}
