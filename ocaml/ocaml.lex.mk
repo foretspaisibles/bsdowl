@@ -44,9 +44,13 @@
 #  _OMCAML_MLI
 #   Interfaces associated to detected lexers are added to this list
 
+
+.if !defined(THISMODULE)
+.error ocaml.lex.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.lex.mk>__)
 __<ocaml.lex.mk>__:
-
 
 OCAMLLEX?= ocamllex
 

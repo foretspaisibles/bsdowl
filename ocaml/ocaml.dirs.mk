@@ -46,8 +46,11 @@
 #
 #
 #  OCAMLROOTDIR
-#    Path to the standard library
+#   Path to the standard library
 
+.if !defined(THISMODULE)
+.error ocaml.dirs.mk cannot be included directly.
+.endif
 
 .if !target(__<ocaml.dirs.mk>__)
 __<ocaml.dirs.mk>__:

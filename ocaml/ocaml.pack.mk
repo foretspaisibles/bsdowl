@@ -67,13 +67,15 @@
 #
 #   See `bps.own.mk` for a closer description of these variables.
 
-
-.include "bps.init.mk"
-.include "ocaml.init.mk"
+THISMODULE=		ocaml.pack
+PRODUCT=		${PACK}
+_PACKAGE_CANDIDATE=	${PACK}
 
 .if !defined(PACK)||empty(PACK)
 .error The ocaml.pack.mk module expects you to set the PACK variable to a sensible value.
 .endif
+
+.include "ocaml.init.mk"
 
 _OCAML_SRCS?=
 _OCAML_CMA?=

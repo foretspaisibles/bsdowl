@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# LIBDIR?= ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
+# LIBDIR?=		${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
 # .include "ocaml.meta.mk"
 
 
@@ -31,24 +31,31 @@
 .if !target(__<ocaml.meta.mk>__)
 __<ocaml.meta.mk>__:
 
-.include "bps.init.mk"
-.include "ocaml.init.mk"
+THISMODULE?=		ocaml.meta
 
-FILESGROUPS+= META
-
-METAOWN?= ${LIBOWN}
-METAGRP?= ${LIBGRP}
-METADIR?= ${LIBDIR}
-METAMODE?= ${LIBMODE}
-METANAME?= META
-
-.if exists(META)||exists(META.in)
-META= META
+.if ${THISMODULE} == ocaml.meta
+PRODUCT=		${META}
 .endif
 
+.include "ocaml.init.mk"
+
+FILESGROUPS+=		META
+
+METAOWN?=		${LIBOWN}
+METAGRP?=		${LIBGRP}
+METADIR?=		${LIBDIR}
+METAMODE?=		${LIBMODE}
+METANAME?=		META
+
+.if exists(META)||exists(META.in)
+META=			META
+.endif
+
+.if ${THISMODULE} == ocaml.meta
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
+.endif
 
 .endif #!target(__<ocaml.meta.mk>__)
 

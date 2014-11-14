@@ -88,6 +88,10 @@
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.tools.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.tools.mk>__)
 __<ocaml.tools.mk>__:
 

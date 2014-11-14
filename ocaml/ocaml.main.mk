@@ -29,6 +29,10 @@
 # This module is intended to be included by other modules rather than
 # to serve as is to the end user.
 
+.if !defined(THISMODULE)
+.error ocaml.main.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.main.mk>__)
 __<ocaml.main.mk>__:
 

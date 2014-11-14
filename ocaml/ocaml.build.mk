@@ -48,35 +48,39 @@
 
 # Variables:
 #
-#  WITH_DEBUG
+#  WITH_DEBUG [no]
 #   Build with debug symbols
 #
 #   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
 #   OCAMLCFLAGS and OCAMLLFLAGS.
 #
 #
-#  WITH_THREADS (no)
+#  WITH_THREADS [no]
 #   Build with threads support
 #
 #
-#  WITH_VMTHREADS (no)
+#  WITH_VMTHREADS [no]
 #   Force VM-level scheduling of threads in byte-code programs
 #
 #
-#  WITH_CAMLP4 (no)
+#  WITH_CAMLP4 [no]
 #   Include the camlp4 directory during the build process
 #
 #
-#  WITH_COMPILERLIBS (no)
+#  WITH_COMPILERLIBS [no]
 #   Include the compiler libs directory during the build process
 #
 #
-#  USE_ANNOTATE (no)
+#  USE_ANNOTATE [no]
 #   Generate annotate files to support use of type information in editors
 #
 #
-#  USE_CUSTOM (yes)
+#  USE_CUSTOM [yes]
 #   Link byte-code programs in custome mode
+
+.if !defined(THISMODULE)
+.error ocaml.build.mk cannot be included directly.
+.endif
 
 
 ### IMPLEMENTATION

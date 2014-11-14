@@ -56,12 +56,16 @@
 
 ### IMPLEMENTATION
 
-.include "bps.init.mk"
-.include "ocaml.init.mk"
+THISMODULE=		ocaml.lib
 
 .if !defined(LIBRARY)||empty(LIBRARY)
 .error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
 .endif
+
+PRODUCT=		${LIBRARY}
+_PACKAGE_CANDIDATE=	${LIBRARY}
+
+.include "ocaml.init.mk"
 
 _OCAML_SRCS?=
 _OCAML_CMA?=
@@ -104,6 +108,11 @@ ${lib}.cma: ${SRCS.${lib:T}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 LIB+= ${SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
 .endif
 .endfor
+
+
+.if exists(META)||exists(META.in)||defined(META)
+.include "ocaml.meta.mk"
+.endif
 
 .include "bps.clean.mk"
 .include "bps.files.mk"

@@ -53,6 +53,10 @@
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.depend.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:
 

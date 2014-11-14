@@ -49,6 +49,10 @@
 #   Lists of sources for inferred objects
 
 
+.if !defined(THISMODULE)
+.error ocaml.object.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.object.mk>__)
 __<ocaml.object.mk>__:
 
