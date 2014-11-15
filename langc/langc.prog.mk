@@ -180,6 +180,8 @@ CLEANFILES+=		${OBJS.${program:T}}
 
 .for program in ${PROGRAM}
 ${program}: ${OBJS.${program:T}}
+${program}: ${LIBS.${program:T}:S@^@lib@:S@$@.a@}
+${program}:
 	${CCLINKTOOL} -o ${.TARGET} ${.ALLSRC:N*.h} ${LDADD}
 .endfor
 
