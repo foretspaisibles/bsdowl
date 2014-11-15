@@ -28,20 +28,11 @@ __<langc.build.mk>__:
 
 CC?=			cc
 
-
-.SUFFIXES: .c .o .h .a .so
-
 #
 # Prepare the path
 #
 
 .if defined(DIRS)
-.PATH.c:		${DIRS}
-.PATH.o:		${DIRS}
-.PATH.h:		${DIRS}
-.PATH.a:		${DIRS}
-.PATH.so:		${DIRS}
-
 .for dir in ${DIRS}
 CFLAGS+=		-I ${dir}
 .endfor
