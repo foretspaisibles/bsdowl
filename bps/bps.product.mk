@@ -43,7 +43,12 @@ PRODUCTFILE?=		${WRKDIR}/.product
 
 .if defined(THISMODULE)&&defined(PRODUCT)&&!empty(PRODUCT)
 do-product: .PHONY
-	@${ECHO} "PRODUCT_${THISMODULE}+=${PRODUCT}" >> ${PRODUCTFILE}
+	@${ECHO} ".if empty(PRODUCT_${THISMODULE}:M${PRODUCT})"\
+	  >> ${PRODUCTFILE}
+	@${ECHO} "PRODUCT_${THISMODULE}+=${PRODUCT}"\
+	  >> ${PRODUCTFILE}
+	@${ECHO} ".endif"\
+	  >> ${PRODUCTFILE}
 do-depend:		do-product
 .endif
 
