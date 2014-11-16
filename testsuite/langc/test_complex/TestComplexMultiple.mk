@@ -15,6 +15,8 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 CONFIGURATIONLIST=	Debug Profile Release
+ARCHITECTURELIST=	Native Mingw32
+
 TARGETLIST=		realclean distclean clean
 TARGETLIST+=		obj depend build
 
@@ -34,16 +36,22 @@ install dist:
 
 ${TARGETLIST}: .PHONY
 .for configuration in ${CONFIGURATIONLIST}
+.for architecture in ${ARCHITECTURELIST}
 	cd ${.CURDIR} && ${MAKE} -f ${.CURDIR}/TestComplex.mk\
 	  CONFIGURATIONDIR=/${configuration}\
 	  CONFIGURATION=${configuration}\
+	  ARCHITECTUREDIR=/${architecture}\
+	  ARCHITECTURE=${architecture}\
 	  ${.TARGET}
+.endfor
 .endfor
 
 test:
 .for configuration in ${CONFIGURATIONLIST}
+.for architecture in ${ARCHITECTURELIST}
 .for object in ${OBJECTLIST}
-	test -f ${MAKEOBJDIRPREFIX}/${configuration}${.CURDIR}${object}
+	test -f ${MAKEOBJDIRPREFIX}/${architecture}/${configuration}${.CURDIR}${object}
+.endfor
 .endfor
 .endfor
 

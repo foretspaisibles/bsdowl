@@ -24,8 +24,9 @@ http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt */
 void
 goldenratio_rational(int n)
 {
+  int i;
   struct rational phi = { 0, 1 };
-  for(int i = 1; i <= n; ++i) {
+  for(i = 1; i <= n; ++i) {
     phi.q = phi.p + phi.q;
     phi.p = phi.q - phi.p;
   }
