@@ -62,6 +62,9 @@
 #
 # DIRS [not set]
 #  Directories that are searched for manual pages
+#
+# _MAN_AUTO [not set]
+#  List of manual pages automatically added to MAN if they exist
 
 
 ### TARGETS
@@ -86,15 +89,21 @@ MANMODE?=		${SHAREMODE}
 MANOWN?=		${SHAREOWN}
 MANGRP?=		${SHAREGRP}
 MANSECTIONS?=		1 2 3 4 5 6 7 8 9 n l
-MANINSTALL?=		${INSTALL} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
+INSTALL_MAN?=		${INSTALL} -o ${MANOWN} -g ${MANGRP} -m ${MANMODE}
 MANCOMPRESSCMD?=	gzip
 MANCOMPRESSEXT?=	.gz
 
 .SUFFIXES: ${MANSECTIONS:S@^@.@}
 
 .if defined(DIRS)
-.for mansection in ${MANSECTIONS}
-.PATH.${mansection}: ${DIRS}
+.PATH:			${DIRS}
+.endif
+
+.if defined(_MAN_AUTO)
+.for man in ${_MAN_AUTO}
+.if exists(${man})&&empty(MAN:M${man})
+MAN+=			${man}
+.endif
 .endfor
 .endif
 
@@ -120,7 +129,7 @@ ${man}${MANCOMPRESSEXT}: ${man}
 	${MANTOOL} < ${.ALLSRC} > ${.TARGET}
 buildman: ${man}${MANCOMPRESSEXT}
 installfiles-man-${man:T}: ${man}${MANCOMPRESSEXT} .PHONY
-	${MANINSTALL} ${.ALLSRC} ${DESTDIR}${MANDIR.${man:T}}
+	${INSTALL_MAN} ${.ALLSRC} ${DESTDIR}${MANDIR.${man:T}}
 .endfor
 .endif
 

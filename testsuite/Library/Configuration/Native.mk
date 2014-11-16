@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for C language modules
+### Native -- Native build settings
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:14:14 CET 2014
+# Date: Sun Nov 16 12:03:36 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,4 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
-
-.include "subdir.mk"
-
-### End of file `Makefile'
+### End of file `Native'

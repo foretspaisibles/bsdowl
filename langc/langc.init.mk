@@ -26,6 +26,8 @@
 .if !target(__<langc.init.mk>__)
 __<langc.init.mk>__:
 
+.SUFFIXES: .c .o .h .a .so .l .y
+
 #
 # Archive manager
 #

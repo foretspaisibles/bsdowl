@@ -112,12 +112,8 @@ _PACKAGE_CANDIDATE=	${PROGRAM}
 #
 
 .for program in ${PROGRAM}
-.if exists(${program}.1)&&empty(MAN:M${program}.1)
-MAN+=		${program}.1
-.endif
-.if exists(${program}.8)&&empty(MAN:M${program}.8)
-MAN+=		${program}.8
-.endif
+_MAN_AUTO+=		${program}.1
+_MAN_AUTO+=		${program}.8
 .endfor
 
 
@@ -161,7 +157,7 @@ _LANGC_OBJS+=		OBJS.${program:T}
 OBJS.${program:T}=	${SRCS.${program:T}:N*.h:C/\.[cly]$/.o/}
 .endif
 .if !empty(OBJS.${program:T}:N*.o)
-.warning Do not know what to do with ${OBJS.${program:T}:N*.o}\
+.error Do not know what to do with ${OBJS.${program:T}:N*.o}\
 			when preparing ${program}.
 .endif
 .endfor
@@ -184,6 +180,8 @@ CLEANFILES+=		${OBJS.${program:T}}
 
 .for program in ${PROGRAM}
 ${program}: ${OBJS.${program:T}}
+${program}: ${LIBS.${program:T}:S@^@lib@:S@$@.a@}
+${program}:
 	${CCLINKTOOL} -o ${.TARGET} ${.ALLSRC:N*.h} ${LDADD}
 .endfor
 

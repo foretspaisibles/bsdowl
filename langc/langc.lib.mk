@@ -100,9 +100,7 @@ _PACKAGE_CANDIDATE=	${LIBRARY}
 # Prepare manual pages
 #
 
-.if exists(lib${LIBRARY}.3)&&empty(MAN:Mlib${LIBRARY}.3)
-MAN+=		lib${LIBRARY}.3
-.endif
+_MAN_AUTO+=		lib${LIBRARY}.3
 
 
 #
@@ -133,13 +131,6 @@ INCLUDE+=		${SRCS:M*.h}
 CLEANFILES+=		lib${LIBRARY}.a
 CLEANFILES+=		${OBJS}
 
-INCLUDEDIR?=		${includedir}${PACKAGEDIR}
-INCLUDEMODE?=		${LIBMODE}
-INCLUDEOWN?=		${LIBOWN}
-INCLUDEGRP?=		${LIBGRP}
-
-FILESGROUPS+=		INCLUDE
-
 
 #
 # Prepare library
@@ -153,8 +144,8 @@ lib${LIBRARY}.a:	${OBJS}
 # Display debugging information
 #
 
-.if !target(display-prog)
-display-prog: .PHONY
+.if !target(display-lib)
+display-lib: .PHONY
 	${INFO} 'Display langc program information'
 .for displayvar in PROGRAM MAN SRCS LIBS DIRS MODULE EXTERNAL USES
 	${MESG} "${displayvar}=${${displayvar}}"

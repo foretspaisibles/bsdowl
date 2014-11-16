@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for C language modules
+### Makefile -- A very simple static library
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:14:14 CET 2014
+# Date: Fri Nov 14 16:28:04 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+LIBRARY=		rational
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+SRCS=			rational.h
+SRCS+=			rational_trace.h
+SRCS+=			rational_trace.c
+SRCS+=			rational_operation.c
+SRCS+=			rational_print.c
 
-.include "subdir.mk"
+DIRS=			${TESTSRCDIR}/librational
+
+.include "langc.lib.mk"
 
 ### End of file `Makefile'

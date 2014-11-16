@@ -26,12 +26,39 @@
 .if !target(__<langc.module.mk>__)
 __<langc.module.mk>__:
 
+# Source files, like .c or .h, can also appear under ${WRKDIR}
+# because they might be produce by an external program, like lex, yacc
+# or m4.
+
 .for module_path in ${_MODULE_langc.prog_ARGS}
-DIRS+=			${SRCDIR}/${module_path}
+.if empty(CFLAGS:M${SRCDIR}/${module_path})
+CFLAGS+=		-I ${SRCDIR}/${module_path}
+.endif
+.if empty(CFLAGS:M${WRKDIR}/${module_path})
+CFLAGS+=		-I ${WRKDIR}/${module_path}
+.endif
+.PATH.c:		${SRCDIR}/${module_path}
+.PATH.c:		${WRKDIR}/${module_path}
+.PATH.h:		${SRCDIR}/${module_path}
+.PATH.h:		${WRKDIR}/${module_path}
+.PATH.o:		${WRKDIR}/${module_path}
 .endfor
 
 .for module_path in ${_MODULE_langc.lib_ARGS}
-DIRS+=			${SRCDIR}/${module_path}
+.if empty(CFLAGS:M${SRCDIR}/${module_path})
+CFLAGS+=		-I ${SRCDIR}/${module_path}
+.endif
+.if empty(CFLAGS:M${WRKDIR}/${module_path})
+CFLAGS+=		-I ${WRKDIR}/${module_path}
+.endif
+.if empty(LDFLAGS:M${WRKDIR}/${module_path})
+LDFLAGS+=		-L ${WRKDIR}/${module_path}
+.endif
+.PATH.h:		${SRCDIR}/${module_path}
+.PATH.h:		${WRKDIR}/${module_path}
+.PATH.o:		${WRKDIR}/${module_path}
+.PATH.a:		${WRKDIR}/${module_path}
+.PATH.so:		${WRKDIR}/${module_path}
 .endfor
 
 .if ${THISMODULE} == langc.prog

@@ -128,6 +128,10 @@
 #    A id command that handles -g, -u and -n
 #
 #
+#  _BPS_GPG
+#    A gpg command to sign distribution files
+#
+#
 #  _BPS_SYSTEMOWN [@SYSTEMOWN@]
 #    The owner of system files.
 #
@@ -182,6 +186,7 @@ _BPS_AWK?=		@AWK@
 _BPS_GREP?=		@GREP@
 _BPS_SED?=		@SED@
 _BPS_ID?=		@ID@
+_BPS_GPG?=		@GPG@
 _BPS_SYSTEMOWN?=	@SYSTEMOWN@
 _BPS_SYSTEMGRP?=	@SYSTEMGRP@
 _BPS_COMPRESS?=		@COMPRESS@

@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for C language modules
+### Mingw32 -- Mingw32 build settings
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:14:14 CET 2014
+# Date: Sun Nov 16 12:03:36 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+CC=			mingw32-gcc
+AR=			mingw32-ar
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+.if "${THISMODULE}" == "langc.prog"
+.for program in ${PROGRAM}
+BINNAME.${program:T}=	${program}.exe
+.endfor
+.endif
 
-.include "subdir.mk"
-
-### End of file `Makefile'
+### End of file `Mingw32'
