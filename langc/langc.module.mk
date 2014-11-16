@@ -31,8 +31,11 @@ __<langc.module.mk>__:
 # or m4.
 
 .for module_path in ${_MODULE_langc.prog_ARGS}
-.if empty(DIRS:M${SRCDIR}/${module_path})
-DIRS+=			${SRCDIR}/${module_path}
+.if empty(CFLAGS:M${SRCDIR}/${module_path})
+CFLAGS+=		-I ${SRCDIR}/${module_path}
+.endif
+.if empty(CFLAGS:M${WRKDIR}/${module_path})
+CFLAGS+=		-I ${WRKDIR}/${module_path}
 .endif
 .PATH.c:		${SRCDIR}/${module_path}
 .PATH.c:		${WRKDIR}/${module_path}
@@ -42,8 +45,11 @@ DIRS+=			${SRCDIR}/${module_path}
 .endfor
 
 .for module_path in ${_MODULE_langc.lib_ARGS}
-.if empty(DIRS:M${SRCDIR}/${module_path})
-DIRS+=			${SRCDIR}/${module_path}
+.if empty(CFLAGS:M${SRCDIR}/${module_path})
+CFLAGS+=		-I ${SRCDIR}/${module_path}
+.endif
+.if empty(CFLAGS:M${WRKDIR}/${module_path})
+CFLAGS+=		-I ${WRKDIR}/${module_path}
 .endif
 .if empty(LDFLAGS:M${WRKDIR}/${module_path})
 LDFLAGS+=		-L ${WRKDIR}/${module_path}
