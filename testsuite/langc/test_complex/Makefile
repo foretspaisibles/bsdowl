@@ -15,6 +15,8 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 TEST=			TestComplex
+TEST+=			TestComplexMultiple
+
 TESTSEQUENCE=		clean obj depend build install dist
 
 .include "test.mk"
