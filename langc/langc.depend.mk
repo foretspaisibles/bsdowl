@@ -38,12 +38,9 @@ MKDEPCMD?=		mkdep
 .endfor
 
 MKDEPTOOL=		${MKDEPCMD}
-.for toolvariable in CFLAGS
-.if defined(${toolvariable})&&!empty(${toolvariable})
-MKDEPTOOL+=		${${toolvariable}}
+.if defined(CFLAGS)&&!empty(CFLAGS:M-I)
+MKDEPTOOL+=		${CFLAGS:S@-I @-I@gW:M-I*:S@-I@-I @g}
 .endif
-.endfor
-
 
 .depend:
 	${MKDEPTOOL} ${.ALLSRC}
