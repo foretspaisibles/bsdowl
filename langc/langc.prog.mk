@@ -157,7 +157,7 @@ _LANGC_OBJS+=		OBJS.${program:T}
 OBJS.${program:T}=	${SRCS.${program:T}:N*.h:C/\.[cly]$/.o/}
 .endif
 .if !empty(OBJS.${program:T}:N*.o)
-.warning Do not know what to do with ${OBJS.${program:T}:N*.o}\
+.error Do not know what to do with ${OBJS.${program:T}:N*.o}\
 			when preparing ${program}.
 .endif
 .endfor
