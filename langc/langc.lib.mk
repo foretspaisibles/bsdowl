@@ -78,12 +78,41 @@
 #
 #
 #  USES [not set]
-#    Supported options are debug and profile
+#    Supported options are debug, profile and compile
 #
 #
 #  MODULE [not set]
 #    The list of modules in our software package
-
+#
+#
+#  APIVERSION [not set]
+#   The shared library API version
+#
+#   See LIBVERSION.
+#
+#
+#  LIBVERSION [${APIVERSION}]
+#   The shared library version
+#
+#   When building a shared library, a library version and an api
+#   version can be used to allow several version of the same shared
+#   library to be simultaneously installed.  The value LIBVERSION
+#   is appended to the shared object name.  The value of APIVERSION is
+#   used to build a forged name, the shared object claims to have.
+#
+#   Typical values have the form ${APIVERSION}.MINOR.PATCHLEVEL.
+#
+#
+# Uses:
+#
+#  debug: No argument allowed
+#   Build with debug symbols
+#
+#  profile: No argument allowed
+#   Build with profiling information
+#
+#  compile:shared,static  At least one argument required
+#   Prepare the corresponding library
 
 THISMODULE=		langc.lib
 
@@ -95,6 +124,12 @@ PRODUCT=		${LIBRARY}
 _PACKAGE_CANDIDATE=	${LIBRARY}
 
 .include "langc.init.mk"
+
+_USES_compile_ARGS?=	static shared
+
+.if defined(APIVERSION)
+LIBVERSION?=		${APIVERSION}
+.endif
 
 #
 # Prepare manual pages
@@ -126,9 +161,21 @@ OBJS=			${SRCS:N*.h:C/\.[cly]$/.o/}
 # Register programs for installation and cleaning
 #
 
+.if!empty(_USES_compile_ARGS:Mstatic)
 LIB+=			lib${LIBRARY}.a
-INCLUDE+=		${SRCS:M*.h}
 CLEANFILES+=		lib${LIBRARY}.a
+.endif
+.if!empty(_USES_compile_ARGS:Mshared)
+CFLAGS+=		-fpic
+.if defined(LIBVERSION)
+LIB+=			lib${LIBRARY}.so.${LIBVERSION}
+CLEANFILES+=		lib${LIBRARY}.so.${LIBVERSION}
+.else
+LIB+=			lib${LIBRARY}.so
+CLEANFILES+=		lib${LIBRARY}.so
+.endif
+.endif
+INCLUDE+=		${SRCS:M*.h}
 CLEANFILES+=		${OBJS}
 
 
@@ -138,6 +185,17 @@ CLEANFILES+=		${OBJS}
 
 lib${LIBRARY}.a:	${OBJS}
 	${AR} ${ARFLAGS} ${.TARGET} ${.ALLSRC} ${ARADD}
+
+.if defined(APIVERSION)&&("${APIVERSION}" != "${LIBVERSION}")
+MKSHAREDLIB+=		-Wl,-soname,lib${LIBRARY}.so.${APIVERSION}
+.endif
+
+.if defined(LIBVERSION)
+lib${LIBRARY}.so.${LIBVERSION}:	${OBJS}
+.else
+lib${LIBRARY}.so:	${OBJS}
+.endif
+	${MKSHAREDLIB} -o ${.TARGET} ${.ALLSRC}
 
 
 #
