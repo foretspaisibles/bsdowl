@@ -1,4 +1,4 @@
-### bps.usertarget.mk -- Cibles de l'insterface utilisateur
+### bps.usertarget.mk -- Common build targets
 
 # Author: Michael Grünewald
 # Date: Sam  7 jul 2007 09:59:15 CEST
@@ -17,41 +17,61 @@
 
 ### SYNOPSIS
 
-# _MAKE_USERTARGET = configure depend build doc all install
-# _MAKE_USERTARGET+= clean distclean realclean update
-# _MAKE_ALLSUBTARGET = configure depend build doc
+# _MAKE_USERTARGET=	configure depend build doc all install
+# _MAKE_USERTARGET+=	clean distclean realclean update
+# _MAKE_ALLSUBTARGET=	configure depend build doc
 #
 # .include "bps.usertarget.mk"
 
 
 ### DESCRIPTION
 
-# Définit une recette de production pour chaque cible administrative énumérée
-# par la variable _MAKE_USERTARGET. Définit une cible administrative `all' qui
-# appelle le programme `make' pour produire chacune des cibles énumérées dans
-# _MAKE_ALLSUBTARGET.
+# Provide recipes and standard hooks for each of the targets
+# enumerated by _MAKE_USER_TARGET.
 #
-# Pour chaque cible ${target} figurant dans _MAKE_USERTARGET et pour
-# laquelle il n'existe pas de recettes, on définit une recette, de la
-# façon suivante:
-#  -- si une des cibles pre-${target}, do-${target} ou post-${target}
-#     existe, alors la recette de ${target} est vide et la production
-#     de ${target} dépend des cibles pre-do-post existantes;
-#  -- sinon, une recette affichant un message ``Nothing to do'' est
-#     préparée.
+# Define an all target, diverting the execution flow to the targets
+# enumerated by _MAKE_ALLSUBTARGET.
+
+# Variables:
+#
+#  _MAKE_USERTARGET [set by bps.init.mk]
+#   The list of targets which are operated on
+#
+#   After reading this file, for any ${target} in _MAKE_USERTARGET
+#   which does not exist yet:
+#     1. If they exist {pre,do,post}-${target} are added to the dependencies
+#        of ${target}
+#     2. An empty definition of ${target} is provided.
+#
+#
+#  _MAKE_ALLSUBTARGET
+#   The list of targets subsumed by the target all
 
 
 .if !target(__<bps.usertarget.mk>__)
 __<bps.usertarget.mk>__:
 
+.PHONY:			${_MAKE_USERTARGET}
+
+
 #
-# Dépendances pre-do-post
+# Define the all target
 #
 
-# On insère les dépendances * -> pre-*,  * -> do-* et * -> post-*
-# dans le graphe des recettes lorsque le membre de droite existe.
+.for target in ${_MAKE_ALLSUBTARGET}
+.if target(${target})
+do-all: do-all-${target}
 
-.PHONY: ${_MAKE_USERTARGET}
+do-all-${target}: .USE
+	@echo ${MAKE} ${target}
+	@cd ${.CURDIR} && ${MAKE} ${target}
+.endif
+.endfor
+
+
+#
+# Add pre,do,post hooks
+#
 
 .for target in ${_MAKE_USERTARGET:Nall}
 .if !target(${target})
@@ -63,21 +83,6 @@ ${target}: ${prefix}-${target}
 .endif
 .endfor
 
-
-#
-# Cible all
-#
-
-.for target in ${_MAKE_ALLSUBTARGET}
-.if target(${target})
-do-all: divert-${target}
-
-divert-${target}: .USE
-	@echo ${MAKE} ${target}
-	@cd ${.CURDIR}; ${MAKE} ${target}
-.endif
-.endfor
-
 .for prefix in pre do post
 .if target(${prefix}-all)
 all: ${prefix}-all
@@ -86,7 +91,7 @@ all: ${prefix}-all
 
 
 #
-# Messages
+# Empty recipes
 #
 
 .for target in ${_MAKE_USERTARGET}
