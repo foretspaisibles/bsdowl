@@ -19,8 +19,6 @@ LIBRARY=		fibonacci
 SRCS=			fibonacci.h
 SRCS+=			fibonacci.c
 
-#MAN=			libfibonacci.3
-
 DIRS=			${TESTSRCDIR}/libfibonacci
 
 .include "langc.lib.mk"
