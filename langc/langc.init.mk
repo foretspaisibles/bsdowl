@@ -27,6 +27,7 @@
 __<langc.init.mk>__:
 
 .SUFFIXES: .c .o .h .a .so .l .y
+.SUFFIXES: .s
 
 #
 # Archive manager
@@ -34,6 +35,8 @@ __<langc.init.mk>__:
 
 AR?=			ar
 ARFLAGS?=		-cru
+
+AS?=			as
 
 .include "bps.init.mk"
 .include "langc.uses.mk"

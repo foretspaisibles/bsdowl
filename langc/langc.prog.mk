@@ -154,7 +154,7 @@ LIBS.${program:T}?=	${LIBS}
 .for program in ${PROGRAM}
 _LANGC_OBJS+=		OBJS.${program:T}
 .if !defined(OBJS.${program:T})
-OBJS.${program:T}=	${SRCS.${program:T}:N*.h:C/\.[cly]$/.o/}
+OBJS.${program:T}=	${SRCS.${program:T}:N*.h:C/\.[clys]$/.o/}
 .endif
 .if !empty(OBJS.${program:T}:N*.o)
 .error Do not know what to do with ${OBJS.${program:T}:N*.o}\
