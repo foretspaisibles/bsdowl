@@ -125,6 +125,7 @@ buildfiles-${group:tl}: ${${group}}
 do-build: buildfiles
 do-install: installdirs
 do-install: installfiles
+.ORDER: installdirs installfiles
 
 .if !target(installfiles)
 installfiles:
