@@ -45,6 +45,9 @@ MAKETEST+=		${MAKE}
 
 TESTSEQUENCE?=		clean obj depend build install
 
+.ORDER:			${TEST:C@^@do-test-@}
+.ORDER:			${TEST:C@$@.done@}
+
 .for test in ${TEST}
 .if exists(${test}.mk)
 do-test: do-test-${test}
