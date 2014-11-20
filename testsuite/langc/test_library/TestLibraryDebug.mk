@@ -14,7 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-WITH_DEBUG=yes
-.include "TestLibrary.mk"
+USES=			debug
+
+test:			test-static
+test:			test-shared
+test:			test-extras
+
+.include "TestLibraryMain.mk"
 
 ### End of file `TestLibraryDebug.mk'

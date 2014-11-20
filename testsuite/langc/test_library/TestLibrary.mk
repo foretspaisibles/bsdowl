@@ -1,7 +1,7 @@
 ### TestLibrary.mk -- A very simple static library
 
 # Author: Michael Grünewald
-# Date: Fri Nov  7 10:16:01 CET 2014
+# Date: Thu Nov 20 10:18:05 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,24 +14,10 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		rational
+test:			test-static
+test:			test-shared
+test:			test-extras
 
-SRCS=			rational.h
-SRCS+=			rational_trace.h
-SRCS+=			rational_trace.c
-SRCS+=			rational_operation.c
-SRCS+=			rational_print.c
-
-MAN=			librational.3
-
-DIRS=			${TESTSRCDIR}/librational
-
-test:
-	test -f ${DESTDIR}${LIBDIR}/librational.a
-	test -f ${DESTDIR}${INCLUDEDIR}/rational.h
-	test -f ${DESTDIR}${INCLUDEDIR}/rational_trace.h
-	test -f ${DESTDIR}${MANDIR}/man3/librational.3.gz
-
-.include "langc.lib.mk"
+.include "TestLibraryMain.mk"
 
 ### End of file `TestLibrary.mk'

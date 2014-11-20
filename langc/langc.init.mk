@@ -34,6 +34,7 @@ __<langc.init.mk>__:
 
 AR?=			ar
 ARFLAGS?=		-cru
+MKSHAREDLIB?=		${CC} -shared -Wl,-undefined -Wl,dynamic_lookup
 
 .include "bps.init.mk"
 .include "langc.uses.mk"

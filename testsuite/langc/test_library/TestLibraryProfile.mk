@@ -14,7 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-WITH_PROFILE=yes
-.include "TestLibrary.mk"
+USES=			profile
+
+test:			test-static
+test:			test-shared
+test:			test-extras
+
+.include "TestLibraryMain.mk"
 
 ### End of file `TestLibraryProfile.mk'
