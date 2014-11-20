@@ -176,9 +176,30 @@ DISTEXCLUDE+=		${DISTNAME}/${f:.in=}
 # Production rule for archives
 #
 
-.for tool in ${_PROJECT_COMPRESS_TOOLS}
-${DISTDIR}/${DISTNAME}.tar${_PROJECT_COMPRESS.suffix.${tool}}::
+do-dist-tarballs-setup: .PHONY
 	${LN_S} ${SRCDIR} ${DISTDIR}/${DISTNAME}
+
+do-dist-tarballs-teardown: .PHONY
+	${RM} -f ${DISTDIR}/${DISTNAME}
+
+do-dist-tarballs-compress: .PHONY
+	${NOP}
+
+do-dist-tarballs: .PHONY
+	${NOP}
+
+do-dist-tarballs:	do-dist-tarballs-setup
+do-dist-tarballs:	do-dist-tarballs-compress
+do-dist-tarballs:	do-dist-tarballs-teardown
+
+.ORDER: do-dist-tarballs-setup\
+	  do-dist-tarballs-compress\
+	  do-dist-tarballs-teardown
+
+.for tool in ${_PROJECT_COMPRESS_TOOLS}
+do-dist-tarballs-compress:\
+	  ${DISTDIR}/${DISTNAME}.tar${_PROJECT_COMPRESS.suffix.${tool}}
+${DISTDIR}/${DISTNAME}.tar${_PROJECT_COMPRESS.suffix.${tool}}::
 	${TAR} -c\
 	  ${_PROJECT_COMPRESS.flag.${tool}}\
 	  -f ${.TARGET}\
@@ -187,7 +208,6 @@ ${DISTDIR}/${DISTNAME}.tar${_PROJECT_COMPRESS.suffix.${tool}}::
 	  ${DISTEXCLUDE:S@^@--exclude @}\
 	  --exclude ${DISTNAME}/${DISTNAME}\
 	  ${DISTNAME}
-	${RM} -f ${DISTDIR}/${DISTNAME}
 .endfor
 
 
@@ -228,9 +248,17 @@ post-dist:
 # Distribution
 #
 
+
+.ORDER: do-dist-projectdistdir\
+	  do-dist-distnosign\
+	  do-dist-tarballs\
+	  do-dist-distsign\
+	  do-dist-sign
+
 .if !target(do-dist)
 do-dist: do-dist-projectdistdir
 do-dist: do-dist-distnosign
+do-dist: do-dist-tarballs
 do-dist: do-dist-distsign
 do-dist: do-dist-sign
 .endif
@@ -253,6 +281,17 @@ do-dist-distsign do-dist-sign:
 do-dist-distnosign do-dist-distsign do-dist-sign: do-dist-projectdistdir
 
 dist: pre-dist do-dist post-dist
+
+
+#
+# Configure parallelism
+#
+
+
+.if defined(DISTSIGN)
+.ORDER:			${DISTSIGN:C@$@.sig@}
+.endif
+
 .ORDER: pre-dist do-dist post-dist
 
 #
