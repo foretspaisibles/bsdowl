@@ -64,12 +64,23 @@ CCCOMPILETOOL+=		${${toolvariable}}
 .endfor
 
 
+ASCOMPILETOOL=		${AS}
+.for toolvariable in AFLAGS
+.if defined(${toolvariable})&&!empty(${toolvariable})
+ASCOMPILETOOL+=		${${toolvariable}}
+.endif
+.endfor
+
+
 #
 # Compilation rules
 #
 
 .c.o:
 	${CCCOMPILETOOL} -c -o ${.TARGET} ${.IMPSRC}
+
+.s.o:
+	${ASCOMPILETOOL} -o ${.TARGET} ${.IMPSRC}
 
 .endif # !target(__<langc.build.mk>__)
 
