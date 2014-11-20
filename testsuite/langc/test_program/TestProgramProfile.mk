@@ -14,7 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-WITH_PROFILE=		yes
+USES=			profile
 .include "TestProgram.mk"
 
 ### End of file `TestProgram.mk'
