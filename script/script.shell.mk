@@ -1,4 +1,4 @@
-### misc.script.mk -- Development of shell scripts
+### script.shell.mk -- Development of shell scripts
 
 # Author: Michael Grünewald
 # Date: Fri 10 Feb 2006 10:40:49 GMT
@@ -28,7 +28,7 @@
 #
 # REPLACE = PREFIX TMPDIR
 #
-# .include "misc.script.mk"
+# .include "script.shell.mk"
 
 
 ### DESCRIPTION
@@ -94,8 +94,8 @@
 
 ### IMPLEMENTATION
 
-.if !target(__<misc.script.mk>__)
-__<misc.script.mk>__:
+.if !target(__<script.shell.mk>__)
+__<script.shell.mk>__:
 
 .include "bps.init.mk"
 
@@ -149,6 +149,6 @@ FILESGROUPS+= SCRIPTLIB
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
-.endif #!target(__<misc.script.mk>__)
+.endif #!target(__<script.shell.mk>__)
 
-### End of file `misc.script.mk'
+### End of file `script.shell.mk'

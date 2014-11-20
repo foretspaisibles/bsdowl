@@ -1,7 +1,7 @@
-### Makefile -- BSD Owl
+### Makefile -- Install script programs and libraries
 
 # Author: Michael Grünewald
-# Date: Ven 10 fév 2006 16:50:40 GMT
+# Date: Thu Nov 20 14:11:44 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,26 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR+=		bps
-SUBDIR+=		ocaml
-SUBDIR+=		texmf
-SUBDIR+=		langc
-SUBDIR+=		noweb
-SUBDIR+=		config
-SUBDIR+=		script
-SUBDIR+=		misc
-SUBDIR+=		www
-SUBDIR+=		support
-SUBDIR+=		testsuite
+FILES=			script.shell.mk
 
-PROJECTDISTEXCLUDE=	Wiki
-
-test: .PHONY
-	@(cd testsuite && ${MAKE} test)
-
-.MAKEFLAGS: -I${.CURDIR}/Library/Make
-.MAKEFLAGS: -I${.CURDIR}/bps
-
-.include "bsdowl.mk"
+.include "project.mk"
 
 ### End of file `Makefile'
