@@ -112,8 +112,8 @@
 #    the source tree of a project.
 #
 #
-# subshell
-#  Pop up a user subshell
+#  subshell
+#   Pop up a user subshell
 
 
 ### IMPLEMENTATION
@@ -144,8 +144,7 @@ _PROJECT_COMPRESS.flag.xz=	-J
 
 
 #
-# Production des archives
-#  initialisation
+# Prepare list of distribution files
 #
 
 .for tool in ${_PROJECT_COMPRESS_TOOLS}
@@ -157,7 +156,7 @@ DISTEXCLUDE+=		${f}
 
 
 #
-# Strategy to detect auo-excluded files
+# Strategy to detect auto-excluded files
 #
 
 .for f in CVS .cvsignore .svn .gitignore .git .product
