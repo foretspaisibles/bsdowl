@@ -106,7 +106,7 @@ __<script.shell.mk>__:
 
 .if defined(REPLACE)&&!empty(REPLACE)
 .for var in ${REPLACE}
-_SCRIPT_SED+= -e 's|@${var:L}@|${${var:S/|/\|/g}}|g'
+_SCRIPT_SED+=		-e 's|@${var:tl}@|${${var:S/|/\|/g}}|g'
 .endfor
 .endif
 
