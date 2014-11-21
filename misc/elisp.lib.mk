@@ -1,4 +1,4 @@
-### misc.elisp.mk -- Manage Emacs Lisp Directories
+### elisp.lib.mk -- Manage Emacs Lisp Directories
 
 # Author: Michael Grünewald
 # Date: Fri Feb 10 17:59:16 2006
@@ -25,7 +25,7 @@
 #
 # ELISP_INSTALL_SRC.module2.el = no
 #
-# .include "misc.elisp.mk"
+# .include "elisp.lib.mk"
 
 
 ### DESCRIPTION
@@ -92,4 +92,4 @@ ${obj}: ${obj:.elc=.el}
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
-### End of file `misc.elisp.mk'
+### End of file `elisp.lib.mk'

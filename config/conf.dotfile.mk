@@ -1,4 +1,4 @@
-### misc.dotfile.mk -- BSD Makefile for dotfiles
+### conf.dotfile.mk -- BSD Makefile for dotfiles
 
 # Author: Michael Grünewald
 # Date: Tue Sep 12 15:33:20 CEST 2006
@@ -22,7 +22,7 @@
 # DOTFILE+= dot.gnus
 #
 # DOTFILEDIR = ${HOME}			# This is the default
-# .include "misc.dotfile.mk"
+# .include "conf.dotfile.mk"
 
 
 ### DESCRIPTION
@@ -45,4 +45,4 @@ USE_SWITCH_CREDENTIALS=no
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
-### End of file `misc.dotfile.mk'
+### End of file `conf.dotfile.mk'

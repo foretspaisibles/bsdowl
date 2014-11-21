@@ -1,7 +1,7 @@
-### Makefile -- BSD Owl
+### TestLibrary.mk -- Prepare and install a shell library
 
 # Author: Michael Grünewald
-# Date: Ven 10 fév 2006 16:50:40 GMT
+# Date: Fri Nov 21 15:39:08 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,26 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR+=		bps
-SUBDIR+=		ocaml
-SUBDIR+=		texmf
-SUBDIR+=		langc
-SUBDIR+=		noweb
-SUBDIR+=		config
-SUBDIR+=		script
-SUBDIR+=		misc
-SUBDIR+=		www
-SUBDIR+=		support
-SUBDIR+=		testsuite
+LIBRARY=		libselftest.subr
 
-PROJECTDISTEXCLUDE=	Wiki
+test:
+	test -f ${DESTDIR}${SHAREDIR}/libselftest.subr
+	test -f ${DESTDIR}${MANDIR}/man3/libselftest.3.gz
 
-test: .PHONY
-	@(cd testsuite && ${MAKE} test)
+.include "shell.lib.mk"
 
-.MAKEFLAGS: -I${.CURDIR}/Library/Make
-.MAKEFLAGS: -I${.CURDIR}/bps
-
-.include "bsdowl.mk"
-
-### End of file `Makefile'
+### End of file `TestLibrary.mk'

@@ -25,6 +25,5 @@ FILESDIR?=		${SHAREDIR}
 .include "../../bps/bps.files.mk"
 .include "../../bps/bps.clean.mk"
 .include "../../bps/bps.usertarget.mk"
-.include "../../misc/misc.script.mk"
 
 ### End of file `project.mk'
