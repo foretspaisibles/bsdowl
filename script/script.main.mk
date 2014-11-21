@@ -136,7 +136,10 @@ _SCRIPT_SED+=		-e 's|@${var}@|${${var:S/|/\|/g}}|g'
 #
 
 _SCRIPT_SUFFIXES?=	sh bash csh ksh sed awk pl py
+
+.if defined(PROGRAM)&&!empty(PROGRAM)
 BIN+=			${PROGRAM:C@\.(sh|bash|csh|ksh|awk|sed|pl|py)$@@}
+.endif
 
 .for ext in ${_SCRIPT_SUFFIXES}
 .for script in ${PROGRAM:M*.${ext}}
@@ -160,12 +163,26 @@ ${script:T:.${ext}=}: ${script}
 
 # Script subroutines are not preprocessed.
 
+.if defined(LIBRARY)&&!empty(LIBRARY)
+SUBR+=			${LIBRARY}
+.endif
+
 SUBRMODE?=		${SHAREMODE}
 SUBRDIR?=		${SHAREDIR}
 SUBROWN?=		${SHAREOWN}
 SUBRGRP?=		${SHAREGRP}
 
 FILESGROUPS+=		SUBR
+
+
+#
+# Maybe filter manual pages
+#
+
+.if defined(_SCRIPT_SED)&&!defined(MANFILTER)
+MANFILTER=		${SED} ${_SCRIPT_SED}
+.endif
+
 
 .include "bps.man.mk"
 .include "bps.files.mk"

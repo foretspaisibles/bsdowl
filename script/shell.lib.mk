@@ -1,7 +1,7 @@
-### shell.prog.mk -- Shell programs
+### shell.lib.mk -- Prepare shell library
 
 # Author: Michael Grünewald
-# Date: Fri Nov 21 21:26:09 CET 2014
+# Date: Fri Nov 21 23:01:07 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,46 +14,40 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-### DESCRIPTION
-
 # Variables:
 #
 #
-#  PROGRAM [not set]
-#   Name of the program
+#  LIBRARY [not set]
+#   Name of the library
 #
-#   This can actually be a list of programs.  Standard directory
-#   variables between `@'s are expanded in the code.
+#   This can actually be a list of libraries.  Standard directory
+#   variables between `@'s are not expanded in the code.
 #
-#   If PACKAGE is not defined, it will be guessed from PROGRAM if this
+#   If PACKAGE is not defined, it will be guessed from LIBRARY if this
 #   is a single word or from the last component of SRCDIR otherwise.
 #
 #
-#  BINOWN, BINGRP, BINMODE, BINDIR, BINNAME
-#   Parameters of the program installation
+#  SUBROWN, SUBRGRP, SUBRMODE, SUBRDIR, SUBRNAME
+#   Parameters of the library installation
 #
 #   See `bps.files.mk` for a closer description of these variables.
 
-THISMODULE=		shell.prog
+THISMODULE=		shell.lib
 
-.if defined(PROG)&&!empty(PROG)
-PROGRAM?=		${PROG}
+.if !defined(LIBRARY)||empty(LIBRARY)
+.error The shell.prog.mk module expects you to set the LIBRARY variable to a sensible value.
 .endif
 
-.if !defined(PROGRAM)||empty(PROGRAM)
-.error The shell.prog.mk module expects you to set the PROGRAM variable to a sensible value.
-.endif
-
-PRODUCT=		${PROGRAM:C@\.(sh|bash|ksh|csh|awk|sed)$@@}
+PRODUCT=		${LIBRARY:C@\.(sh|bash|ksh|csh|awk|sed|subr)$@@}
 _PACKAGE_CANDIDATE=	${PRODUCT}
 REPLACE+=		${STDREPLACE}
-REPLACE+=		${BINDIR}
+REPLACE+=		SUBRDIR
 
 .for product in ${PRODUCT}
-_MAN_AUTO+=		${product}.1
+_MAN_AUTO+=		${product}.3
 _MAN_AUTO+=		${product}.8
 .endfor
 
 .include "script.main.mk"
 
-### End of file `shell.prog.mk'
+### End of file `shell.lib.mk'

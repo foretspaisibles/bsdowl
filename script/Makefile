@@ -16,6 +16,7 @@
 
 FILES=			script.main.mk
 FILES+=			shell.prog.mk
+FILES+=			shell.lib.mk
 
 .include "project.mk"
 

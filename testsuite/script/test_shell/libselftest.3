@@ -1,0 +1,46 @@
+.\" libselftest.3 -- A self-testing library
+.\"
+.\" Author: Michael Grünewald
+.\" Date: Fri Nov 21 22:54:14 CET 2014
+.\"
+.\" BSD Owl Scripts (https://github.com/michipili/bsdowl)
+.\" This file is part of BSD Owl Scripts
+.\"
+.\" Copyright © 2005–2014 Michael Grünewald
+.\"
+.\" This file must be used under the terms of the CeCILL-B.
+.\" This source file is licensed as described in the file COPYING, which
+.\" you should have received as part of this distribution. The terms
+.\" are also available at
+.\" http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+.\"
+.Dd November 21, 2014
+.Dt LIBSELFTEST.SUBR 3
+.Os
+.Sh NAME
+.Nm libselftest.subr
+.Nd functions used by system shell scripts
+.Sh SYNOPSIS
+.Bl -item -compact
+.It
+.Ic .\& Pa @SUBRDIR@/libselftest.subr
+.Pp
+.It
+.Ic selftest
+.It
+.El
+.Sh DESCRIPTION
+The
+.Nm
+library defines a single function testing for the existence of the
+file being read.
+.Sh HISTORY
+The
+.Nm
+library appeared as a demonstration shell script for bsdowl.
+.Sh AUTHORS
+.An -nosplit
+This heat generating
+.Nm
+library was written by
+.An Michael Gr\(:unewald Aq michipili@gmail.com .
