@@ -17,6 +17,7 @@
 
 SUBDIR=		ocaml
 SUBDIR+=	langc
+SUBDIR+=	script
 
 .include "subdir.mk"
 

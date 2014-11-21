@@ -54,45 +54,45 @@
 
 # Variables:
 #
-#  SCRIPT
+#  PROGRAM
 #   List of script programs to install
 #
-#   The variables BINDIR, BINMODE, BINOWN and BINGRP
-#   parametrise the installation.
+#   If a file in this list has a name ending in one of the
+#   suffixes enumerated in _SCRIPT_SUFFIXES, then variable replacement
+#   may occur in this file, and the file is always installed under a
+#   name without the suffix.
 #
 #
-#  SCRIPTLIB
+#  SUBR
+#   List of script subroutine libraries to install
+#
+#
+#  SUBRDIR [${SHAREDIR}${PACKAGEDIR}]
 #   List of script libraries to install
 #
-#   The variables SCRIPTLIBDIR, SCRIPTLIBMODE, SCRIPTLIBOWN and
-#   SCRIPTLIBGRP parametrise the installation.
+#   The variables SUBRDIR, SUBRMODE, SUBROWN and
+#   SUBRGRP parametrise the installation.
 #
-#   The SCRIPTLIBDIR variable defaults to
+#   The SUBRDIR variable defaults to
 #   `${SHAREDIR}${PACKAGEDIR}` but other sensible locations could
-#   be `${LIBDIR}/perl5/5.12.4/${PACKAGEDIR}`.
+#   be `${LIBDIR}/perl5/5.12.4${PACKAGEDIR}`.
 #
 #
-#  PACKAGE
-#   Name of the application
-#
-#   It must be a UNIX filename and can be defined to let script
-#   libraries be installed in an application specific subdirectory.
-#
-#
-#  REPLACE
-#   List of variables to be replaced in the configuration step
-#
-#   The declaration `REPLACE=PREFIX` arranges so that the sequence
-#   `@prefix@` is replaced by the value of `PREFIX` known to `make`.
-#
-#   The case conversion should help to follow the different
-#   conventions used when writing makefiles and using autoconf.
+#  REPLACE [not set]
+#   List of variables to be replaced in the preparation step
 #
 #   The pipe character `|` must not appear in replacement text of the
 #   variables enumerated by REPLACE.
+#
+#  STDREPLACE [see description]
+#   The standard replacement list
 
 
 ### IMPLEMENTATION
+
+.if !defined(THISMODULE)
+.error shell.main.mk cannot be included directly.
+.endif
 
 .if !target(__<script.shell.mk>__)
 __<script.shell.mk>__:
@@ -104,9 +104,29 @@ __<script.shell.mk>__:
 # Replacement of variables
 #
 
+STDREPLACE=		PACKAGE
+STDREPLACE+=		VERSION
+STDREPLACE+=		prefix
+STDREPLACE+=		exec_prefix
+STDREPLACE+=		bindir
+STDREPLACE+=		sbindir
+STDREPLACE+=		libexecdir
+STDREPLACE+=		datarootdir
+STDREPLACE+=		datadir
+STDREPLACE+=		sysconfdir
+STDREPLACE+=		sharedstatedir
+STDREPLACE+=		localstatedir
+STDREPLACE+=		runstatedir
+STDREPLACE+=		includedir
+STDREPLACE+=		docdir
+STDREPLACE+=		infodir
+STDREPLACE+=		libdir
+STDREPLACE+=		localedir
+STDREPLACE+=		mandir
+
 .if defined(REPLACE)&&!empty(REPLACE)
 .for var in ${REPLACE}
-_SCRIPT_SED+=		-e 's|@${var:tl}@|${${var:S/|/\|/g}}|g'
+_SCRIPT_SED+=		-e 's|@${var}@|${${var:S/|/\|/g}}|g'
 .endfor
 .endif
 
@@ -115,12 +135,13 @@ _SCRIPT_SED+=		-e 's|@${var:tl}@|${${var:S/|/\|/g}}|g'
 # Script programs
 #
 
-_SCRIPT_EXTS?= pl sh bash py sed awk
+_SCRIPT_SUFFIXES?=	sh bash csh ksh sed awk pl py
+BIN+=			${PROGRAM:C@\.(sh|bash|csh|ksh|awk|sed|pl|py)$@@}
 
-.for ext in ${_SCRIPT_EXTS}
-.for script in ${SCRIPT:M*.${ext}}
-BIN+= ${script:T:.${ext}=}
-CLEANFILES+= ${script:T:.${ext}=}
+.for ext in ${_SCRIPT_SUFFIXES}
+.for script in ${PROGRAM:M*.${ext}}
+CLEANFILES+=		${script:T:.${ext}=}
+buildfiles:		${script:T:.${ext}=}
 .if defined(_SCRIPT_SED)
 ${script:T:.${ext}=}: ${script}
 	${SED} ${_SCRIPT_SED} < ${.ALLSRC} > ${.TARGET}.output
@@ -134,19 +155,21 @@ ${script:T:.${ext}=}: ${script}
 
 
 #
-# Script libraries
+# Script subroutine libraries
 #
 
-SCRIPTLIBMODE?= ${SHAREMODE}
-SCRIPTLIBDIR?= ${SHAREDIR}
-SCRIPTLIBOWN?= ${SHAREOWN}
-SCRIPTLIBGRP?= ${SHAREGRP}
+# Script subroutines are not preprocessed.
 
-FILESGROUPS+= SCRIPTLIB
+SUBRMODE?=		${SHAREMODE}
+SUBRDIR?=		${SHAREDIR}
+SUBROWN?=		${SHAREOWN}
+SUBRGRP?=		${SHAREGRP}
 
+FILESGROUPS+=		SUBR
 
-.include "bps.clean.mk"
+.include "bps.man.mk"
 .include "bps.files.mk"
+.include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
 .endif #!target(__<script.shell.mk>__)

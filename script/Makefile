@@ -14,7 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			script.shell.mk
+FILES=			script.main.mk
+FILES+=			shell.prog.mk
 
 .include "project.mk"
 
