@@ -17,23 +17,23 @@
 
 ### SYNOPSIS
 
-# SCRIPT = mp2eps.sh
-# SCRIPT+= mp2pdf.sh
-# SCRIPT+= mp2png.sh
+# SCRIPT=		mp2eps.sh
+# SCRIPT+=		mp2pdf.sh
+# SCRIPT+=		mp2png.sh
 #
-# SCRIPTLIB+= mp2pnglib.sh
+# SCRIPTLIB+=		mp2pnglib.sh
 #
 #
-# TMPDIR = /var/run/tmp
+# TMPDIR=		/var/run/tmp
 #
-# REPLACE = PREFIX TMPDIR
+# REPLACE=		PREFIX TMPDIR
 #
 # .include "script.shell.mk"
 
 
 ### DESCRIPTION
 
-# This modules handles the configuration and installation of
+# This module handles the configuration and installation of
 # scripts.  The target language is the Bourne shell but other
 # scripting languages are supported as well.
 
@@ -54,14 +54,14 @@
 
 # Variables:
 #
-# SCRIPT
+#  SCRIPT
 #   List of script programs to install
 #
 #   The variables BINDIR, BINMODE, BINOWN and BINGRP
 #   parametrise the installation.
 #
 #
-# SCRIPTLIB
+#  SCRIPTLIB
 #   List of script libraries to install
 #
 #   The variables SCRIPTLIBDIR, SCRIPTLIBMODE, SCRIPTLIBOWN and
@@ -72,14 +72,14 @@
 #   be `${LIBDIR}/perl5/5.12.4/${PACKAGEDIR}`.
 #
 #
-# PACKAGE
+#  PACKAGE
 #   Name of the application
 #
 #   It must be a UNIX filename and can be defined to let script
 #   libraries be installed in an application specific subdirectory.
 #
 #
-# REPLACE
+#  REPLACE
 #   List of variables to be replaced in the configuration step
 #
 #   The declaration `REPLACE=PREFIX` arranges so that the sequence
