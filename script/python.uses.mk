@@ -1,7 +1,7 @@
-### Makefile -- Test for Python support
+### python.uses.mk -- Options for Python scripts
 
 # Author: Michael Grünewald
-# Date: Sat Nov 22 11:04:44 CET 2014
+# Date: Sat Nov 22 12:52:43 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,9 +14,18 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR=		showconfig
-SUBDIR+=	funniest
 
-.include "subdir.mk"
+.if !defined(THISMODULE)
+.error python.uses.mk cannot be included directly.
+.endif
 
-### End of file `Makefile'
+.if !target(__<python.uses.mk>__)
+__<python.uses.mk>__:
+
+.if!empty(_USES_python_ARGS:M[0-9].[0-9])
+PYTHONVERSION=		${_USES_python_ARGS:M[0-9].[0-9]}
+.endif
+
+.endif # !target(__<python.uses.mk>__)
+
+### End of file `python.uses.mk'

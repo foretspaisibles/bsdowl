@@ -18,6 +18,10 @@ FILES=			script.main.mk
 FILES+=			shell.prog.mk
 FILES+=			shell.lib.mk
 FILES+=			python.prog.mk
+FILES+=			python.lib.mk
+FILES+=			python.init.mk
+FILES+=			python.uses.mk
+FILES+=			python.setuptools.mk
 
 .include "project.mk"
 
