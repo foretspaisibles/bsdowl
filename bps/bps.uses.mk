@@ -29,7 +29,7 @@
 #    The list of options found in ${USES}.
 #
 #
-#  _USES_${option}_ARG
+#  _USES_${option}_ARGS
 #    The argument for option ${option}
 
 
@@ -48,7 +48,7 @@ __<bps.uses.mk>__:
 .if defined(USES)&&!empty(USES)
 _USES_OPTIONS=		${USES:C/\:.*//}
 .for option in ${USES}
-_USE_${option:C/\:.*//}_ARGS:=${option:C/^[^\:]*(\:|\$)//:S/,/ /g}
+_USES_${option:C/\:.*//}_ARGS:=${option:C/^[^\:]*(\:|\$)//:S/,/ /g}
 .endfor
 .endif
 
@@ -61,7 +61,7 @@ display-uses: .PHONY
 	${MESG} "${displayvar}=${${displayvar}}"
 .endfor
 .for option in ${_USES_OPTIONS}
-	${MESG} "_USE_${option}_ARGS=${_USE_${option}_ARGS}"
+	${MESG} "_USES_${option}_ARGS=${_USES_${option}_ARGS}"
 .endfor
 .endif
 
