@@ -17,6 +17,7 @@
 FILES=			script.main.mk
 FILES+=			shell.prog.mk
 FILES+=			shell.lib.mk
+FILES+=			python.prog.mk
 
 .include "project.mk"
 
