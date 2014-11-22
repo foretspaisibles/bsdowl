@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for scripts
+### Makefile -- Test installation of Python modules
 
 # Author: Michael Grünewald
-# Date: Fri Nov 21 21:54:07 CET 2014
+# Date: Sat Nov 22 11:21:37 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TEST=			TestLibrary
 
-SUBDIR=		test_shell
-SUBDIR+=	test_python
-
-.include "subdir.mk"
+.include "test.mk"
 
 ### End of file `Makefile'
