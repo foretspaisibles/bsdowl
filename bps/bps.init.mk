@@ -176,6 +176,10 @@
 #    The command used to copy file trees.
 #
 #
+#  M4 [m4]
+#   The command used to invoke the macro processor M4
+#
+#
 #  _MAKE_USERTARGET [configure obj depend build doc all
 #    install test clean distclean realclean benchmark]
 #    The list of targets that are defined by every module.
@@ -288,6 +292,7 @@ CHOWN?=			chown
 CHMOD?=			chmod
 FIND?=			find
 CPIO?=			cpio
+M4?=			m4
 
 
 #
