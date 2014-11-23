@@ -96,6 +96,8 @@ USE_SWITCH_CREDENTIALS=	yes
 
 LOCALBASE?=		/usr/local
 
+.include "bps.init.mk"
+
 
 #
 # BASE, for base system configuration files, in /etc
@@ -251,8 +253,11 @@ XDMDIR.${file:T}?= ${XDMDIR}/pixmaps
 .endfor
 .endfor
 
+.for filesgroup in ${FILESGROUPS}
+_M4_CANDIDATE+=		${${filesgroup}}
+.endfor
 
-.include "bps.init.mk"
+.include "bps.m4.mk"
 .include "bps.credentials.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
