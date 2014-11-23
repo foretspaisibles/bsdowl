@@ -106,6 +106,12 @@ BASEDIR.sshd_config=	${BASEDIR}/ssh
 BASEDIR.ssh_config=	${BASEDIR}/ssh
 BASEMODE.hostpad.conf=	400
 
+.if !empty(BASE:Mlogin.conf)
+post-install: post-install-rebuild-logindb
+post-install-rebuild-logindb:
+	cap_mkdb /etc/login.conf
+.endif
+
 
 #
 #  RCD, for initialisation files used to boot the system
