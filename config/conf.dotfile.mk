@@ -17,30 +17,47 @@
 
 ### SYNOPSIS
 
-# DOTFILE+= dot.cshrc
-# DOTFILE+= dot.emacs
-# DOTFILE+= dot.gnus
+# DOTFILE+=		dot.cshrc
+# DOTFILE+=		dot.emacs
+# DOTFILE+=		dot.gnus
 #
-# DOTFILEDIR = ${HOME}			# This is the default
+# DOTFILEDIR= ${HOME}			# This is the default
 # .include "conf.dotfile.mk"
 
 
 ### DESCRIPTION
 
-# Install dotfiles.
+# Variables:
+#
+#
+#  DOTFILE
+#   Enumerate the dotfiles to be installed
+#
+#
+#  DOTFILEDIR [${HOME}]
+#   The directory, relative to ${DESTDIR}, for items of DOTFILE
 
-FILESGROUPS+= DOTFILE
-DOTFILEDIR?= ${HOME}
 
-.for item in ${DOTFILE}
-.if !defined(DOTFILENAME.${item:T})
-DOTFILENAME.${item:T}=${item:C/^dot//}
-.endif
-.endfor
+THISMODULE=		conf.dotfile
 
 USE_SWITCH_CREDENTIALS=no
 
 .include "bps.init.mk"
+
+FILESGROUPS+=		DOTFILE
+DOTFILEDIR?=		${HOME}
+
+.for item in ${DOTFILE}
+.if !defined(DOTFILENAME.${item:T})
+DOTFILENAME.${item:T}=	${item:C@^dot@@}
+.endif
+.endfor
+
+.for filesgroup in ${FILESGROUPS}
+_M4_CANDIDATE+=		${${filesgroup}}
+.endfor
+
+.include "bps.m4.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"

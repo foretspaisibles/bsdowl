@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### Makefile -- Test support for dotfiles
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sun Nov 23 15:50:59 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,12 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TEST=			TestDotfile
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
-SUBDIR+=	script
-SUBDIR+=	config
-
-.include "subdir.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

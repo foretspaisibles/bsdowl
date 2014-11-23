@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### dot.cshrc -- Configuration file for the C-shell
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sun Nov 23 15:52:11 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,12 +14,6 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+setenv	PAGER		less
 
-SUBDIR=		ocaml
-SUBDIR+=	langc
-SUBDIR+=	script
-SUBDIR+=	config
-
-.include "subdir.mk"
-
-### End of file `Makefile'
+### End of file `dot.cshrc'
