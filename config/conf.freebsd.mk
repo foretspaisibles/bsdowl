@@ -16,6 +16,7 @@
 
 # Variables:
 #
+#
 #  LOCALBASE [/usr/local]
 #   The prefix used by ports
 #
@@ -84,6 +85,10 @@
 #
 #   XDM is the display manager daemon shipped with Xorg. It is highly
 #   configurable, see comments in the relevant files.
+#
+#
+#  JAILDIR [not set]
+#   The base directory of the jail where files should be installed
 
 
 THISMODULE=		conf.freebsd
@@ -98,7 +103,7 @@ LOCALBASE?=		/usr/local
 
 FILESGROUPS+=		BASE
 
-BASEDIR?=		/etc
+BASEDIR?=		${JAILDIR}/etc
 BASEOWN?=		root
 BASEGRP?=		wheel
 BASEMODE?=		444
@@ -119,7 +124,7 @@ post-install-rebuild-logindb:
 
 FILESGROUPS+=		RCD
 
-RCDDIR?=		${LOCALBASE}/etc/rc.d
+RCDDIR?=		${JAILDIR}${LOCALBASE}/etc/rc.d
 RCDOWN?=		${BASEOWN}
 RCDGRP?=		${BASEGRP}
 RCDMODE?=		555
@@ -131,13 +136,13 @@ RCDMODE?=		555
 
 FILESGROUPS+=		PORT
 
-PORTDIR?=		${LOCALBASE}/etc
+PORTDIR?=		${JAILDIR}${LOCALBASE}/etc
 PORTOWN?=		${BASEOWN}
 PORTGRP?=		${BASEGRP}
 PORTMODE?=		444
 
 PORTMODE.sudoers=	440
-PORTDIR.PolicyKit.conf=	${PORTDIR}/PolicyKit
+PORTDIR.PolicyKit.conf=${PORTDIR}/PolicyKit
 PORTDIR.fonts-local.conf=${PORTDIR}/fonts
 PORTNAME.fonts-local.conf=local.conf
 
@@ -148,7 +153,7 @@ PORTNAME.fonts-local.conf=local.conf
 
 FILESGROUPS+=		FDI
 
-FDIDIR?=		${LOCALBASE}/share/hal/fdi/preprobe/20thirdparty
+FDIDIR?=		${JAILDIR}${LOCALBASE}/share/hal/fdi/preprobe/20thirdparty
 FDIOWN?=		${BASEOWN}
 FDIGRP?=		${BASEGRP}
 FDIMODE?=		444
@@ -160,7 +165,7 @@ FDIMODE?=		444
 
 FILESGROUPS+=		KERN
 
-KERNDIR?=		/usr/src/sys/${MACHINE}/conf
+KERNDIR?=		${JAILDIR}/usr/src/sys/${MACHINE}/conf
 KERNOWN?=		${BASEOWN}
 KERNGRP?=		${BASEGRP}
 KERNMODE?=		444
@@ -172,7 +177,7 @@ KERNMODE?=		444
 
 FILESGROUPS+=		BOOT
 
-BOOTDIR?=		/boot
+BOOTDIR?=		${JAILDIR}/boot
 BOOTOWN?=		${BASEOWN}
 BOOTGRP?=		${BASEGRP}
 BOOTMODE?=		444
@@ -184,7 +189,7 @@ BOOTMODE?=		444
 
 FILESGROUPS+=		CSUP
 
-CSUPDIR?=		/etc/csup
+CSUPDIR?=		${JAILDIR}/etc/csup
 CSUPOWN?=		${BASEOWN}
 CSUPGRP?=		${BASEGRP}
 CSUPMODE?=		444
@@ -199,7 +204,7 @@ CSUPNAME.refuse-supfile=refuse
 
 FILESGROUPS+=		XORG
 
-XORGDIR?=		/etc/X11
+XORGDIR?=		${JAILDIR}/etc/X11
 XORGOWN?=		${BASEOWN}
 XORGGRP?=		${BASEGRP}
 XORGMODE?=		444
@@ -210,7 +215,7 @@ XORGMODE?=		444
 
 FILESGROUPS+=		KDE
 
-KDEDIR?=		${LOCALBASE}/kde4/share/config
+KDEDIR?=		${JAILDIR}${LOCALBASE}/kde4/share/config
 KDEOWN?=		${BASEOWN}
 KDEGRP?=		${BASEGRP}
 KDEMODE?=		444
@@ -223,7 +228,7 @@ KDEDIR.kdmrc=		${KDEDIR}/kdm
 #
 
 FILESGROUPS+=		XDM
-XDMDIR?=		${LOCALBASE}/lib/X11/xdm
+XDMDIR?=		${JAILDIR}${LOCALBASE}/lib/X11/xdm
 XDMOWN?=		${BASEOWN}
 XDMGRP?=		${BASEGRP}
 XDMMODE?=		444
