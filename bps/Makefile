@@ -33,6 +33,7 @@ FILES+=	bps.subdir.mk
 FILES+=	bps.files.mk
 FILES+= bps.autoconf.mk
 FILES+= bps.project.mk
+FILES+= bps.m4.mk
 
 .include "project.mk"
 
