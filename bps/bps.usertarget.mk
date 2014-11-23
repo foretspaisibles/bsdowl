@@ -59,13 +59,11 @@ __<bps.usertarget.mk>__:
 #
 
 .for target in ${_MAKE_ALLSUBTARGET}
-.if target(${target})
 do-all: do-all-${target}
 
 do-all-${target}: .USE
 	@echo ${MAKE} ${target}
 	@cd ${.CURDIR} && ${MAKE} ${target}
-.endif
 .endfor
 
 
