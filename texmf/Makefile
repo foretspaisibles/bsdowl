@@ -1,42 +1,34 @@
-### Makefile
+### Makefile -- Support for TeX and METAPOST
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 18:12:07 CEST
+# Date: Sam Jul  7 2007 18:12:07 CEST
 
-FILES = texmf.init.mk
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES+= tex.init.mk
-FILES+= tex.doc.pre.mk
-FILES+= tex.doc.main.mk
-FILES+= tex.doc.post.mk
-FILES+= tex.doc.mk
-FILES+= tex.device.dvi.mk
-FILES+= tex.device.ps.mk
-FILES+= tex.device.pdf.mk
-FILES+= tex.driver.dvi.mk
-FILES+= tex.driver.pdftex.mk
-FILES+= tex.driver.dvips.mk
-FILES+= tex.mpost.mk
-FILES+= tex.files.mk
-FILES+= tex.files.main.mk
+FILES=			texmf.init.mk
+FILES+=			texmf.uses.mk
+FILES+=			texmf.module.mk
+FILES+=			texmf.external.mk
+FILES+=			texmf.depend.mk
+FILES+=			texmf.clean.mk
+FILES+=			texmf.build.mk
+FILES+=			texmf.draft.mk
 
-FILES+= latex.doc.mk
-FILES+= latex.doc.pre.mk
-FILES+= latex.doc.post.mk
-FILES+= latex.bibtex.mk
+FILES+=			tex.doc.mk
+FILES+=			latex.doc.mk
 
-tex.driver.pdftex.mk: tex.driver.dvi.mk
-	sed \
-	  -e 's/tex\.driver\.dvi\.mk/tex\.driver\.pdftex\.mk/g'\
-	  -e 's/DVI/PDF/g' \
-	  -e 's/dvi/pdf/g' \
-	  ${.ALLSRC} > ${.TARGET}
-
-tex.device.pdf.mk: tex.device.dvi.mk
-	sed -e 's/DVI/PDF/g' -e 's/dvi/pdf/g' ${.ALLSRC} > ${.TARGET}
-
-CLEANFILES+= tex.driver.pdftex.mk
-CLEANFILES+= tex.device.pdf.mk
+OBSOLETE+=		tex.files.mk
+OBSOLETE+=		tex.files.main.mk
+OBSOLETE+=		latex.bibtex.mk
 
 .include "project.mk"
 

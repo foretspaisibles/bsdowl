@@ -1,7 +1,7 @@
-### latex.doc.pre.mk -- Produce LaTeX documents
+### texmf.uses.mk -- Process module options
 
 # Author: Michael Grünewald
-# Date: Dim  9 sep 2007 14:49:18 CEST
+# Date: Mon Nov 24 14:00:50 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,16 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-# Confer `tex.doc.mk'.
+.if !defined(THISMODULE)
+.error texmf.uses.mk cannot be included directly.
+.endif
 
-TEX = pdflatex
-TEX.dvi = latex
-TEX.pdf = pdflatex
+.if !target(__<texmf.uses.mk>__)
+__<texmf.uses.mk>__:
 
-MULTIPASS+= aux toc
-_TEX_AUX_SUFFIXES?= .log .aux .toc .out
-_TEX_SUFFIXES?= .tex .latex .cls .sty
+.endif # !target(__<texmf.uses.mk>__)
 
-MPOST_CONVERT_MPS?= no
-
-### End of file `latex.doc.pre.mk'
+### End of file `texmf.uses.mk'

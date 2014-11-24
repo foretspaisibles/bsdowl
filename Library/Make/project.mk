@@ -21,7 +21,6 @@ SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
 FILESDIR?=		${SHAREDIR}
 
 .include "../../bps/bps.init.mk"
-.include "../../texmf/tex.files.mk"
 .include "../../bps/bps.files.mk"
 .include "../../bps/bps.clean.mk"
 .include "../../bps/bps.usertarget.mk"

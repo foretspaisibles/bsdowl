@@ -1,7 +1,7 @@
-### tex.doc.post.mk -- Produce TeX documents
+### texmf.module.mk -- Take in account other modules in the project
 
 # Author: Michael Grünewald
-# Date: sam 16 avr 2011 22:46:34 CEST
+# Date: Mon Nov 24 14:01:15 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,8 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-.include "bps.clean.mk"
-.include "bps.files.mk"
-.include "bps.usertarget.mk"
+.if !defined(THISMODULE)
+.error texmf.module.mk cannot be included directly.
+.endif
 
-### End of file `tex.doc.post.mk'
+.if !target(__<texmf.module.mk>__)
+__<texmf.module.mk>__:
+
+.endif # !target(__<texmf.module.mk>__)
+
+### End of file `texmf.module.mk'

@@ -16,7 +16,6 @@
 
 PROGRAM=		mp2eps.sh
 PROGRAM+=		mp2png.sh
-PROGRAM+=		mp2pdf.sh
 
 .include "script.mk"
 
