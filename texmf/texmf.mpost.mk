@@ -61,15 +61,11 @@ CLEANFILES+=		${figure}.log
 .if !empty(MPDEVICE:Nsvg)
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
 .endif
-.if !empty(MPDEVICE:Meps)
-CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.eps}
+.for device in eps pdf png
+.if !empty(MPDEVICE:M${device})
+CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.${device}}
 .endif
-.if !empty(MPDEVICE:Mpdf)
-CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
-.endif
-.if !empty(MPDEVICE:Mpng)
-CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.png}
-.endif
+.endfor
 .endif
 .endfor
 
