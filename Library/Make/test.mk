@@ -53,17 +53,18 @@ TESTSEQUENCE?=		clean obj depend build install
 do-test: do-test-${test}
 do-test-${test}: ${test}.done
 ${test}.done: ${test}.mk
-	${INFO} ${_SUBDIR_PREFIX}${test} '(test)'
 .for step in ${TESTSEQUENCE}
-	${MAKETEST} -f ${.ALLSRC:M*.mk} ${step}
+	${INFO} ${_SUBDIR_PREFIX}${test} '(${step})'
+	@${MAKETEST} -f ${.ALLSRC:M*.mk} ${step}
 .endfor
-	${MAKETEST} -f ${.ALLSRC:M*.mk} test
+	${INFO} ${_SUBDIR_PREFIX}${test} '(test)'
+	@${MAKETEST} -f ${.ALLSRC:M*.mk} test
 	touch ${test}.done
 do-clean: do-clean-${test}
 do-clean-${test}: ${test}.mk .PHONY
 	${INFO} ${_SUBDIR_PREFIX}${test} '(clean)'
 	@${RM} -f ${test}.done
-	${MAKETEST} -f ${.ALLSRC:M*.mk} realclean
+	@${MAKETEST} -f ${.ALLSRC:M*.mk} realclean
 .else
 .error ${test}: Test is not defined.
 .endif
