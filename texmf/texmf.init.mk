@@ -77,6 +77,14 @@ _TEX_PRINTER=		${TEXDEVICE:M*.ps:.ps=}
 # TeX environment
 #
 
+.if "${.OBJDIR}" != "${.CURDIR}"
+TEXINPUTS+=		${.CURDIR}
+MPINPUTS+=		${.CURDIR}
+.if defined(MPTEXINPUTS)
+MPTEXINPUTS+=		${.CURDIR}
+.endif
+.endif
+
 .if defined(TEXINPUTS)&&!empty(TEXINPUTS)
 .if !defined(USE_STRICT_TEXINPUTS)|| ${USE_STRICT_TEXINPUTS} != yes
 _TEX_ENV+=		TEXINPUTS=".:${TEXINPUTS:tW:S@ @:@g}:"
