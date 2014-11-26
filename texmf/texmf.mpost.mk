@@ -33,6 +33,11 @@ _MPOST_MPSTOOL=		${_MPOST_TOOL}
 _MPOST_MPSTOOL+=	-s 'prologues=3'
 _MPOST_MPSTOOL+=	-s 'outputtemplate="%j-%c.mps"'
 
+_MPOST_SVGTOOL=		${_MPOST_TOOL}
+_MPOST_SVGTOOL+=	-s 'prologues=3'
+_MPOST_SVGTOOL+=	-s 'outputformat="svg"'
+_MPOST_SVGTOOL+=	-s 'outputtemplate="%j-%c.svg"'
+
 .for figure in ${_MPOST_SRC}
 ${_MPOST_LIST.${figure:T}}: ${figure}
 	${_MPOST_MPSTOOL} ${.ALLSRC}
@@ -46,6 +51,21 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .endif
 .endfor
 
+.for figure in ${_MPOST_SRC}
+${_MPOST_LIST.${figure:T}:.mps=.svg}: ${figure}
+	${_MPOST_SVGTOOL} ${.ALLSRC}
+CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.svg}
+.endfor
+
 .endif # !target(__<texmf.mpost.mk>__)
+
+.if !target(display-mpost)
+display-mpost:
+	${INFO} 'Display METAPOST information'
+.for displayvar in _MPOST_SRC
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.endif
+
 
 ### End of file `texmf.mpost.mk'

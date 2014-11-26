@@ -26,6 +26,7 @@ FILES+=			texmf.draft.mk
 
 FILES+=			tex.doc.mk
 FILES+=			latex.doc.mk
+FILES+=			metapost.doc.mk
 
 OBSOLETE+=		tex.files.mk
 OBSOLETE+=		tex.files.main.mk

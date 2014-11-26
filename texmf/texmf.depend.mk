@@ -39,10 +39,8 @@ DISTCLEANFILES+=	.depend.mpost
 .depend.mpost:
 	@${RM} -f ${.TARGET}
 	@${TOUCH} ${.TARGET}
-.for document in ${DOCUMENT}
-.for figure in ${SRCS.${document:T}:M*.mp}
+.for figure in ${_MPOST_SRC}
 	@${SED} -n 's@^beginfig(\([0-9][0-9]*\)).*@_MPOST_LIST.${figure:T}+=${figure:.mp=}-\1.mps@p' ${.ALLSRC} >> ${.TARGET}
-.endfor
 .endfor
 
 .for document in ${DOCUMENT}
