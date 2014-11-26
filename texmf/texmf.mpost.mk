@@ -38,10 +38,9 @@ _MPOST_SVGTOOL+=	-s 'prologues=3'
 _MPOST_SVGTOOL+=	-s 'outputformat="svg"'
 _MPOST_SVGTOOL+=	-s 'outputtemplate="%j-%c.svg"'
 
-.for figure in ${_MPOST_DOCUMENT}
-${_MPOST_LIST.${figure:T}}: ${figure}.mp
-	${_MPOST_MPSTOOL} ${.ALLSRC}
-
+.for document in ${_TEX_DOCUMENT}
+.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
+.if !empty(_MPOST_LIST.${figure:T})
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
 .if !empty(TEXDEVICE:Mdvi)||!empty(TEXDEVICE:M*ps)
 CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.eps}
@@ -49,13 +48,38 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.eps}
 .if !empty(TEXDEVICE:Mpdf)
 CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .endif
+.endif
+.endfor
 .endfor
 
 .for figure in ${_MPOST_DOCUMENT}
+.if !empty(_MPOST_LIST.${figure:T})
+${_MPOST_LIST.${figure:T}}: ${figure}.mp
+	${_MPOST_MPSTOOL} ${.ALLSRC}
+.if !empty(MPDEVICE:Nsvg)
+CLEANFILES+=		${_MPOST_LIST.${figure:T}}
+.endif
+.if !empty(MPDEVICE:Meps)
+CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.eps}
+.endif
+.if !empty(MPDEVICE:Mpdf)
+CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
+.endif
+.if !empty(MPDEVICE:Mpng)
+CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.png}
+.endif
+.endif
+.endfor
+
+.if !empty(MPDEVICE:Msvg)
+.for figure in ${_MPOST_DOCUMENT}
+.if !empty(_MPOST_LIST.${figure:T})
 ${_MPOST_LIST.${figure:T}:.mps=.svg}: ${figure}.mp
 	${_MPOST_SVGTOOL} ${.ALLSRC}
 CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.svg}
+.endif
 .endfor
+.endif
 
 .endif # !target(__<texmf.mpost.mk>__)
 

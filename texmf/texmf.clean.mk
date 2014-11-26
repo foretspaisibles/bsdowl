@@ -37,9 +37,6 @@
 __<texmf.clean.mk>__:
 
 .for document in ${_TEX_DOCUMENT}
-.for device in ${TEXDEVICE}
-CLEANFILES+=		${document}.${device}
-.endfor
 .if empty(TEXDEVICE:Mdvi)&&!empty(TEXDEVICE:M*ps)
 CLEANFILES+=		${document}.dvi
 .endif
