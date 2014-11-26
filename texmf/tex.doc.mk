@@ -72,36 +72,14 @@ THISMODULE=		tex.doc
 .endif
 
 TEXDEVICE?=		pdf
-_PACKAGE_CANDIDATE=	${DOCUMENT}
+_TEX_DOCUMENT=		${DOCUMENT:.tex=}
+_PACKAGE_CANDIDATE=	${_TEX_DOCUMENT}
 
 .for device in ${TEXDEVICE}
-PRODUCT+=		${DOCUMENT:C@$@.${device}@}
+PRODUCT+=		${_TEX_DOCUMENT:=.${device}}
 .endfor
 
 .include "texmf.init.mk"
-
-.for document in ${DOCUMENT}
-.if defined(SRCS)
-SRCS.${document:T}+=	${SRCS}
-.endif
-.if exists(${document:T}.tex)&&empty(SRCS.${document:T}:M${document:T}.tex)
-SRCS.${document:T}+=	${document:T}.tex
-.endif
-.endfor
-
-.for document in ${DOCUMENT}
-.for device in ${TEXDEVICE}
-DOC+=			${document}.${device}
-.endfor
-.endfor
-
-.for document in ${DOCUMENT}
-.for figure in ${SRCS.${document:T}:M*.mp}
-.if !empty(TEXDEVICE:Mdvi)
-DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
-.endif
-.endfor
-.endfor
 
 .include "texmf.build.mk"
 .include "texmf.mpost.mk"

@@ -14,6 +14,15 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+# Variables:
+#
+#  _TEX_DOCUMENT
+#   The list of TeX documents
+#
+#
+#  TEXDEVICE
+#   The list of TeX devices
+#
 .if !target(__<texmf.init.mk>__)
 .error texmf.clean.mk cannot be included directly.
 .endif
@@ -21,7 +30,10 @@
 .if !target(__<texmf.clean.mk>__)
 __<texmf.clean.mk>__:
 
-.for document in ${DOCUMENT}
+.for document in ${_TEX_DOCUMENT}
+.for device in ${TEXDEVICE}
+CLEANFILES+=		${document}.${device}
+.endfor
 .if empty(TEXDEVICE:Mdvi)&&!empty(TEXDEVICE:M*ps)
 CLEANFILES+=		${document}.dvi
 .endif

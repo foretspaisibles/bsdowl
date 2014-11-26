@@ -21,6 +21,29 @@
 .if !target(__<texmf.build.mk>__)
 __<texmf.build.mk>__:
 
+.for document in ${_TEX_DOCUMENT}
+.if defined(SRCS)
+SRCS.${document:T}+=	${SRCS}
+.endif
+.if exists(${document:T}.tex)&&empty(SRCS.${document:T}:M${document:T}.tex)
+SRCS.${document:T}+=	${document:T}.tex
+.endif
+.endfor
+
+.for document in ${_TEX_DOCUMENT}
+.for device in ${TEXDEVICE}
+DOC+=			${document}.${device}
+.endfor
+.endfor
+
+.for document in ${_TEX_DOCUMENT}
+.for figure in ${SRCS.${document:T}:M*.mp}
+.if !empty(TEXDEVICE:Mdvi)
+DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
+.endif
+.endfor
+.endfor
+
 .tex.dvi:
 .if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
 .for pass in ${MULTIPASS}

@@ -24,10 +24,11 @@ THISMODULE=		tex.doc
 .endif
 
 TEXDEVICE?=		pdf
-_PACKAGE_CANDIDATE=	${DOCUMENT}
+_TEX_DOCUMENT=		${DOCUMENT:.tex=}
+_PACKAGE_CANDIDATE=	${_TEX_DOCUMENT}
 
 .for device in ${TEXDEVICE}
-PRODUCT+=		${DOCUMENT:C@$@.${device}@}
+PRODUCT+=		${_TEX_DOCUMENT:=.${device}}
 .endfor
 
 TEX=			pdflatex
@@ -38,36 +39,13 @@ MULTIPASS+=		aux toc
 _TEX_AUX_SUFFIXES?=	.log .aux .toc .out
 _TEX_SUFFIXES?=		.tex .latex .cls .sty
 
+.include "texmf.init.mk"
+
 _TEX_VALIDATE=\
 	${INFO} 'Information summary for ${.TARGET:T}';\
 	(test -f ${.TARGET:R}.log &&\
 	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log\
 	) && ${ECHO} 'Everything seems in order'
-
-.include "texmf.init.mk"
-
-.for document in ${DOCUMENT}
-.if defined(SRCS)
-SRCS.${document:T}+=	${SRCS}
-.endif
-.if exists(${document:T}.tex)&&empty(SRCS.${document:T}:M${document:T}.tex)
-SRCS.${document:T}+=	${document:T}.tex
-.endif
-.endfor
-
-.for document in ${DOCUMENT}
-.for device in ${TEXDEVICE}
-DOC+=			${document}.${device}
-.endfor
-.endfor
-
-.for document in ${DOCUMENT}
-.for figure in ${SRCS.${document:T}:M*.mp}
-.if !empty(TEXDEVICE:Mdvi)
-DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
-.endif
-.endfor
-.endfor
 
 .include "texmf.build.mk"
 .include "texmf.mpost.mk"
