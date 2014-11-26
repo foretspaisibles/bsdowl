@@ -21,6 +21,7 @@ FILES+=			texmf.external.mk
 FILES+=			texmf.depend.mk
 FILES+=			texmf.clean.mk
 FILES+=			texmf.build.mk
+FILES+=			texmf.mpost.mk
 FILES+=			texmf.draft.mk
 
 FILES+=			tex.doc.mk

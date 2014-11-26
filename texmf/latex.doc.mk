@@ -63,8 +63,6 @@ DOC+=			${document}.${device}
 
 .for document in ${DOCUMENT}
 .for figure in ${SRCS.${document:T}:M*.mp}
-${_MPOST_LIST.${figure:T}}: ${figure}
-	${_MPOST_TOOL} ${.ALLSRC}
 .if !empty(TEXDEVICE:Mdvi)
 DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
 .endif
@@ -72,6 +70,7 @@ DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
 .endfor
 
 .include "texmf.build.mk"
+.include "texmf.mpost.mk"
 .include "texmf.depend.mk"
 .include "texmf.clean.mk"
 .include "bps.files.mk"
