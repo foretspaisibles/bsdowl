@@ -23,6 +23,12 @@
 #  TEXDEVICE
 #   The list of TeX devices
 #
+#  _MPOST_DOCUMENT
+#   The list of METAPOST documents
+#
+#  MPDEVICE
+#   The lsit of METAPOST devices
+
 .if !target(__<texmf.init.mk>__)
 .error texmf.clean.mk cannot be included directly.
 .endif

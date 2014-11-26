@@ -21,13 +21,7 @@
 .if !target(__<texmf.depend.mk>__)
 __<texmf.depend.mk>__:
 
-.for document in ${DOCUMENT}
-.for device in ${TEXDEVICE}
-${document}.${device}:	${SRCS.${document:T}}
-.endfor
-.endfor
-
-.for document in ${DOCUMENT}
+.for document in ${_TEX_DOCUMENT}
 .for device in ${TEXDEVICE}
 ${document}.${device}:	${SRCS.${document:T}}
 .endfor
@@ -39,18 +33,22 @@ DISTCLEANFILES+=	.depend.mpost
 .depend.mpost:
 	@${RM} -f ${.TARGET}
 	@${TOUCH} ${.TARGET}
-.for figure in ${_MPOST_SRC}
-	@${SED} -n 's@^beginfig(\([0-9][0-9]*\)).*@_MPOST_LIST.${figure:T}+=${figure:.mp=}-\1.mps@p' ${.ALLSRC} >> ${.TARGET}
+.for figure in ${_MPOST_DOCUMENT}
+	@${SED} -n 's@^beginfig(\([0-9][0-9]*\)).*@_MPOST_LIST.${figure:T}+=${figure:T}-\1.mps@p' ${.ALLSRC:M*${figure:T}.mp} >> ${.TARGET}
 .endfor
 
-.for document in ${DOCUMENT}
+.for document in ${_TEX_DOCUMENT}
 .for figure in ${SRCS.${document:T}:M*.mp}
 .depend.mpost:		${figure}
 .endfor
 .endfor
 
-.for document in ${DOCUMENT}
-.for figure in ${SRCS.${document:T}:M*.mp}
+.for document in ${_MPOST_DOCUMENT}
+.depend.mpost:		${document}.mp
+.endfor
+
+.for document in ${_TEX_DOCUMENT}
+.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
 ${document}.dvi:	${_MPOST_LIST.${figure:T}:.mps=.eps}
 ${document}.ps:		${_MPOST_LIST.${figure:T}:.mps=.eps}
 ${document}.pdf:	${_MPOST_LIST.${figure:T}:.mps=.pdf}

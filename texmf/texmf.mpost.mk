@@ -22,12 +22,12 @@
 .if !target(__<texmf.mpost.mk>__)
 __<texmf.mpost.mk>__:
 
-.for document in ${DOCUMENT}
+.for document in ${_TEX_DOCUMENT}
 .for figure in ${SRCS.${document:T}:M*.mp}
-_MPOST_SRC+=		${figure}
+_MPOST_DOCUMENT+=	${figure:.mp=}
 .endfor
 .endfor
-_MPOST_SRC:=		${_MPOST_SRC:O:u}
+_MPOST_DOCUMENT:=	${_MPOST_DOCUMENT:O:u}
 
 _MPOST_MPSTOOL=		${_MPOST_TOOL}
 _MPOST_MPSTOOL+=	-s 'prologues=3'
@@ -38,8 +38,8 @@ _MPOST_SVGTOOL+=	-s 'prologues=3'
 _MPOST_SVGTOOL+=	-s 'outputformat="svg"'
 _MPOST_SVGTOOL+=	-s 'outputtemplate="%j-%c.svg"'
 
-.for figure in ${_MPOST_SRC}
-${_MPOST_LIST.${figure:T}}: ${figure}
+.for figure in ${_MPOST_DOCUMENT}
+${_MPOST_LIST.${figure:T}}: ${figure}.mp
 	${_MPOST_MPSTOOL} ${.ALLSRC}
 
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
@@ -51,8 +51,8 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .endif
 .endfor
 
-.for figure in ${_MPOST_SRC}
-${_MPOST_LIST.${figure:T}:.mps=.svg}: ${figure}
+.for figure in ${_MPOST_DOCUMENT}
+${_MPOST_LIST.${figure:T}:.mps=.svg}: ${figure}.mp
 	${_MPOST_SVGTOOL} ${.ALLSRC}
 CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.svg}
 .endfor
@@ -62,7 +62,7 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.svg}
 .if !target(display-mpost)
 display-mpost:
 	${INFO} 'Display METAPOST information'
-.for displayvar in _MPOST_SRC
+.for displayvar in _MPOST_DOCUMENT
 	${MESG} "${displayvar}=${${displayvar}}"
 .endfor
 .endif

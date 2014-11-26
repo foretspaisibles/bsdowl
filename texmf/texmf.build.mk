@@ -37,10 +37,25 @@ DOC+=			${document}.${device}
 .endfor
 
 .for document in ${_TEX_DOCUMENT}
-.for figure in ${SRCS.${document:T}:M*.mp}
+.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
 .if !empty(TEXDEVICE:Mdvi)
 DOC+=			${_MPOST_LIST.${figure:T}:.mps=.eps}
 .endif
+.endfor
+.endfor
+
+.for document in ${_MPOST_DOCUMENT}
+.if defined(SRCS)
+SRCS.${document:T}+=	${SRCS}
+.endif
+.if exists(${document:T}.mp)&&empty(SRCS.${document:T}:M${document:T}.mp)
+SRCS.${document:T}+=	${document:T}.mp
+.endif
+.endfor
+
+.for document in ${_MPOST_DOCUMENT}
+.for device in ${MPDEVICE}
+DOC+=			${_MPOST_LIST.${document:T}:.mps=.${device}}
 .endfor
 .endfor
 

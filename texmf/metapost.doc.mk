@@ -55,26 +55,11 @@ THISMODULE=		metapost.doc
 .endif
 
 MPDEVICE?=		eps
-_PACKAGE_CANDIDATE=	${DOCUMENT}
+_MPOST_DOCUMENT=	${DOCUMENT:.mp=}
+_PACKAGE_CANDIDATE=	${_MPOST_DOCUMENT}
 PRODUCT=		${DOC}
 
 .include "texmf.init.mk"
-
-.for document in ${DOCUMENT}
-.if defined(SRCS)
-SRCS.${document:T}+=	${SRCS}
-.endif
-.if exists(${document:T}.mp)&&empty(SRCS.${document:T}:M${document:T}.mp)
-SRCS.${document:T}+=	${document:T}.mp
-.endif
-.endfor
-
-.for document in ${DOCUMENT}
-.for device in ${MPDEVICE}
-DOC+=			${_MPOST_LIST.${document:T}.mp:.mps=.${device}}
-.endfor
-.endfor
-
 .include "texmf.build.mk"
 .include "texmf.mpost.mk"
 .include "texmf.depend.mk"
