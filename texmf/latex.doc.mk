@@ -44,8 +44,6 @@ _TEX_VALIDATE=\
 	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log\
 	) && ${ECHO} 'Everything seems in order'
 
-MPOST_CONVERT_MPS?=	no
-
 .include "texmf.init.mk"
 
 .for document in ${DOCUMENT}
