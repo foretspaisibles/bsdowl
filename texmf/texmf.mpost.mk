@@ -40,6 +40,7 @@ _MPOST_SVGTOOL+=	-s 'outputtemplate="%j-%c.svg"'
 
 .for document in ${_TEX_DOCUMENT}
 .for figure in ${SRCS.${document:T}:M*.mp:.mp=}
+CLEANFILES+=		${figure}.log
 .if !empty(_MPOST_LIST.${figure:T})
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
 .if !empty(TEXDEVICE:Mdvi)||!empty(TEXDEVICE:M*ps)
@@ -56,6 +57,7 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .if !empty(_MPOST_LIST.${figure:T})
 ${_MPOST_LIST.${figure:T}}: ${figure}.mp
 	${_MPOST_MPSTOOL} ${.ALLSRC}
+CLEANFILES+=		${figure}.log
 .if !empty(MPDEVICE:Nsvg)
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
 .endif
