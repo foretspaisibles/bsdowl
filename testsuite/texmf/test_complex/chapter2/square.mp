@@ -14,12 +14,10 @@
 % are also available at
 % http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-prologues := 3;
-outputtemplate := "%j-%c.mps";
-
 beginfig(1)
   u := 4cm;
-  draw (0,0) -- (0,u) -- (u,u) -- (u,0) -- cycle;
+  draw ((0,0) -- (0,u) -- (u,u) -- (u,0) -- cycle)
+    rotated 45;
 endfig;
 bye;
 
