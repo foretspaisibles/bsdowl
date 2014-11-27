@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# Author: Michael Grünewald
+# Date: Sat Sep 27 09:47:26 CEST 2014
+# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+
+# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2002–2016 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+: ${PROJECTBASE:?Must be run within a project subshell}
+cookies="SYNOPSIS TARGET VARIABLE EN DOCUMENTATION"
+wikidir="${PROJECTBASE}/Wiki"
+
+make_report()
+{
+    printf '# Progress report for the %s Cookie\n\n' "$1"
+
+    printf '| File                             | State |\n'
+    printf '| -------------------------------- | ----- |\n'
+    find . -type f -name '*.mk'\
+	| xargs -n 1 awk -v cookie="$1" '
+BEGIN { status = "DONE"; }
+$0 ~ ("Cookie: .*" cookie){ status = "TODO" }
+END {
+  sub("^[.]/", "", FILENAME);
+  printf("| %-32s | %5s |\n", FILENAME, status)
+}
+'
+}
+
+cd "${PROJECTBASE}"
+for cookie in $cookies; do
+    make_report $cookie > "$wikidir/ReportCookie$cookie.md"
+done
