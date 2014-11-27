@@ -28,6 +28,7 @@ FILES+=			texmf.index.mk
 
 FILES+=			tex.doc.mk
 FILES+=			latex.doc.mk
+FILES+=			latex.files.mk
 FILES+=			mpost.doc.mk
 
 .include "project.mk"
