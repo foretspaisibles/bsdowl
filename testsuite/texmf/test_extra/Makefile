@@ -1,4 +1,4 @@
-### Makefile -- Test bibtex support
+### Makefile -- Test support for extras
 
 # Author: Michael Grünewald
 # Date: Thu Nov 27 09:33:31 CET 2014

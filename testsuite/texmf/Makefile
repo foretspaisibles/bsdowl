@@ -19,7 +19,7 @@ SUBDIR+=		test_latex
 SUBDIR+=		test_graphicx
 SUBDIR+=		test_metapost
 SUBDIR+=		test_complex
-SUBDIR+=		test_bibtex
+SUBDIR+=		test_extra
 
 .include "subdir.mk"
 
