@@ -1,7 +1,7 @@
-### Makefile -- Support for TeX and METAPOST
+### Makefile -- Test bibtex support
 
 # Author: Michael Grünewald
-# Date: Sam Jul  7 2007 18:12:07 CEST
+# Date: Thu Nov 27 09:33:31 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,24 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			texmf.init.mk
-FILES+=			texmf.uses.mk
-FILES+=			texmf.module.mk
-FILES+=			texmf.external.mk
-FILES+=			texmf.depend.mk
-FILES+=			texmf.clean.mk
-FILES+=			texmf.build.mk
-FILES+=			texmf.mpost.mk
-FILES+=			texmf.draft.mk
-FILES+=			texmf.bibtex.mk
+TEST=			TestBibtex
 
-FILES+=			tex.doc.mk
-FILES+=			latex.doc.mk
-FILES+=			mpost.doc.mk
-
-OBSOLETE+=		tex.files.mk
-OBSOLETE+=		tex.files.main.mk
-
-.include "project.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

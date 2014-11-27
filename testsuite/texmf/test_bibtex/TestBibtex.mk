@@ -1,7 +1,7 @@
-### Makefile -- Test support for TeX and METAFONT
+### TestBibtex.mk -- Test bibtex support
 
 # Author: Michael Grünewald
-# Date: Sun Nov 23 16:08:05 CET 2014
+# Date: Thu Nov 27 09:34:30 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,13 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR=			test_tex
-SUBDIR+=		test_latex
-SUBDIR+=		test_graphicx
-SUBDIR+=		test_metapost
-SUBDIR+=		test_complex
-SUBDIR+=		test_bibtex
+DOCUMENT=		withbibtex.tex
+TEXDEVICE=		pdf
+USES+=			bibtex
 
-.include "subdir.mk"
+test:
+	test -f ${DESTDIR}${DOCDIR}/withbibtex.pdf
 
-### End of file `Makefile'
+.include "latex.doc.mk"
+
+### End of file `TestBibtex.mk'

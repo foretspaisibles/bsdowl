@@ -48,6 +48,7 @@ _TEX_VALIDATE=\
 	) && ${ECHO} 'Everything seems in order'
 
 .include "texmf.build.mk"
+.include "texmf.bibtex.mk"
 .include "texmf.mpost.mk"
 .include "texmf.depend.mk"
 .include "texmf.clean.mk"
