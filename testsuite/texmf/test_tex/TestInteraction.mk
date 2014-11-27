@@ -1,7 +1,7 @@
-### Makefile -- Test support for plain TeX
+### TestInteraction.mk -- Test texinteraction option
 
 # Author: Michael Grünewald
-# Date: Sun Nov 23 16:09:43 CET 2014
+# Date: Thu Nov 27 08:18:18 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=			TestPlainDVI
-TEST+=			TestPlainPS
-TEST+=			TestPlainPDF
-TEST+=			TestInteraction
+DOCUMENT=		simple
 
-.include "test.mk"
+USES+=			texinteraction:errorstop
 
-### End of file `Makefile'
+test:
+	test -f ${DESTDIR}${DOCDIR}/simple.pdf
+
+.include "tex.doc.mk"
+
+### End of file `TestInteraction.mk'

@@ -47,14 +47,12 @@
 #   The jobname passed to TeX
 #
 #
-#  INTERACTION [not set]
-#   The TeX interaction mode
-#
-#   It can be one of batch, nonstop, scroll or errorstop.
-#
-#
 #  TEXINPUTS [not set]
 #   The list of directories where TeX input files are looked up
+#
+#
+#  MPTEXINPUTS [${TEXINPUTS}]
+#   Same as TEXINPUTS when TeX is run in a METAPOST job
 #
 #
 #  TEXMFOUTPUT [${.OBJDIR} if it differs from ${.CURDIR}]
@@ -63,6 +61,23 @@
 #
 #  TEXFORMATS, TEXPOOL, TFMFONTS [not set]
 #   Variables transferred to TeX environment
+#
+#
+# Uses:
+#
+#  texinputs:strict
+#   Do not add . and texmf to TeX search path
+#
+#   This setting affect both TEXINPUTS and MPTEXINPUTS.
+#
+#
+#  mpinputs:strict
+#   Do not add . and texmf to METAPOST search path
+#
+#
+#  texinteraction: one of batch, nonstop, scroll or errorstop.
+#   Change TeX interaction mode
+
 
 THISMODULE=		tex.doc
 

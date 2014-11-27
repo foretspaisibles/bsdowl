@@ -21,6 +21,19 @@
 .if !target(__<texmf.uses.mk>__)
 __<texmf.uses.mk>__:
 
+_USES_texinteraction_VALIDARGS=batch nonstop scroll errorstop
+
+.if !empty(_USES_OPTIONS:Mtexinteraction)
+.if ${_USES_texinteraction_ARGS:[#]} != 1
+.error Incorrect "USES+= texinteraction" usage:\
+	  exactly one argument is expected.
+.endif
+.if empty(_USES_texinteraction_VALIDARGS:M${_USES_texinteraction_ARGS})
+.error Incorrect "USES+= texinteraction:${_USES_texinteraction_ARGS}" usage:\
+	  valid arguments are ${_USES_texinteraction_VALIDARGS}.
+.endif
+.endif
+
 .endif # !target(__<texmf.uses.mk>__)
 
 ### End of file `texmf.uses.mk'

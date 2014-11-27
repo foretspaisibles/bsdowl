@@ -73,6 +73,17 @@ _TEX_PRINTER=		${TEXDEVICE:M*.ps:.ps=}
 
 .SUFFIXES: .mps .png .pdf .svg .eps
 
+
+#
+# Early files
+#
+
+.include "bps.init.mk"
+.include "texmf.uses.mk"
+.include "texmf.module.mk"
+.include "texmf.external.mk"
+
+
 #
 # TeX environment
 #
@@ -86,7 +97,7 @@ MPTEXINPUTS+=		${.CURDIR}
 .endif
 
 .if defined(TEXINPUTS)&&!empty(TEXINPUTS)
-.if !defined(USE_STRICT_TEXINPUTS)|| ${USE_STRICT_TEXINPUTS} != yes
+.if empty(_USES_texinputs_ARGS:Mstrict)
 _TEX_ENV+=		TEXINPUTS=".:${TEXINPUTS:tW:S@ @:@g}:"
 .else
 _TEX_ENV+=		TEXINPUTS="${TEXINPUTS:tW:S@ @:@g}"
@@ -104,8 +115,8 @@ _TEX_ENV+=		${variable}=${${variable}:Q}
 # TeX flags
 #
 
-.if defined(INTERACTION)&&!empty(INTERACTION)
-_TEX_FLAGS+=		-interaction ${INTERACTION}mode
+.if !empty(_USES_OPTIONS:Mtexinteraction)
+_TEX_FLAGS+=		-interaction ${_USES_texinteraction_ARGS}mode
 .endif
 
 .if defined(JOBNAME)&&!empty(JOBNAME)
@@ -148,7 +159,7 @@ _MPOST_ENV+=		TEX=${MPTEX}
 .endif
 
 .if defined(MPINPUTS)&&!empty(MPINPUTS)
-.if !defined(USE_STRICT_MPINPUTS)|| ${USE_STRICT_MPINPUTS} != yes
+.if empty(_USES_mpinputs_ARGS:Mstrict)
 _MPOST_ENV+=		MPINPUTS=".:${MPINPUTS:tW:S@ @:@g}:"
 .else
 _MPOST_ENV+=		MPINPUTS="${MPINPUTS:tW:S@ @:@g}"
@@ -156,13 +167,13 @@ _MPOST_ENV+=		MPINPUTS="${MPINPUTS:tW:S@ @:@g}"
 .endif
 
 .if defined(MPTEXINPUTS)&&!empty(MPTEXINPUTS)
-.if !defined(USE_STRICT_MPTEXINPUTS)|| ${USE_STRICT_MPTEXINPUTS} != yes
+.if empty(_USES_texinputs_ARGS:Mstrict)
 _MPOST_ENV+=		TEXINPUTS=".:${MPTEXINPUTS:tW:S@ @:@g}:"
 .else
 _MPOST_ENV+=		TEXINPUTS="${MPTEXINPUTS:tW:S@ @:@g}"
 .endif
 .elif defined(TEXINPUTS)&&!empty(TEXINPUTS)
-.if !defined(USE_STRICT_TEXINPUTS)|| ${USE_STRICT_TEXINPUTS} != yes
+.if empty(_USES_texinputs_ARGS:Mstrict)
 _MPOST_ENV+=		TEXINPUTS=".:${TEXINPUTS:tW:S@ @:@g}:"
 .else
 _MPOST_ENV+=		TEXINPUTS="${TEXINPUTS:tW:S@ @:@g}"
@@ -212,10 +223,6 @@ _MPOST_TOOL=		${MPOST}
 .include ".depend.mpost"
 .endif
 
-.include "bps.init.mk"
-.include "texmf.uses.mk"
-.include "texmf.module.mk"
-.include "texmf.external.mk"
 .include "texmf.draft.mk"
 
 .endif #!target(__<texmf.init.mk>__)
