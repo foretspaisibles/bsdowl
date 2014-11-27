@@ -1,7 +1,7 @@
-### Makefile -- Test support for TeX and METAFONT
+### Makefile.inc -- Configuration for samhain project
 
 # Author: Michael Grünewald
-# Date: Sun Nov 23 16:08:05 CET 2014
+# Date: Fri Nov 28 10:07:22 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,10 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR=			test_tex
-SUBDIR+=		test_latex
-SUBDIR+=		test_graphicx
-SUBDIR+=		test_metapost
-SUBDIR+=		test_complex
-SUBDIR+=		test_extra
-SUBDIR+=		test_noweb
+TEXDEVICE=		pdf dvi ps
+.PATH:			${SRCDIR}/src
 
-.include "subdir.mk"
+FILESDIR=		${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
+DOCDIR=			${datarootdir}/texmf-local/doc/latex${PACKAGEDIR}
 
-### End of file `Makefile'
+### End of file `Makefile.inc'

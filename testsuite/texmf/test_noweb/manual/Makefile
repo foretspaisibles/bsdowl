@@ -1,7 +1,7 @@
-### Makefile -- Test support for TeX and METAFONT
+### Makefile -- Prepare manual for Samhain LaTeX
 
 # Author: Michael Grünewald
-# Date: Sun Nov 23 16:08:05 CET 2014
+# Date: Fri Nov 28 11:19:47 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,23 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR=			test_tex
-SUBDIR+=		test_latex
-SUBDIR+=		test_graphicx
-SUBDIR+=		test_metapost
-SUBDIR+=		test_complex
-SUBDIR+=		test_extra
-SUBDIR+=		test_noweb
+DOCUMENT=		shusermanual
 
-.include "subdir.mk"
+NOWEB=			shltxbegin.nw
+NOWEB+=			shltx.nw
+NOWEB+=			shclasses.nw
+NOWEB+=			shmetal.nw
+NOWEB+=			shpaper.nw
+NOWEB+=			shplexos.nw
+NOWEB+=			shthm.nw
+NOWEB+=			shltxend.nw
+
+NOWEAVE=		${DOCUMENT}
+SRCS=			shusermanual.tex
+
+USES+=			noweb
+NOWEAVE_LATEX_WRAPPER=	delay
+
+.include "latex.doc.mk"
 
 ### End of file `Makefile'
