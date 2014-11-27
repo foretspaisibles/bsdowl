@@ -1,7 +1,7 @@
-### Makefile -- Test support for extras
+### TestDraft.mk -- Test draft support
 
 # Author: Michael Grünewald
-# Date: Thu Nov 27 09:33:31 CET 2014
+# Date: Thu Nov 27 22:24:57 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=			TestBibtex
-TEST+=			TestIndex
-TEST+=			TestDraft
+DOCUMENT=		simple.tex
+TEXDEVICE=		pdf
+USES+=			draft:git
 
-.include "test.mk"
+test:
+	test -f ${DESTDIR}${DOCDIR}/simple_*.pdf
 
-### End of file `Makefile'
+.include "latex.doc.mk"
+
+### End of file `TestDraft.mk'

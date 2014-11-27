@@ -67,7 +67,7 @@ _TEX_BUILD_FIGURE.pdf=	pdf
 
 .for device in dvi pdf
 .tex.${device}:
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&empty(_USES_OPTIONS:Mdraft)
 .for pass in ${MULTIPASS}
 	${INFO} 'Multipass job for ${.TARGET} (${pass})'
 	${_TEX_BUILD_TOOL.${device}} ${.IMPSRC}
@@ -105,7 +105,7 @@ _TEX_BUILD_FIGURE.pdf=	pdf
 # Specific rules to generate DVI files
 #
 
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&empty(_USES_OPTIONS:Mdraft)
 .for device in dvi pdf
 .for document in ${_TEX_DOCUMENT}
 .undef pass_last
@@ -143,7 +143,7 @@ ${document}.${device}:	${SRCS.${document:T}}\
 # Register cookiefiles
 #
 
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&empty(_USES_OPTIONS:Mdraft)
 .for document in ${_TEX_DOCUMENT}
 .for pass in ${MULTIPASS}
 COOKIEFILES+=		${COOKIEPREFIX}${document:T}.dvi.${pass}
