@@ -1,7 +1,7 @@
-### project.mk
+### TestInteraction.mk -- Test texinteraction option
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Thu Nov 27 08:18:18 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+DOCUMENT=		simple
 
-.include "../../bps/bps.init.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
+USES+=			texinteraction:errorstop
 
-### End of file `project.mk'
+test:
+	test -f ${DESTDIR}${DOCDIR}/simple.pdf
+
+.include "tex.doc.mk"
+
+### End of file `TestInteraction.mk'

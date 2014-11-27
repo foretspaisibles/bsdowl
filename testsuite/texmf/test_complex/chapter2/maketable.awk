@@ -1,7 +1,7 @@
-### project.mk
+### maketable.awk -- Prepare the poultry table
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Sun Nov 23 22:36:46 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+BEGIN {
+    FS="|"
+}
 
-.include "../../bps/bps.init.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
+NR <= 2 {
+    printf("\\textsl{%s}&\\textsl{%s}&\\textsl{%s}&\\textsl{%s}&\\textsl{%s}\\\\", $1, $2, $3, $4, $5);
+}
 
-### End of file `project.mk'
+NR > 2 {
+    printf("\\textbf{%s}&%s&%s&%s&%s\\\\\n", $1, $2, $3, $4, $5);
+}
+
+### End of file `maketable.awk'

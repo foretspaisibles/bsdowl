@@ -1,7 +1,7 @@
-### project.mk
+### Makefile -- Test support for TeX and METAFONT
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Sun Nov 23 16:08:05 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+SUBDIR=			test_tex
+SUBDIR+=		test_latex
+SUBDIR+=		test_graphicx
+SUBDIR+=		test_metapost
+SUBDIR+=		test_complex
+SUBDIR+=		test_extra
 
-.include "../../bps/bps.init.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
+.include "subdir.mk"
 
-### End of file `project.mk'
+### End of file `Makefile'

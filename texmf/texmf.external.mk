@@ -1,7 +1,7 @@
-### project.mk
+### texmf.external.mk -- Use external resources
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Mon Nov 24 14:01:36 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+.if !defined(THISMODULE)
+.error texmf.external.mk cannot be included directly.
+.endif
 
-.include "../../bps/bps.init.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
+.if !target(__<texmf.external.mk>__)
+__<texmf.external.mk>__:
 
-### End of file `project.mk'
+.endif # !target(__<texmf.external.mk>__)
+
+### End of file `texmf.external.mk'

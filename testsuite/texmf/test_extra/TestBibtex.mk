@@ -1,7 +1,7 @@
-### project.mk
+### TestBibtex.mk -- Test bibtex support
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Thu Nov 27 09:34:30 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=		bsdowl
-PACKAGEDIR=		/${PACKAGE}
-SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
-SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
-FILESDIR?=		${SHAREDIR}
+DOCUMENT=		withbibtex.tex
+TEXDEVICE=		pdf
+USES+=			bibtex
 
-.include "../../bps/bps.init.mk"
-.include "../../bps/bps.files.mk"
-.include "../../bps/bps.clean.mk"
-.include "../../bps/bps.usertarget.mk"
+test:
+	test -f ${DESTDIR}${DOCDIR}/withbibtex.pdf
 
-### End of file `project.mk'
+.include "latex.doc.mk"
+
+### End of file `TestBibtex.mk'

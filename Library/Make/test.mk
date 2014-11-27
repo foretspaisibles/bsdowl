@@ -23,6 +23,14 @@ clean: do-clean
 distclean: clean
 realclean: distclean
 
+MP2EPS=			${SH} ${SRCDIR}/support/mp2eps.sh
+MP2PNG=			${SH} ${SRCDIR}/support/mp2png.sh
+MP2PDF=			${SH} ${SRCDIR}/support/mp2pdf.sh
+
+.export MP2EPS
+.export MP2PNG
+.export MP2PDF
+
 MAKETEST=		${ENVTOOL}
 MAKETEST+=		-u SRCDIR
 MAKETEST+=		-u WRKDIR

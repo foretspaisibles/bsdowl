@@ -1,7 +1,7 @@
 ### tex.doc.mk -- Produce TeX documents
 
 # Author: Michael Grünewald
-# Date: Dim  9 sep 2007 14:49:18 CEST
+# Date: Dim Sep  9 2007 14:49:18 CEST
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -15,34 +15,93 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 ### SYNOPSIS
-# PACKAGE = Cours/2de
-#
-# DOCS = lalala
-# DOCS+= lalali.tex
-#
-# SRCS = macro.mac
-# SRCS.lalala = extra.tex
-# SRCS.lalali = title.tex headline.tex footline.tex
-#
-# TEXDEVICE = dvi pdf ps
-# FORMAT.dvi =
-# FORMAT.pdf =
-# FORMAT.ps =
-# FORMAT.dvi.lalala = ...
-#
-# INTERACTION = batch nonstop scroll errorstop
-# JOBNAME
-#
-# Instance variables:
-# TEXINPUTS, TEXMFOUTPUT, FORMATS, TEXPOOL, TFMFONTS
-# conflit puisque pour produire un fichier PostScript, le fichier DVI
-# est une étape intermédiaire.
-#
-# Pour produire un fichier DVI qui est un intermédiaire pour DEVICE,
-# on ajoute donc DEVICE à la fin de JOBNAME pour l'éxécution.
 
-.include "tex.doc.pre.mk"
-.include "tex.doc.main.mk"
-.include "tex.doc.post.mk"
+# PACKAGE=		linalg
+# TEXDEVICE=		dvi pdf ps
+#
+# DOCUMENT=		lecture1
+# DOCUMENT+=		lecture2
+# DOCUMENT+=		lecture3
+#
+# SRCS=			macro.mac
+# SRCS.lecture2=	figure.mp
+
+
+# Variables:
+#
+#  TEXDEVICE [pdf]
+#   The TeX backend that should be used to produce documents
+#
+#
+#  DOCUMENT [not set]
+#   The list of documents to be produced
+#
+#
+#  SRCS [not set]
+#   The sources used to produce our document
+#
+#   This list can contain macro files, TeX files and Metapost files.
+#
+#
+#  JOBNAME [not set]
+#   The jobname passed to TeX
+#
+#
+#  TEXINPUTS [not set]
+#   The list of directories where TeX input files are looked up
+#
+#
+#  MPTEXINPUTS [${TEXINPUTS}]
+#   Same as TEXINPUTS when TeX is run in a METAPOST job
+#
+#
+#  TEXMFOUTPUT [${.OBJDIR} if it differs from ${.CURDIR}]
+#   The directory where TeX should write its output
+#
+#
+#  TEXFORMATS, TEXPOOL, TFMFONTS [not set]
+#   Variables transferred to TeX environment
+#
+#
+# Uses:
+#
+#  texinputs:strict
+#   Do not add . and texmf to TeX search path
+#
+#   This setting affect both TEXINPUTS and MPTEXINPUTS.
+#
+#
+#  mpinputs:strict
+#   Do not add . and texmf to METAPOST search path
+#
+#
+#  texinteraction: one of batch, nonstop, scroll or errorstop.
+#   Change TeX interaction mode
+
+
+THISMODULE=		tex.doc
+
+.if !defined(DOCUMENT)||empty(DOCUMENT)
+.error The tex.doc.mk module expects you to set the DOCUMENT\
+	  variable to a sensible value.
+.endif
+
+TEXDEVICE?=		pdf
+_TEX_DOCUMENT=		${DOCUMENT:.tex=}
+_PACKAGE_CANDIDATE=	${_TEX_DOCUMENT}
+
+.for device in ${TEXDEVICE}
+PRODUCT+=		${_TEX_DOCUMENT:=.${device}}
+.endfor
+
+.include "texmf.init.mk"
+
+.include "texmf.build.mk"
+.include "texmf.mpost.mk"
+.include "texmf.depend.mk"
+.include "texmf.clean.mk"
+.include "bps.files.mk"
+.include "bps.clean.mk"
+.include "bps.usertarget.mk"
 
 ### End of file `tex.doc.mk'

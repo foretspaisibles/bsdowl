@@ -19,6 +19,7 @@ SUBDIR=		ocaml
 SUBDIR+=	langc
 SUBDIR+=	script
 SUBDIR+=	config
+SUBDIR+=	texmf
 
 .include "subdir.mk"
 
