@@ -120,6 +120,8 @@ ${COOKIEPREFIX}${document:T}.dvi.${pass}: ${COOKIEPREFIX}${document:T}.dvi.${pas
 .endif
 	${INFO} 'Multipass job for ${document:T}.dvi (${pass})'
 	${_TEX_TOOL.tex} ${.ALLSRC:M*${document:T}.tex}
+	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.dvi
+	@${TOUCH} ${.TARGET}
 
 pass_last:=		${pass}
 .endfor
@@ -145,12 +147,14 @@ ${document}.dvi:	${COOKIEPREFIX}${document:T}.dvi.${pass_last} ${SRCS.${document
 .for figure in ${SRCS.${document:T}:M*.mp:.mp=}
 ${COOKIEPREFIX}${document:T}.pdf.${pass}: ${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .endfor
-${COOKIEPREFIX}${document:T}.pdf.${pass}: ${SRCS.${document:T}}
 .else
 ${COOKIEPREFIX}${document:T}.pdf.${pass}: ${COOKIEPREFIX}${document:T}.pdf.${pass_last} ${SRCS.${document:T}}
 .endif
+${COOKIEPREFIX}${document:T}.pdf.${pass}: ${SRCS.${document:T}}
 	${INFO} 'Multipass job for ${document:T}.pdf (${pass})'
 	${_TEX_TOOL.pdftex} ${.ALLSRC:M*${document:T}.tex}
+	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.pdf
+	@${TOUCH} ${.TARGET}
 
 pass_last:=		${pass}
 .endfor
