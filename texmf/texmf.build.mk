@@ -59,28 +59,27 @@ DOC+=			${_MPOST_LIST.${document:T}:.mps=.${device}}
 .endfor
 .endfor
 
-.tex.dvi:
+_TEX_BUILD_TOOL.dvi=	${_TEX_TOOL.tex}
+_TEX_BUILD_FIGURE.dvi=	eps
+
+_TEX_BUILD_TOOL.pdf=	${_TEX_TOOL.pdftex}
+_TEX_BUILD_FIGURE.pdf=	pdf
+
+.for device in dvi pdf
+.tex.${device}:
 .if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
 .for pass in ${MULTIPASS}
 	${INFO} 'Multipass job for ${.TARGET} (${pass})'
-	${_TEX_TOOL.tex} ${.IMPSRC}
+	${_TEX_BUILD_TOOL.${device}} ${.IMPSRC}
 .endfor
 .else
-	${_TEX_TOOL.tex} ${.IMPSRC}
+	${_TEX_BUILD_TOOL.${device}} ${.IMPSRC}
 .endif
 .if defined(_TEX_VALIDATE)
 	${_TEX_VALIDATE}
 .endif
-
-.tex.pdf:
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
-.for pass in ${MULTIPASS}
-	${INFO} 'Multipass job for ${.TARGET} (${pass})'
-	${_TEX_TOOL.pdftex} ${.IMPSRC}
 .endfor
-.else
-	${_TEX_TOOL.pdftex} ${.IMPSRC}
-.endif
+
 
 .dvi.ps:
 	${DVIPS} -o ${.TARGET} ${.IMPSRC}
@@ -107,63 +106,35 @@ DOC+=			${_MPOST_LIST.${document:T}:.mps=.${device}}
 #
 
 .if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.for device in dvi pdf
 .for document in ${_TEX_DOCUMENT}
 .undef pass_last
 .for pass in ${MULTIPASS}
 .if undefined(pass_last)||empty(pass_last)
 .for figure in ${SRCS.${document:T}:M*.mp:.mp=}
-${COOKIEPREFIX}${document:T}.dvi.${pass}: ${_MPOST_LIST.${figure:T}:.mps=.eps}
+${COOKIEPREFIX}${document:T}.${device}.${pass}:\
+	  ${_MPOST_LIST.${figure:T}:.mps=.${_TEX_BUILD_FIGURE.${device}}}
 .endfor
-${COOKIEPREFIX}${document:T}.dvi.${pass}: ${SRCS.${document:T}}
+${COOKIEPREFIX}${document:T}.${device}.${pass}: ${SRCS.${document:T}}
 .else
-${COOKIEPREFIX}${document:T}.dvi.${pass}: ${COOKIEPREFIX}${document:T}.dvi.${pass_last} ${SRCS.${document:T}}
+${COOKIEPREFIX}${document:T}.${device}.${pass}:  ${SRCS.${document:T}}\
+	  ${COOKIEPREFIX}${document:T}.${device}.${pass_last}
 .endif
-	${INFO} 'Multipass job for ${document:T}.dvi (${pass})'
-	${_TEX_TOOL.tex} ${.ALLSRC:M*${document:T}.tex}
-	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.dvi
+	${INFO} 'Multipass job for ${document:T}.${device} (${pass})'
+	${_TEX_BUILD_TOOL.${device}} ${.ALLSRC:M*${document:T}.tex}
+	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.${device}
 	@${TOUCH} ${.TARGET}
 
 pass_last:=		${pass}
 .endfor
-${document}.dvi:	${COOKIEPREFIX}${document:T}.dvi.${pass_last} ${SRCS.${document:T}}
-	${INFO} 'Multipass job for ${document:T}.dvi (final)'
-	${_TEX_TOOL.tex} ${.ALLSRC:M*${document:T}.tex}
+${document}.${device}:	${SRCS.${document:T}}\
+	  ${COOKIEPREFIX}${document:T}.${device}.${pass_last}
+	${INFO} 'Multipass job for ${document:T}.${device} (final)'
+	${_TEX_BUILD_TOOL.${device}} ${.ALLSRC:M*${document:T}.tex}
 .if defined(_TEX_VALIDATE)
 	${_TEX_VALIDATE}
 .endif
 .endfor
-.endif
-
-
-#
-# Specific rules to generate PDF files
-#
-
-.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
-.for document in ${_TEX_DOCUMENT}
-.undef pass_last
-.for pass in ${MULTIPASS}
-.if undefined(pass_last)||empty(pass_last)
-.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
-${COOKIEPREFIX}${document:T}.pdf.${pass}: ${_MPOST_LIST.${figure:T}:.mps=.pdf}
-.endfor
-.else
-${COOKIEPREFIX}${document:T}.pdf.${pass}: ${COOKIEPREFIX}${document:T}.pdf.${pass_last} ${SRCS.${document:T}}
-.endif
-${COOKIEPREFIX}${document:T}.pdf.${pass}: ${SRCS.${document:T}}
-	${INFO} 'Multipass job for ${document:T}.pdf (${pass})'
-	${_TEX_TOOL.pdftex} ${.ALLSRC:M*${document:T}.tex}
-	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.pdf
-	@${TOUCH} ${.TARGET}
-
-pass_last:=		${pass}
-.endfor
-${document}.pdf:	${COOKIEPREFIX}${document:T}.pdf.${pass_last} ${SRCS.${document:T}}
-	${INFO} 'Multipass job for ${document:T}.pdf (final)'
-	${_TEX_TOOL.pdftex} ${.ALLSRC:M*${document:T}.tex}
-.if defined(_TEX_VALIDATE)
-	${_TEX_VALIDATE}
-.endif
 .endfor
 .endif
 
