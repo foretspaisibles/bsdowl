@@ -77,6 +77,10 @@
 #
 #  texinteraction: one of batch, nonstop, scroll or errorstop.
 #   Change TeX interaction mode
+#
+#
+#  draft: at most one of time, git, svn, cvs, auto
+#   Select a strategy for draft stamps
 
 
 THISMODULE=		tex.doc

@@ -22,25 +22,36 @@
 .if !target(__<texmf.draft.mk>__)
 __<texmf.draft.mk>__:
 
-DRAFT?=			no
-TEXTIMESTAMP!=		date '+%Y-%m-%d'
-
-.if "${DRAFT}" == "no"
-.undef TEXDRAFTSTAMP
+.if !empty(_USES_OPTIONS:Mdraft)
+.if empty(_USES_draft_ARGS)\
+	  ||!empty(_USES_draft_ARGS:Mauto)\
+	  ||!empty(_USES_draft_ARGS:Mcvs)\
+	  ||!empty(_USES_draft_ARGS:Mtime)
+_TEXMF_DRAFTSTAMP_CMD=	date '+%Y-%m-%d'
+.elif !empty(_USES_draft_ARGS:Mgit)
+_TEXMF_DRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
+.elif !empty(_USES_draft_ARGS:Msvn)
+_TEXMF_DRAFTSTAMP_CMD=	svn log -l 1| awk -F'_[|]_'\
+	  'NR == 2 {gsub(" ","_"); gsub("[(].*[)]",""); print($$3 $$1);}'
 .else
-TEXDRAFTSTAMP?=		-${TEXTIMESTAMP}
+.error Incorrect "USES+= draft:${_USES_draft_ARGS}" usage:\
+	  valid arguments are ${_USES_draft_VALIDARGS}.
 .endif
 
-.if defined(TEXDRAFTSTAMP)&&!empty(TEXDRAFTSTAMP)
-.for document in ${DOCUMENT}
+.if !defined(TEXDRAFTSTAMP)
+TEXDRAFTSTAMP!=		(cd ${.CURDIR} && ${_TEXMF_DRAFTSTAMP_CMD})
+.endif
+
+.for document in ${_TEX_DOCUMENT}
 .for device in ${TEXDEVICE}
-.if defined(TEXDOCNAME.${document:T})
-TEXDOCNAME.${document:T}:=	${TEXDOCNAME.${document:T}}${TEXDRAFTSTAMP}
+.if defined(TEXDOCNAME.${document:T}.${device})
+DOCNAME.${document:T}.${device}:=	${TEXDOCNAME.${document:T}}_${TEXDRAFTSTAMP}.${device}
 .else
-TEXDOCNAME.${document:T}=	${document:T}${TEXDRAFTSTAMP}
+DOCNAME.${document:T}.${device}=	${document:T}_${TEXDRAFTSTAMP}.${device}
 .endif
 .endfor
 .endfor
+
 .endif
 
 .endif # !target(__<texmf.draft.mk>__)

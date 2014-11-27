@@ -22,6 +22,7 @@
 __<texmf.uses.mk>__:
 
 _USES_texinteraction_VALIDARGS=batch nonstop scroll errorstop
+_USES_draft_VALIDARGS=time git svn cvs auto
 
 .if !empty(_USES_OPTIONS:Mtexinteraction)
 .if ${_USES_texinteraction_ARGS:[#]} != 1
@@ -31,6 +32,17 @@ _USES_texinteraction_VALIDARGS=batch nonstop scroll errorstop
 .if empty(_USES_texinteraction_VALIDARGS:M${_USES_texinteraction_ARGS})
 .error Incorrect "USES+= texinteraction:${_USES_texinteraction_ARGS}" usage:\
 	  valid arguments are ${_USES_texinteraction_VALIDARGS}.
+.endif
+.endif
+
+.if !empty(_USES_OPTIONS:Mdraft)
+.if ${_USES_draft_ARGS:[#]} > 1
+.error Incorrect "USES+= draft" usage:\
+	  at most one argument is expected.
+.endif
+.if empty(_USES_draft_VALIDARGS:M${_USES_draft_ARGS})
+.error Incorrect "USES+= draft:${_USES_draft_ARGS}" usage:\
+	  valid arguments are ${_USES_draft_VALIDARGS}.
 .endif
 .endif
 
