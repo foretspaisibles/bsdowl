@@ -20,6 +20,6 @@ MPDEVICE=		png
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.png
 
-.include "metapost.doc.mk"
+.include "mpost.doc.mk"
 
 ### End of file `TestMetapostPNG.mk'

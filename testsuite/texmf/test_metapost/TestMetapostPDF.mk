@@ -20,6 +20,6 @@ MPDEVICE=		pdf
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.pdf
 
-.include "metapost.doc.mk"
+.include "mpost.doc.mk"
 
 ### End of file `TestMetapostPDF.mk'

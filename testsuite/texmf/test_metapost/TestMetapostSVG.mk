@@ -21,6 +21,6 @@ MPDEVICE=		svg
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.svg
 
-.include "metapost.doc.mk"
+.include "mpost.doc.mk"
 
 ### End of file `TestMetapostSVG.mk'

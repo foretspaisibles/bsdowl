@@ -20,6 +20,6 @@ MPDEVICE=		eps
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.eps
 
-.include "metapost.doc.mk"
+.include "mpost.doc.mk"
 
 ### End of file `TestMetapostEPS.mk'

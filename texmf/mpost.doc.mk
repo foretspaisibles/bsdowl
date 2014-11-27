@@ -1,4 +1,4 @@
-### metapost.doc.mk -- Prepare pictures with METAPOST
+### mpost.doc.mk -- Prepare pictures with METAPOST
 
 # Author: Michael Grünewald
 # Date: Wed Nov 26 19:21:34 CET 2014
@@ -47,10 +47,10 @@
 #  MPINPUTS [not set]
 #   The list of directories where METAPOST input files are looked up
 
-THISMODULE=		metapost.doc
+THISMODULE=		mpost.doc
 
 .if !defined(DOCUMENT)||empty(DOCUMENT)
-.error The metapost.doc.mk module expects you to set the DOCUMENT\
+.error The mpost.doc.mk module expects you to set the DOCUMENT\
 	  variable to a sensible value.
 .endif
 
@@ -68,4 +68,4 @@ PRODUCT=		${DOC}
 .include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
-### End of file `metapost.doc.mk'
+### End of file `mpost.doc.mk'
