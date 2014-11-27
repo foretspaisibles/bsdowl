@@ -1,7 +1,7 @@
-### Makefile -- Test support for extras
+### TestIndex.mk -- Test index support
 
 # Author: Michael Grünewald
-# Date: Thu Nov 27 09:33:31 CET 2014
+# Date: Thu Nov 27 12:27:35 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,9 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=			TestBibtex
-TEST+=			TestIndex
+DOCUMENT=		withindex.tex
+TEXDEVICE=		pdf
+USES+=			index
 
-.include "test.mk"
+test:
+	test -f ${DESTDIR}${DOCDIR}/withindex.pdf
 
-### End of file `Makefile'
+.include "latex.doc.mk"
+
+### End of file `TestIndex.mk'

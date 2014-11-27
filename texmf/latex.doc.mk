@@ -49,6 +49,7 @@ _TEX_VALIDATE=\
 
 .include "texmf.build.mk"
 .include "texmf.bibtex.mk"
+.include "texmf.index.mk"
 .include "texmf.mpost.mk"
 .include "texmf.depend.mk"
 .include "texmf.clean.mk"

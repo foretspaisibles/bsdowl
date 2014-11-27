@@ -24,6 +24,7 @@ FILES+=			texmf.build.mk
 FILES+=			texmf.mpost.mk
 FILES+=			texmf.draft.mk
 FILES+=			texmf.bibtex.mk
+FILES+=			texmf.index.mk
 
 FILES+=			tex.doc.mk
 FILES+=			latex.doc.mk
