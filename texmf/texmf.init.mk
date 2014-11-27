@@ -199,6 +199,22 @@ _MPOST_TOOL=		${MPOST}
 
 
 #
+# DVIPS tool
+#
+
+.if defined(TEXINPUTS)&&!empty(TEXINPUTS)
+.if empty(_USES_texinputs_ARGS:Mstrict)
+_DVIPS_TOOL=		${ENVTOOL} TEXINPUTS=".:${TEXINPUTS:tW:S@ @:@g}:" ${DVIPS}
+.else
+_DVIPS_TOOL=		${ENVTOOL} TEXINPUTS="${TEXINPUTS:tW:S@ @:@g}" ${DVIPS}
+.endif
+.else
+_DVIPS_TOOL=		${DVIPS}
+.endif
+
+
+
+#
 # Path
 #
 

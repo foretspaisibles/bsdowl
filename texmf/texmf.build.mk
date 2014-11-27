@@ -82,7 +82,7 @@ _TEX_BUILD_FIGURE.pdf=	pdf
 
 
 .dvi.ps:
-	${DVIPS} -o ${.TARGET} ${.IMPSRC}
+	${_DVIPS_TOOL} -o ${.TARGET} ${.IMPSRC}
 
 .if defined(_TEX_PRINTER)
 .for printer in ${_TEX_PRINTER}
