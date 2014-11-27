@@ -102,6 +102,81 @@ DOC+=			${_MPOST_LIST.${document:T}:.mps=.${device}}
 	${EPSTOPDF} --outfile=${.TARGET} ${.IMPSRC}
 
 
+#
+# Specific rules to generate DVI files
+#
+
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.for document in ${_TEX_DOCUMENT}
+.undef pass_last
+.for pass in ${MULTIPASS}
+.if undefined(pass_last)||empty(pass_last)
+.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
+${COOKIEPREFIX}${document:T}.dvi.${pass}: ${_MPOST_LIST.${figure:T}:.mps=.eps}
+.endfor
+${COOKIEPREFIX}${document:T}.dvi.${pass}: ${SRCS.${document:T}}
+.else
+${COOKIEPREFIX}${document:T}.dvi.${pass}: ${COOKIEPREFIX}${document:T}.dvi.${pass_last} ${SRCS.${document:T}}
+.endif
+	${INFO} 'Multipass job for ${document:T}.dvi (${pass})'
+	${_TEX_TOOL.tex} ${.ALLSRC:M*${document:T}.tex}
+
+pass_last:=		${pass}
+.endfor
+${document}.dvi:	${COOKIEPREFIX}${document:T}.dvi.${pass_last} ${SRCS.${document:T}}
+	${INFO} 'Multipass job for ${document:T}.dvi (final)'
+	${_TEX_TOOL.tex} ${.ALLSRC:M*${document:T}.tex}
+.if defined(_TEX_VALIDATE)
+	${_TEX_VALIDATE}
+.endif
+.endfor
+.endif
+
+
+#
+# Specific rules to generate PDF files
+#
+
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.for document in ${_TEX_DOCUMENT}
+.undef pass_last
+.for pass in ${MULTIPASS}
+.if undefined(pass_last)||empty(pass_last)
+.for figure in ${SRCS.${document:T}:M*.mp:.mp=}
+${COOKIEPREFIX}${document:T}.pdf.${pass}: ${_MPOST_LIST.${figure:T}:.mps=.pdf}
+.endfor
+${COOKIEPREFIX}${document:T}.pdf.${pass}: ${SRCS.${document:T}}
+.else
+${COOKIEPREFIX}${document:T}.pdf.${pass}: ${COOKIEPREFIX}${document:T}.pdf.${pass_last} ${SRCS.${document:T}}
+.endif
+	${INFO} 'Multipass job for ${document:T}.pdf (${pass})'
+	${_TEX_TOOL.pdftex} ${.ALLSRC:M*${document:T}.tex}
+
+pass_last:=		${pass}
+.endfor
+${document}.pdf:	${COOKIEPREFIX}${document:T}.pdf.${pass_last} ${SRCS.${document:T}}
+	${INFO} 'Multipass job for ${document:T}.pdf (final)'
+	${_TEX_TOOL.pdftex} ${.ALLSRC:M*${document:T}.tex}
+.if defined(_TEX_VALIDATE)
+	${_TEX_VALIDATE}
+.endif
+.endfor
+.endif
+
+
+#
+# Register cookiefiles
+#
+
+.if defined(MULTIPASS)&&!empty(MULTIPASS)&&(${DRAFT} == no)
+.for document in ${_TEX_DOCUMENT}
+.for pass in ${MULTIPASS}
+COOKIEFILES+=		${COOKIEPREFIX}${document:T}.dvi.${pass}
+COOKIEFILES+=		${COOKIEPREFIX}${document:T}.pdf.${pass}
+.endfor
+.endfor
+.endif
+
 .endif # !target(__<texmf.build.mk>__)
 
 ### End of file `texmf.build.mk'
