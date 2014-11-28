@@ -20,6 +20,7 @@ SUBDIR+=		test_graphicx
 SUBDIR+=		test_metapost
 SUBDIR+=		test_complex
 SUBDIR+=		test_extra
+SUBDIR+=		test_noweb
 
 .include "subdir.mk"
 

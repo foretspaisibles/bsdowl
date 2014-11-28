@@ -1,7 +1,7 @@
-### Makefile -- Support files for noweb
+### Makefile.inc -- Configuration for samhain project
 
 # Author: Michael Grünewald
-# Date: Sat Oct  3 2009 19:09:28 CEST
+# Date: Fri Nov 28 10:07:22 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,10 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SHARE+=		nwlatex.css
-FILES+=		nwlatex.tex
+TEXDEVICE=		pdf dvi ps
+.PATH:			${SRCDIR}/src
 
-FILESDIR=	${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
+FILESDIR=		${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
+DOCDIR=			${datarootdir}/texmf-local/doc/latex${PACKAGEDIR}
 
-.include "project.mk"
-
-### End of file `Makefile'
+### End of file `Makefile.inc'

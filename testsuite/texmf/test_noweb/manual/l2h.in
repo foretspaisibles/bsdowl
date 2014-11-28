@@ -1,0 +1,8 @@
+% l2h substitution th &thorn;
+% l2h argblock paragraph h4
+% l2h argblock subparagraph h5
+% l2h argblock fn em
+% l2h argblock va var
+% l2h argblock fa car
+% l2h argblock pa em
+% l2h envblock example pre

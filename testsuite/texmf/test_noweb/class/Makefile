@@ -1,7 +1,7 @@
-### Makefile -- Support files for noweb
+### Makefile -- Prepare Samhain LaTeX classes
 
 # Author: Michael Grünewald
-# Date: Sat Oct  3 2009 19:09:28 CEST
+# Date: Fri Nov 28 10:17:37 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,27 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SHARE+=		nwlatex.css
-FILES+=		nwlatex.tex
+FILES=			shltx.sty
+FILES+=			shthm.sty
+FILES+=			sharticle.cls
+FILES+=			shplexos.cls
+FILES+=			shbook.cls
+FILES+=			shpaper.cls
+FILES+=			shmetal.sty
 
-FILESDIR=	${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
+NOWEB=			shltxbegin.nw
+NOWEB+=			shltx.nw
+NOWEB+=			shclasses.nw
+NOWEB+=			shmetal.nw
+NOWEB+=			shpaper.nw
+NOWEB+=			shplexos.nw
+NOWEB+=			shthm.nw
+NOWEB+=			shltxend.nw
 
-.include "project.mk"
+NOTANGLE=		${FILES}
+
+USES+=			noweb
+
+.include "latex.files.mk"
 
 ### End of file `Makefile'

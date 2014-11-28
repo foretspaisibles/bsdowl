@@ -1,7 +1,7 @@
-### Makefile -- Support files for noweb
+### Makefile -- Test noweb support
 
 # Author: Michael Grünewald
-# Date: Sat Oct  3 2009 19:09:28 CEST
+# Date: Fri Nov 28 10:04:55 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SHARE+=		nwlatex.css
-FILES+=		nwlatex.tex
+TEST=			TestNoweb
 
-FILESDIR=	${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
-
-.include "project.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

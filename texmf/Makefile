@@ -27,8 +27,11 @@ FILES+=			texmf.bibtex.mk
 FILES+=			texmf.index.mk
 
 FILES+=			tex.doc.mk
+FILES+=			plain.files.mk
 FILES+=			latex.doc.mk
+FILES+=			latex.files.mk
 FILES+=			mpost.doc.mk
+FILES+=			mpost.files.mk
 
 .include "project.mk"
 
