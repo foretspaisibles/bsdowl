@@ -21,6 +21,9 @@ SUBDIR+=	script
 SUBDIR+=	config
 SUBDIR+=	texmf
 
+install build:
+	${NOP}
+
 .include "subdir.mk"
 
 ### End of file `Makefile'
