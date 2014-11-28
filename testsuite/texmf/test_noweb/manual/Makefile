@@ -30,6 +30,7 @@ SRCS=			shusermanual.tex
 
 USES+=			noweb
 NOWEAVE_LATEX_WRAPPER=	delay
+NOWEAVE_LATEX_DEFS=	l2h.in
 
 .include "latex.doc.mk"
 
