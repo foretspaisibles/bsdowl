@@ -1,7 +1,7 @@
-### latex.files.mk -- Install LaTeX macro files
+### plain.files.mk -- Install Plain macro files
 
 # Author: Michael Grünewald
-# Date: Fri Nov 28 10:20:39 CET 2014
+# Date: Fri Nov 28 12:12:13 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -16,10 +16,10 @@
 
 ### DESCRIPTION
 
-THISMODULE=		latex.files
+THISMODULE=		plain.files
 
 .if !defined(FILES)||empty(FILES)
-.error The latex.files.mk module expects you to set the FILES\
+.error The plain.files.mk module expects you to set the FILES\
 	  variable to a sensible value.
 .endif
 
@@ -30,8 +30,8 @@ PRODUCT=		${FILES}
 PRODUCT+=		${DOC}
 .endif
 
-FILESDIR?=		${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
-DOCDIR?=		${datarootdir}/texmf-local/doc/latex${PACKAGEDIR}
+FILESDIR?=		${datarootdir}/texmf-local/tex/plain${PACKAGEDIR}
+DOCDIR?=		${datarootdir}/texmf-local/doc/plain${PACKAGEDIR}
 
 .include "bps.init.mk"
 .include "bps.man.mk"
@@ -39,4 +39,4 @@ DOCDIR?=		${datarootdir}/texmf-local/doc/latex${PACKAGEDIR}
 .include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
-### End of file `latex.files.mk'
+### End of file `plain.files.mk'
