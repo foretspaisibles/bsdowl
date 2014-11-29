@@ -18,7 +18,12 @@ SUBDIR+= support
 
 PREFIX?= @prefix@
 
+CONFIGURE=		Makefile.in
+CONFIGURE+=		bps/bps.init.mk.in
+
 PROJECTDISTEXCLUDE+=	Wiki
+PROJECTDISTEXCLUDE+=	${PROJECTDISTNAME}/Makefile
+PROJECTDISTEXCLUDE+=	${PROJECTDISTNAME}/bps/bps.init.mk
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .MAKEFLAGS: -I${.CURDIR}/bps
