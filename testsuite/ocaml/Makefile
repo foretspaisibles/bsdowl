@@ -16,6 +16,7 @@
 
 
 SUBDIR=		test_program
+SUBDIR+=	test_library
 
 .include "subdir.mk"
 

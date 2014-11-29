@@ -1,7 +1,7 @@
-### Makefile -- Mini Basic
+### Makefile -- Test features of module ocaml.lib
 
 # Author: Michael Grünewald
-# Date: Fri Oct  4 20:53:07 CEST 2013
+# Date: Sat Nov 29 08:08:34 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,13 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=	minibasic
+TEST=			TestPack
 
-SRCS =		main.ml
-SRCS+=		basic_types.ml
-SRCS+=		basic_parser.mly
-SRCS+=		basic_lexer.mll
-
-.include "ocaml.prog.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

@@ -1,7 +1,7 @@
-### Makefile -- Mini Basic
+### TestPack.mk -- Produce a packed library
 
 # Author: Michael Grünewald
-# Date: Fri Oct 18 07:48:45 CEST 2013
+# Date: Sat Nov 29 08:06:59 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,13 +14,18 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACK=	minibasic
+PACK=			minibasic
 
-SRCS =		main.ml
-SRCS+=		basic_types.ml
-SRCS+=		basic_parser.mly
-SRCS+=		basic_lexer.mll
+SRCS=			basic_types.ml
+SRCS+=			basic_parser.mly
+SRCS+=			basic_lexer.mll
+
+.PATH:			${TESTSRCDIR}/ocaml/minibasic
+
+test:
+	test -f ${DESTDIR}${LIBDIR}/minibasic.cma
+	test -f ${DESTDIR}${LIBDIR}/minibasic.cmi
 
 .include "ocaml.pack.mk"
 
-### End of file `Makefile'
+### End of file `TestPack.mk'
