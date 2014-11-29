@@ -72,20 +72,20 @@ _OCAML_CMA?=
 _OCAML_CMXA?=
 _OCAML_A?=
 
-_OCAML_LIB:=${LIBRARY}
+_OCAML_LIB:=		${LIBRARY}
 
 .for lib in ${_OCAML_LIB}
-SRCS.${lib:T}?=${SRCS}
+SRCS.${lib:T}?=		${SRCS}
 .if defined(_OCAML_COMPILE_NATIVE)
-SRCS.${lib:T}.cmxa?=${SRCS.${lib:T}}
-_OCAML_SRCS+=SRCS.${lib}.cmxa
-_OCAML_CMXA+=${lib:T}.cmxa
-_OCAML_A+=${lib:T}.a
+SRCS.${lib:T}.cmxa?=	${SRCS.${lib:T}}
+_OCAML_SRCS+=		SRCS.${lib}.cmxa
+_OCAML_CMXA+=		${lib:T}.cmxa
+_OCAML_A+=		${lib:T}.a
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-SRCS.${lib:T}.cma?=${SRCS.${lib:T}}
-_OCAML_SRCS+=SRCS.${lib}.cma
-_OCAML_CMA+=${lib:T}.cma
+SRCS.${lib:T}.cma?=	${SRCS.${lib:T}}
+_OCAML_SRCS+=		SRCS.${lib}.cma
+_OCAML_CMA+=		${lib:T}.cma
 .endif
 .endfor
 
@@ -95,17 +95,17 @@ _OCAML_CMA+=${lib:T}.cma
 
 .for lib in ${_OCAML_LIB}
 .if defined(_OCAML_COMPILE_NATIVE)
-LIB+= ${lib}.cmxa ${lib}.a
+LIB+=			${lib}.cmxa ${lib}.a
 _OCAML_SRCS.${lib}.cmxa=${.ALLSRC}
-${lib}.cmxa: ${SRCS.${lib}.cmxa:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
+${lib}.cmxa:		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-LIB+= ${lib}.cma
+LIB+=			${lib}.cma
 _OCAML_SRCS.${lib:T}.cma=${.ALLSRC}
-${lib}.cma: ${SRCS.${lib:T}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
+${lib}.cma:		${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
 .endif
-.if !empty(SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml)
-LIB+= ${SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
+.if !empty(SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml)
+LIB+=			${SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmi}
 .endif
 .endfor
 
