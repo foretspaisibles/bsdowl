@@ -128,6 +128,15 @@
 .if !target(__<ocaml.odoc.mk>__)
 __<ocaml.odoc.mk>__:
 
+.if !empty(_USES_OPTIONS:Mocamldoc)
+USE_ODOC=		yes
+.for format in odoc html
+.if !empty(_USES_ocamldoc_ARGS:M${format})
+ODOC_FORMAT+=		${format}
+.endif
+.endfor
+.endif
+
 USE_ODOC?=		no
 
 .if ${USE_ODOC} == yes
