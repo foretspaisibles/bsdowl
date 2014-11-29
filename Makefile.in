@@ -18,6 +18,8 @@ SUBDIR+= support
 
 PREFIX?= @prefix@
 
+PROJECTDISTEXCLUDE+=	Wiki
+
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .MAKEFLAGS: -I${.CURDIR}/bps
 
