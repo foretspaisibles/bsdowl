@@ -3,14 +3,17 @@ Maintainer: Michael Grünewald <michipili@gmail.com>
 Section: devel
 Priority: optional
 Standards-Version: 3.9.5
-Build-Depends: debhelper (>= 9), bmake, graphicsmagick
+Build-Depends: debhelper (>= 9), bmake, graphicsmagick, gawk, m4
 Vcs-Git: git://github.com/michipili/bsdowl.git
 Vcs-Browser: https://github.com/michipili/bsdowl/tree/debian
 Homepage: https://github.com/michipili/bsdowl
 
 Package: bsdowl
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, bmake
+Depends: ${shlibs:Depends}, ${misc:Depends}, gawk, m4, bmake,
+ ocaml, texlive-latex-base
+Recommends: gnupg, graphicsmagick, ocaml-findlib
+Suggests: opensp
 Description: Highly portable build system targeting modern UNIX systems
  This collection of BSD Make directives aims at providing a highly
  portable build system targeting modern UNIX systems and supporting
