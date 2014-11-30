@@ -137,6 +137,13 @@ ODOC_FORMAT+=		${format}
 .endfor
 .endif
 
+.if !empty(_MODULE_LIST:Mocaml.manual)&&(${THISMODULE} == ocaml.lib)
+USE_ODOC?=		yes
+.if empty(ODOC_FORMAT:Modoc)
+ODOC_FORMAT+=		odoc
+.endif
+.endif
+
 USE_ODOC?=		no
 
 .if ${USE_ODOC} == yes
