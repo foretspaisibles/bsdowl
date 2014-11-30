@@ -1,6 +1,7 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/Makefile)
 version='3.0-pre'
+AC_CONFIG_AUX_DIR([Library/Autoconf])
 AC_PROG_AWK()
 AC_PROG_GREP()
 AC_PROG_INSTALL()
