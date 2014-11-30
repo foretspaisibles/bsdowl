@@ -1,8 +1,9 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/Makefile)
-version='3.0-pre'
+AC_SUBST([version], [3.0-pre])
 AC_CONFIG_AUX_DIR([Library/Autoconf])
 AC_CANONICAL_HOST
+AC_NEED_BSDMAKE()
 AC_PROG_AWK()
 AC_PROG_GREP()
 AC_PROG_INSTALL()
@@ -11,6 +12,7 @@ AC_PROG_MKDIR_P()
 AC_PROG_SED()
 AC_PROG_ID()
 AC_SYSTEM_USER()
+AC_TAR_COMPRESSION_METHODS([COMPRESS])
 
 #
 # Feature control for package managers
@@ -37,8 +39,5 @@ AC_ARG_ENABLE([findlib],
 [  --enable-findlib        enable use of OCaml findlib],
 [AC_NEED_PROG([ocamlfind], [ocamlfind])])
 
-AC_TAR_COMPRESSION_METHODS([COMPRESS])
-AC_NEED_BSDMAKE()
-AC_SUBST([version])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT
