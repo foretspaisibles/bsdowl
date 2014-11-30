@@ -30,10 +30,13 @@ __<ocaml.module.mk>__:
 
 .for module_path in ${_MODULE_langc.lib_ARGS}
 DIRS+=			${SRCDIR}/${module_path}
+DIRS+=			${WRKDIR}/${module_path}
 .endfor
 
 .for module_path in ${_MODULE_ocaml.lib_ARGS}
 DIRS+=			${SRCDIR}/${module_path}
+DIRS+=			${WRKDIR}/${module_path}
+ODOC_DIRS+=		${WRKDIR}/${module_path}
 .endfor
 
 .for module_path in ${_MODULE_ocaml.pack_ARGS}
@@ -42,10 +45,10 @@ DIRS+=			${SRCDIR}/${module_path}
 
 .if ${THISMODULE} == ocaml.prog
 .for library in ${PRODUCT_ocaml.lib:N*.odoc}
-LIBS+=			${library}
+_MODULE_LIBS+=		${library}
 .endfor
 .for library in ${PRODUCT_ocaml.pack:N*.odoc}
-LIBS+=			${library}
+_MODULE_LIBS+=		${library}
 .endfor
 .endif
 

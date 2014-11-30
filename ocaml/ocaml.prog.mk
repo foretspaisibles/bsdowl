@@ -177,9 +177,18 @@ _OCAML_CN+=${item:T}.native
 SRCS.${item:T}.byte?=${SRCS.${item:T}}
 _OCAML_CB+=${item:T}.byte
 .endif
+.if defined(_EXTERNAL_LIBS)&&!empty(_EXTERNAL_LIBS)
+_OCAML_LIBS+=		${_EXTERNAL_LIBS}
+.endif
+.if defined(_MODULE_LIBS)&&!empty(_MODULE_LIBS)
+_OCAML_LIBS+=		${_MODULE_LIBS}
+.endif
 .if defined(LIBS)&&!empty(LIBS)
-LIBS.${item:T}.byte?=${LIBS:=.cma}
-LIBS.${item:T}.native?=${LIBS:=.cmxa}
+_OCAML_LIBS+=		${LIBS}
+.endif
+.if defined(_OCAML_LIBS)&&!empty(_OCAML_LIBS)
+LIBS.${item:T}.byte?=${_OCAML_LIBS:=.cma}
+LIBS.${item:T}.native?=${_OCAML_LIBS:=.cmxa}
 .endif
 .endfor
 

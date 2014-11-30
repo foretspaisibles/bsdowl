@@ -30,6 +30,13 @@ __<ocaml.external.mk>__:
 PKGS+=			${external_arg}
 .endfor
 
+.for external_arg in ${_EXTERNAL_ocaml.lib_ARGS}
+_EXTERNAL_LIBS+=	${external_arg}
+.if defined(_EXTERNAL_ocaml.lib_${external_arg}_DIRS)
+DIRS+=			${_EXTERNAL_ocaml.lib_${external_arg}_DIRS}
+.endif
+.endfor
+
 .endif # !target(__<ocaml.external.mk>__)
 
 ### End of file `ocaml.external.mk'
