@@ -35,3 +35,69 @@ done;])
 ID="$ac_cv_path_ID"
 AC_SUBST([ID])
 ])
+
+
+# AC_PROG_BSDMAKE
+# ---------------
+# Check for a BSD Make program which is compatible with a recent
+# version of BSD Make (2014-02-14 or later).
+#
+# - On FreeBSD 10.0 or newer, it will use `make' from the base system.
+# - On NetBSD 6.1.5 or newer, it will use `make' from the base system.
+# - On other platforms, it will look for a `bmake' program.
+#
+# If a suitable program is found, its name is affected to the BSDMAKE
+# variable.  If no such a program has been found, this variable is set
+# to `no'.
+#
+# Note that OpenBSD is not supported as there is modern no version of
+# bmake available wether in the base system nor in the ports at time
+# of writing (OpenBSD 5.6).
+#
+# This macro will break for NetBSD 10.X, many years from now.
+AC_DEFUN([AC_PROG_BSDMAKE_BASEBSD],
+[case $host_os in
+    # FreeBSD 10.0 or newer will match.
+    freebsd*)
+        ac_cv_path_BSDMAKE_freebsd_version=${host_os#freebsd}
+        if test ${ac_cv_path_BSDMAKE_freebsd_version%%.*} -ge 10; then
+            ac_cv_path_BSDMAKE=make
+        fi
+        ;;
+    # NetBSD 6.0 or newer will match.
+    netbsd*)
+        ac_cv_path_BSDMAKE_netbsd_version=${host_os#netbsd}
+        if test ${ac_cv_path_BSDMAKE_netbsd_version%%.*} -ge 6; then
+            ac_cv_path_BSDMAKE=make
+        fi
+        ;;
+esac])dnl
+AC_DEFUN([AC_PROG_BSDMAKE],
+[AC_CACHE_CHECK([for a modern BSD Make program], ac_cv_path_BSDMAKE,
+  [AC_REQUIRE([AC_CANONICAL_HOST])[]dnl
+ac_cv_path_BSDMAKE=no
+if test "$ac_cv_path_BSDMAKE" = "no"; then
+    AC_PROG_BSDMAKE_BASEBSD
+fi
+if test "$ac_cv_path_BSDMAKE" = "no"; then
+    if ! test "x$(which bmake)" = "x"; then
+        ac_cv_path_BSDMAKE=bmake
+    fi
+fi;])
+BSDMAKE="$ac_cv_path_BSDMAKE"
+AC_SUBST([BSDMAKE])
+])dnl
+
+
+# AC_CHECK_BSDMAKE([ACTION-IF-FOUND], [ACTION-IF-NOT-FOUND])
+# ----------------------------------------------------------
+# Macro for checking if a modern version of BSD make is installed.
+AC_DEFUN([AC_CHECK_BSDMAKE],
+[AC_REQUIRE([AC_PROG_BSDMAKE])[]dnl
+AS_IF([test "$BSDMAKE" = "no"], [$2], [$3])])dnl
+
+
+# AC_NEED_BSDMAKE
+# ---------------
+AC_DEFUN([AC_NEED_BSDMAKE],
+[AC_CHECK_BSDMAKE([], [AC_MSG_ERROR([*** BSD Make not found.])])])

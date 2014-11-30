@@ -2,6 +2,7 @@ dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/Makefile)
 version='3.0-pre'
 AC_CONFIG_AUX_DIR([Library/Autoconf])
+AC_CANONICAL_HOST
 AC_PROG_AWK()
 AC_PROG_GREP()
 AC_PROG_INSTALL()
@@ -25,13 +26,6 @@ AC_SUBST([GPG], [gpg])
 AC_CHECK_PROG([has_gm], [gm], [yes], [no])
 if test "x$has_gm" = 'xno'; then
   AC_MSG_ERROR([*** GraphicsMagick not found.])
-fi
-#
-# Check for BSD Make
-#
-AC_CHECK_PROG([has_bmake], [bmake], [yes], [no])
-if test "x$has_bmake" = 'xno' && test \! $(uname) = 'FreeBSD'; then
- AC_MSG_ERROR([*** BSD Make not found.])
 fi
 #
 # Determine compression tools
@@ -60,6 +54,7 @@ fi
 if test "${USE_XZ}" = "yes"; then
 	COMPRESS="${COMPRESS}${COMPRESS:+ }xz"
 fi
+AC_NEED_BSDMAKE()
 AC_SUBST([version])
 AC_SUBST([COMPRESS])
 AC_SUBST([SYSTEMOWN])
