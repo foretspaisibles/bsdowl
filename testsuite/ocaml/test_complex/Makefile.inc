@@ -1,7 +1,7 @@
-### Makefile -- Mini project
+### Makefile.inc -- Configuration for golden_ratio
 
 # Author: Michael Grünewald
-# Date: Sun Oct 13 10:50:45 CEST 2013
+# Date: Sun Nov 30 15:09:47 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROJECT=	golden_ratio
-VERSION=	1.0
-AUTHOR=		Michael Grünewald
+.if "${THISMODULE}" == "ocaml.lib"
+USES+=			ocamldoc:odoc
+.endif
 
-SUBDIR+=	fibonacci
-SUBDIR+=	newton
-SUBDIR+=	golden_ratio
-SUBDIR+=	manual
-
-.include "bps.project.mk"
-
-### End of file `Makefile'
+### End of file `Makefile.inc'

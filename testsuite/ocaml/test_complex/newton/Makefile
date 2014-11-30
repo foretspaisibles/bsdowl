@@ -1,7 +1,7 @@
 ### Makefile -- Newton's method
 
 # Author: Michael Grünewald
-# Date: Sat Oct  5 20:40:24 CEST 2013
+# Date: Thu Oct  3 23:39:20 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,13 +14,10 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=	fibonacci
-SRCS+=		fibonacci.ml
+LIBRARY=		newton
+SRCS+=			newton.ml
 
-LIBS=		nums
-
-USE_ODOC=	yes
-ODOC_FORMAT=	odoc
+.PATH:			${TESTSRCDIR}/ocaml/newton
 
 .include "ocaml.lib.mk"
 

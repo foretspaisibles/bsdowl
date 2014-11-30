@@ -18,14 +18,6 @@ PROGRAM=	golden_ratio
 
 SRCS=		main.ml
 
-LIBS+=		nums
-LIBS+=		newton
-LIBS+=		fibonacci
-
-DIRS=		${.OBJDIR}/../newton
-DIRS+=		${.OBJDIR}/../fibonacci
-
-
 .include "ocaml.prog.mk"
 
 ### End of file `Makefile'
