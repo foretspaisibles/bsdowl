@@ -21,7 +21,7 @@ SUBDIR+=	script
 SUBDIR+=	config
 SUBDIR+=	texmf
 
-install build:
+all configure install build depend doc:
 	${NOP}
 
 .include "subdir.mk"
