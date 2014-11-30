@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### TestLibraryFindlib.mk -- Produce a simple library and install with findlib
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sun Nov 30 12:18:24 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,20 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+LIBRARY=		newton
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+SRCS=			newton.ml
 
-.include "subdir.mk"
+USES+=			site-lib
 
-### End of file `Makefile'
+.PATH:			${TESTSRCDIR}/ocaml/newton
+.PATH:			${TESTSRCDIR}/ocaml/newton-meta
+
+test:
+	test -f ${DESTDIR}${LIBDIR}/newton.cma
+	test -f ${DESTDIR}${LIBDIR}/newton.cmi
+	test -f ${DESTDIR}${LIBDIR}/META
+
+.include "ocaml.lib.mk"
+
+### End of file `TestLibraryFindlib.mk'

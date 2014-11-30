@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### TestPack.mk -- Produce a packed library
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sat Nov 29 08:06:59 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,18 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+PACK=			minibasic
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+SRCS=			basic_types.ml
+SRCS+=			basic_parser.mly
+SRCS+=			basic_lexer.mll
 
-.include "subdir.mk"
+.PATH:			${TESTSRCDIR}/ocaml/minibasic
 
-### End of file `Makefile'
+test:
+	test -f ${DESTDIR}${LIBDIR}/minibasic.cma
+	test -f ${DESTDIR}${LIBDIR}/minibasic.cmi
+
+.include "ocaml.pack.mk"
+
+### End of file `TestPack.mk'

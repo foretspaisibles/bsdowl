@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### Makefile -- Test complex projetcs
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sun Nov 30 15:23:55 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TEST=			TestComplex
+TEST+=			TestComplexMultiple
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
-
-.include "subdir.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

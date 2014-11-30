@@ -36,14 +36,24 @@
 #   The list of object groups handled by our framework
 #
 #
-#  LIBDIR
+#  LIBDIR [${ocamllibdir}${PACKAGEDIR}]
 #   The installation target for libraries
 #
 #   The value defined in `bps.own.mk` is suited for C libraries but not
 #   for OCaml objects that are rather installed in the same location as
 #   the standard library.
 #
-#   It takes into account the PACKAGEDIR variable.
+#
+#  ocamllibdir [${libdir}]
+#   Directory for ocaml libraries
+#
+#   See "USES+=site-lib" below.
+#
+#
+# Uses:
+#
+#  site-lib: No argument allowed
+#   Use ${libdir}/ocaml/site-lib as default value for ocamllibdir
 
 
 ### IMPLEMENTATION
@@ -55,12 +65,14 @@
 .if !target(__<ocaml.init.mk>__)
 __<ocaml.init.mk>__:
 
+LIBDIR?=		${ocamllibdir}${PACKAGEDIR}
+
 .include "bps.init.mk"
 
-.if !defined(PACKAGEDIR)||empty(PACKAGEDIR)
-LIBDIR?=		${libdir}/ocaml
+.if!empty(_USES_OPTIONS:Msite-lib)
+ocamllibdir?=		${libdir}/ocaml/site-lib
 .else
-LIBDIR?=		${libdir}/ocaml/site-lib${PACKAGEDIR}
+ocamllibdir?=		${libdir}
 .endif
 
 .SUFFIXES: .ml .mli .mll .mly

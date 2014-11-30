@@ -51,7 +51,7 @@ MAKETEST+=		TESTSRCDIR='${SRCDIR}/testsuite/src'
 MAKETEST+=		TESTDIR='${.CURDIR:C,${SRCDIR}/testsuite,,}/${.ALLSRC:M*.mk:C/.mk$//}'
 MAKETEST+=		${MAKE}
 
-TESTSEQUENCE?=		clean obj depend build install
+TESTSEQUENCE?=		clean obj depend build doc install
 
 .ORDER:			${TEST:C@^@do-test-@}
 .ORDER:			${TEST:C@$@.done@}

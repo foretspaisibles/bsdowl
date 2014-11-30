@@ -31,6 +31,17 @@
 .if !target(__<ocaml.uses.mk>__)
 __<ocaml.uses.mk>__:
 
+_USES_ocamldoc_VALIDARGS=html odoc
+
+.if !empty(_USES_OPTIONS:Mocamldoc)
+.for argument in ${_USES_ocamldoc_ARGS}
+.if empty(_USES_ocamldoc_VALIDARGS:M${argument})
+.error Incorrect "USES+= ocamldoc:${argument}" usage:\
+	  valid arguments are ${_USES_ocamldoc_VALIDARGS}.
+.endif
+.endfor
+.endif
+
 .endif # !target(__<ocaml.uses.mk>__)
 
 ### End of file `ocaml.uses.mk'

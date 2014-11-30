@@ -189,9 +189,9 @@ COPYTREE_${group}=\
 		-- COPYTREE_${group}
 .else
 COPYTREE_${group}=\
-	${SH} -c '(${FIND} -d $$0 $$2 | ${CPIO} -dumpl $$1 >/dev/null 2>&1) &&\
-		${FIND} -d $$0 $$2 -type d -exec ${CHMOD} 755 $$1/{} \; &&\
-		${FIND} -d $$0 $$2 -type f -exec ${CHMOD} ${${group}MODE} $$1/{} \;'\
+	${SH} -c '(${FIND} -d $$1 $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
+		${FIND} -d $$1 $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
+		${FIND} -d $$1 $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
 		-- COPYTREE_${group}
 .endif
 

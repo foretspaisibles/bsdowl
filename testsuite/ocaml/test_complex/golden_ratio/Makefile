@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### Makefile -- Computing the golden ratio
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sat Oct  5 20:47:48 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,10 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+PROGRAM=	golden_ratio
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+SRCS=		main.ml
 
-.include "subdir.mk"
+.include "ocaml.prog.mk"
 
 ### End of file `Makefile'

@@ -1,0 +1,6 @@
+name="@PACKAGE@"
+version="@VERSION@"
+description="The Newton method to solve functional equations"
+
+archive(byte)="newton.cma"
+archive(native)+="newton.cmxa"

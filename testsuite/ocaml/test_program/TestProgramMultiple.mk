@@ -16,7 +16,7 @@
 
 CONFIGURATIONLIST=	Debug Profile Release
 TARGETLIST=		realclean distclean clean
-TARGETLIST+=		obj depend build install
+TARGETLIST+=		obj depend build doc install
 
 ${TARGETLIST}: .PHONY
 .for configuration in ${CONFIGURATIONLIST}

@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### TestLibraryDoc.mk -- Produce a simple library with ocamldoc documentation
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sat Nov 29 14:47:24 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,20 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+LIBRARY=		newton
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+SRCS=			newton.ml
 
-.include "subdir.mk"
+USES+=			ocamldoc:odoc,html
 
-### End of file `Makefile'
+.PATH:			${TESTSRCDIR}/ocaml/newton
+
+test:
+	test -f ${DESTDIR}${LIBDIR}/newton.cma
+	test -f ${DESTDIR}${LIBDIR}/newton.cmi
+	test -f ${DESTDIR}${DOCDIR}/html/index.html
+	test -f ${.OBJDIR}/newton.odoc
+
+.include "ocaml.lib.mk"
+
+### End of file `TestLibraryDoc.mk'

@@ -1,7 +1,7 @@
-### Makefile -- Test Suite for OCaml
+### TestProgramLexerParser.mk -- Counting characters and lines in a file
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sat Nov 29 08:21:58 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+SRCS=			basic_types.ml
+SRCS+=			basic_parser.mly
+SRCS+=			basic_lexer.mll
+SRCS+=			wordcount.ml
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
+.PATH:			${TESTSRCDIR}/ocaml/minibasic
 
-.include "subdir.mk"
+.include "TestProgram.mk"
 
-### End of file `Makefile'
+### End of file `TestProgramProfile.mk'
