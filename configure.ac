@@ -71,5 +71,5 @@ AC_SUBST([version])
 AC_SUBST([COMPRESS])
 AC_SUBST([SYSTEMOWN])
 AC_SUBST([SYSTEMGRP])
-AC_OUTPUT(Makefile.inc)
-AC_OUTPUT(bps/bps.bpsconfig.mk)
+AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
+AC_OUTPUT
