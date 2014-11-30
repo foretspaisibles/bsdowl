@@ -37,36 +37,8 @@ AC_ARG_ENABLE([findlib],
 [  --enable-findlib        enable use of OCaml findlib],
 [AC_NEED_PROG([ocamlfind], [ocamlfind])])
 
-
-#
-# Determine compression tools
-#
-define([CHECK_TAR_OPTION], [dnl
-printf 'checking whether tar -$1 works... '
-if tar c$1f /dev/null /dev/null >/dev/null 2>&1; then
-	$2=yes
-else
-	$2=no
-fi
-printf '%s\n' "$$2"])dnl
-CHECK_TAR_OPTION(z, USE_GZIP)
-CHECK_TAR_OPTION(j, USE_BZIP2)
-CHECK_TAR_OPTION(J, USE_XZ)
-if test "${USE_XZ}" = "yes"; then
-	USE_BZIP2="no"
-fi
-COMPRESS=""
-if test "${USE_GZIP}" = "yes"; then
-	COMPRESS="${COMPRESS}${COMPRESS:+ }gzip"
-fi
-if test "${USE_BZIP2}" = "yes"; then
-	COMPRESS="${COMPRESS}${COMPRESS:+ }bzip2"
-fi
-if test "${USE_XZ}" = "yes"; then
-	COMPRESS="${COMPRESS}${COMPRESS:+ }xz"
-fi
+AC_TAR_COMPRESSION_METHODS([COMPRESS])
 AC_NEED_BSDMAKE()
 AC_SUBST([version])
-AC_SUBST([COMPRESS])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT

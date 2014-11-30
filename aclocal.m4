@@ -140,3 +140,41 @@ AC_DEFUN([AC_SYSTEM_USER],
   AC_SUBST([SYSTEMOWN])
   AC_SUBST([SYSTEMGRP])
 ])
+
+
+# AC_CHECK_TAR_OPTION([TAR-OPTION], [VARIABLE])
+# ---------------------------------------------
+# Check if the tar command supports TAR-OPTION and set VARIABLE to yes
+# or to no accordingly.
+AC_DEFUN([AC_CHECK_TAR_OPTION],
+  [printf 'checking whether tar -$1 works... '
+if tar c$1f /dev/null /dev/null >/dev/null 2>&1; then
+	$2=yes
+else
+	$2=no
+fi
+printf '%s\n' "$$2"])dnl
+
+
+# AC_TAR_COMPRESSION_METHODS([VARIABLE])
+# --------------------------------------
+
+# Determine the list of compression methods supported by tar. These
+# compression methods are designed by gzip, bzip2 and xz.
+#
+# The list of available methods is stored in VARIABLE and this
+# variable is marker for substitution.
+AC_DEFUN([AC_TAR_COMPRESSION_METHODS],
+  [AC_CHECK_TAR_OPTION(z, ac_tar_compression_gzip)
+   AC_CHECK_TAR_OPTION(j, ac_tar_compression_bzip2)
+   AC_CHECK_TAR_OPTION(J, ac_tar_compression_xz)
+   $1=""
+   AC_TAR_COMPRESSION_PACK([gzip], [$1])
+   AC_TAR_COMPRESSION_PACK([bzip2], [$1])
+   AC_TAR_COMPRESSION_PACK([xz], [$1])
+   AC_SUBST([$1])
+])
+AC_DEFUN([AC_TAR_COMPRESSION_PACK],
+  [if test "${ac_tar_compression_$1}" = "yes"; then
+	COMPRESS="${$2}${$2:+ }$1"
+fi;])
