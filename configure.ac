@@ -10,8 +10,7 @@ AC_PROG_LN_S()
 AC_PROG_MKDIR_P()
 AC_PROG_SED()
 AC_PROG_ID()
-SYSTEMOWN=root
-SYSTEMGRP=$($ID -gn $SYSTEMOWN)
+AC_SYSTEM_USER()
 
 #
 # Feature control for package managers
@@ -69,7 +68,5 @@ fi
 AC_NEED_BSDMAKE()
 AC_SUBST([version])
 AC_SUBST([COMPRESS])
-AC_SUBST([SYSTEMOWN])
-AC_SUBST([SYSTEMGRP])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT

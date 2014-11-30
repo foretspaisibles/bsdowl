@@ -110,3 +110,33 @@ AC_DEFUN([AC_NEED_PROG],
 if test "x$has_$2" = 'xno'; then
   AC_MSG_ERROR([*** $1 not found.])
 fi;])
+
+
+# AC_SYSTEM_USER
+# --------------
+# Fill the variables SYSTEMOWN and SYSTEMGRP with values that can be
+# passed as arguments to the -o and -g options of the install program.
+#
+# These variables are selected for substitution.
+#
+# On Cygwin we use numeric uids and gids because it is common for
+# these names to contain spaces.
+#
+# Some systems do not have a wheel group, we therefore rely on our
+# ID command to determine the group of the root user.
+AC_DEFUN([AC_SYSTEM_USER],
+  [AC_REQUIRE([AC_CANONICAL_HOST])[]dnl
+  AC_REQUIRE([AC_PROG_ID])[]dnl
+  case $host_os in
+    *cygwin*)
+      SYSTEMOWN=$($ID -u)
+      SYSTEMGRP=$($ID -g)
+      ;;
+    *)
+      SYSTEMOWN=root
+      SYSTEMGRP=$($ID -gn $SYSTEMOWN)
+    ;;
+  esac
+  AC_SUBST([SYSTEMOWN])
+  AC_SUBST([SYSTEMGRP])
+])
