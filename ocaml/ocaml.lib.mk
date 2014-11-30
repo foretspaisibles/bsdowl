@@ -45,13 +45,30 @@
 #   It can list implementation files, lexer and parser definitions.
 #
 #
-#  LIBOWN, LIBGRP, LIBMODE, LIBDIR, LIBNAME
+#  LIBOWN, LIBGRP, LIBMODE, LIBNAME
 #   Paramters of the library installation
 #
-#   See `bps.own.mk` for a closer description of these variables. If
-#   the PACKAGE library is set, then LIBDIR will appropriately be
-#   initialised to ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
-#   instead of ${PREFIX}/lib/ocaml.
+#   See `bps.own.mk` for a closer description of these variables.
+#
+#
+#  LIBDIR [${ocamllibdir}${PACKAGEDIR}]
+#   The installation target for libraries
+#
+#   The value defined in `bps.own.mk` is suited for C libraries but not
+#   for OCaml objects that are rather installed in the same location as
+#   the standard library.
+#
+#
+#  ocamllibdir [${libdir}]
+#   Directory for ocaml libraries
+#
+#   See "USES+=site-lib" below.
+#
+#
+# Uses:
+#
+#  site-lib: No argument allowed
+#   Use ${libdir}/ocaml/site-lib as default value for ocamllibdir
 
 
 ### IMPLEMENTATION
