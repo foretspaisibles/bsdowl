@@ -123,7 +123,7 @@ __<bps.project.mk>__:
 
 DISTNAME?=		${PACKAGE}-${VERSION}
 DISTDIR?=		${.OBJDIR}
-GPG?=			${_BPS_GPG}
+GPG?=			gpg
 
 .include "bps.init.mk"
 
