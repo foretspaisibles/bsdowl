@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# LIBDIR?=		${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
+# LIBDIR?=		${ocamllibdir}${PACKAGEDIR}
 # .include "ocaml.meta.mk"
 
 
@@ -47,8 +47,49 @@ METADIR?=		${LIBDIR}
 METAMODE?=		${LIBMODE}
 METANAME?=		META
 
+STDREPLACE=		PACKAGE
+STDREPLACE+=		VERSION
+STDREPLACE+=		prefix
+STDREPLACE+=		exec_prefix
+STDREPLACE+=		bindir
+STDREPLACE+=		sbindir
+STDREPLACE+=		libexecdir
+STDREPLACE+=		datarootdir
+STDREPLACE+=		datadir
+STDREPLACE+=		sysconfdir
+STDREPLACE+=		sharedstatedir
+STDREPLACE+=		localstatedir
+STDREPLACE+=		runstatedir
+STDREPLACE+=		includedir
+STDREPLACE+=		docdir
+STDREPLACE+=		infodir
+STDREPLACE+=		libdir
+STDREPLACE+=		ocamllibdir
+STDREPLACE+=		localedir
+STDREPLACE+=		mandir
+
+REPLACE+=		${STDREPLACE}
+
+_SCRIPT_SED=		${SED}
+
+.if defined(REPLACE)&&!empty(REPLACE)
+.for var in ${REPLACE}
+_SCRIPT_SED+=		-e 's|@${var}@|${${var:S/|/\|/g}}|g'
+.endfor
+.endif
+
 .if exists(META)||exists(META.in)
 META=			META
+.endif
+
+.if !empty(META)
+.for file in ${META}
+.if exists(${file}.in)
+${file}:		${file}.in
+	${_SCRIPT_SED} ${.ALLSRC} > ${.TARGET}
+CLEANFILES+=		${file}
+.endif
+.endfor
 .endif
 
 .if ${THISMODULE} == ocaml.meta
