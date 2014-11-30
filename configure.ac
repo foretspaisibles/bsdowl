@@ -13,8 +13,15 @@ AC_PROG_ID()
 SYSTEMOWN=root
 SYSTEMGRP=$($ID -gn $SYSTEMOWN)
 
-AC_NEED_PROG([GPG], [gpg])
-AC_NEED_PROG([GraphicsMagick], [gm])
+AC_ARG_ENABLE([gpg],
+[  --enable-gpg            enable signing of distribution files with GPG],
+[AC_NEED_PROG([GPG], [gpg])])
+
+AC_ARG_ENABLE([gm],
+[  --enable-gm             enable conversion of METAPOST pictures to raster
+                          formats with GraphicsMagick],
+[AC_NEED_PROG([GraphicsMagick], [gm])])
+
 #
 # Determine compression tools
 #
