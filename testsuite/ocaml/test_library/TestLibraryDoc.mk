@@ -18,13 +18,15 @@ LIBRARY=		newton
 
 SRCS=			newton.ml
 
-USES+=			odoc:odoc,html
+USES+=			ocamldoc:odoc,html
 
 .PATH:			${TESTSRCDIR}/ocaml/newton
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cma
 	test -f ${DESTDIR}${LIBDIR}/newton.cmi
+	test -f ${DESTDIR}${DOCDIR}/html/index.html
+	test -f ${.OBJDIR}/newton.odoc
 
 .include "ocaml.lib.mk"
 
