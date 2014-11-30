@@ -101,3 +101,12 @@ AS_IF([test "$BSDMAKE" = "no"], [$2], [$3])])dnl
 # ---------------
 AC_DEFUN([AC_NEED_BSDMAKE],
 [AC_CHECK_BSDMAKE([], [AC_MSG_ERROR([*** BSD Make not found.])])])
+
+
+# AC_NEED_PROG([UNFORMAL PROGRAM NAME], [PROGRAM NAME])
+# -----------------------------------------------------
+AC_DEFUN([AC_NEED_PROG],
+[AC_CHECK_PROG([has_$2], [$2], [yes], [no])
+if test "x$has_$2" = 'xno'; then
+  AC_MSG_ERROR([*** $1 not found.])
+fi;])

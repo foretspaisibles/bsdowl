@@ -12,21 +12,10 @@ AC_PROG_SED()
 AC_PROG_ID()
 SYSTEMOWN=root
 SYSTEMGRP=$($ID -gn $SYSTEMOWN)
-#
-# Check for GPG
-#
-AC_CHECK_PROG([has_gpg], [gpg], [yes], [no])
-if test "x$has_gpg" = 'xno'; then
-  AC_MSG_ERROR([*** GPG not found.])
-fi
+
+AC_NEED_PROG([GPG], [gpg])
 AC_SUBST([GPG], [gpg])
-#
-# Check for GraphicsMagick
-#
-AC_CHECK_PROG([has_gm], [gm], [yes], [no])
-if test "x$has_gm" = 'xno'; then
-  AC_MSG_ERROR([*** GraphicsMagick not found.])
-fi
+AC_NEED_PROG([GraphicsMagick], [gm])
 #
 # Determine compression tools
 #
