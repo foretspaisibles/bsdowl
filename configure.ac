@@ -14,7 +14,6 @@ SYSTEMOWN=root
 SYSTEMGRP=$($ID -gn $SYSTEMOWN)
 
 AC_NEED_PROG([GPG], [gpg])
-AC_SUBST([GPG], [gpg])
 AC_NEED_PROG([GraphicsMagick], [gm])
 #
 # Determine compression tools
