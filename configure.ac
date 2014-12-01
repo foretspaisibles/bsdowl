@@ -169,12 +169,26 @@ AC_ARG_ENABLE([test-gpg],
   [WITH_TESTSUITE_GPG=${enable_test_gpg}],
   [WITH_TESTSUITE_GPG=${with_gpg}])
 
+
+# texmf
+#
+#   A part of the testsuite requires a TeX installation.  The tests
+#   must be explicitly enabled to run.
+
+AC_ARG_ENABLE([test-texmf],
+  [AS_HELP_STRING([--enable-test-texmf],
+    [enable testsuite part requiring texmf])],
+  [WITH_TESTSUITE_TEXMF=${enable_test_texmf}],
+  [WITH_TESTSUITE_TEXMF=no])
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_SUBST([WITH_TESTSUITE_MINGW32])
 AC_SUBST([WITH_TESTSUITE_NOWEB])
 AC_SUBST([WITH_TESTSUITE_GPG])
+AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
