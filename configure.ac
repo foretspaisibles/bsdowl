@@ -39,5 +39,13 @@ AC_ARG_ENABLE([findlib],
 [  --enable-findlib        enable use of OCaml findlib],
 [AC_NEED_PROG([ocamlfind], [ocamlfind])])
 
+AC_ARG_ENABLE([tidy],
+[  --enable-tidy           enable use of tidy to canonise HTML pages],
+[AC_NEED_PROG([tidy], [tidy])])
+
+AC_ARG_ENABLE([opensp],
+[  --enable-opensp         enable static HTML pages generation with OpenSP],
+[AC_NEED_PROG([OpenSP], [onsgmls])])
+
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT
