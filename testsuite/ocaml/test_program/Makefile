@@ -20,7 +20,10 @@ TEST+=	TestProgramDebug
 TEST+=	TestProgramProfile
 TEST+=	TestProgramMultiple
 TEST+=	TestProgramLexerParser
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST+=	TestProgramExternalFindlib
+.endif
 
 # The test TestProgramNoObjDir must be at the end of the list, because
 # it builds its objects in ${.CURDIR} and these objects would be found

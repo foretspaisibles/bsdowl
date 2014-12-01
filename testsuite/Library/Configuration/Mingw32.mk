@@ -14,8 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-CC=			mingw32-gcc
-AR=			mingw32-ar
+CC=			${MINGW32CC}
+AR=			${MINGW32AR}
 
 .if "${THISMODULE}" == "langc.prog"
 .for program in ${PROGRAM}

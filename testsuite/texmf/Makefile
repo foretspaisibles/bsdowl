@@ -20,7 +20,10 @@ SUBDIR+=		test_graphicx
 SUBDIR+=		test_metapost
 SUBDIR+=		test_complex
 SUBDIR+=		test_extra
+
+.if "${WITH_TESTSUITE_NOWEB}" == "yes"
 SUBDIR+=		test_noweb
+.endif
 
 .include "subdir.mk"
 

@@ -16,7 +16,11 @@
 
 TEST=			TestLibrary
 TEST+=			TestLibraryDoc
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST+=			TestLibraryFindlib
+.endif
+
 TEST+=			TestPack
 
 .include "test.mk"
