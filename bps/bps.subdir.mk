@@ -61,7 +61,7 @@
 #   Variables which are exported to subdirectories
 #
 #
-#  _SUBDIR_PREFIX [controlled by us]
+#  SUBDIR_PREFIX [controlled by us]
 #   The current subdirectory we are in
 
 
@@ -74,7 +74,7 @@
 __<bps.subdir.mk>__:
 
 _SUBDIR_TARGET+= ${_MAKE_USERTARGET}
-_SUBDIR_PREFIX?=
+SUBDIR_PREFIX?=
 
 .if defined(SUBDIR) && !empty(SUBDIR)
 USE_SUBDIR?= yes
@@ -86,9 +86,9 @@ USE_SUBDIR?= no
 .PHONY: ${SUBDIR}
 _SUBDIR: .USE
 .for item in ${SUBDIR}
-	${INFO} "${_SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
+	${INFO} "${SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
 	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} _SUBDIR_PREFIX=${_SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
+	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
 .endfor
 
 ${SUBDIR}::

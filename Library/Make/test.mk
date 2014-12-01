@@ -62,15 +62,15 @@ do-test: do-test-${test}
 do-test-${test}: ${test}.done
 ${test}.done: ${test}.mk
 .for step in ${TESTSEQUENCE}
-	${INFO} ${_SUBDIR_PREFIX}${test} '(${step})'
+	${INFO} ${SUBDIR_PREFIX}${test} '(${step})'
 	@${MAKETEST} -f ${.ALLSRC:M*.mk} ${step}
 .endfor
-	${INFO} ${_SUBDIR_PREFIX}${test} '(test)'
+	${INFO} ${SUBDIR_PREFIX}${test} '(test)'
 	@${MAKETEST} -f ${.ALLSRC:M*.mk} test
 	touch ${test}.done
 do-clean: do-clean-${test}
 do-clean-${test}: ${test}.mk .PHONY
-	${INFO} ${_SUBDIR_PREFIX}${test} '(clean)'
+	${INFO} ${SUBDIR_PREFIX}${test} '(clean)'
 	@${RM} -f ${test}.done
 	@${MAKETEST} -f ${.ALLSRC:M*.mk} realclean
 .else
