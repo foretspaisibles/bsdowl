@@ -85,7 +85,7 @@
 #    The command used to rename files.
 #
 #
-#  LN_S [${BPS_LN_S}]
+#  LN_S [${_BPS_LN_S}]
 #    The command used to create symbolic links.
 #
 #
