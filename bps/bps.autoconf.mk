@@ -67,7 +67,7 @@ DISTCLEANDIRS+=		autom4te.cache
 CONFIGURE+=		${file}
 .endif
 .endfor
-DISTCLEANFILES+=	${CONFIGURE:.in=}
+REALCLEANFILES+=	${CONFIGURE:.in=}
 .if exists(configure.ac)||exists(configure.in)
 .if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
 REALCLEANFILES+=	configure
