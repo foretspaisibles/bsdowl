@@ -28,17 +28,17 @@
 # Variables:
 #
 #  USE_SWITCH_CREDENTIALS
-#    Command the use of the switch credential functionality
+#   Command the use of the switch credential functionality
 #
-#    Possible values are 'yes' or 'no', it defaults to 'yes'.
+#   Possible values are 'yes' or 'no', it defaults to 'yes'.
 #
 #
 #  _SWITCH_CREDENTIALS_TARGETS
-#    List of targets needing a credential switch
+#   List of targets needing a credential switch
 #
-#    It defaults to the empty list, except for the user is inable to
-#    write in ${DESTDIR}${PREFIX}, in which case the install target is
-#    added to this list.
+#   It defaults to the empty list, except for the user is inable to
+#   write in ${DESTDIR}${PREFIX}, in which case the install target is
+#   added to this list.
 
 
 ### IMPLEMENTATION

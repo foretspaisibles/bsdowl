@@ -1,7 +1,7 @@
 ### bps.subdir.mk -- Manage subdirectories
 
 # Author: Michael Grünewald
-# Date: Ven 10 fév 2006 16:24:23 GMT
+# Date: Fri Feb 10 2006 16:24:23 GMT
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -17,63 +17,55 @@
 
 ### SYNOPSIS
 
-# SUBDIR+= library
-# SUBDIR+= program
-# SUBDIR+= manual
+# SUBDIR+=		library
+# SUBDIR+=		program
+# SUBDIR+=		manual
 #
 # .include "bps.subdir.mk"
 
 
 ### DESCRIPTION
 
-# Diffuse la demande de production des cibles administratives énumérées par la
-# variables _SUBDIR_TARGET vers les sous-répertoires énumérés par la variable
-# SUBDIR.
+# Delegate targets enumerated by the variable _SUBDIR_TARGET to the
+# directories list by the variable SUBDIR. This implements an
+# aggregate pattern.
 #
-# Pour chaque cible administrative ${target}, une cible do-${target}-subdir
-# est définie, la règle de production de cette cible lance le sous-traitement
-# de ${target} dans les sous-répertoires énumérés dans SUBDIR.
-#
-# Les cibles administratives sont marquées par l'attribut `.PHONY'.
-#
-# À moins qu'une cible ${target}-switch-credentials existe, la cible
-# do-${target}-subdir devient un prérequis de ${target}. Ce comportement
-# permet l'utilsiation conjointe de ce module de directives avec le module
-# `bps.credentials.mk'.
+# The logic is as follows:
+# - for each target in _SUBDIR_TARGET, a do-${target}-subdir target is
+#   created, effectively descending in each subdirs and doing
+#   ${target}.
+# - for each target in _SUBDIR_TARGET, if no target ${target} has been
+#   defined and if credential switch has not been required for
+#   ${target}, a rule with an empty recipe and depending on
+#   do-${target}-subdir is created for ${target}.
+# - for each directory in ${SUBDIR} a ${directory} target is created,
+#   requiring to make all in this subdirectory.
 
 
+# Variables:
 #
-# Description des variables
 #
-
-# USE_SUBDIR
+#  USE_SUBDIR [yes if SUBDIR is set, no otherwise]
+#   Flag controlling the use of the subdir facility
 #
-#  Drapeau de contrôle de la rediffusion des ordres de production vers les
-#  sous-dossiers.
 #
-#  La rediffusion des ordres de production vers les sous-dossiers a lieu
-#  lorsque la variable USE_SUBDIR est positionnée à `yes'. En l'absence
-#  d'initialisation explicite, lorsque SUBDIR est initialisée la variable
-#  USE_SUBDIR reçoit la valeur implicite `yes'.
-
-# SUBDIR
+#  SUBDIR
+#   Directories in the aggregate
 #
-#  Liste des sous-dossiers vers lesquels les ordres de production sont
-#  rediffusés.
-
-# _SUBDIR_TARGET
 #
-#  Liste des ordres de production devant être rediffusés.
+#  _SUBDIR_TARGET [${_MAKE_USERTARGET}]
+#   Targets which are delegated
 #
-#  Les ordres de production énumérés par la variable _MAKE_USERTARGET
-#  (bps.usertarget.mk) sont automatiquement ajoutés à cette variable.
-
-# _SUBDIR_EXPORT
 #
-#  Liste des variables de Make à transmettre aux sous-processus
+#  _SUBDIR_EXPORT
+#   Variables which are exported to subdirectories
+#
+#
+#  _SUBDIR_PREFIX [controlled by us]
+#   The current subdirectory we are in
 
 
-### IMPLÉMENTATION
+### IMPLEMENTATION
 
 .include "bps.init.mk"
 .include "bps.credentials.mk"
