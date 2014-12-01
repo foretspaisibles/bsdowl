@@ -157,6 +157,10 @@
 #    The command used to gain administrator credentials.
 #
 #
+#  SUDO [sudo]
+#    The sudo command used to gain administrator credentials.
+#
+#
 #  SH [/bin/sh]
 #    The path to the bourne shell.
 #
@@ -287,6 +291,7 @@ FAIL?=			@>&2 echo 'Failure:'
 MESG?=			@echo
 NOP?=			@: do nada
 SU?=			su
+SUDO?=			sudo
 SH?=			sh
 CHOWN?=			chown
 CHMOD?=			chmod

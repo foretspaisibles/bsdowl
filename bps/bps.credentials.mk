@@ -79,7 +79,13 @@ ${target}:: ${target}-switch-credentials
 	${NOP}
 ${target}-switch-credentials:
 	${INFO} 'Switching to root credentials for target (${target})'
+.if ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == su
 	@${SU} root -c '${MAKE} ${target}'
+.elif ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == sudo
+	@${SUDO} ${MAKE} UID=0 ${target}
+.else
+	@${MAKE} UID=0 ${target}
+.endif
 .endif
 .endfor
 .endif

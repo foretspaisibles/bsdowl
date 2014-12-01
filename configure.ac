@@ -52,5 +52,29 @@ AC_ARG_WITH([opensp],
     [support static HTML pages generation with OpenSP])],
   [AC_NEED_PROG([OpenSP], [onsgmls])])
 
+AC_ARG_WITH([credentials],
+  [AS_HELP_STRING([--with-credentials],
+    [use ARG for credential switch, where ARG is one of su, sudo or no])],
+  [case $with_credentials in
+    no|su|sudo)
+        SWITCH_CREDENTIALS_STRATEGY=$with_credentials
+        ;;
+    yes)
+        SWITCH_CREDENTIALS_STRATEGY=su
+        ;;
+    *)
+        AC_MSG_ERROR([*** $with_credentials: invalid argument for credentials.])
+        ;;
+    esac;],
+  [case $host_os in
+    *cygwin*)
+        SWITCH_CREDENTIALS_STRATEGY=no
+        ;;
+    *)
+        SWITCH_CREDENTIALS_STRATEGY=su
+        ;;
+    esac;])
+
+AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT
