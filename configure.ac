@@ -75,6 +75,30 @@ AC_ARG_WITH([credentials],
         ;;
     esac;])
 
+
+#
+# Conditionally enable tests
+#
+
+# OCaml findlib.
+#
+#   OCaml findlib seems not to be available under Cygwin.  We
+#   therefore disable tests requiring it under this platform.
+
+AC_ARG_ENABLE([test-findlib],
+  [AS_HELP_STRING([--enable-test-findlib],
+    [enable testsuite part requiring findlib])],
+  [WITH_TESTSUITE_FINDLIB=${enable_test_findlib}],
+  [case $host_os in
+    *cygwin*)
+        WITH_TESTSUITE_FINDLIB=no
+        ;;
+    *)
+        WITH_TESTSUITE_FINDLIB=yes
+        ;;
+    esac;])
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
-AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
+AC_SUBST([WITH_TESTSUITE_FINDLIB])
+AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT

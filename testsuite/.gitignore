@@ -3,3 +3,4 @@
 *.cm[xioa]
 *.cmxa
 *.done
+Makefile.inc

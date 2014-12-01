@@ -1,7 +1,7 @@
-### Makefile -- Test features of module ocaml.lib
+### Makefile.inc.in -- Configuration for the test suite
 
 # Author: Michael Grünewald
-# Date: Sat Nov 29 08:08:34 CET 2014
+# Date: Mon Dec  1 11:40:36 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,15 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TEST=			TestLibrary
-TEST+=			TestLibraryDoc
+WITH_TESTSUITE_FINDLIB?=	@WITH_TESTSUITE_FINDLIB@
 
-.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
-TEST+=			TestLibraryFindlib
-.endif
+.export WITH_TESTSUITE_FINDLIB
 
-TEST+=			TestPack
-
-.include "test.mk"
-
-### End of file `Makefile'
+### End of file `Makefile.inc.in'

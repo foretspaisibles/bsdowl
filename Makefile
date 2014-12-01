@@ -28,6 +28,7 @@ SUBDIR+=		testsuite
 
 CONFIGURE=		Makefile.inc.in
 CONFIGURE+=		bps/bps.bpsconfig.mk.in
+CONFIGURE+=		testsuite/Makefile.inc.in
 PROJECTDISTEXCLUDE=	Wiki
 
 test: .PHONY
