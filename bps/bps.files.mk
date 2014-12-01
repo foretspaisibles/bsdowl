@@ -182,16 +182,16 @@ INSTALL_${group}?=	${INSTALL} -o ${${group}OWN}\
 # Macro for copying entire directory tree with correct permissions
 .if ${UID} == 0
 COPYTREE_${group}=\
-	${SH} -c '(${FIND} -d $$1 $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
+	${SH} -c '(${FIND} $$1 -depth $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
 		${CHOWN} -Rh ${${group}OWN}:${${group}GRP} $$2 &&\
-		${FIND} -d $$1 $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
-		${FIND} -d $$1 $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
+		${FIND} $$1 -depth $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
+		${FIND} $$1 -depth $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
 		COPYTREE_${group}
 .else
 COPYTREE_${group}=\
-	${SH} -c '(${FIND} -d $$1 $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
-		${FIND} -d $$1 $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
-		${FIND} -d $$1 $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
+	${SH} -c '(${FIND} $$1 -depth $$3 | ${CPIO} -dumpl $$2 >/dev/null 2>&1) &&\
+		${FIND} $$1 -depth $$3 -type d -exec ${CHMOD} 755 $$2/{} \; &&\
+		${FIND} $$1 -depth $$3 -type f -exec ${CHMOD} ${${group}MODE} $$2/{} \;'\
 		COPYTREE_${group}
 .endif
 
