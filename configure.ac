@@ -52,6 +52,11 @@ AC_ARG_WITH([opensp],
     [support static HTML pages generation with OpenSP])],
   [AC_NEED_PROG([OpenSP], [onsgmls])])
 
+AC_ARG_WITH([noweb],
+  [AS_HELP_STRING([--with-noweb],
+    [support literate programming with noweb])],
+  [AC_NEED_PROG([noweb], [noweb])])
+
 AC_ARG_WITH([credentials],
   [AS_HELP_STRING([--with-credentials],
     [use ARG for credential switch, where ARG is one of su, sudo or no])],
@@ -141,10 +146,23 @@ esac
 fi
 
 
+# Noweb
+#
+#   A part of the testsuite requires noweb.  The tests must be
+#   explicitly enabled to run.
+
+AC_ARG_ENABLE([test-noweb],
+  [AS_HELP_STRING([--enable-test-noweb],
+    [enable testsuite part requiring noweb])],
+  [WITH_TESTSUITE_NOWEB=${enable_test_noweb}],
+  [WITH_TESTSUITE_NOWEB=${with_noweb}])
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_SUBST([WITH_TESTSUITE_MINGW32])
+AC_SUBST([WITH_TESTSUITE_NOWEB])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
