@@ -98,7 +98,22 @@ AC_ARG_ENABLE([test-findlib],
         ;;
     esac;])
 
+
+# Python setup tools
+#
+#   Support of Python setup tools for preparing Python libraries is an
+#   experimental feature.  Corresponding files are always installed
+#   but the tests must be explicitly enabled to run.
+
+AC_ARG_ENABLE([test-py-setuptools],
+  [AS_HELP_STRING([--enable-test-py-setuptool],
+    [enable testsuite part requiring Python setuptools])],
+  [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptool}],
+  [WITH_TESTSUITE_PY_SETUPTOOLS=no])
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
+AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT

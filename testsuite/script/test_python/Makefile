@@ -15,7 +15,10 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 SUBDIR=		showconfig
+
+.if "${WITH_TESTSUITE_PY_SETUPTOOLS}" == "yes"
 SUBDIR+=	funniest
+.endif
 
 .include "subdir.mk"
 

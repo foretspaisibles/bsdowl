@@ -15,7 +15,9 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 WITH_TESTSUITE_FINDLIB?=	@WITH_TESTSUITE_FINDLIB@
+WITH_TESTSUITE_PY_SETUPTOOLS?=	@WITH_TESTSUITE_PY_SETUPTOOLS@
 
 .export WITH_TESTSUITE_FINDLIB
+.export WITH_TESTSUITE_PY_SETUPTOOLS
 
 ### End of file `Makefile.inc.in'
