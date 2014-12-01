@@ -158,11 +158,23 @@ AC_ARG_ENABLE([test-noweb],
   [WITH_TESTSUITE_NOWEB=${with_noweb}])
 
 
+# GPG
+#
+#   A part of the testsuite requires gpg to sign archives.  The tests
+#   must be explicitly enabled to run.
+
+AC_ARG_ENABLE([test-gpg],
+  [AS_HELP_STRING([--enable-test-gpg],
+    [enable testsuite part requiring gpg])],
+  [WITH_TESTSUITE_GPG=${enable_test_gpg}],
+  [WITH_TESTSUITE_GPG=${with_gpg}])
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_SUBST([WITH_TESTSUITE_MINGW32])
 AC_SUBST([WITH_TESTSUITE_NOWEB])
+AC_SUBST([WITH_TESTSUITE_GPG])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])

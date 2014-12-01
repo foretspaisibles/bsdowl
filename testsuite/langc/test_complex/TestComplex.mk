@@ -45,7 +45,10 @@ test-dist:
 test: test-librational
 test: test-libfibonacci
 test: test-goldenratio
+
+.if "${WITH_TESTSUITE_GPG}" == "yes"
 test: test-dist
+.endif
 
 .include "bps.project.mk"
 
