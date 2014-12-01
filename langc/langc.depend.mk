@@ -27,11 +27,7 @@
 .if !target(__<langc.depend.mk>__)
 __<langc.depend.mk>__:
 
-.if ${CC} != "cc"
-MKDEPCMD?=		CC='${CC}' mkdep
-.else
-MKDEPCMD?=		mkdep
-.endif
+MKDEPCMD?=		${CC} -MM
 
 .for source in ${_LANGC_SRCS}
 .depend: ${${source}}
@@ -43,7 +39,7 @@ MKDEPTOOL+=		${CFLAGS:S@-I @-I@gW:M-I*:S@-I@-I @g}
 .endif
 
 .depend:
-	${MKDEPTOOL} ${.ALLSRC}
+	${MKDEPTOOL} ${.ALLSRC} > ${.TARGET}
 
 do-depend:		.depend
 
