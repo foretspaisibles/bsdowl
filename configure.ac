@@ -23,29 +23,34 @@ AC_TAR_COMPRESSION_METHODS([COMPRESS])
 # to let the configure script fail if some programs are not present.
 
 AC_ARG_ENABLE([gpg],
-[  --enable-gpg            enable signing of distribution files with GPG],
-[AC_NEED_PROG([GPG], [gpg])])
+  [AS_HELP_STRING([--enable-gpg],
+    [enable signing of distribution files with GPG])],
+  [AC_NEED_PROG([GPG], [gpg])])
 
 AC_ARG_ENABLE([gm],
-[  --enable-gm             enable conversion of METAPOST pictures to raster
-                          formats with GraphicsMagick],
-[AC_NEED_PROG([GraphicsMagick], [gm])])
+  [AS_HELP_STRING([--enable-gm],
+    [enable conversion of METAPOST pictures to raster formats with GraphicsMagick])],
+  [AC_NEED_PROG([GraphicsMagick], [gm])])
 
 AC_ARG_ENABLE([ocaml],
-[  --enable-ocaml          enable preparation of OCaml projects],
-[AC_NEED_PROG([ocamlc], [ocamlc])])
+  [AS_HELP_STRING([--enable-ocaml],
+    [enable preparation of OCaml projects])],
+  [AC_NEED_PROG([ocamlc], [ocamlc])])
 
 AC_ARG_ENABLE([findlib],
-[  --enable-findlib        enable use of OCaml findlib],
-[AC_NEED_PROG([ocamlfind], [ocamlfind])])
+  [AS_HELP_STRING([--enable-findlib],
+    [enable use of OCaml findlib])],
+  [AC_NEED_PROG([ocamlfind], [ocamlfind])])
 
 AC_ARG_ENABLE([tidy],
-[  --enable-tidy           enable use of tidy to canonise HTML pages],
-[AC_NEED_PROG([tidy], [tidy])])
+  [AS_HELP_STRING([--enable-tidy],
+    [enable use of tidy to canonise HTML pages])],
+  [AC_NEED_PROG([tidy], [tidy])])
 
 AC_ARG_ENABLE([opensp],
-[  --enable-opensp         enable static HTML pages generation with OpenSP],
-[AC_NEED_PROG([OpenSP], [onsgmls])])
+  [AS_HELP_STRING([--enable-opensp],
+    [enable static HTML pages generation with OpenSP])],
+  [AC_NEED_PROG([OpenSP], [onsgmls])])
 
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT
