@@ -56,7 +56,7 @@ __<bps.objdir.mk>__:
 # If one these variables is set in a file, we terminate with an
 # appropriate error message.
 
-_MAKE_CHECKOBJDIR=	${ENVTOOL} -i PATH=${PATH} ${MAKE} -f /dev/null
+_MAKE_CHECKOBJDIR=	${ENVTOOL} -i PATH="${PATH}" ${MAKE} -f /dev/null
 _MAKE_OBJDIRPREFIX!=	${_MAKE_CHECKOBJDIR} -V MAKEOBJDIRPREFIX
 _MAKE_OBJDIR!=		${_MAKE_CHECKOBJDIR} -V MAKEOBJDIR
 
