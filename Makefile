@@ -26,6 +26,8 @@ SUBDIR+=		www
 SUBDIR+=		support
 SUBDIR+=		testsuite
 
+CONFIGURE=		Makefile.inc.in
+CONFIGURE+=		bps/bps.bpsconfig.mk.in
 PROJECTDISTEXCLUDE=	Wiki
 
 test: .PHONY
