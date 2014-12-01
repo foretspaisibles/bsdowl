@@ -22,30 +22,59 @@ AC_TAR_COMPRESSION_METHODS([COMPRESS])
 # programs, nevertheless, it might be useful for packagers and porters
 # to let the configure script fail if some programs are not present.
 
-AC_ARG_ENABLE([gpg],
-[  --enable-gpg            enable signing of distribution files with GPG],
-[AC_NEED_PROG([GPG], [gpg])])
+AC_ARG_WITH([gpg],
+  [AS_HELP_STRING([--with-gpg],
+    [support signing of distribution files with GPG])],
+  [AC_NEED_PROG([GPG], [gpg])])
 
-AC_ARG_ENABLE([gm],
-[  --enable-gm             enable conversion of METAPOST pictures to raster
-                          formats with GraphicsMagick],
-[AC_NEED_PROG([GraphicsMagick], [gm])])
+AC_ARG_WITH([gm],
+  [AS_HELP_STRING([--with-gm],
+    [support conversion of METAPOST pictures to PNG with GraphicsMagick])],
+  [AC_NEED_PROG([GraphicsMagick], [gm])])
 
-AC_ARG_ENABLE([ocaml],
-[  --enable-ocaml          enable preparation of OCaml projects],
-[AC_NEED_PROG([ocamlc], [ocamlc])])
+AC_ARG_WITH([ocaml],
+  [AS_HELP_STRING([--with-ocaml],
+    [support preparation of OCaml projects])],
+  [AC_NEED_PROG([ocamlc], [ocamlc])])
 
-AC_ARG_ENABLE([findlib],
-[  --enable-findlib        enable use of OCaml findlib],
-[AC_NEED_PROG([ocamlfind], [ocamlfind])])
+AC_ARG_WITH([findlib],
+  [AS_HELP_STRING([--with-findlib],
+    [support use of OCaml findlib in OCaml projects])],
+  [AC_NEED_PROG([ocamlfind], [ocamlfind])])
 
-AC_ARG_ENABLE([tidy],
-[  --enable-tidy           enable use of tidy to canonise HTML pages],
-[AC_NEED_PROG([tidy], [tidy])])
+AC_ARG_WITH([tidy],
+  [AS_HELP_STRING([--with-tidy],
+    [support use of tidy to canonise HTML pages])],
+  [AC_NEED_PROG([tidy], [tidy])])
 
-AC_ARG_ENABLE([opensp],
-[  --enable-opensp         enable static HTML pages generation with OpenSP],
-[AC_NEED_PROG([OpenSP], [onsgmls])])
+AC_ARG_WITH([opensp],
+  [AS_HELP_STRING([--with-opensp],
+    [support static HTML pages generation with OpenSP])],
+  [AC_NEED_PROG([OpenSP], [onsgmls])])
 
+AC_ARG_WITH([credentials],
+  [AS_HELP_STRING([--with-credentials],
+    [use ARG for credential switch, where ARG is one of su, sudo or no])],
+  [case $with_credentials in
+    no|su|sudo)
+        SWITCH_CREDENTIALS_STRATEGY=$with_credentials
+        ;;
+    yes)
+        SWITCH_CREDENTIALS_STRATEGY=su
+        ;;
+    *)
+        AC_MSG_ERROR([*** $with_credentials: invalid argument for credentials.])
+        ;;
+    esac;],
+  [case $host_os in
+    *cygwin*)
+        SWITCH_CREDENTIALS_STRATEGY=no
+        ;;
+    *)
+        SWITCH_CREDENTIALS_STRATEGY=su
+        ;;
+    esac;])
+
+AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk])
 AC_OUTPUT

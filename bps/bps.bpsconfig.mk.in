@@ -138,6 +138,10 @@
 #
 #  _BPS_COMPRESS [@COMPRESS@]
 #    The list of available compression methods.
+#
+#
+#  _BPS_SWITCH_CREDENTIALS_STRATEGY [@SWITCH_CREDENTIALS_STRATEGY@]
+#    The stratgey used to swithc credentials
 
 
 # Targets:
@@ -185,6 +189,7 @@ _BPS_ID?=		@ID@
 _BPS_SYSTEMOWN?=	@SYSTEMOWN@
 _BPS_SYSTEMGRP?=	@SYSTEMGRP@
 _BPS_COMPRESS?=		@COMPRESS@
+_BPS_SWITCH_CREDENTIALS_STRATEGY?=@SWITCH_CREDENTIALS_STRATEGY@
 
 .endif # !target(__<bps.config.mk>__)
 
