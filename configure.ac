@@ -112,8 +112,40 @@ AC_ARG_ENABLE([test-py-setuptools],
   [WITH_TESTSUITE_PY_SETUPTOOLS=no])
 
 
+# Mingw32 cross-compiler
+#
+#   A part of the testsuite requires a Mingw32 cross compiler to
+#   complete.  The tests must be explicitly enabled to run.
+
+AC_ARG_ENABLE([test-mingw32],
+  [AS_HELP_STRING([--enable-test-mingw32],
+    [enable testsuite part requiring a mingw32 cross-compiler])],
+  [WITH_TESTSUITE_MINGW32=${enable_test_mingw32}],
+  [WITH_TESTSUITE_MINGW32=no])
+
+if test "x${WITH_TESTSUITE_MINGW32}" != "xno"; then
+case $host_os in
+    *freebsd*)
+        MINGW32CC=mingw32-gcc
+        MINGW32AR=mingw32-ar
+        ;;
+    *linux-gnu*)
+        MINGW32CC=i586-mingw32msvc-cc
+        MINGW32AR=i586-mingw32msvc-ar
+        ;;
+    *)
+        MINGW32CC=no
+        MINGW32AR=no
+        ;;
+esac
+fi
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
+AC_SUBST([WITH_TESTSUITE_MINGW32])
+AC_SUBST([MINGW32CC])
+AC_SUBST([MINGW32AR])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT

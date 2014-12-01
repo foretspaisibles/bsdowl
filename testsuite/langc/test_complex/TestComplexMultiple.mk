@@ -15,7 +15,11 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 CONFIGURATIONLIST=	Debug Profile Release
-ARCHITECTURELIST=	Native Mingw32
+ARCHITECTURELIST=	Native
+
+.if "${WITH_TESTSUITE_MINGW32}" == "yes"
+ARCHITECTURELIST+=	Mingw32
+.endif
 
 TARGETLIST=		realclean distclean clean
 TARGETLIST+=		obj depend build
