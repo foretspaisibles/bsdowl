@@ -35,8 +35,10 @@ test: .PHONY
 	@(cd testsuite && ${MAKE} test)
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
-.MAKEFLAGS: -I${.CURDIR}/bps
+.for subdir in ${SUBDIR}
+.MAKEFLAGS: -I${.CURDIR}/${subdir}
+.endfor
 
-.include "bsdowl.mk"
+.include "bps.project.mk"
 
 ### End of file `Makefile'
