@@ -32,6 +32,15 @@ AC_ARG_WITH([gm],
     [support conversion of METAPOST pictures to PNG with GraphicsMagick])],
   [AC_NEED_PROG([GraphicsMagick], [gm])])
 
+AC_ARG_WITH([tex],
+  [AS_HELP_STRING([--with-tex],
+    [support preparation of TeX documents])],
+  [AC_NEED_PROG([TeX], [tex])
+   AC_NEED_PROG([LaTeX], [latex])
+   AC_NEED_PROG([PdfTeX], [pdftex])
+   AC_NEED_PROG([dvips], [dvips])
+   AC_NEED_PROG([epstopdf], [epstopdf])])
+
 AC_ARG_WITH([ocaml],
   [AS_HELP_STRING([--with-ocaml],
     [support preparation of OCaml projects])],
@@ -90,11 +99,12 @@ AC_ARG_WITH([credentials],
 #   OCaml findlib seems not to be available under Cygwin.  We
 #   therefore disable tests requiring it under this platform.
 
+AC_HAS_PROG([ocamlfind])
 AC_ARG_ENABLE([test-findlib],
   [AS_HELP_STRING([--enable-test-findlib],
     [enable testsuite part requiring findlib])],
   [WITH_TESTSUITE_FINDLIB=${enable_test_findlib}],
-  [WITH_TESTSUITE_FINDLIB=no])
+  [WITH_TESTSUITE_FINDLIB=${has_ocamlfind}])
 
 
 # Python setup tools
@@ -115,28 +125,17 @@ AC_ARG_ENABLE([test-py-setuptools],
 #   A part of the testsuite requires a Mingw32 cross compiler to
 #   complete.  The tests must be explicitly enabled to run.
 
+AC_CHECK_PROGS([MINGW32CC], [mingw32-gcc i586-mingw32msvc-cc], [no])
+AC_CHECK_PROGS([MINGW32AR], [mingw32-ar i586-mingw32msvc-ar], [no])
 AC_ARG_ENABLE([test-mingw32],
   [AS_HELP_STRING([--enable-test-mingw32],
     [enable testsuite part requiring a mingw32 cross-compiler])],
   [WITH_TESTSUITE_MINGW32=${enable_test_mingw32}],
-  [WITH_TESTSUITE_MINGW32=no])
-
-if test "x${WITH_TESTSUITE_MINGW32}" != "xno"; then
-case $host_os in
-    *freebsd*)
-        MINGW32CC=mingw32-gcc
-        MINGW32AR=mingw32-ar
-        ;;
-    *linux-gnu*)
-        MINGW32CC=i586-mingw32msvc-cc
-        MINGW32AR=i586-mingw32msvc-ar
-        ;;
-    *)
-        MINGW32CC=no
-        MINGW32AR=no
-        ;;
-esac
-fi
+  [if test "${MINGW32CC}" == 'no'; then
+     WITH_TESTSUITE_MINGW32=no
+   else
+     WITH_TESTSUITE_MINGW32=yes
+   fi;])
 
 
 # Noweb
@@ -144,11 +143,12 @@ fi
 #   A part of the testsuite requires noweb.  The tests must be
 #   explicitly enabled to run.
 
+AC_HAS_PROG([noweb])
 AC_ARG_ENABLE([test-noweb],
   [AS_HELP_STRING([--enable-test-noweb],
     [enable testsuite part requiring noweb])],
   [WITH_TESTSUITE_NOWEB=${enable_test_noweb}],
-  [WITH_TESTSUITE_NOWEB=no])
+  [WITH_TESTSUITE_NOWEB=${has_noweb}])
 
 
 # GPG
@@ -156,11 +156,12 @@ AC_ARG_ENABLE([test-noweb],
 #   A part of the testsuite requires gpg to sign archives.  The tests
 #   must be explicitly enabled to run.
 
+AC_HAS_PROG([gpg])
 AC_ARG_ENABLE([test-gpg],
   [AS_HELP_STRING([--enable-test-gpg],
     [enable testsuite part requiring gpg])],
   [WITH_TESTSUITE_GPG=${enable_test_gpg}],
-  [WITH_TESTSUITE_GPG=no])
+  [WITH_TESTSUITE_GPG=${has_gpg}])
 
 
 # texmf
@@ -168,11 +169,12 @@ AC_ARG_ENABLE([test-gpg],
 #   A part of the testsuite requires a TeX installation.  The tests
 #   must be explicitly enabled to run.
 
+AC_HAS_PROG([tex])
 AC_ARG_ENABLE([test-texmf],
   [AS_HELP_STRING([--enable-test-texmf],
     [enable testsuite part requiring texmf])],
   [WITH_TESTSUITE_TEXMF=${enable_test_texmf}],
-  [WITH_TESTSUITE_TEXMF=no])
+  [WITH_TESTSUITE_TEXMF=${has_tex}])
 
 # metapost
 #

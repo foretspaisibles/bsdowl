@@ -103,6 +103,14 @@ AC_DEFUN([AC_NEED_BSDMAKE],
 [AC_CHECK_BSDMAKE([], [AC_MSG_ERROR([*** BSD Make not found.])])])
 
 
+# AC_HAS_PROG([PROGRAM NAME])
+# ---------------------------
+AC_DEFUN([AC_HAS_PROG],
+  [if test "x$has_$1" = 'x'; then
+     AC_CHECK_PROG([has_$1], [$1], [yes], [no])
+   fi;])
+
+
 # AC_NEED_PROG([UNFORMAL PROGRAM NAME], [PROGRAM NAME])
 # -----------------------------------------------------
 AC_DEFUN([AC_NEED_PROG],
