@@ -23,6 +23,6 @@ TESTSEQUENCE=		clean obj depend build install
 TESTSEQUENCE+=		dist
 .endif
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

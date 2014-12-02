@@ -19,6 +19,6 @@ TEST+=			AssertOneWord
 
 TESTSEQUENCE?=		all
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

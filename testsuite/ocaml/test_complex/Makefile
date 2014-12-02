@@ -17,6 +17,6 @@
 TEST=			TestComplex
 TEST+=			TestComplexMultiple
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

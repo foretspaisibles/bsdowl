@@ -19,6 +19,6 @@ TEST+=			TestPlainPS
 TEST+=			TestPlainPDF
 TEST+=			TestInteraction
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

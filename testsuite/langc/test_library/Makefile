@@ -24,6 +24,6 @@ TEST+=	TestLibraryShared
 TEST+=	TestLibrarySharedDebug
 TEST+=	TestLibrarySharedProfile
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

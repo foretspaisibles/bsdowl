@@ -18,6 +18,6 @@ TEST=			TestLaTeXDVI
 TEST+=			TestLaTeXPS
 TEST+=			TestLaTeXPDF
 
-.include "test.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

@@ -1,4 +1,4 @@
-### test.mk
+### bsdowl.test.mk
 
 # Author: Michael Grünewald
 # Date: Fri Mai  9 14:47:47 CEST 2008
@@ -80,4 +80,4 @@ display-makeflags:
 
 .include "bps.usertarget.mk"
 
-### End of file `test.mk'
+### End of file `bsdowl.test.mk'
