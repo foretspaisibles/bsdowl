@@ -14,11 +14,14 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+.if "${WITH_TESTSUITE_METAPOST}" == "yes"
+SUBDIR+=		test_metapost
+.endif
+
 .if "${WITH_TESTSUITE_TEXMF}" == "yes"
-SUBDIR=			test_tex
+SUBDIR+=		test_tex
 SUBDIR+=		test_latex
 SUBDIR+=		test_graphicx
-SUBDIR+=		test_metapost
 SUBDIR+=		test_complex
 SUBDIR+=		test_extra
 .endif

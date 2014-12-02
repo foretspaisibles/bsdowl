@@ -174,6 +174,20 @@ AC_ARG_ENABLE([test-texmf],
   [WITH_TESTSUITE_TEXMF=${enable_test_texmf}],
   [WITH_TESTSUITE_TEXMF=no])
 
+# metapost
+#
+#   The standalone METAPOST tests part can be enabled even
+#   if the texmf suite is disabled.
+#
+#   This is because some Cygwin bug forbids the use of TeX in some
+#   conditions, nevertheless, METAPOST seems to continue working.
+
+AC_ARG_ENABLE([test-metapost],
+  [AS_HELP_STRING([--enable-test-metapost],
+    [enable testsuite for standalone METAPOST documents])],
+  [WITH_TESTSUITE_METAPOST=${enable_test_metapost}],
+  [WITH_TESTSUITE_METAPOST=${WITH_TESTSUITE_TEXMF}])
+
 
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
@@ -198,6 +212,7 @@ Optional Features:
   --enable-test-noweb=${WITH_TESTSUITE_NOWEB}
   --enable-test-gpg=${WITH_TESTSUITE_GPG}
   --enable-test-texmf=${WITH_TESTSUITE_TEXMF}
+  --enable-test-metapost=${WITH_TESTSUITE_METAPOST}
 
 Optional Packages:
   --with-credentials=${SWITCH_CREDENTIALS_STRATEGY}
