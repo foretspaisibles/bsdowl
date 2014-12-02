@@ -69,14 +69,6 @@
 #   See `bps.files.mk` for a closer description of these variables.
 #
 #
-#  WITH_DEBUG [no]
-#    Build with debug symbols
-#
-#
-#  WITH_PROFILE [no]
-#   Build with profiling information
-#
-#
 #  USES [not set]
 #    Supported options are debug, profile and compile
 #

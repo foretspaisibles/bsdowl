@@ -28,22 +28,22 @@ __<langc.uses.mk>__:
 .if defined(_USES_OPTIONS)
 
 .if!empty(_USES_OPTIONS:Mdebug)
-WITH_DEBUG=		yes
+_LANGC_WITH_DEBUG=	yes
 .endif
 
 .if!empty(_USES_OPTIONS:Mprofile)
-WITH_PROFILE=		yes
+_LANGC_WITH_PROFILE=	yes
 .endif
 .endif
 
-WITH_DEBUG?=		no
-WITH_PROFILE?=		no
+_LANGC_WITH_DEBUG?=	no
+_LANGC_WITH_PROFILE?=	no
 
-.if ${WITH_DEBUG} == yes
+.if ${_LANGC_WITH_DEBUG} == yes
 CFLAGS+=		-g
 .endif
 
-.if ${WITH_PROFILE} == yes && !empty(CC:M*gcc*)
+.if ${_LANGC_WITH_PROFILE} == yes && !empty(CC:M*gcc*)
 CFLAGS+=		-pg
 MKSHAREDLIB+=		-pg
 .endif
