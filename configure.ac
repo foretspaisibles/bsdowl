@@ -94,14 +94,7 @@ AC_ARG_ENABLE([test-findlib],
   [AS_HELP_STRING([--enable-test-findlib],
     [enable testsuite part requiring findlib])],
   [WITH_TESTSUITE_FINDLIB=${enable_test_findlib}],
-  [case $host_os in
-    *cygwin*)
-        WITH_TESTSUITE_FINDLIB=no
-        ;;
-    *)
-        WITH_TESTSUITE_FINDLIB=yes
-        ;;
-    esac;])
+  [WITH_TESTSUITE_FINDLIB=no])
 
 
 # Python setup tools
@@ -111,7 +104,7 @@ AC_ARG_ENABLE([test-findlib],
 #   but the tests must be explicitly enabled to run.
 
 AC_ARG_ENABLE([test-py-setuptools],
-  [AS_HELP_STRING([--enable-test-py-setuptool],
+  [AS_HELP_STRING([--enable-test-py-setuptools],
     [enable testsuite part requiring Python setuptools])],
   [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptool}],
   [WITH_TESTSUITE_PY_SETUPTOOLS=no])
@@ -155,7 +148,7 @@ AC_ARG_ENABLE([test-noweb],
   [AS_HELP_STRING([--enable-test-noweb],
     [enable testsuite part requiring noweb])],
   [WITH_TESTSUITE_NOWEB=${enable_test_noweb}],
-  [WITH_TESTSUITE_NOWEB=${with_noweb}])
+  [WITH_TESTSUITE_NOWEB=no])
 
 
 # GPG
@@ -167,7 +160,7 @@ AC_ARG_ENABLE([test-gpg],
   [AS_HELP_STRING([--enable-test-gpg],
     [enable testsuite part requiring gpg])],
   [WITH_TESTSUITE_GPG=${enable_test_gpg}],
-  [WITH_TESTSUITE_GPG=${with_gpg}])
+  [WITH_TESTSUITE_GPG=no])
 
 
 # texmf
