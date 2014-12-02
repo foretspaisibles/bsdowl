@@ -19,6 +19,6 @@ SUBDIR=		test_program
 SUBDIR+=	test_library
 SUBDIR+=	test_complex
 
-.include "subdir.mk"
+.include "bps.subdir.mk"
 
 ### End of file `Makefile'

@@ -1,7 +1,7 @@
 ### script.shell.mk -- Development of shell scripts
 
 # Author: Michael Grünewald
-# Date: Fri 10 Feb 2006 10:40:49 GMT
+# Date: Fri Feb 10 10:40:49 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

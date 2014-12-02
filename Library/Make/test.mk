@@ -1,7 +1,7 @@
 ### test.mk
 
 # Author: Michael Grünewald
-# Date: Ven  9 mai 2008 14:47:47 CEST
+# Date: Fri Mai  9 14:47:47 CEST 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

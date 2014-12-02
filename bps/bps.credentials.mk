@@ -1,7 +1,7 @@
 ### bps.credentials.mk -- Credential switch
 
 # Author: Michael Grünewald
-# Date: Sat 29 Mar 2008 16:05:16 CET
+# Date: Sat Mar 29 16:05:16 CET 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

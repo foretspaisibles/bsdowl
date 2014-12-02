@@ -14,15 +14,15 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			script.main.mk
-FILES+=			shell.prog.mk
-FILES+=			shell.lib.mk
-FILES+=			python.prog.mk
-FILES+=			python.lib.mk
-FILES+=			python.init.mk
-FILES+=			python.uses.mk
-FILES+=			python.setuptools.mk
+SHARE=			script.main.mk
+SHARE+=			shell.prog.mk
+SHARE+=			shell.lib.mk
+SHARE+=			python.prog.mk
+SHARE+=			python.lib.mk
+SHARE+=			python.init.mk
+SHARE+=			python.uses.mk
+SHARE+=			python.setuptools.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

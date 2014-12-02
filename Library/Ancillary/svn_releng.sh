@@ -3,7 +3,7 @@
 ### releng -- Release Engineering script
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 23:01:35 CET
+# Date: Thu Mar 13 23:01:35 CET 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

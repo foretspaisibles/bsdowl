@@ -1,7 +1,7 @@
 ### bps.project.mk -- Maintenance for software projects
 
 # Author: Michael Grünewald
-# Date: Sam 19 avr 2008 16:27:56 CEST
+# Date: Sat Apr 19 16:27:56 CEST 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

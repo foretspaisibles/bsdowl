@@ -14,15 +14,15 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			langc.init.mk
-FILES+=			langc.build.mk
-FILES+=			langc.uses.mk
-FILES+=			langc.module.mk
-FILES+=			langc.external.mk
-FILES+=			langc.depend.mk
-FILES+=			langc.prog.mk
-FILES+=			langc.lib.mk
+SHARE=			langc.init.mk
+SHARE+=			langc.build.mk
+SHARE+=			langc.uses.mk
+SHARE+=			langc.module.mk
+SHARE+=			langc.external.mk
+SHARE+=			langc.depend.mk
+SHARE+=			langc.prog.mk
+SHARE+=			langc.lib.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

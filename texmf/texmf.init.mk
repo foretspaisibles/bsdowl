@@ -1,7 +1,7 @@
 ### texmf.init.mk -- Initialisation for TeX and METAPOST
 
 # Author: Michael Grünewald
-# Date: Dim Oct  4 2009 11:59:26 CEST
+# Date: Sun Oct  4 11:59:26 CEST 2009
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

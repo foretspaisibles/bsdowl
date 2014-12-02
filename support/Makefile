@@ -1,7 +1,7 @@
 ### Makefile -- Support scripts for BSD Owl Scripts
 
 # Author: Michael Grünewald
-# Date: Ven Mai  9 2008 14:47:47 CEST
+# Date: Fri Mai  9 14:47:47 CEST 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -17,6 +17,6 @@
 PROGRAM=		mp2eps.sh
 PROGRAM+=		mp2png.sh
 
-.include "script.mk"
+.include "shell.prog.mk"
 
 ### End of file `Makefile'

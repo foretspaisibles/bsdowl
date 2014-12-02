@@ -14,9 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			conf.dotfile.mk
-FILES+=			conf.freebsd.mk
+SHARE=			conf.dotfile.mk
+SHARE+=			conf.freebsd.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

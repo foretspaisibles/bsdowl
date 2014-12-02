@@ -3,7 +3,7 @@
 ### mp2png.sh -- Convert METAPOST output to PNG
 
 # Author: Michael Grünewald
-# Date: Sat 10 Dec 2005 09:58:48 GMT
+# Date: Sat Dec 10 09:58:48 GMT 2005
 
 
 # Global Variables:

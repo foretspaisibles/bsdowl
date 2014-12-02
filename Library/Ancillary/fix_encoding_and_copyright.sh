@@ -1,5 +1,7 @@
+### fix_encoding_and_copyright.sh
+
 # Author: Michael Grünewald
-# Date: dim 16 jui 2013 13:41:46 CEST
+# Date: Sun Jul 16 13:41:46 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -95,3 +97,5 @@ lu_process()
 }
 
 lu_query . | lu_select | lu_process
+
+### End of file `fix_encoding_and_copyright.sh'

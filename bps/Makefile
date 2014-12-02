@@ -1,7 +1,7 @@
 ### Makefile -- Core facilities
 
 # Author: Michael Grünewald
-# Date: Fri 10 Feb 2006 16:51:08 GMT
+# Date: Fri Feb 10 16:51:08 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,27 +14,27 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES+=	bps.init.mk
-FILES+=	bps.bpsconfig.mk
-FILES+= bps.package.mk
-FILES+= bps.uses.mk
-FILES+= bps.module.mk
-FILES+= bps.external.mk
-FILES+=	bps.product.mk
-FILES+= bps.architecture.mk
-FILES+= bps.configuration.mk
-FILES+= bps.credentials.mk
-FILES+= bps.objdir.mk
-FILES+=	bps.own.mk
-FILES+= bps.man.mk
-FILES+= bps.usertarget.mk
-FILES+=	bps.clean.mk
-FILES+=	bps.subdir.mk
-FILES+=	bps.files.mk
-FILES+= bps.autoconf.mk
-FILES+= bps.project.mk
-FILES+= bps.m4.mk
+SHARE=			bps.init.mk
+SHARE+=			bps.bpsconfig.mk
+SHARE+=			bps.package.mk
+SHARE+=			bps.uses.mk
+SHARE+=			bps.module.mk
+SHARE+=			bps.external.mk
+SHARE+=			bps.product.mk
+SHARE+=			bps.architecture.mk
+SHARE+=			bps.configuration.mk
+SHARE+=			bps.credentials.mk
+SHARE+=			bps.objdir.mk
+SHARE+=			bps.own.mk
+SHARE+=			bps.man.mk
+SHARE+=			bps.usertarget.mk
+SHARE+=			bps.clean.mk
+SHARE+=			bps.subdir.mk
+SHARE+=			bps.files.mk
+SHARE+=			bps.autoconf.mk
+SHARE+=			bps.project.mk
+SHARE+=			bps.m4.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

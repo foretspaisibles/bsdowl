@@ -19,14 +19,11 @@ SUBDIR=		ocaml
 SUBDIR+=	langc
 SUBDIR+=	script
 SUBDIR+=	config
-
-.if "${WITH_TESTSUITE_TEXMF}" == "yes"
 SUBDIR+=	texmf
-.endif
 
 all configure install build depend doc:
 	${NOP}
 
-.include "subdir.mk"
+.include "bps.subdir.mk"
 
 ### End of file `Makefile'

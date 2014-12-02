@@ -1,7 +1,7 @@
 # -*- autoconf -*-
 
 # Author: Michael Grünewald
-# Date: Sam 12 sep 2009 13:02:08 CEST
+# Date: Sat Sep 12 13:02:08 CEST 2009
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

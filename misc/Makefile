@@ -1,7 +1,7 @@
 ### Makefile -- Miscellaneous modules
 
 # Author: Michael Grünewald
-# Date: Sam Jul  7 2007 18:09:47 CEST
+# Date: Sat Jul  7 18:09:47 CEST 2007
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,8 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			elisp.lib.mk
+SHARE=			elisp.lib.mk
+SHARE+=			generic.files.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

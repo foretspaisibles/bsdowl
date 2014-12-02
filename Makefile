@@ -1,7 +1,7 @@
 ### Makefile -- BSD Owl
 
 # Author: Michael Grünewald
-# Date: Fri Feb 10 2006 16:50:40 GMT
+# Date: Fri Feb 10 16:50:40 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -35,8 +35,10 @@ test: .PHONY
 	@(cd testsuite && ${MAKE} test)
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
-.MAKEFLAGS: -I${.CURDIR}/bps
+.for subdir in ${SUBDIR}
+.MAKEFLAGS: -I${.CURDIR}/${subdir}
+.endfor
 
-.include "bsdowl.mk"
+.include "bps.project.mk"
 
 ### End of file `Makefile'

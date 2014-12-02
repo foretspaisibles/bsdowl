@@ -1,7 +1,7 @@
 ### elisp.lib.mk -- Manage Emacs Lisp Directories
 
 # Author: Michael Grünewald
-# Date: Fri Feb 10 17:59:16 2006
+# Date: Fri Feb 10 17:59:16 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

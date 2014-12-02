@@ -1,7 +1,7 @@
 ### Makefile -- Test misc.elisp.mk
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 18:08:19 CEST
+# Date: Sat Jul  7 18:08:19 CEST 2007
 
 
 ### SYNOPSIS

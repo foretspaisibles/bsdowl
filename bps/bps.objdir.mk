@@ -1,7 +1,7 @@
 ### bps.objdir.mk -- Path to the directory where the targets are built
 
 # Author: Michael Grünewald
-# Date: Sat 15 Mar 2008 20:51:30 CET
+# Date: Sat Mar 15 20:51:30 CET 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
