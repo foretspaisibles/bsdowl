@@ -1,7 +1,7 @@
 ### tex.doc.mk -- Produce TeX documents
 
 # Author: Michael Grünewald
-# Date: Dim Sep  9 2007 14:49:18 CEST
+# Date: Sun Sep  9 14:49:18 CEST 2007
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

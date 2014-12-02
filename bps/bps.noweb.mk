@@ -1,7 +1,7 @@
 ### bps.noweb.mk -- Support literate programming with noweb
 
 # Author: Michael Grünewald
-# Date: Sam Oct  3 2009 19:10:53 CEST
+# Date: Sat Oct  3 19:10:53 CEST 2009
 
 # BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

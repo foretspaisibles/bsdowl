@@ -1,7 +1,7 @@
 ### Makefile -- Miscellaneous modules
 
 # Author: Michael Grünewald
-# Date: Sam Jul  7 2007 18:09:47 CEST
+# Date: Sat Jul  7 18:09:47 CEST 2007
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

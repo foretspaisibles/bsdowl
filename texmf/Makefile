@@ -1,7 +1,7 @@
 ### Makefile -- Support for TeX and METAPOST
 
 # Author: Michael Grünewald
-# Date: Sam Jul  7 2007 18:12:07 CEST
+# Date: Sat Jul  7 18:12:07 CEST 2007
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

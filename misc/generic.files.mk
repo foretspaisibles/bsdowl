@@ -1,7 +1,7 @@
 ### generic.files.mk -- Install files as assets
 
 # Auteur: Michael Grünewald
-# Date: Tue  2 Dec 2014 18:44:57 CET
+# Date: Tue Dec  2 18:44:57 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

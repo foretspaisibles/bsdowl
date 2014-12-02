@@ -1,7 +1,7 @@
 ### Makefile -- Core facilities
 
 # Author: Michael Grünewald
-# Date: Fri 10 Feb 2006 16:51:08 GMT
+# Date: Fri Feb 10 16:51:08 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

@@ -1,7 +1,7 @@
 ### bps.autoconf.mk -- Support for autoconf
 
 # Author: Michael Grünewald
-# Date: Ven Apr 18 2008 09:59:39 CEST
+# Date: Fri Apr 18 09:59:39 CEST 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

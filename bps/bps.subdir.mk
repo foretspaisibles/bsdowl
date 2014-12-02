@@ -1,7 +1,7 @@
 ### bps.subdir.mk -- Manage subdirectories
 
 # Author: Michael Grünewald
-# Date: Fri Feb 10 2006 16:24:23 GMT
+# Date: Fri Feb 10 16:24:23 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

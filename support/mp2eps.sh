@@ -3,7 +3,7 @@
 ### mp2eps.sh -- Convert METAPOST output to PostScript
 
 # Author: Michael Grünewald
-# Date: Sat Dec 10 2005 09:58:48 GMT
+# Date: Sat Dec 10 09:58:48 GMT 2005
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

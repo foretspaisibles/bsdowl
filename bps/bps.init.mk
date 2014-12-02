@@ -1,7 +1,7 @@
 ### bps.init.mk -- Initialisation
 
 # Author: Michael Grünewald
-# Date: Fri Feb 10 2006 10:40:49 GMT
+# Date: Fri Feb 10 10:40:49 GMT 2006
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

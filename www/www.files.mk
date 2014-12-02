@@ -1,7 +1,7 @@
 ### www.files.mk -- A bps.files.mk wrapper for my www
 
 # Author: Michael Grünewald
-# Date: Jeu 13 mar 2008 21:58:28 CET
+# Date: Thu Mar 13 21:58:28 CET 2008
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

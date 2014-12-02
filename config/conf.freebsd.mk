@@ -1,7 +1,7 @@
 ### conf.freebsd.mk -- Installation of configuration files for FreeBSD
 
 # Author: Michael Grünewald
-# Date: Sam Oct  3 2009 18:25:04 CEST
+# Date: Sat Oct  3 18:25:04 CEST 2009
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

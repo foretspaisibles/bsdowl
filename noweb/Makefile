@@ -1,7 +1,7 @@
 ### Makefile -- Support files for noweb
 
 # Author: Michael Grünewald
-# Date: Sat Oct  3 2009 19:09:28 CEST
+# Date: Sat Oct  3 19:09:28 CEST 2009
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts

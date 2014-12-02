@@ -1,7 +1,7 @@
 ### bps.usertarget.mk -- Common build targets
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 09:59:15 CEST
+# Date: Sat Jul  7 09:59:15 CEST 2007
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
