@@ -34,6 +34,7 @@ SHARE+=			bps.files.mk
 SHARE+=			bps.autoconf.mk
 SHARE+=			bps.project.mk
 SHARE+=			bps.m4.mk
+SHARE+=			bps.noweb.mk
 
 .include "generic.files.mk"
 
