@@ -122,7 +122,7 @@ ${COOKIEPREFIX}${document:T}.${device}.${pass}:  ${SRCS.${document:T}}\
 .endif
 	${INFO} 'Multipass job for ${document:T}.${device} (${pass})'
 	${_TEX_BUILD_TOOL.${device}} ${.ALLSRC:M*${document:T}.tex}
-	@${TOUCH} -d 1971-01-01T01:00:00 ${document}.${device}
+	@${TOUCH} -t 197101010100.00 ${document}.${device}
 	@${TOUCH} ${.TARGET}
 
 pass_last:=		${pass}
