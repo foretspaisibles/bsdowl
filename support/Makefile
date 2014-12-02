@@ -17,6 +17,6 @@
 PROGRAM=		mp2eps.sh
 PROGRAM+=		mp2png.sh
 
-.include "script.mk"
+.include "shell.prog.mk"
 
 ### End of file `Makefile'
