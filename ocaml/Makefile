@@ -21,29 +21,29 @@
 # - ocaml.meta -- Prepare OCaml findlib META files
 # - ocaml.toplevel -- Prepare OCaml toplevels
 
-FILES+= ocaml.uses.mk
-FILES+= ocaml.module.mk
-FILES+= ocaml.external.mk
-FILES+= ocaml.build.mk
-FILES+= ocaml.depend.mk
-FILES+= ocaml.find.mk
-FILES+= ocaml.meta.mk
-FILES+= ocaml.init.mk
-FILES+= ocaml.lex.mk
-FILES+= ocaml.lib.mk
-FILES+= ocaml.pack.mk
-FILES+= ocaml.main.mk
-FILES+= ocaml.object.mk
-FILES+= ocaml.prog.mk
-FILES+= ocaml.dirs.mk
-FILES+= ocaml.source.mk
-FILES+= ocaml.compile.mk
-FILES+= ocaml.tools.mk
-FILES+= ocaml.yacc.mk
-FILES+= ocaml.odoc.mk
-FILES+= ocaml.manual.mk
-FILES+= ocaml.toplevel.mk
+SHARE+=			ocaml.uses.mk
+SHARE+=			ocaml.module.mk
+SHARE+=			ocaml.external.mk
+SHARE+=			ocaml.build.mk
+SHARE+=			ocaml.depend.mk
+SHARE+=			ocaml.find.mk
+SHARE+=			ocaml.meta.mk
+SHARE+=			ocaml.init.mk
+SHARE+=			ocaml.lex.mk
+SHARE+=			ocaml.lib.mk
+SHARE+=			ocaml.pack.mk
+SHARE+=			ocaml.main.mk
+SHARE+=			ocaml.object.mk
+SHARE+=			ocaml.prog.mk
+SHARE+=			ocaml.dirs.mk
+SHARE+=			ocaml.source.mk
+SHARE+=			ocaml.compile.mk
+SHARE+=			ocaml.tools.mk
+SHARE+=			ocaml.yacc.mk
+SHARE+=			ocaml.odoc.mk
+SHARE+=			ocaml.manual.mk
+SHARE+=			ocaml.toplevel.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

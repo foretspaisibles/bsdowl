@@ -4,9 +4,9 @@
 # Date: Sam  7 jul 2007 18:12:00 CEST
 
 
-FILES = www.files.mk
-FILES+= www.sgml.mk
+SHARE+=			www.files.mk
+SHARE+=			www.sgml.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

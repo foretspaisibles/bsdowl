@@ -39,6 +39,8 @@ mandir?=		@mandir@
 PREFIX?=		${prefix}
 EXEC_PREFIX?=		${exec_prefix}
 DATAROOTDIR?=		${datarootdir}
+SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
+SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
 
 # Local Variables:
 # mode: makefile

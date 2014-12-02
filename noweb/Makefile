@@ -19,6 +19,6 @@ FILES+=		nwlatex.tex
 
 FILESDIR=	${datarootdir}/texmf-local/tex/latex${PACKAGEDIR}
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

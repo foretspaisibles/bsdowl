@@ -14,25 +14,25 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES=			texmf.init.mk
-FILES+=			texmf.uses.mk
-FILES+=			texmf.module.mk
-FILES+=			texmf.external.mk
-FILES+=			texmf.depend.mk
-FILES+=			texmf.clean.mk
-FILES+=			texmf.build.mk
-FILES+=			texmf.mpost.mk
-FILES+=			texmf.draft.mk
-FILES+=			texmf.bibtex.mk
-FILES+=			texmf.index.mk
+SHARE=			texmf.init.mk
+SHARE+=			texmf.uses.mk
+SHARE+=			texmf.module.mk
+SHARE+=			texmf.external.mk
+SHARE+=			texmf.depend.mk
+SHARE+=			texmf.clean.mk
+SHARE+=			texmf.build.mk
+SHARE+=			texmf.mpost.mk
+SHARE+=			texmf.draft.mk
+SHARE+=			texmf.bibtex.mk
+SHARE+=			texmf.index.mk
 
-FILES+=			tex.doc.mk
-FILES+=			plain.files.mk
-FILES+=			latex.doc.mk
-FILES+=			latex.files.mk
-FILES+=			mpost.doc.mk
-FILES+=			mpost.files.mk
+SHARE+=			tex.doc.mk
+SHARE+=			plain.files.mk
+SHARE+=			latex.doc.mk
+SHARE+=			latex.files.mk
+SHARE+=			mpost.doc.mk
+SHARE+=			mpost.files.mk
 
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'
