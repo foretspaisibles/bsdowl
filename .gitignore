@@ -10,3 +10,4 @@ support/mp2png
 texmf/tex.device.pdf.mk
 texmf/tex.driver.pdftex.mk
 /Wiki/
+.product
