@@ -25,6 +25,9 @@
 
 .if !target(__<langc.uses.mk>__)
 __<langc.uses.mk>__:
+
+_USES_shared_VALIDARGS=	elf mach-o
+
 .if defined(_USES_OPTIONS)
 
 .if!empty(_USES_OPTIONS:Mdebug)
@@ -34,10 +37,33 @@ _LANGC_WITH_DEBUG=	yes
 .if!empty(_USES_OPTIONS:Mprofile)
 _LANGC_WITH_PROFILE=	yes
 .endif
+.if!empty(_USES_OPTIONS:Mshared)
+.if ${_USES_shared_ARGS:[#]} > 1
+.error Incorrect "USES+= shared" usage:\
+	  at most one argument is expected.
+.endif
+.if empty(_USES_shared_VALIDARGS:M${_USES_shared_ARGS})
+.error Incorrect "USES+= shared:${_USES_shared_ARGS}" usage:\
+	  valid arguments are ${_USES_shared_VALIDARGS}.
+.endif
+_LANGC_SHARED_FORMAT=	${_USES_shared_ARGS}
+.endif
 .endif
 
 _LANGC_WITH_DEBUG?=	no
 _LANGC_WITH_PROFILE?=	no
+.if defined(.MAKE.OS)
+.if ${.MAKE.OS} == Darwin
+_LANGC_SHARED_FORMAT?=	mach-o
+.else
+_LANGC_SHARED_FORMAT?=	elf
+.endif
+.endif
+
+.if !defined(_LANGC_SHARED_FORMAT)
+.error Unable to determine shared object format.
+.endif
+
 
 .if ${_LANGC_WITH_DEBUG} == yes
 CFLAGS+=		-g

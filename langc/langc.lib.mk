@@ -153,6 +153,14 @@ OBJS=			${SRCS:N*.h:C/\.[cly]$/.o/}
 # Register programs for installation and cleaning
 #
 
+.if ${_LANGC_SHARED_FORMAT} == elf
+_LANGC_SHARED_SUFFIX=	so
+.elif ${_LANGC_SHARED_FORMAT} == mach-o
+_LANGC_SHARED_SUFFIX=	dylib
+.else
+.error ${_LANGC_SHARED_FORMAT}: Unsupported shared object format.
+.endif
+
 .if!empty(_USES_compile_ARGS:Mstatic)
 LIB+=			lib${LIBRARY}.a
 CLEANFILES+=		lib${LIBRARY}.a
@@ -160,11 +168,11 @@ CLEANFILES+=		lib${LIBRARY}.a
 .if!empty(_USES_compile_ARGS:Mshared)
 CFLAGS+=		-fpic
 .if defined(LIBVERSION)
-LIB+=			lib${LIBRARY}.so.${LIBVERSION}
-CLEANFILES+=		lib${LIBRARY}.so.${LIBVERSION}
+LIB+=			lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}.${LIBVERSION}
+CLEANFILES+=		lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}.${LIBVERSION}
 .else
-LIB+=			lib${LIBRARY}.so
-CLEANFILES+=		lib${LIBRARY}.so
+LIB+=			lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}
+CLEANFILES+=		lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}
 .endif
 .endif
 INCLUDE+=		${SRCS:M*.h}
@@ -179,13 +187,19 @@ lib${LIBRARY}.a:	${OBJS}
 	${AR} ${ARFLAGS} ${.TARGET} ${.ALLSRC} ${ARADD}
 
 .if defined(APIVERSION)&&("${APIVERSION}" != "${LIBVERSION}")
+.if ${_LANGC_SHARED_FORMAT} == elf
 MKSHAREDLIB+=		-Wl,-soname,lib${LIBRARY}.so.${APIVERSION}
+.elif ${_LANGC_SHARED_FORMAT} == mach-o
+MKSHAREDLIB+=		-Wl,-install_name,lib${LIBRARY}.dylib.${APIVERSION}
+.else
+.error ${_LANGC_SHARED_FORMAT}: Unsupported shared object format.
+.endif
 .endif
 
 .if defined(LIBVERSION)
-lib${LIBRARY}.so.${LIBVERSION}:	${OBJS}
+lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}.${LIBVERSION}: ${OBJS}
 .else
-lib${LIBRARY}.so:	${OBJS}
+lib${LIBRARY}.${_LANGC_SHARED_SUFFIX}: ${OBJS}
 .endif
 	${MKSHAREDLIB} -o ${.TARGET} ${.ALLSRC}
 

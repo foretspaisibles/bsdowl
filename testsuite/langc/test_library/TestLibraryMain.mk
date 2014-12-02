@@ -32,8 +32,13 @@ DIRS=			${TESTSRCDIR}/librational
 test-static:
 	test -f ${DESTDIR}${LIBDIR}/librational.a
 
+.if defined(.MAKE.OS)&& ${.MAKE.OS} == Darwin
+test-shared:
+	test -f ${DESTDIR}${LIBDIR}/librational.dylib.${LIBVERSION}
+.else
 test-shared:
 	test -f ${DESTDIR}${LIBDIR}/librational.so.${LIBVERSION}
+.endif
 
 test-extras:
 	test -f ${DESTDIR}${INCLUDEDIR}/rational.h
