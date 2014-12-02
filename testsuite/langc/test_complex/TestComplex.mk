@@ -39,8 +39,12 @@ test-goldenratio:
 test-dist:
 	test -f ${PACKAGE}-${VERSION}.tar.gz
 	test -f ${PACKAGE}-${VERSION}.tar.gz.sig
+	test -f ${PACKAGE}-${VERSION}.tar.bz2
+	test -f ${PACKAGE}-${VERSION}.tar.bz2.sig
+.if!(defined(.MAKE.OS)&&${.MAKE.OS} == Darwin)
 	test -f ${PACKAGE}-${VERSION}.tar.xz
 	test -f ${PACKAGE}-${VERSION}.tar.xz.sig
+.endif
 
 test: test-librational
 test: test-libfibonacci
