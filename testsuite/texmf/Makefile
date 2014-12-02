@@ -27,6 +27,8 @@ SUBDIR+=		test_extra
 SUBDIR+=		test_noweb
 .endif
 
+USE_SUBDIR=		yes
+
 .include "bps.subdir.mk"
 
 ### End of file `Makefile'
