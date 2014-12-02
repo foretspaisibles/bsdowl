@@ -18,8 +18,11 @@ DOCUMENT=		simple.tex
 TEXDEVICE=		pdf
 USES+=			draft:git
 
+TEST_DRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
+TEST_DRAFTSTAMP!=	(cd ${.CURDIR} && ${TEST_DRAFTSTAMP_CMD})
+
 test:
-	test -f ${DESTDIR}${DOCDIR}/simple_*.pdf
+	test -f ${DESTDIR}${DOCDIR}/simple_${TEST_DRAFTSTAMP}.pdf
 
 .include "latex.doc.mk"
 
