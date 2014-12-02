@@ -27,11 +27,11 @@
 __<langc.uses.mk>__:
 .if defined(_USES_OPTIONS)
 
-.if defined(_USES_debug_ARGS)
+.if!empty(_USES_OPTIONS:Mdebug)
 WITH_DEBUG=		yes
 .endif
 
-.if defined(_USES_profile_ARGS)
+.if!empty(_USES_OPTIONS:Mprofile)
 WITH_PROFILE=		yes
 .endif
 .endif
