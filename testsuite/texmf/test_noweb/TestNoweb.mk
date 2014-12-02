@@ -26,6 +26,10 @@ SUBDIR=			class
 SUBDIR+=		example
 SUBDIR+=		manual
 
+TEXINPUTS=		${BSDOWLSRCDIR}/noweb
+
+.export TEXINPUTS
+
 test-class:
 	test -f ${DESTDIR}${FILESDIR}/shltx.sty
 	test -f ${DESTDIR}${FILESDIR}/shthm.sty
