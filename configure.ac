@@ -186,3 +186,20 @@ AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
 AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT
+
+cat <<EOF
+
+** Configuration Summary **
+
+Optional Features:
+  --enable-test-findlib=${WITH_TESTSUITE_FINDLIB}
+  --enable-test-py-setuptools=${WITH_TESTSUITE_PY_SETUPTOOLS}
+  --enable-test-mingw32=${WITH_TESTSUITE_MINGW32}
+  --enable-test-noweb=${WITH_TESTSUITE_NOWEB}
+  --enable-test-gpg=${WITH_TESTSUITE_GPG}
+  --enable-test-texmf=${WITH_TESTSUITE_TEXMF}
+
+Optional Packages:
+  --with-credentials=${SWITCH_CREDENTIALS_STRATEGY}
+
+EOF
