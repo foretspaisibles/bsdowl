@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### Makefile -- Test portability issues for BSD Make
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Tue Dec  2 22:31:53 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,17 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TEST=			AssertMakeOS
+TEST+=			AssertOneWord
 
-SUBDIR=		bsdmake
-SUBDIR+=	ocaml
-SUBDIR+=	langc
-SUBDIR+=	script
-SUBDIR+=	config
-SUBDIR+=	texmf
+TESTSEQUENCE?=		all
 
-all configure install build depend doc:
-	${NOP}
-
-.include "bps.subdir.mk"
+.include "test.mk"
 
 ### End of file `Makefile'

@@ -1,7 +1,7 @@
-### Makefile -- Test Suite
+### bsdowl.assert.mk
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Tue Dec  2 22:40:47 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,17 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-
-SUBDIR=		bsdmake
-SUBDIR+=	ocaml
-SUBDIR+=	langc
-SUBDIR+=	script
-SUBDIR+=	config
-SUBDIR+=	texmf
-
-all configure install build depend doc:
+all configure depend build doc test install clean distclean realclean:
 	${NOP}
 
-.include "bps.subdir.mk"
+.include "bps.init.mk"
 
-### End of file `Makefile'
+### End of file `bsdowl.assert.mk'
