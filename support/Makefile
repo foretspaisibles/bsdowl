@@ -14,8 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		mp2eps.sh
-PROGRAM+=		mp2png.sh
+PROGRAM=		mp2png.sh
 
 .include "shell.prog.mk"
 

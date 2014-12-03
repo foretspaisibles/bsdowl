@@ -95,7 +95,7 @@ _TEX_BUILD_FIGURE.pdf=	pdf
 	${MP2PNG} -o ${.TARGET} ${.IMPSRC}
 
 .mps.eps:
-	${MP2EPS} -o ${.TARGET} ${.IMPSRC}
+	${CP} -f ${.IMPSRC} ${.TARGET}
 
 .eps.pdf:
 	${EPSTOPDF} --outfile=${.TARGET} ${.IMPSRC}
