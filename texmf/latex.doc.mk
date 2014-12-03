@@ -42,7 +42,7 @@ _TEX_SUFFIXES?=		.tex .latex .cls .sty
 .include "texmf.init.mk"
 
 _TEX_VALIDATE=\
-	${INFO} 'Information summary for ${.TARGET:T}';\
+	${INFO} 'Information summary for ${.TARGET:T}' &&\
 	(test -f ${.TARGET:R}.log &&\
 	  ! ${GREP} 'LaTeX \(Error\|Warning\|Font Error\)' ${.TARGET:R}.log\
 	) && ${ECHO} 'Everything seems in order'

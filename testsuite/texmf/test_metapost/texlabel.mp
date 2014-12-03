@@ -1,7 +1,7 @@
-%%% square.mp -- An illustration for a TeX document
+%%% texlabel.mp -- An illustration with TeX labels
 
 % Author: Michael Grünewald
-% Date: Sun Nov 23 18:20:05 CET 2014
+% Date: Wed Dec  3 07:58:42 CET 2014
 
 % BSD Owl Scripts (https://github.com/michipili/bsdowl)
 % This file is part of BSD Owl Scripts
@@ -18,7 +18,8 @@ beginfig(1)
   u := 4cm;
   draw ((0,0) -- (0,u) -- (u,u) -- (u,0) -- cycle)
     rotated 45;
+  dotlabel.top(btex $O$ etex, (0,0));
 endfig;
 bye;
 
-%%% End of file `square.mp'
+%%% End of file `texlabel.mp'

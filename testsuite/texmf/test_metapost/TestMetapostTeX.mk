@@ -1,7 +1,7 @@
-### Makefile -- Support scripts for BSD Owl Scripts
+### TestMetapostTeX.mk -- Metapost figure using TeX labels
 
 # Author: Michael Grünewald
-# Date: Fri Mai  9 14:47:47 CEST 2008
+# Date: Wed Dec  3 07:56:22 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,8 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		mp2png.sh
+DOCUMENT=		texlabel.mp
+MPDEVICE=		eps
 
-.include "shell.prog.mk"
+test:
+	test -f ${DESTDIR}${DOCDIR}/texlabel-1.eps
 
-### End of file `Makefile'
+.include "mpost.doc.mk"
+
+### End of file `TestMetapostTeX.mk'

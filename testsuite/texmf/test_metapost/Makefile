@@ -19,6 +19,10 @@ TEST+=			TestMetapostPDF
 TEST+=			TestMetapostPNG
 TEST+=			TestMetapostSVG
 
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
+TEST+=			TestMetapostTeX
+.endif
+
 .include "bsdowl.test.mk"
 
 ### End of file `Makefile'

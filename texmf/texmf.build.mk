@@ -95,7 +95,7 @@ _TEX_BUILD_FIGURE.pdf=	pdf
 	${MP2PNG} -o ${.TARGET} ${.IMPSRC}
 
 .mps.eps:
-	${MP2EPS} -o ${.TARGET} ${.IMPSRC}
+	${CP} -f ${.IMPSRC} ${.TARGET}
 
 .eps.pdf:
 	${EPSTOPDF} --outfile=${.TARGET} ${.IMPSRC}
@@ -132,7 +132,11 @@ ${document}.${device}:	${SRCS.${document:T}}\
 	${INFO} 'Multipass job for ${document:T}.${device} (final)'
 	${_TEX_BUILD_TOOL.${device}} ${.ALLSRC:M*${document:T}.tex}
 .if defined(_TEX_VALIDATE)
+.if !empty(_USES_OPTIONS:Mgalley)||(${document} == galley)
+	-${_TEX_VALIDATE}
+.else
 	${_TEX_VALIDATE}
+.endif
 .endif
 .endfor
 .endfor

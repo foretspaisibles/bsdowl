@@ -40,6 +40,7 @@ TEX.pdftex?=		pdftex
 TEX.tex?=		tex
 DVIPS?=			dvips
 MPOST?=			mpost
+MPTEX?=			${TEX.tex}
 MP2EPS?=		mp2eps
 MP2PNG?=		mp2png
 MP2PDF?=		mp2pdf
@@ -71,6 +72,7 @@ _TEX_PRINTER=		${TEXDEVICE:M*.ps:.ps=}
 .SUFFIXES: ${_TEX_PRINTER:C@^@.@:C@$@.ps@}
 .endif
 
+.SUFFIXES: .mp
 .SUFFIXES: .mps .png .pdf .svg .eps
 
 
@@ -228,6 +230,10 @@ _DVIPS_TOOL=		${DVIPS}
 .for suffix in ${_TEX_SUFFIXES}
 .PATH${suffix}: ${MPTEXINPUTS}
 .endfor
+.endif
+
+.if defined(MPINPUTS)&&!empty(MPINPUTS)
+.PATH.mp: ${MPINPUTS}
 .endif
 
 
