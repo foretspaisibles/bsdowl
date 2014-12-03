@@ -56,7 +56,7 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.pdf}
 .for figure in ${_MPOST_DOCUMENT}
 .if !empty(_MPOST_LIST.${figure:T})
 ${_MPOST_LIST.${figure:T}}: ${figure}.mp
-	${_MPOST_MPSTOOL} ${.ALLSRC}
+	${_MPOST_MPSTOOL} ${figure}.mp
 CLEANFILES+=		${figure}.log
 .if !empty(MPDEVICE:Nsvg)
 CLEANFILES+=		${_MPOST_LIST.${figure:T}}
@@ -73,7 +73,7 @@ CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.${device}}
 .for figure in ${_MPOST_DOCUMENT}
 .if !empty(_MPOST_LIST.${figure:T})
 ${_MPOST_LIST.${figure:T}:.mps=.svg}: ${figure}.mp
-	${_MPOST_SVGTOOL} ${.ALLSRC}
+	${_MPOST_SVGTOOL} ${figure}.mp
 CLEANFILES+=		${_MPOST_LIST.${figure:T}:.mps=.svg}
 .endif
 .endfor
