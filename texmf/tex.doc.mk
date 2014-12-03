@@ -81,6 +81,12 @@
 #
 #  draft: at most one of time, git, svn, cvs, auto
 #   Select a strategy for draft stamps
+#
+#
+#  galley: No argument allowed
+#   Do not fail on LaTeX errors or warnings
+#
+#   This is always enabled if the document is called `galley'.
 
 
 THISMODULE=		tex.doc
