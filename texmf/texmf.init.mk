@@ -40,6 +40,7 @@ TEX.pdftex?=		pdftex
 TEX.tex?=		tex
 DVIPS?=			dvips
 MPOST?=			mpost
+MPTEX?=			${TEX.tex}
 MP2EPS?=		mp2eps
 MP2PNG?=		mp2png
 MP2PDF?=		mp2pdf
