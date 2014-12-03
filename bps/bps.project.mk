@@ -373,6 +373,7 @@ SUBDIR+=		${MODULE:C@.*\:@@}
 .endif
 
 .include "bps.subdir.mk"
+.include "bps.usertarget.mk"
 
 obj: do-obj-subdir
 

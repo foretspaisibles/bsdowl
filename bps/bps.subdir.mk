@@ -100,7 +100,12 @@ ${SUBDIR}::
 do-${target}-subdir: _SUBDIR
 	${NOP}
 .if !target(${target}) && !target(${target}-switch-credentials)
-${target}: do-${target}-subdir
+.for sub in pre-${target} do-${target}-subdir do-${target} post-${target}
+.if target(${sub})
+${target}: ${sub}
+.endif
+.endfor
+.ORDER: pre-${target} do-${target}-subdir do-${target} post-${target}
 .endif
 .endfor
 .endif
