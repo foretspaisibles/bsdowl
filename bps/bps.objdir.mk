@@ -92,10 +92,13 @@ USE_OBJDIR?=no
 
 .if !target(do-obj)
 obj: do-obj
-do-obj:
 .if defined(MAKEOBJDIRPREFIX)
+do-obj: ${MAKEOBJDIRPREFIX}${.CURDIR}
+${MAKEOBJDIRPREFIX}${.CURDIR}:
 	${INSTALL_DIR} ${MAKEOBJDIRPREFIX}${.CURDIR}
 .elif defined(MAKEOBJDIR)
+do-obj: ${MAKEOBJDIR}
+${MAKEOBJDIR}:
 	${INSTALL_DIR} ${MAKEOBJDIR}
 .endif
 .endif
