@@ -206,9 +206,14 @@ MAKEINITRC?=		Makefile.inc
 
 # Input the package configuration file, if any.
 .if defined(SRCDIR) && !empty(SRCDIR)
+.sinclude "${SRCDIR}/Makefile.build"
+.sinclude "${SRCDIR}/Makefile.config"
 .if ${SRCDIR} != ${.CURDIR}
 .sinclude "${SRCDIR}/${MAKEINITRC}"
 .endif
+.else
+.sinclude "Makefile.build"
+.sinclude "Makefile.config"
 .endif
 
 # Input the current module configuration file, if any.
