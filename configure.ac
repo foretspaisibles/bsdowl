@@ -201,7 +201,7 @@ AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
-AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
+AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT
 
 cat <<EOF

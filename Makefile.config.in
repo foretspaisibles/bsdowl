@@ -46,4 +46,4 @@ SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
 # mode: makefile
 # End:
 
-### End of file `Makefile'
+### End of file `Makefile.config.in'
