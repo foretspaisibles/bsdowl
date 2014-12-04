@@ -88,6 +88,11 @@ _OCAML_MLI+=${if}
 ${lexer:.mll=.ml}: ${lexer}
 	${OCAMLLEX} -o ${.TARGET} ${.ALLSRC}
 
+.if !empty(_OCAML_MLI:M${lexer:.mll=.mli})
+${lexer:.mll=.cmo}: ${lexer:.mll=.cmi}
+${lexer:.mll=.cmx}: ${lexer:.mll=.cmi}
+.endif
+
 .endfor
 .endif
 
