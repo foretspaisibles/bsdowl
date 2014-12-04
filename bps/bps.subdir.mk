@@ -27,8 +27,8 @@
 ### DESCRIPTION
 
 # Delegate targets enumerated by the variable _SUBDIR_TARGET to the
-# directories list by the variable SUBDIR. This implements an
-# aggregate pattern.
+# directories listed by the variable SUBDIR or _SUBDIR_LIST. This
+# implements a simple aggregate pattern.
 #
 # The logic is as follows:
 # - for each target in _SUBDIR_TARGET, a do-${target}-subdir target is
@@ -38,7 +38,7 @@
 #   defined and if credential switch has not been required for
 #   ${target}, a rule with an empty recipe and depending on
 #   do-${target}-subdir is created for ${target}.
-# - for each directory in ${SUBDIR} a ${directory} target is created,
+# - for each directory in _SUBDIR_LIST a ${directory} target is created,
 #   requiring to make all in this subdirectory.
 
 
@@ -49,7 +49,11 @@
 #   Flag controlling the use of the subdir facility
 #
 #
-#  SUBDIR
+#  SUBDIR [not set]
+#   Directories in the aggregate
+#
+#
+#  _SUBDIR_LIST [${SUBDIR}]
 #   Directories in the aggregate
 #
 #
@@ -77,21 +81,25 @@ _SUBDIR_TARGET+= ${_MAKE_USERTARGET}
 SUBDIR_PREFIX?=
 
 .if defined(SUBDIR) && !empty(SUBDIR)
+_SUBDIR_LIST?=		${SUBDIR}
+.endif
+
+.if defined(_SUBDIR_LIST) && !empty(_SUBDIR_LIST)
 USE_SUBDIR?= yes
 .else
 USE_SUBDIR?= no
 .endif
 
 .if ${USE_SUBDIR} == yes
-.PHONY: ${SUBDIR}
+.PHONY: ${_SUBDIR_LIST}
 _SUBDIR: .USE
-.for item in ${SUBDIR}
+.for item in ${_SUBDIR_LIST}
 	${INFO} "${SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
 	@cd ${.CURDIR}/${item}\
 	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
 .endfor
 
-${SUBDIR}::
+${_SUBDIR_LIST}::
 	${INFO} "${.TARGET} (all)"
 	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
 

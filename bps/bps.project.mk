@@ -369,7 +369,11 @@ subshell: .PHONY
 #
 
 .if defined(MODULE)
-SUBDIR+=		${MODULE:C@.*\:@@}
+_SUBDIR_LIST+=		${MODULE:C@.*\:@@}
+.endif
+
+.if defined(SUBDIR)
+_SUBDIR_LIST+=		${SUBDIR}
 .endif
 
 .include "bps.subdir.mk"
