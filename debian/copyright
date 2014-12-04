@@ -1,5 +1,5 @@
 Format: http://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
-Upstream-Name: bsdowl
+Upstream-Name: BSD Owl
 Upstream-Contact: Michael Grünewald <michipili@gmail.com>
 Source: https://github.com/michipili/bsdowl
 
