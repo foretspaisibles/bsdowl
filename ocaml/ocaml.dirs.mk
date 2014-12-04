@@ -57,10 +57,7 @@ __<ocaml.dirs.mk>__:
 
 .if defined(DIRS)&&!empty(DIRS)
 _OCAML_DIRS=${DIRS:C/^/-I /}
-# Compiled interfaces files probably never appear on the command line
-# and also probably do not need to be looked up by make, so the .cmi
-# suffix is omitted from the next list.
-#.PATH.cmi: ${DIRS}
+.PATH.cmi: ${DIRS}
 .PATH.cmo: ${DIRS}
 .PATH.cmx: ${DIRS}
 .PATH.cmxa: ${DIRS}
@@ -73,6 +70,7 @@ _OCAML_DIRS=${DIRS:C/^/-I /}
 OCAMLROOTDIR!= ${OCAMLCI} -where
 .endif
 
+.PATH.cmi: ${OCAMLROOTDIR}
 .PATH.cmo: ${OCAMLROOTDIR}
 .PATH.cmx: ${OCAMLROOTDIR}
 .PATH.cmxa: ${OCAMLROOTDIR}
