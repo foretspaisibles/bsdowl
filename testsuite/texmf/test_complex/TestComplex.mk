@@ -36,6 +36,6 @@ test:
 	test -f ${DESTDIR}${DOCDIR}/complex.ps
 	test -f ${DESTDIR}${DOCDIR}/complex.pdf
 
-.include "bps.project.mk"
+.include "generic.project.mk"
 
 ### End of file `TestComplex.mk'

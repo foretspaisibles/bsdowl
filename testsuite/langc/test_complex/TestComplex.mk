@@ -54,6 +54,6 @@ test: test-goldenratio
 test: test-dist
 .endif
 
-.include "bps.project.mk"
+.include "generic.project.mk"
 
 ### End of file `TestComplex.mk'

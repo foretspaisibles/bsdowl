@@ -52,6 +52,6 @@ test-manual:
 
 test: test-class test-example test-manual
 
-.include "bps.project.mk"
+.include "generic.project.mk"
 
 ### End of file `TestNoweb.mk'

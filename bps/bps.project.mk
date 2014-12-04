@@ -125,9 +125,6 @@ DISTNAME?=		${PACKAGE}-${VERSION}
 DISTDIR?=		${.OBJDIR}
 GPG?=			gpg
 
-.include "bps.init.mk"
-
-
 #
 # Data for compression tools
 #
@@ -363,23 +360,6 @@ subshell: .PHONY
 	${INFO} "Entering developper's subshell"
 	@cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL}
 	${INFO} "Exiting developper's subshell"
-
-#
-# Delegating targets to subdirectories
-#
-
-.if defined(MODULE)
-_SUBDIR_LIST+=		${MODULE:C@.*\:@@}
-.endif
-
-.if defined(SUBDIR)
-_SUBDIR_LIST+=		${SUBDIR}
-.endif
-
-.include "bps.subdir.mk"
-.include "bps.usertarget.mk"
-
-obj: do-obj-subdir
 
 .endif # !target(__<bps.project.mk>__)
 
