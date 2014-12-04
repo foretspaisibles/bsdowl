@@ -16,6 +16,6 @@
 
 SUBDIR=			dotfile
 
-.include "bps.subdir.mk"
+.include "generic.subdir.mk"
 
 ### End of file `Makefile'

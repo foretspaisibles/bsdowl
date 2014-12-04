@@ -128,7 +128,9 @@ _SUBDIR_LIST+=		${SUBDIR}
 
 .include "bps.init.mk"
 .include "bps.project.mk"
+.include "bps.credentials.mk"
 .include "bps.subdir.mk"
+.include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
 obj: do-obj-subdir

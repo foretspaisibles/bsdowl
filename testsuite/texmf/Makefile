@@ -32,6 +32,6 @@ SUBDIR+=		test_noweb
 
 USE_SUBDIR=		yes
 
-.include "bps.subdir.mk"
+.include "generic.subdir.mk"
 
 ### End of file `Makefile'

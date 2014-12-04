@@ -20,6 +20,6 @@ SUBDIR=		showconfig
 SUBDIR+=	funniest
 .endif
 
-.include "bps.subdir.mk"
+.include "generic.subdir.mk"
 
 ### End of file `Makefile'

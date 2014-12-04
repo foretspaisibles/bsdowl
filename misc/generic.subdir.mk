@@ -1,7 +1,7 @@
-### Makefile -- Miscellaneous modules
+### generic.subdir.mk -- Generic aggregate
 
 # Author: Michael Grünewald
-# Date: Sat Jul  7 18:09:47 CEST 2007
+# Date: Thu Dec  4 23:47:57 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,11 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SHARE=			elisp.lib.mk
-SHARE+=			generic.files.mk
-SHARE+=			generic.subdir.mk
-SHARE+=			generic.project.mk
+.include "bps.init.mk"
+.include "bps.credentials.mk"
+.include "bps.subdir.mk"
+.include "bps.clean.mk"
 
-.include "generic.files.mk"
+obj: do-obj-subdir
 
-### End of file `Makefile'
+### End of file `generic.subdir.mk'

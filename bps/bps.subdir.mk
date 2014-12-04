@@ -71,8 +71,9 @@
 
 ### IMPLEMENTATION
 
-.include "bps.init.mk"
-.include "bps.credentials.mk"
+.if !target(__<bps.init.mk>__)
+.error bps.subdir.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.subdir.mk>__)
 __<bps.subdir.mk>__:
@@ -128,7 +129,5 @@ ${target}: ${sub}
 
 .endif # ${USE_SUBDIR} == yes
 .endif #!target(__<bps.subdir.mk>__)
-
-.include "bps.clean.mk"
 
 ### End of file `bps.subdir.mk'

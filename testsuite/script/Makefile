@@ -18,6 +18,6 @@
 SUBDIR=		test_shell
 SUBDIR+=	test_python
 
-.include "bps.subdir.mk"
+.include "generic.subdir.mk"
 
 ### End of file `Makefile'
