@@ -67,9 +67,10 @@ _OCAML_DIRS=${DIRS:C/^/-I /}
 .endif
 
 .if !defined(OCAMLROOTDIR)
-OCAMLROOTDIR!= ${OCAMLCI} -where
+OCAMLROOTDIR!=		2>/dev/null ${OCAMLCI} -where
 .endif
 
+.if defined(OCAMLROOTDIR)
 .PATH.cmi: ${OCAMLROOTDIR}
 .PATH.cmo: ${OCAMLROOTDIR}
 .PATH.cmx: ${OCAMLROOTDIR}
@@ -77,6 +78,7 @@ OCAMLROOTDIR!= ${OCAMLCI} -where
 .PATH.cma: ${OCAMLROOTDIR}
 .PATH.a: ${OCAMLROOTDIR}
 .PATH.o: ${OCAMLROOTDIR}
+.endif
 
 .if defined(_OCAML_DIRS) && !empty(_OCAML_DIRS)
 .for tool in OCAMLCI OCAMLCB OCAMLCN OCAMLLB OCAMLLN OCAMLDEP
