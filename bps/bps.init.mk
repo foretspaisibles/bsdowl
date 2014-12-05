@@ -354,6 +354,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc
 .include "bps.autoconf.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"
+.include "bps.test-expected.mk"
 
 .endif # !target(__<bps.init.mk>__)
 
