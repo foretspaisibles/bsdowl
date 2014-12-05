@@ -39,6 +39,6 @@ test: .PHONY
 .MAKEFLAGS: -I${.CURDIR}/${subdir}
 .endfor
 
-.include "bps.project.mk"
+.include "generic.project.mk"
 
 ### End of file `Makefile'

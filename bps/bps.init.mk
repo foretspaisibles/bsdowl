@@ -206,17 +206,18 @@ MAKEINITRC?=		Makefile.inc
 
 # Input the package configuration file, if any.
 .if defined(SRCDIR) && !empty(SRCDIR)
+.sinclude "${SRCDIR}/Makefile.build"
+.sinclude "${SRCDIR}/Makefile.config"
 .if ${SRCDIR} != ${.CURDIR}
-.if exists(${SRCDIR}/${MAKEINITRC})
-.include "${SRCDIR}/${MAKEINITRC}"
+.sinclude "${SRCDIR}/${MAKEINITRC}"
 .endif
-.endif
+.else
+.sinclude "Makefile.build"
+.sinclude "Makefile.config"
 .endif
 
 # Input the current module configuration file, if any.
-.if exists(${.CURDIR}/${MAKEINITRC})
-.include "${.CURDIR}/${MAKEINITRC}"
-.endif
+.sinclude "${.CURDIR}/${MAKEINITRC}"
 
 
 #
@@ -353,6 +354,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc
 .include "bps.autoconf.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"
+.include "bps.test-expected.mk"
 
 .endif # !target(__<bps.init.mk>__)
 
