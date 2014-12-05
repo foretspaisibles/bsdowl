@@ -54,23 +54,30 @@ USE_AUTOCONF?=yes
 .endif
 USE_AUTOCONF?=no
 .if ${USE_AUTOCONF} == yes
+.if "${.CURDIR}" != "${.OBJDIR}"
+_AUTOCONF_DIR=		${.CURDIR}/
+.else
+_AUTOCONF_DIR=
+.endif
 .for file in config.status config.log
 .if exists(${file})
-DISTCLEANFILES+=	${file}
+DISTCLEANFILES+=	${_AUTOCONF_DIR}${file}
 .endif
 .endfor
 .if exists(autom4te.cache)
-DISTCLEANDIRS+=		autom4te.cache
+DISTCLEANDIRS+=		${_AUTOCONF_DIR}autom4te.cache
 .endif
 .for file in Makefile.in Makefile.inc.in
 .if exists(${file})&&empty(CONFIGURE:M${file})
 CONFIGURE+=		${file}
 .endif
 .endfor
-REALCLEANFILES+=	${CONFIGURE:.in=}
+.for file in ${CONFIGURE:.in=}
+REALCLEANFILES+=	${_AUTOCONF_DIR}${file}
+.endfor
 .if exists(configure.ac)||exists(configure.in)
 .if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
-REALCLEANFILES+=	configure
+REALCLEANFILES+=	${_AUTOCONF_DIR}configure
 .endif
 .endif
 .endif # ${USE_AUTOCONF} == yes
