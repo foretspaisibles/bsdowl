@@ -355,10 +355,10 @@ PROJECTENV+=		PATH="${PROJECTLIBRARYSHELL}:${PATH}"
 
 
 # The SHELL variable is defined in user's environment
-SUBSHELLDIR?=		.
+SUBSHELLDIR?=		${.CURDIR}
 subshell: .PHONY
 	${INFO} "Entering developper's subshell"
-	@cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL}
+	@(cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL})
 	${INFO} "Exiting developper's subshell"
 
 .endif # !target(__<bps.project.mk>__)
