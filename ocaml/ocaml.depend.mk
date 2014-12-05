@@ -60,39 +60,39 @@
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:
 
+.for directory in ${DIRS}
+_OCAMLDEP_FILTER_SCRIPT+=	-e "s@${directory}/*@@g"
+.endfor
+
+.if ("${.OBJDIR}" != "${.CURDIR}") && empty(DIRS:M${.CURDIR})
+_OCAMLDEP_FILTER_SCRIPT+=	-e "s@${.OBJDIR}/*@@g"
+OCAMLDEPFLAGS+=			-I ${.OBJDIR}
+.endif
+
+_OCAMLDEP_FILTER=	sh -c '${SED} ${_OCAMLDEP_FILTER_SCRIPT}'\
+			  -- OCAMLDEP_FILTER
+
 .for thg in ${_OCAML_SRCS}
 .for item in ${${thg}}
-.depend: ${item:C/.ml[ly]/.ml/}
-.if exists(${item:.ml=.mli})
-.depend: ${item:.ml=.mli}
+_OCAML_DEPEND+=		${item:C/.ml[ly]/.ml/}
+.if exists(${item:C/.ml[ly]/.ml/:.ml=.mli})
+_OCAML_DEPEND+=		${item:C/.ml[ly]/.ml/:.ml=.mli}
 .endif
-.if !empty(${thg}:M*mly)
-.for item in ${${thg}:M*.mly}
-.if !exists(${item:.mly=.mli})
-.depend: ${item:.mly=.mli}
-.endif
-.endfor
-.endif
-.endfor
-# This logic adds implementation files associated to lexers when they
-# are defined.  Does it belongs `ocaml.lex.mk`?
-.for item in ${${thg}:M*.mll}
-.if exists(${item:.mll=.mli})
-.depend: ${item:.mll=.mli}
-.endif
-.endfor
-# This logic adds implementation files associated to parsers. Does it
-# belongs `ocaml.yacc.mk`?
-.for item in ${${thg}:M*.mly}
-.depend: ${item:.mly=.mli}
 .endfor
 .endfor
 
-.depend:
-.if !defined(_OCAML_COMPILE_NATIVE_ONLY)
-	ocamldep ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
+.if defined(_OCAML_COMPILE_NATIVE_ONLY)
+OCAMLDEPFLAGS+=		-native
+.endif
+
+.if defined(_OCAML_DEPEND)
+.depend: ${_OCAML_DEPEND}
+	(cd ${.CURDIR} && ocamldep ${OCAMLDEPFLAGS} ${_OCAML_DEPEND})\
+	  | ${_OCAMLDEP_FILTER} \
+	  > ${.TARGET}
 .else
-	ocamldep -native ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
+.depend: .PHONY
+	${NOP}
 .endif
 
 DISTCLEANFILES+=	.depend
