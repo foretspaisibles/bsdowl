@@ -361,6 +361,11 @@ subshell: .PHONY
 	@(cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL})
 	${INFO} "Exiting developper's subshell"
 
+# Remove the global product file before generating dependencies
+.if target(do-distclean-product)
+pre-depend: do-distclean-product
+.endif
+
 .endif # !target(__<bps.project.mk>__)
 
 ### End of file `bps.project.mk'
