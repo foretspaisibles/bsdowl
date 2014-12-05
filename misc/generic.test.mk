@@ -77,7 +77,7 @@ do-test-${test}: ${test}.done
 ${test}.done: ${test}.mk
 .for step in ${TEST_SEQUENCE}
 	${INFO} ${SUBDIR_PREFIX}${test} '(${step})'
-	${TESTTOOL} -f ${.ALLSRC:M*.mk} ${step}
+	@${TESTTOOL} -f ${.ALLSRC:M*.mk} ${step}
 .endfor
 	${INFO} ${SUBDIR_PREFIX}${test} '(test)'
 	@${TESTTOOL} -f ${.ALLSRC:M*.mk} test
