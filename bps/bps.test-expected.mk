@@ -49,13 +49,13 @@ ${test}.got: ${test}
 	./${test} > ${.TARGET}
 .endif
 CLEANFILES+=		${test}.got
-do-test-expected-${test}: .PHONY ${test}.got ${test}.expected
-	@${ECHO} diff -u ${.ALLSRC:M*.expected} ${.ALLSRC:M*.got}
-	@${diff -u ${.ALLSRC:M*.expected} ${.ALLSRC:M*.got}\
-	|| (${RM} -f ${.ALLSRC:M*.got}; exit 1)
+CLEANFILES+=		${test}.done
+${test}.done: ${test}.got ${test}.expected
+	diff -u ${.ALLSRC:M*.expected} ${.ALLSRC:M*.got}\
+	  || (${RM} -f ${.ALLSRC:M*.got}; exit 1)
+	${TOUCH} ${.TARGET}
 
-
-do-test-expected: do-test-expected-${test}
+do-test-expected: ${test}.done
 .endfor
 
 do-test: do-test-expected

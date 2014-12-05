@@ -17,7 +17,7 @@
 TEST=			AssertMakeOS
 TEST+=			AssertOneWord
 
-TESTSEQUENCE?=		all
+TEST_SEQUENCE?=		all
 
 .include "bsdowl.test.mk"
 

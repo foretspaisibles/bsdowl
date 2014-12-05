@@ -18,6 +18,7 @@ SHARE=			elisp.lib.mk
 SHARE+=			generic.files.mk
 SHARE+=			generic.subdir.mk
 SHARE+=			generic.project.mk
+SHARE+=			generic.test.mk
 
 .include "generic.files.mk"
 

@@ -16,12 +16,26 @@
 
 .include "bps.init.mk"
 
-all configure depend build doc:
-	${NOP}
-test: do-test
-clean: do-clean
-distclean: clean
-realclean: distclean
+TEST_SEQUENCE?=		clean obj depend build doc install
+
+TEST_ENV+=		DESTDIR='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
+TEST_ENV+=		PREFIX='/usr/local'
+TEST_ENV+=		USE_SWITCH_CREDENTIALS='no'
+TEST_ENV+=		MAKEOBJDIRPREFIX='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
+TEST_ENV+=		PACKAGELIBRARYCONFIGURATION='${SRCDIR}/testsuite/Library/Configuration'
+TEST_ENV+=		PACKAGELIBRARYARCHITECTURE='${SRCDIR}/testsuite/Library/Configuration'
+TEST_ENV+=		BSDOWLSRCDIR='${SRCDIR}'
+TEST_ENV+=		TESTSRCDIR='${SRCDIR}/testsuite/src'
+TEST_ENV+=		TESTDIR='${.CURDIR:C,${SRCDIR}/testsuite,,}/${.ALLSRC:M*.mk:C/.mk$//}'
+
+TEST_ENV_UNSET+=	SRCDIR
+TEST_ENV_UNSET+=	WRKDIR
+TEST_ENV_UNSET+=	PACKAGE
+TEST_ENV_UNSET+=	PACKAGEDIR
+TEST_ENV_UNSET+=	OFFICER
+TEST_ENV_UNSET+=	VERSION
+TEST_ENV_UNSET+=	MODULE
+TEST_ENV_UNSET+=	EXTERNAL
 
 MP2EPS=			${SH} ${SRCDIR}/support/mp2eps.sh
 MP2PNG=			${SH} ${SRCDIR}/support/mp2png.sh
@@ -31,53 +45,6 @@ MP2PDF=			${SH} ${SRCDIR}/support/mp2pdf.sh
 .export MP2PNG
 .export MP2PDF
 
-.for variable in SRCDIR WRKDIR\
-	  PACKAGE PACKAGEDIR OFFICER VERSION MODULE EXTERNAL
-MAKETEST+=		unset ${variable};
-.endfor
-
-MAKETEST+=		${ENVTOOL}
-MAKETEST+=		DESTDIR='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
-MAKETEST+=		PREFIX='/usr/local'
-MAKETEST+=		USE_SWITCH_CREDENTIALS='no'
-MAKETEST+=		MAKEOBJDIRPREFIX='/tmp/${USER}${PACKAGEDIR}$${TESTDIR}$${ARCHITECTUREDIR}$${CONFIGURATIONDIR}'
-MAKETEST+=		PACKAGELIBRARYCONFIGURATION='${SRCDIR}/testsuite/Library/Configuration'
-MAKETEST+=		PACKAGELIBRARYARCHITECTURE='${SRCDIR}/testsuite/Library/Configuration'
-MAKETEST+=		BSDOWLSRCDIR='${SRCDIR}'
-MAKETEST+=		TESTSRCDIR='${SRCDIR}/testsuite/src'
-MAKETEST+=		TESTDIR='${.CURDIR:C,${SRCDIR}/testsuite,,}/${.ALLSRC:M*.mk:C/.mk$//}'
-MAKETEST+=		${MAKE}
-
-TESTSEQUENCE?=		clean obj depend build doc install
-
-.ORDER:			${TEST:C@^@do-test-@}
-.ORDER:			${TEST:C@$@.done@}
-
-.for test in ${TEST}
-.if exists(${test}.mk)
-do-test: do-test-${test}
-do-test-${test}: ${test}.done
-${test}.done: ${test}.mk
-.for step in ${TESTSEQUENCE}
-	${INFO} ${SUBDIR_PREFIX}${test} '(${step})'
-	@${MAKETEST} -f ${.ALLSRC:M*.mk} ${step}
-.endfor
-	${INFO} ${SUBDIR_PREFIX}${test} '(test)'
-	@${MAKETEST} -f ${.ALLSRC:M*.mk} test
-	touch ${test}.done
-do-clean: do-clean-${test}
-do-clean-${test}: ${test}.mk .PHONY
-	${INFO} ${SUBDIR_PREFIX}${test} '(clean)'
-	@${RM} -f ${test}.done
-	@${MAKETEST} -f ${.ALLSRC:M*.mk} realclean
-.else
-.error ${test}: Test is not defined.
-.endif
-.endfor
-
-display-makeflags:
-	@printf '.MAKEFLAGS: %s\n' ${MAKEFLAGS}
-
-.include "bps.usertarget.mk"
+.include "generic.test.mk"
 
 ### End of file `bsdowl.test.mk'
