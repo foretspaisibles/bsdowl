@@ -116,6 +116,10 @@ _OCAML_CMXA.cmd=OCAMLAN
 _OCAML_CMXA.obj=_OCAML_CMXA
 _OCAML_CMXA.var=OCAMLANFLAGS OCAMLAFLAGS OCAMLFLAGS OCAMLANADD
 
+_OCAML_CMXS.cmd=OCAMLCS
+_OCAML_CMXS.obj=_OCAML_CMXS
+_OCAML_CMXS.var=OCAMLCSFLAGS OCAMLCFLAGS OCAMLFLAGS OCAMLCSADD
+
 _OCAML_PKO.cmd=	OCAMLPB
 _OCAML_PKO.obj=	_OCAML_PKO
 _OCAML_PKO.var=	OCAMLPBFLAGS OCAMLCFLAGS OCAMLFLAGS
@@ -241,13 +245,15 @@ ${clib}: ${obj}
 .endif
 .undef clib
 .endif
-.if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))&&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))
+.if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))\
+	  &&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))\
+	  &&(empty(_OCAML_CMXS)||empty(_OCAML_CMXS:M${obj}))
 # We are not building a CMO nor a CMX file
 ${obj}:
 	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi}
 .else
 # We are building a CMO or a CMX file
-if:=${obj:C/.cm[xo]/.cmi/}
+if:=${obj:C/.cm[xo]/.cmi/:C/.cmxs/.cmi/}
 .if !(empty(_OCAML_CMI)||empty(_OCAML_CMI:M${if}))
 ${obj}: ${if}
 ${obj}:

@@ -81,7 +81,7 @@ OCAMLROOTDIR!=		2>/dev/null ${OCAMLCI} -where
 .endif
 
 .if defined(_OCAML_DIRS) && !empty(_OCAML_DIRS)
-.for tool in OCAMLCI OCAMLCB OCAMLCN OCAMLLB OCAMLLN OCAMLDEP
+.for tool in OCAMLCI OCAMLCB OCAMLCN OCAMLCS OCAMLLB OCAMLLN OCAMLDEP
 ${tool}FLAGS+=${_OCAML_DIRS}
 .endfor
 .endif

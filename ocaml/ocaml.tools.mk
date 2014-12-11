@@ -37,6 +37,10 @@
 #   Native compiler
 #
 #
+#  OCAMLCS (ocamlopt)
+#   Native plugin compiler
+#
+#
 #  OCAMLCI (ocamlc or ocamlopt)
 #   Interface compiler
 #
@@ -97,6 +101,7 @@ __<ocaml.tools.mk>__:
 
 _OCAML_TOOLS+= OCAMLCI
 _OCAML_TOOLS+= OCAMLCB
+_OCAML_TOOLS+= OCAMLCS
 _OCAML_TOOLS+= OCAMLCN
 _OCAML_TOOLS+= OCAMLAB
 _OCAML_TOOLS+= OCAMLAN
@@ -116,6 +121,7 @@ USE_OPTIMIZED_COMPILER?= no
 # Profiling case
 OCAMLCB?= ocamlcp -c
 OCAMLCN?= ocamloptp -c
+OCAMLCS?= ocamloptp -shared
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
 OCAMLCI?= ocamloptp -c
 .else
@@ -131,6 +137,7 @@ OCAMLPN?= ocamloptp -pack
 # Optimized compiler case
 OCAMLCB?= ocamlc.opt -c
 OCAMLCN?= ocamlopt.opt -c
+OCAMLCS?= ocamlopt.opt -shared
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
 OCAMLCI?= ocamlopt.opt -c
 .else
@@ -146,6 +153,7 @@ OCAMLPN?= ocamlopt.opt -pack
 # Normal case
 OCAMLCB?= ocamlc -c
 OCAMLCN?= ocamlopt -c
+OCAMLCS?= ocamlopt -shared
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
 OCAMLCI?= ocamlopt -c
 .else

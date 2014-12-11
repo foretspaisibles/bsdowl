@@ -126,6 +126,7 @@ OCAMLMKTOP?= ${OCAMLFIND} ocamlmktop -linkpkg
 # Profiling case
 OCAMLCB?= ${OCAMLFIND} ocamlcp -c
 OCAMLCN?= ${OCAMLFIND} ocamloptp -c
+OCAMLCS?= ${OCAMLFIND} ocamloptp -shared
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
 OCAMLCI?= ${OCAMLFIND} ocamloptp -c
 .else
@@ -137,6 +138,7 @@ OCAMLLN?= ${OCAMLFIND} ocamloptp -linkpkg
 # Not profiling case
 OCAMLCB?= ${OCAMLFIND} ocamlc -c
 OCAMLCN?= ${OCAMLFIND} ocamlopt -c
+OCAMLCS?= ${OCAMLFIND} ocamlopt -shared
 .if defined(_OCAML_COMPILE_NATIVE_ONLY)
 OCAMLCI?= ${OCAMLFIND} ocamlopt -c
 .else
@@ -155,7 +157,8 @@ PKGS+= threads
 .endif
 
 
-.for pseudo in OCAMLCB OCAMLCN OCAMLCI OCAMLLB OCAMLLN OCAMLDOC OCAMLMKTOP
+.for pseudo in OCAMLCB OCAMLCN OCAMLCS OCAMLCI OCAMLLB OCAMLLN\
+	  OCAMLDOC OCAMLMKTOP
 .if defined(PKGS)&&!empty(PKGS)
 ${pseudo}+= -package "${PKGS}"
 .endif
