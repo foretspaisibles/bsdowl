@@ -42,6 +42,14 @@ _USES_ocamldoc_VALIDARGS=html odoc
 .endfor
 .endif
 
+.if !empty(_USES_OPTIONS:Mdynlink)
+.if !empty(_USES_ocamldoc_ARGS)
+.error Incorrect "USES+= dynlink:${_USES_ocamldoc_ARGS}" usage:\
+	  arguments are not allowed.
+.endif
+_OCAML_COMPILE_PLUGIN=	yes
+.endif
+
 .endif # !target(__<ocaml.uses.mk>__)
 
 ### End of file `ocaml.uses.mk'

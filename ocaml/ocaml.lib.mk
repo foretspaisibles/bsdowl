@@ -69,6 +69,10 @@
 #
 #  site-lib: No argument allowed
 #   Use ${libdir}/ocaml/site-lib as default value for ocamllibdir
+#
+#
+#  dynlink: No argument allowed
+#   Prepare dynlink plugins
 
 
 ### IMPLEMENTATION

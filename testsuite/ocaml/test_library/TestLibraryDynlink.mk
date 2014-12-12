@@ -19,12 +19,12 @@ LIBRARY=		newton
 SRCS=			newton.ml
 
 USES+=			site-lib
+USES+=			dynlink
+
+COMPILE=		native
 
 .PATH:			${TESTSRCDIR}/ocaml/newton
 .PATH:			${TESTSRCDIR}/ocaml/newton-meta
-
-COMPILE=native
-_OCAML_COMPILE_PLUGIN=yes
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cmxa
