@@ -16,6 +16,15 @@
 SUBDIR=		test_shell
 SUBDIR+=	test_python
 
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
+.if defined(OCAMLVERSION)&&!empty(OCAMLVERSION)
+.if ${OCAMLVERSION} > 000400000000
+SUBDIR+=	test_toplevel
+SUBDIR+=	test_extra
+.endif
+.endif
+.endif
+
 .include "generic.subdir.mk"
 
 ### End of file `Makefile'
