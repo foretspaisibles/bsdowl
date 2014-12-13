@@ -41,8 +41,8 @@
 #   Device information files for the HAL system
 #
 #
-#  PKA [not set]
-#   PolicyKit autorisations
+#  PKLA [not set]
+#   PolicyKit Local Authority
 #
 #
 #  KERN [not set]
@@ -165,15 +165,15 @@ FDIGRP?=		${BASEGRP}
 FDIMODE?=		444
 
 #
-# PKA, PolKit Authorisations
+# PKLA, PolKit Local Authority
 #
 
-FILESGROUPS+=		PKA
+FILESGROUPS+=		PKLA
 
-PKADIR?=		${JAILDIR}${LOCALBASE}/etc/polkit-1/localauthority/50-local.d
-PKAOWN?=		${BASEOWN}
-PKAGRP?=		${BASEGRP}
-PKAMODE?=		444
+PKLADIR?=		${JAILDIR}${LOCALBASE}/etc/polkit-1/localauthority/50-local.d
+PKLAOWN?=		${BASEOWN}
+PKLAGRP?=		${BASEGRP}
+PKLAMODE?=		444
 
 
 #
