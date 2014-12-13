@@ -16,6 +16,7 @@
 
 TEST=			TestLibrary
 TEST+=			TestLibraryDoc
+TEST+=			TestLibraryDynlink
 
 .if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST+=			TestLibraryFindlib

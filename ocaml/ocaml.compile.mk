@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-#  COMPILE = byte_code|native_code|both|bc|nc|byte|native
+#  COMPILE = byte_code|native_code|both|byte|native
 # .include "ocaml.compile.mk"
 
 

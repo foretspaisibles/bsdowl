@@ -69,6 +69,10 @@
 #
 #  site-lib: No argument allowed
 #   Use ${libdir}/ocaml/site-lib as default value for ocamllibdir
+#
+#
+#  dynlink: No argument allowed
+#   Prepare dynlink plugins
 
 
 ### IMPLEMENTATION
@@ -84,11 +88,6 @@ _PACKAGE_CANDIDATE=	${LIBRARY}
 
 .include "ocaml.init.mk"
 
-_OCAML_SRCS?=
-_OCAML_CMA?=
-_OCAML_CMXA?=
-_OCAML_A?=
-
 _OCAML_LIB:=		${LIBRARY}
 
 .for lib in ${_OCAML_LIB}
@@ -98,31 +97,46 @@ SRCS.${lib:T}.cmxa?=	${SRCS.${lib:T}}
 _OCAML_SRCS+=		SRCS.${lib}.cmxa
 _OCAML_CMXA+=		${lib:T}.cmxa
 _OCAML_A+=		${lib:T}.a
+_OCAML_SRCS.${lib:T}.cmxa+=\
+			${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
+LIB+=			${lib}.cmxa ${lib}.a
+.endif
+.if defined(_OCAML_COMPILE_NATIVE)&&defined(_OCAML_COMPILE_PLUGIN)
+_OCAML_CMXS+=		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmxs}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
 SRCS.${lib:T}.cma?=	${SRCS.${lib:T}}
 _OCAML_SRCS+=		SRCS.${lib}.cma
 _OCAML_CMA+=		${lib:T}.cma
+_OCAML_SRCS.${lib:T}.cma+=\
+			${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
+LIB+=			${lib}.cma
+.endif
+.if!empty(SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml)
+LIB+=			${SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmi}
 .endif
 .endfor
 
+.if !empty(_OCAML_CMXS)
+LIB+=			${_OCAML_CMXS}
+CLEANFILES+=		${_OCAML_CMXS}
+.endif
 
 .include "ocaml.main.mk"
+
+.if !empty(_OCAML_CMXS)
+.for plugin in ${_OCAML_CMXS}
+${plugin}: ${plugin:.cmxs=.ml}
+.endfor
+.endif
 
 
 .for lib in ${_OCAML_LIB}
 .if defined(_OCAML_COMPILE_NATIVE)
-LIB+=			${lib}.cmxa ${lib}.a
-_OCAML_SRCS.${lib}.cmxa=${.ALLSRC}
-${lib}.cmxa:		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
+${lib}.cmxa: ${_OCAML_SRCS.${lib}.cmxa}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-LIB+=			${lib}.cma
-_OCAML_SRCS.${lib:T}.cma=${.ALLSRC}
-${lib}.cma:		${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
-.endif
-.if !empty(SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml)
-LIB+=			${SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmi}
+${lib}.cma: ${_OCAML_SRCS.${lib:T}.cma}
 .endif
 .endfor
 
