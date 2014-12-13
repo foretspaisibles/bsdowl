@@ -41,6 +41,10 @@
 #   Device information files for the HAL system
 #
 #
+#  PKA [not set]
+#   PolicyKit autorisations
+#
+#
 #  KERN [not set]
 #   Kernel configuration files
 #
@@ -159,6 +163,17 @@ FDIDIR?=		${JAILDIR}${LOCALBASE}/share/hal/fdi/preprobe/20thirdparty
 FDIOWN?=		${BASEOWN}
 FDIGRP?=		${BASEGRP}
 FDIMODE?=		444
+
+#
+# PKA, PolKit Authorisations
+#
+
+FILESGROUPS+=		PKA
+
+PKADIR?=		${JAILDIR}${LOCALBASE}/etc/polkit-1/localauthority/50-local.d
+PKAOWN?=		${BASEOWN}
+PKAGRP?=		${BASEGRP}
+PKAMODE?=		444
 
 
 #
