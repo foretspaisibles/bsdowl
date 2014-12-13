@@ -144,6 +144,27 @@ ${document}.${device}:	${SRCS.${document:T}}\
 
 
 #
+# Document names
+#
+
+.for document in ${_TEX_DOCUMENT}
+.for device in ${TEXDEVICE}
+.if defined(DOCNAME.${document:T})&&!defined(DOCNAME.${document:T}.${device})
+DOCNAME.${document:T}.${device}=	${DOCNAME.${document:T}}.${device}
+.endif
+.endfor
+.endfor
+
+.for document in ${_MPOST_DOCUMENT}
+.for device in ${MPDEVICE}
+.if defined(DOCNAME.${document:T})&&!defined(DOCNAME.${document:T}.${device})
+DOCNAME.${document:T}.${device}=	${DOCNAME.${document:T}}.${device}
+.endif
+.endfor
+.endfor
+
+
+#
 # Register cookiefiles
 #
 
