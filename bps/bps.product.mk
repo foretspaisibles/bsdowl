@@ -36,7 +36,7 @@
 .error bps.product.mk cannot be included directly.
 .endif
 
-.if !target(__<bps.product.mk>__)&&defined(PRODUCT)
+.if !target(__<bps.product.mk>__)
 __<bps.product.mk>__:
 
 PRODUCTFILE?=		${WRKDIR}/.product
