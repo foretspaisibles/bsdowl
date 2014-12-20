@@ -1,0 +1,4 @@
+body {
+  font-family: Palatino,Adobe Palatino,URW Palladio,URW Palladio L,Palladio,Bitstream Vera Serif,Times,Georgia,serif;
+  font-size: 11pt;
+}

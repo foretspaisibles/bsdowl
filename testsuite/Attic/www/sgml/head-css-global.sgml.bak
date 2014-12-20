@@ -1,0 +1,11 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "head" ("title")
+End Variables:
+-->
+<link rel="stylesheet" title="Modern"
+  type="text/css" href="style/modern.css">
+<link rel="alternate stylesheet" title="Trendy"
+  type="text/css" href="style/trendy.css">
+<link rel="alternate stylesheet" title="Classic"
+  type="text/css" href="style/classic.css">

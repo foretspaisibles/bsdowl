@@ -1,0 +1,17 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<div class="title">Liens externes</div>
+<div class="body">
+<ul>
+  <li><a href="http://www.freebsd.org">FreeBSD</a></li> <li><a
+  href="http://www.w3.org/MarkUp/Guide/Overview.html">Getting started
+  with HTML</a></li> <li><a
+  href="http://www.w3.org/MarkUp/Guide/Advanced.html">More advanced
+  features</a></li> <li><a
+  href="http://www.w3.org/MarkUp/Guide/Style.html">Adding a touch of
+  style</a></li>
+</ul>
+</div>

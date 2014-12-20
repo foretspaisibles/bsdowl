@@ -1,0 +1,36 @@
+(* Custom_configuration -- Configuration for our custom toplevel
+
+Author: Michael Grünewald
+Date: Mon Dec 29 11:22:17 CET 2014
+
+BSD Owl Scripts (https://github.com/michipili/bsdowl)
+This file is part of BSD Owl Scripts
+
+Copyright © 2002–2016 Michael Grünewald
+
+This file must be used under the terms of the CeCILL-B.
+This source file is licensed as described in the file COPYING, which
+you should have received as part of this distribution. The terms
+are also available at
+http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt *)
+
+let project = "bsdowl"
+let officer = "michipili@gmail.com"
+let version = "@VERSION@"
+let prefix = "@prefix@"
+let exec_prefix = "@exec_prefix@"
+let bindir = "@bindir@"
+let sbindir = "@sbindir@"
+let libexecdir = "@libexecdir@"
+let datarootdir = "@datarootdir@"
+let datadir = "@datadir@"
+let sysconfdir = "@sysconfdir@"
+let sharedstatedir = "@sharedstatedir@"
+let localstatedir = "@localstatedir@"
+let runstatedir = "@runstatedir@"
+let includedir = "@includedir@"
+let docdir = "@docdir@"
+let infodir = "@infodir@"
+let libdir = "@libdir@"
+let localedir = "@localedir@"
+let mandir = "@mandir@"

@@ -1,0 +1,154 @@
+%%% shthm.nw -- Theorem environements for -*- LaTeX -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Thu Nov  2 17:40:08 CET 2006
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2002–2016 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Bibliothèque SHTHM}
+
+La bibliothèque~SHTHM s'appuie sur~\emph{amsthm} pour définir des
+environnements~\emph{theorem}, \emph{proposition}, \emph{corollary},
+\emph{lemma} et \emph{definition}, ainsi que des versions avec une
+étoile, qui signifient que ces items ne sont pas numérotés.
+
+Tous ces environnements sont numérotés, et utilisent le même compteur que la
+commande~\fn{subsection}.
+<<shthm.sty>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{shthm}
+\RequirePackage{shltx}
+
+
+@ \subsection{Babel}
+
+Lorsque la bibliothèque~\emph{babel} de~\LaTeX\ est chargée, on définit des
+noms symboliques pour les théorèmes, etc., pour l'allemenad, l'anglais et le
+français.
+
+<<shthm.sty>>=
+\@ifpackageloaded{babel}{%
+  \addto\captionsfrench{%
+    \def\theoremname{Th\'eor\`eme}%
+    \def\propositionname{Proposition}%
+    \def\lemmaname{Lemme}%
+    \def\corollaryname{Corollaire}%
+    \def\definitionname{D\'efinition}%
+    \def\remarkname{Remarque}%
+    \def\remarksname{Remarques}%
+    \def\examplename{Exemple}%
+    \def\examplesname{Exemples}%
+    \def\partname{Partie}%
+  }%
+  \addto\captionsgerman{%
+    \def\theoremname{Satz}%
+    \def\propositionname{XXX}%
+    \def\lemmaname{XXX}%
+    \def\corollaryname{XXX}%
+    \def\definitionname{XXX}%
+    \def\remarkname{Bermerkung}%
+    \def\remarksname{Bermerkungen}%
+    \def\examplename{Beispiel}%
+    \def\examplesname{Beispiele}%
+    \def\partname{Teil}%
+  }%
+  \addto\captionsenglish{%
+    \def\theoremname{Theorem}%
+    \def\propositionname{Proposition}%
+    \def\lemmaname{Lemma}%
+    \def\corollaryname{Corollary}%
+    \def\definitionname{Definition}%
+    \def\remarkname{Remark}%
+    \def\remarksname{Remarks}%
+    \def\examplename{Example}%
+    \def\examplesname{Examples}%
+    \def\partname{Part}%
+  }%
+}\relax%\if@packageloaded{babel}
+
+\providecommand\theoremname{Th\'eor\`eme}%
+\providecommand\propositionname{Proposition}%
+\providecommand\lemmaname{Lemme}%
+\providecommand\corollaryname{Corollaire}%
+\providecommand\definitionname{D\'efinition}%
+\providecommand\remarkname{Remarque}%
+\providecommand\examplename{Exemple}%
+\providecommand\partname{Partie}%
+\providecommand\remarksname{Remarques}%
+\providecommand\examplesname{Exemples}%
+
+
+
+@ \subsection{Définitions et théorèmes}
+
+<<shthm.sty>>=
+\newtheoremstyle{shthm}%
+{.5em}%			Space above
+{.5em}%			Space below
+{\normalfont\slshape}%	Body font
+{}%			Indent (e.g. {}, \parindent)
+{\scshape}%		Head font
+{.}%            	Head after punct (e.g. . --- )
+{.5em}%			Head after space
+{}
+
+\newtheoremstyle{shdefinition}%
+{.5em}%			Space above
+{.5em}%			Space below
+{\normalfont}%		Body font
+{}%			Indent (e.g. {}, \parindent)
+{\scshape}%		Head font
+{.}%    		Head after punct (e.g. . --- )
+{.5em}%			Head after space
+{}
+
+\theoremstyle{shthm}
+\swapnumbers
+\newtheorem{theorem}[subsubsection]{\theoremname}
+\newtheorem*{theorem*}{\theoremname}
+\newtheorem{proposition}[subsubsection]{\propositionname}
+\newtheorem*{proposition*}{\propositionname}
+\newtheorem{lemma}[subsubsection]{\lemmaname}
+\newtheorem*{lemma*}{\lemmaname}
+\newtheorem{corollary}[subsubsection]{\corollaryname}
+\newtheorem*{corollary*}{\corollaryname}
+
+\theoremstyle{shdefinition}
+\newtheorem{definition}[subsubsection]{\definitionname}
+\newtheorem*{definition*}{\definitionname}
+
+\newtheorem{remark}[subsubsection]{\remarkname}
+\newtheorem{example}[subsubsection]{\examplename}
+\newtheorem{remarks}[subsubsection]{\remarksname}
+\newtheorem{examples}[subsubsection]{\examplesname}
+
+% Numérotation des équations
+%  les équations sont numérotées sous la section en cours
+
+\renewcommand{\theequation}{\thesection.\arabic{equation}}
+\numberwithin{equation}{section}
+\numberwithin{subsubsection}{section}
+
+\def\subsection{\@startsection{subsection}{2}%
+  \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+  {\normalfont\bfseries}}
+
+\def\subsubsection{\@startsection{subsubsection}{3}%
+  \z@{.5\linespacing\@plus.7\linespacing}{-.5em}%
+  {\normalfont\bfseries}}
+
+\def\paragraph{\@startsection{paragraph}{4}%
+  \normalparindent\z@{-\fontdimen 2\font}%
+  {\normalfont\slshape}}
+
+@
+%%% End of file `shthm.nw'

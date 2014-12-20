@@ -1,0 +1,474 @@
+<!--
+Local Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
+-->
+<h1>Summary</h1>
+
+<p>On this page, you will learn how to use
+BSD Owl Scripts&nbsp;(BPS)&nbsp;to:</p>
+<ul>
+<li>produce simple documents and publish them on the file system;</li>
+<li>produce the bibliography of your LaTeX document with BIBTeX;</li>
+<li>produce figures for your document with METAPOST;</li>
+<li>deal with documents having parts that need to be automatically generated.</li>
+<li>deal with documents whose source spans across several directories;</li>
+</ul>
+
+<h1>Foreword: working with TeX or LaTeX</h1>
+
+<p>There is multiple TeX formats in use, plain TeX and LaTeX are
+examples of such formats.  The LaTeX format enjoys a wide community of
+users, so the module latex.doc.mk is used in examples. However most of
+the following applies to the module tex.doc.mk as
+well. Some paragraphs in the sequel document mechanisms specific to
+latex.doc.mk, they are explicitly identified as such.</p>
+
+
+<h1>Simple use</h1>
+
+<p>The preparation of a simple document with LaTeX itself is very
+easy, thus the use of BPS may at a first glance look like a useless
+complication instead of a simplification. It provides some
+useful features, however.</p>
+
+
+<h2>The first time</h2>
+
+<p>Assume the file script.tex holds your
+manuscript. Put it in a directory dedicated to your document, and
+create a Makefile file (note the leading capital) with the following
+content:</p>
+
+<pre class="file">
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>Your document's directory now contains the paper.tex file and the
+Makefile described above.  Point your shell's working directory to
+your document's directory, and issue the <em>make</em> command:</p>
+
+<pre class="shell">
+$ make
+make build
+===> Multipass job for script.dvi (aux)
+latex script.tex
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4)
+entering extended mode
+(./script.tex
+LaTeX2e <2003/12/01>
+...
+</pre>
+
+<p>If your manuscript has no error, you end up with the following
+object files in your working directory:</p>
+
+<pre class="shell">
+$ ls
+Makefile    script.log
+script.aux  script.tex
+script.dvi  script.toc
+</pre>
+
+<p>Once you are done with the objects, you can clean the directory
+with the <em>make clean</em> mantra:</p>
+
+<pre class="shell">
+$ make clean
+rm -f  script.dvi script.log script.aux script.toc
+</pre>
+
+<p>Cleaning the directory is an optional step, but it prevents your storage and
+your archive media to end up filled with unused data, that can be
+quickly recreated on demand. While DVI files are usually very small,
+a few hundred kilobytes, the PS or PDF objects are often much
+larger.</p>
+
+
+<h2>Installing</h2>
+
+<p>Before you clean up your working directory with the <em>make
+clean</em> mantra, you may wish to store the objects you created
+in some adequate place of the local file system.  This step is called
+<em>installation</em> of your document, because it is analogous to the
+installation of a program you freshly compiled.  You require the
+installation of your document with the <em>make install</em> command,
+but you must first tell make which place is
+actually adequate. This is done by assigning the DOCUMENTDIR variable with the
+path to the directory you want your files to be copied to, as displayed by
+the following Makefile:</p>
+<pre class="file">
+DOCUMENTDIR = ${HOME}/doc/report
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>You can then proceed with the <em>make install</em> command:</p>
+<pre class="shell">
+$ make install
+install -d /home/michi/doc/report
+install -o michi -g michi -m 440 script.dvi /home/michi/doc/report
+</pre>
+
+<p>In comparison with the manual approach for storing the object in a
+safe place with the <em>cp</em> command, you save retyping the target
+directory name the next time you update your document. Moreover, it eases
+the organisation of your document sources library and scales to a
+large number of documents, see <em>Working with a large number of
+documents</em> below.</p>
+
+
+<h2>Selecting an output format</h2>
+
+<p>The TeX tool chain is capable of producing electronic documents in
+several formats. Commonly used formats are DVI, PostScript (PS) and
+PDF. The TEXDEVICE variable governs the format of documents produced
+with the help of latex.doc.mk. Its value is usually <em>dvi</em>, so
+that latex.doc.mk will produce a DVI file from your source.  Other
+possible values are <em>ps</em> or <em>pdf</em>.  If you configured a
+PostScript printer <em>TEXPRINTER</em> with the texconfig program, you
+also can use <em>ps.TEXPRINTER</em> as a value in TEXDEVICE, it will
+instruct dvips to use the settings for TEXPRINTER when translating
+your DVI file to PostScript. It is also possible to list several
+output formats in TEXDEVICE, like <em>dvi pdf ps.TEXPRINTER1 ps.TEXPRINTER2</em>.</p>
+
+
+<h2>Drafts and multipass jobs</h2>
+
+<p>Some formats or macros need your manuscript to be processed several
+times by TeX or LaTeX before you obtain the final version of your
+document.  The latex.tex.mk module enforces multipass treatment of your manuscript,
+because LaTeX needs this to produce correct cross references created
+with <em>label</em> and <em>ref</em> commands within your document.
+The doc.tex.mk module will not do multiple treatment of your
+manuscript unless you set the variable MULTIPASS to a list of names,
+each element giving its name to a pass.  The choice of these names does
+not have a real importance, as they are only displayed to the user.
+It is even possible to specify the same name several times!</p>
+
+<p>In the early stages of existence of a document, updates are likely to be
+frequent and it is thus desirable to avoid the lengthy multiple passes
+processing.  BPS has a draft mode for this. To
+enable the draft mode, set make's variable DRAFT to yes, this is done
+by adding an appropriate statement in the Makefile, as shown by the
+following example:
+
+<pre class="file">
+DRAFT?= yes
+DOC = script.tex
+.include "latex.doc.mk"
+</pre>
+
+<p>The statement <em>DRAFT?=</em> is a special form of an assignment
+statement, that allows you to type <em>make DRAFT=no</em> at the shell
+prompt if you want to re-enable multipass processing of your job for
+one time.
+When you have finished polishing your manuscript, you can remove
+the DRAFT assignment from the Makefile, your paper is then ready for a last <em>make</em>
+run producing the final version of your document.  If you are
+satisfied with it, you can <em>install</em> it.</p>
+
+<p>When working on a document, it might be useful to keep copies of the
+objects you produced at some point of your work.  For instance,
+picture yourself sending a copy of your work to a friend.  Your friend
+will read your paper with attention and send you back his comments,
+but in the meanwhile, you kept on improving your document.  When you
+receive the comments of your friend, you will compare them to the
+document you sent him.  It is therefore useful to keep a copy of it.
+The best way to do this is probably to use
+  a <a href="http://en.wikipedia.org/wiki/Revision_Control_System">RCS</a>,
+  a software system
+managing history of files.  If you do not use such a system,
+BPS might be here of some help.</p>
+
+<p>When the variable DRAFT is set to <em>yes</em> and the variable
+TEXDRAFTSTAMP is not initialised, it receives the value
+-${TEXDRAFTTIMESTAMP} where TEXDRAFTTIMESTAMP expands to the date when
+Make is run.  When the variable TEXDRAFTSTAMP is initialised and not
+empty, its value is appended to the name of all document installed by
+latex.doc.mk or latex.doc.mk. If you do not want the name of the files
+to be modified, you just need to initialise TEXDRAFTSTAMP with an
+empty value.</p>
+
+
+<h2>Split document</h2>
+
+<p>If you are working on a complex document, you certainly have split
+your sources into several files. Usually one file per chapter, or per
+section, plus a main file containing the preamble and many
+<em>input</em> statements to instruct LaTeX to read all of the files
+actually containing the document.</p>
+
+<p>Assume that your document is split into a main file galley.tex
+and two other files part1.tex and part2.tex. Your galley.tex
+certainly looks like this:</p>
+
+<pre class="file">
+\documentclass{article}
+\begin{document}
+\input{part1}
+\input{part2}
+\end{document}
+</pre>
+
+<p>A suitable Makefile is then:</p>
+
+<pre class="file">
+DOC = galley.tex
+SRCS = part1.tex
+SRCS+= part2.tex
+.include "latex.doc.mk"
+</pre>
+
+
+<h1>More advanced features</h1>
+
+<h2>Figures with METAPOST</h2>
+
+<p>Modules latex.doc.mk and tex.doc.mk comes with a nice support for
+<a href="http://cm.bell-labs.com/who/hobby/MetaPost.html">METAPOST</a>
+generated pictures, provided you have <a
+href="http://pages.cs.wisc.edu/~ghost/">Ghostscript</a> and a working
+TeX installation. This is something worth noting, since METAPOST is
+often the right tool to be used for drawing figures appearing in TeX
+documents, but support for it is missing in many GUI editors for LaTeX.</p>
+
+<p>Assume you prepared illustrations for your article with METAPOST,
+and split your illustrations into two files illustr1.mp and
+illustr2.mp. To let latex.doc.mk handle the production of your
+figures, add FIGS statements to your Makefile:</p>
+
+<pre class="file">
+DOC = galley.tex
+SRCS = part1.tex
+SRCS+= part2.tex
+FIGS = illustr1.mp
+FIGS+= illustr2.mp
+.include "latex.doc.mk"
+</pre>
+
+<p>Then type in <em>make</em> at the shell prompt. The latex.doc.mk will
+then figure out how many illustrations are present in each file, and
+produce the image files required by your TEXDEVICE.  For instance, if
+your TEXDEVICE is dvi, and illustr1.mp contains two figures
+introduced by beginfig(1) and beginfig(2), you end up with four files
+</p>
+
+<pre>
+illustr1.1
+illustr1.2
+illustr1.1.eps
+illustr1.2.eps
+</pre>
+
+<p>The first two files are intermediary files in PostScript format,
+and the last ones are Encapulated PostScript and suited for inclusion
+in your document.</p>
+
+<p><em>Note for graphics and graphicx packages users.</em>
+You are very likely to use the <em>graphics</em> or <em>graphicx</em>
+package defining commands for graphics inclusion.  These packages are
+puzzled by the names given by METAPOST to its output.  To correct
+this, you can say MPOST_TRANSLATE_NAMES="yes" in your Makefile.  This
+options reworks the names of the outputs of METAPOST, so they follow a
+scheme the two aforementioned packages can cope with.  When this
+option is active, the listing above becomes
+</p>
+<pre>
+illustr1-1.mps
+illustr1-2.mps
+illustr1-1.eps
+illustr1-2.eps
+</pre>
+<p>and using the <em>graphicx</em> package is as easy as it should be:</p>
+<pre>
+\includegraphics{illustr1-1}%
+</pre>
+
+<p><em>Discovering METAPOST.</em>
+It seems that many people do not know about METAPOST.  If it is true
+for you but are interested in discovering it, the
+first good news is that this program is included by many (if not all)
+TeX distributions, hence it is probably already available on your
+system.
+The second good news is that you can easily find
+plenty of information and examples of its use on the WWW. For instance
+the <a href="http://www.tug.org/metapost.html">TeX users group</a> has
+a page on its website devoted to this tool. The list you will find
+there is pretty long, so let me add that I especially like the
+introduction written by <a
+href="http://staff.science.uva.nl/~heck/Courses/mptut.pdf">André
+Heck</a>, it might also be a good starting point for you.</p>
+
+
+<h2>Bibliography</h2>
+
+<p>BPS supports the preparation of bibliographies with BibTeX. First,
+you must be sure that the program TeX will find the bibliographic
+databases you enumerated in your document with <em>bibliography</em>
+statements.  It is customary to gather bibliographic databases in some
+directory, for instance <em>${HOME}/share/bib</em>.  To let bibtex
+find these files, it is enough to add <em>${HOME}/share/bib</em> to the content
+of the variable BIBINPUTS.  If your bibliographic databases are
+scattered among several directories, you just need to let each of them
+appear in the value of the variable BIBINPUTS:</p>
+
+<pre class="file">
+DOC = galley.tex
+SRCS = part1.tex
+SRCS+= part2.tex
+BIBINPUTS = ${HOME}/share/bib
+BIBINPUTS+= ../morebib
+.include "latex.doc.mk"
+</pre>
+
+<p>Note that the <em>make clean</em> mantra will leave intact the BBL
+file produced by bibtex.  This is because you sometimes need to send
+this file to your publisher rather than an unprocessed
+bibtex database.  Hence the
+<em>make clean</em> or <em>make distclean</em> will leave you
+document's directory in the state you want to have it when you want to
+redistribute it. To get rid of the BBL file as well, you need to use
+the more powerful mantra <em>make realclean</em>.</p>
+
+
+<h2>Index</h2>
+
+<p>At that time, there is no specific provision in BPS to
+help the preparation of LaTeX documents featuring an index.  You are
+on your own.</p>
+
+
+<h2>Several documents in the same directory</h2>
+
+<p>While it is often a good idea to reserve a directory for each of
+your documents, you might have some reasons to keep several documents
+in the same directory.  You have your reasons and they are probably
+good ones, so BPS will do its best to help you.</p>
+
+<p>We assume that you have two documents whose sources are
+living in the same directory, let's say an article and an abridged version
+of this article. These files share a macro file macro.tex, but are
+otherwise rather independent (from LaTeX's point of view). The text of
+the article is split across two files,
+section1.tex and section2.tex. The summary has just one text file
+summary.tex. The Makefile used looks like this:</p>
+
+<pre class="file">
+DOC = article.tex
+DOC+= summary.tex
+
+SRCS = macros.tex
+
+SRCS.article.tex = section1.tex
+SRCS.article.tex+= section2.tex
+
+.include "latex.doc.mk"
+</pre>
+
+
+<h2>Automatically generating a part of a document</h2>
+
+<p>Assume you are working on a document containing a table whose
+content is likely to change several times and will need to be
+updated.  Such a table could be a budget:  when information on the
+situation evolves, so does the budget.  It can be quite tedious to
+type in a table in LaTeX, and updating it might even be trickier.  In
+such a situation, it is probably a good idea to write a program
+reading the raw data of your table and writing a LaTeX table
+displaying your data and everything you want to compute from it.  Such
+a program is usually very easy to write, because you only need to deal
+with text files all of the time.</p>
+
+<p>So you have gathered the raw data of your table in the file
+table.raw and written a small program gentable that will write for you
+a LaTeX table on its standard output.  In your manuscript, you use the
+name <em>table</em> to refer to the file containing the generated
+table. Here is your Makefile:</p>
+
+<pre class="file">
+DOC = galley.tex
+
+table.tex: gentable table.raw
+	./gentable < table.raw > table.tex
+
+REALCLEANFILES+= table.tex
+
+.include "latex.doc.mk"
+</pre>
+
+<p>The example assume that the <em>gentable</em> utility in the
+recipe above is a filter, hence input and output are defined with the
+help of shell redirections.  Other utilities may have other ways to
+define their input and output, a described by their respective manuals.</p>
+
+<p>If you send your files to someone else, he will maybe not want to
+run your program gentable, so it is better to list table.tex in
+REALCLEANFILES than in CLEANFILES.</p>
+
+<p>Of course, you can compute some text or a METAPOST picture, or
+pretty-print a piece of code, or whatever, instead of generating a
+table!</p>
+
+<h2>Source files spanning across several directories</h2>
+
+<p>Some workflows may prescribe that your source files are not located
+in a single directory, but disseminated across the file system.
+Imagine that your organisation uses a custom document class for its
+letters, where some picture appears.  You do not want to copy the
+picture file in each of the folders hosting your letters, nor do you
+want to have a symbolic link to the picture in each of your
+directories because the file is irrelevant to your work:  you just
+want to not even know anything about it.  The solution to this problem
+is to rely on the TEXINPUTS variable, its content is a list of
+directories searched by TeX for its input files.</p>
+
+<p>You can set the TEXINPUTS variable in your environment or in your
+Makefile, or even write a custom Makefile template including this
+setting.  The role of this variable for TeX is pretty much the same
+than the role of the environment variable PATH in your shell.</p>
+
+<p>Assume that the picture visually impersonating your organisation
+is in the <em>${HOME}/share/texmf/tex/organisation/visual.eps</em>, in
+order to let TeX look for files in the folder containing the picture,
+you write a TEXINPUTS statement in your Makefile, like this:</p>
+
+<pre class="file">
+DOC = galley.tex
+TEXINPUTS = ${HOME}/share/texmf/organisation
+.include "latex.doc.mk"
+</pre>
+
+<p>If you run <em>make</em> in the folder containing this Makefile, you
+will see something like this in your terminal:</p>
+
+<pre class="shell">
+$ make
+make build
+===> Multipass job for galley.dvi (aux)
+env TEXINPUTS=".:${HOME}/share/texmf/organization:" latex galley.tex
+This is pdfeTeX, Version 3.141592-1.21a-2.2 (Web2C 7.5.4)
+...
+</pre>
+
+<p>Take a look at the TEXINPUTS assignment in the <em>env</em>
+command.  Its difference with respect to the declaration in the
+Makefile above means that TeX will also look for files
+in the current directory (this is what the initial dot stands for) and
+all standard TeX locations (this is what the final colon stands for).</p>
+
+<p>If you want to have absolute control on the value of TEXINPUTS, you
+must add an assignment <em>USE_STRICT_TEXINPUTS=yes</em> in your
+Makefile.  If it sees this statement, BPS will refrain from adding the
+initial dot and the final colon to your TEXINPUTS declaration.</p>
+
+<p>The supporting macros for METAPOST also understand TEXINPUTS and
+USE_STRICT_TEXINPUTS.  There is an analogous variable MPINPUTS
+governing the look up of METAPOST input files, it is accompanied with a
+USE_STRICT_MPINPUTS flag.  If you want to have your TeX program and
+your METAPOST program to be run with different values for TEXINPUTS,
+you can pass the correct value to METAPOST through the MPTEXINPUTS
+variable, this variable is also accompanied by a
+USE_STRICT_MPTEXINPUTS flag.</p>

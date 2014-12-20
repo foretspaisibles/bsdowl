@@ -1,0 +1,54 @@
+/* hello_config.c -- The obnoxious hello world program
+
+BSD Owl Scripts (https://github.com/michipili/bsdowl)
+This file is part of BSD Owl Scripts
+
+Copyright © 2002–2016 Michael Grünewald
+
+This file must be used under the terms of the CeCILL-B.
+This source file is licensed as described in the file COPYING, which
+you should have received as part of this distribution. The terms
+are also available at
+http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt */
+
+#include <stdlib.h>
+#include <stdio.h>
+
+typedef struct {
+  const char* key;
+  const char* value;
+} binding;
+
+static binding binding_lst[] = {
+  { "prefix", "@prefix@" },
+  { "exec_prefix", "@exec_prefix@" },
+  { "bindir", "@bindir@" },
+  { "sbindir", "@sbindir@" },
+  { "libexecdir", "@libexecdir@" },
+  { "datarootdir", "@datarootdir@" },
+  { "datadir", "@datadir@" },
+  { "sysconfdir", "@sysconfdir@" },
+  { "sharedstatedir", "@sharedstatedir@" },
+  { "localstatedir", "@localstatedir@" },
+  { "runstatedir", "@runstatedir@" },
+  { "includedir", "@includedir@" },
+  { "docdir", "@docdir@" },
+  { "infodir", "@infodir@" },
+  { "libdir", "@libdir@" },
+  { "localedir", "@localedir@" },
+  { "mandir", "@mandir@" },
+};
+
+static int binding_n = sizeof(binding_lst) / sizeof(binding);
+
+void
+print_config()
+{
+  int i;
+
+  printf("Print %d configuration bindings:\n\n", binding_n);
+  for(i = 0; i < binding_n; ++i) {
+    printf("%32s: %s\n", binding_lst[i].key, binding_lst[i].value);
+  }
+  printf("\n");
+}

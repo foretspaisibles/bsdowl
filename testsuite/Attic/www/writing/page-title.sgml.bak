@@ -1,0 +1,13 @@
+<!--
+Local Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
+-->
+<p id="HEADLINE">BSD Owl Scripts</p>
+<p id="INTRODUCTION">BSD Owl Scripts is a small group of BSD
+Make directive files. Modules are written in the spirit of FreeBSD's
+project files.
+
+Currently available scripts may be used for OCaml projects and (La)TeX
+documents.</p>

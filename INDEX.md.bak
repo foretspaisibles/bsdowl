@@ -1,0 +1,70 @@
+INDEX -- Guide through the Makefile Collection
+
+Author: Michael Grünewald
+Date: Fri Feb 10 2006 16:50:40 GMT
+
+
+Project infrastructure
+
+Files and directories that are artifacts of the project
+infrastructure.
+
+AUTHORS		Contributors to BSD Make Pallàs scripts.
+COPYING		License, in english
+COPYING-FR	License, in french
+INDEX		This file
+INSTALL		See README.md for installation
+README.md	General introduction
+Makefile.in	Master build directives
+Library/Make	Build directives library
+Library/Ancillary
+		Developement scripts
+Library/Logo	Logo
+test		Test suite
+support		Ancillary programs needing installation
+
+
+Project tier-1
+
+Libraries of directives providing a complete functionality and a
+satisfying documentation.
+
+ocaml		OCaml projects
+		 See ocaml.prog.mk, ocaml.lib.mk. ocaml.toplevel.mk,
+		 ocaml.pack.mk and ocaml.manual.mk.
+
+texmf		Produce TeX documents
+		 See tex.doc.mk and latex.doc.mk
+
+
+Project tier-2
+
+Libraries of directives providing a incomplete functionality or a
+unsatisfying documentation.
+
+
+bps		Generic macros (subdir, project, etc.)
+		 See bps.subdir.mk and bps.project.mk
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.
+
+www		Produce offline sites with a SGML normaliser
+		 See www.sgml.mk and www.files.mk
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.
+
+noewb		Prepare LaTeX macros with noweb
+		 See noweb.latex.mk
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.
+
+misc		Miscellaneous
+
+		Do not use a `misc` library but useful names in order
+		to move to tier-1.
+
+		Needs proper documentation and test cases in order to
+		move to tier-1.

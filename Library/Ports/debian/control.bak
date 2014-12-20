@@ -1,0 +1,20 @@
+Source: bsdowl
+Section: devel
+Priority: optional
+Maintainer: Michael Grünewald <michipili@gmail.com>
+Build-Depends: debhelper (>= 7.0.50~), autotools-dev, pmake
+Standards-Version: 3.8.4
+Homepage: https://bitbucket.org/michipili/bsdowl
+Vcs-Svn: svn://svn.gna.org/svn/bsdowl
+Vcs-Browser: http://svn.gna.org/viewcvs/bsdowl/
+
+Package: bsdowl
+Architecture: all
+Depends: ${misc:Depends}
+Suggests: noweb, ocaml
+Description: BSD Make template files for TeX, OCaml, NOWEB and more
+ BSD Owl Scripts is a group of BSD Make template files. They
+ are written mich in the spirit of FreeBSD's Make template files, with
+ portability in mind: they can also be used on GNU/Linux systems, Mac
+ OS X and Sun Solaris. Currently available scripts may be used for
+ OCaml projects and (La)TeX documents or macros.

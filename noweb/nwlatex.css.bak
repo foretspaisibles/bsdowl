@@ -1,0 +1,44 @@
+/* nwlatex.css -- CSS for NOWEB output
+*
+* BSD Owl Scripts (https://github.com/michipili/bsdowl)
+* This file is part of BSD Owl Scripts
+*
+* Copyright © 2002–2016 Michael Grünewald
+*
+* This file must be used under the terms of the CeCILL-B.
+* This source file is licensed as described in the file COPYING, which
+* you should have received as part of this distribution. The terms
+* are also available at
+* http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+*/
+html {
+    font-family: Palatino, Garamond, Times New Roman, Serif;
+}
+
+div#tableofcontents {
+    border: solid black 1px;
+    background-color: #CCCCFF;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    background-color: #CCCCFF;
+}
+
+p {
+    text-align: justify;
+}
+
+h4, h5, h6 {
+    display: inline;
+    margin-right: 3ex;
+}
+
+h5 {
+    font-size: 100%;
+    font-weight: normal;
+    font-style: italic;
+}

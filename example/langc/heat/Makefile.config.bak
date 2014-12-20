@@ -1,0 +1,45 @@
+### @autoconf_input@
+
+# Author: Michael Grünewald
+# Date: Fri Feb 10 16:50:40 GMT 2006
+
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2002–2016 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+prefix?=		/usr/local
+exec_prefix?=		${prefix}
+bindir?=		${exec_prefix}/bin
+sbindir?=		${exec_prefix}/sbin
+libexecdir?=		${exec_prefix}/libexec
+datarootdir?=		${prefix}/share
+datadir?=		${datarootdir}
+sysconfdir?=		${prefix}/etc
+sharedstatedir?=	${prefix}/com
+localstatedir?=		${prefix}/var
+runstatedir?=		@runstatedir@
+includedir?=		${prefix}/include
+docdir?=		${datarootdir}/doc/${PACKAGE}
+infodir?=		${datarootdir}/info
+libdir?=		${exec_prefix}/lib
+localedir?=		${datarootdir}/locale
+mandir?=		${datarootdir}/man
+
+PREFIX?=		${prefix}
+EXEC_PREFIX?=		${exec_prefix}
+DATAROOTDIR?=		${datarootdir}
+SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
+SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
+
+# Local Variables:
+# mode: makefile
+# End:
+
+### End of file `Makefile.config.in'

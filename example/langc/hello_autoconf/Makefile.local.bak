@@ -1,0 +1,46 @@
+### Makefile.local -- Local customisation
+
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2002–2016 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+
+# IMPORTANT NOTES FOR LOCAL CUSTOMISATIONS
+#
+# In practical projects, the `Makefile.local' file should not be
+# versioned and is the ideal place to put “local” customisations such
+# as the examples presented in the sequel.
+
+
+# A quick, non-engineered, throw-away optical test is provided by the
+# following target.  The special modificator `:tA' ensures that the
+# correct path will be substituted to ${.ALLSRC} if distinct
+# directories are used to hold the source and compilation objects.
+#
+# If your project has a real test suite, it should, of-course, be
+# declared in the main `Makefile' and under version control.
+
+do-test:		${PROGRAM}
+	${.ALLSRC:tA}
+
+
+# While this is a bad idea to hardwire `./configure' arguments in the
+# main Makefile of the project, this can turns be out handy for the
+# developer to easily reconfigure the project or to switch
+# configurations.
+
+do-configure:
+	(cd ${.CURDIR} && autoconf && ./configure --prefix='/opt/bsdowl')
+
+# Local Variables:
+# mode: makefile
+# End:
+
+### End of file `Makefile.local.in'

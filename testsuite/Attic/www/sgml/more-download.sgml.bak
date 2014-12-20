@@ -1,0 +1,13 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<div class="title">Download</div>
+<div class="body">
+<ul>
+<li><a
+href="&bps-current-tarball-url;"
+>&bps-current-tarball-name;</a></li>
+</ul>
+</div>

@@ -1,0 +1,16 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<div class="title">Sections</div>
+<div class="body">
+<ul>
+<li><a href="index.html">Home</a></li>
+<li><a href="tex.html">Producing TeX and LaTeX documents</a></li>
+<li><a href="ocaml.html">Producing and deploying OCaml software</a></li>
+<li><a href="generation.html">Code generation</a></li>
+<li><a href="guidelines.html">Interface guidelines</a></li>
+<li><a href="writing.html">Writing Makefiles</a></li>
+</ul>
+</div>

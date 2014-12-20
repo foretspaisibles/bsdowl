@@ -1,0 +1,41 @@
+.\" wordcount.1 -- Count bytes, words and lines in a file
+.\"
+.\" Author: Michael Grünewald
+.\" Date: Fri Oct 17 14:22:58 CEST 2014
+.\"
+.\" BSD Owl Scripts (https://github.com/michipili/bsdowl)
+.\" This file is part of BSD Owl Scripts
+.\"
+.\" Copyright © 2002–2016 Michael Grünewald
+.\"
+.\" This file must be used under the terms of the CeCILL-B.
+.\" This source file is licensed as described in the file COPYING, which
+.\" you should have received as part of this distribution. The terms
+.\" are also available at
+.\" http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+.\"
+.Dd October 17, 2014
+.Dt WORDCOUNT 1
+.Os
+.Sh NAME
+.Nm wordcount
+.Nd count bytes, words and lines on stdin
+.Sh SYNOPSIS
+.Nm wordcount
+.Sh DESCRIPTION
+The
+.Nm
+utility displays the number of bytes, lines and words found on stdin.
+A word is defined as a sequence of small or capital letters.
+.Sh SEE ALSO
+.Xr wc 1
+.Sh HISTORY
+The
+.Nm
+command appeared as a demonstration program for bsdowl.
+.Sh AUTHORS
+.An -nosplit
+This simplistic version of the
+.Nm
+program was written by
+.An Michael Gr\(:unewald Aq michipili@gmail.com .

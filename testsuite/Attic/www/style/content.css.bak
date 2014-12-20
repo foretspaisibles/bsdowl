@@ -1,0 +1,91 @@
+/* content.css -- Présentation dans la zone de contenu */
+
+div#CONTENT p {
+  text-align: justify;
+  text-indent: 10pt;
+}
+
+div#CONTENT h1,
+div#CONTENT h2 {
+  text-indent: 0em;
+  margin-left: 0em;
+}
+
+div#CONTENT h3,
+div#CONTENT h4,
+div#CONTENT h5,
+div#CONTENT h6 {
+  text-indent: 0em;
+  margin-left: 10pt;
+}
+
+
+div#CONTENT h1 {
+  font-size: 170%;
+}
+
+div#CONTENT h2 {
+  font-size: 140%;
+}
+
+div#CONTENT h3 {
+  font-size: 120%;
+}
+
+div#CONTENT h4 {
+  font-size: 110%;
+  font-style: italic;
+  text-align: center;
+}
+
+div#CONTENT h5 {
+  font-size: 110%;
+}
+
+div#CONTENT h6 {
+  font-size: 100%;
+}
+
+/* Structure */
+
+div#CONTENT pre {
+  font-size: 80%;
+  line-height: 140%;
+  margin-top: 12pt;
+  margin-bottom: 14pt;
+  text-align: left;
+  white-space: -moz-pre-wrap;
+  white-space: -pre-wrap;
+  white-space: -o-pre-wrap;
+  white-space: pre-wrap;
+}
+
+div#CONTENT pre.file,
+div#CONTENT pre.code {
+  color: #660000;
+}
+
+div#CONTENT pre.shell {
+  color: #006600;
+}
+
+div#CONTENT pre.shell:first-line {
+  font-style: italic;
+}
+
+div#CONTENT ul.resources:before {
+  font-style: italic;
+  margin-left: -1em;
+}
+
+div#CONTENT ul.resources:lang(en):before {
+  content: "Resources:";
+}
+
+div#CONTENT ul.resources:lang(fr):before {
+  content: "Ressources :";
+}
+
+div#CONTENT a img {
+  border: none;
+}

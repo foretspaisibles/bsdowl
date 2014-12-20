@@ -1,0 +1,13 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<div class="title">Latest News</div>
+<div class="body">
+<ul>
+<li>2011-04-28 release-1.4</li>
+<li>2011-04-08 releng-1.4-bp</li>
+<li>2010-08-01 release-1.3</li>
+</ul>
+</div>

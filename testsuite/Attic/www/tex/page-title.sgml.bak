@@ -1,0 +1,11 @@
+<!--
+Local Variables:
+sgml-parent-document: ("../sgml/main.sgml" "html" "body" "div" ())
+ispell-dictionary: "british-ise"
+End:
+-->
+<p id="HEADLINE">Producing TeX and LaTeX documents</p>
+<p id="INTRODUCTION">The BSD Owl Scripts may be used to ease the
+production of TeX and LaTeX documents. As the TeX toolchain functions
+mostly like a compiler toolchain, TeX document production falls in the
+predilection domain of Make.</p>

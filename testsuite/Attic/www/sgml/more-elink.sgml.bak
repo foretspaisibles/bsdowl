@@ -1,0 +1,20 @@
+<!--
+Local Variables:
+sgml-parent-document: "index.sgml" "html" "body" "div" "div"
+End Variables:
+-->
+<div class="title">On the WWW</div>
+<div class="body">
+<ul>
+
+  <li><a
+  href="http://www.freebsd.org/doc/en_US.ISO8859-1/books/pmake/index.html"
+  >PMake, a tutorial</a></li>
+
+  <li><a href="http://home.gna.org/bhrid/">Bhrìd TeX</a></li>
+
+  <li><a
+  href="http://cm.bell-labs.com/who/hobby/MetaPost.html">John'Hobby's METAPOST</a></li>
+
+</ul>
+</div>
