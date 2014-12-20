@@ -27,7 +27,7 @@
 #
 #
 #  WRKDIR [${.OBJDIR}, inherited]
-#    The roor of the objdir-tree of our package.
+#    The root of the objdir-tree of our package.
 #
 #
 #  PACKAGE [last component of SRCDIR, inherited]

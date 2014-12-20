@@ -41,8 +41,12 @@ __<bps.product.mk>__:
 
 PRODUCTFILE?=		${WRKDIR}/.product
 
-.if defined(THISMODULE)&&defined(PRODUCT)&&!empty(PRODUCT)
+.if defined(THISMODULE)&&defined(PRODUCT)
 do-product: .PHONY
+.for product in ${PRODUCT}
+	@${ECHO} "# ${THISMODULE}|${RELDIR}|${product}|${PRODUCT_ARGS.${product}}"\
+	  >> ${PRODUCTFILE}
+.endfor
 	@${ECHO} "PRODUCT_${THISMODULE}+=${PRODUCT}"\
 	  >> ${PRODUCTFILE}
 do-depend:		do-product
