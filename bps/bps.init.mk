@@ -184,6 +184,13 @@
 #   The command used to invoke the macro processor M4
 #
 #
+#  RELDIR [automatically set]
+#   The current path, relative to ${SRCDIR}
+#
+#   This is left undefined if SRCDIR is not defined or if it matches
+#   .CURDIR.
+#
+#
 #  _MAKE_USERTARGET [configure obj depend build doc all
 #    install test clean distclean realclean benchmark]
 #    The list of targets that are defined by every module.
@@ -209,6 +216,7 @@ MAKEINITRC?=		Makefile.inc
 .sinclude "${SRCDIR}/Makefile.build"
 .sinclude "${SRCDIR}/Makefile.config"
 .if ${SRCDIR} != ${.CURDIR}
+RELDIR:=		${.CURDIR:S@^${SRCDIR}@@}
 .sinclude "${SRCDIR}/${MAKEINITRC}"
 .endif
 .else

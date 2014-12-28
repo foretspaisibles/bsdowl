@@ -119,6 +119,10 @@ _PACKAGE_CANDIDATE=	${LIBRARY}
 
 _USES_compile_ARGS?=	static shared
 
+.for product in ${PRODUCT}
+PRODUCT_ARGS.${product}+=${_USES_compile_ARGS}
+.endfor
+
 .if defined(APIVERSION)
 LIBVERSION?=		${APIVERSION}
 .endif
