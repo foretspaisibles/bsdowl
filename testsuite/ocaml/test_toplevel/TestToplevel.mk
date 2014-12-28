@@ -1,12 +1,12 @@
-### Makefile -- Test Suite for OCaml
+### TestToplevel.mk -- Prepare an OCaml toplevel
 
 # Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+# Date: Sun Dec 28 18:15:21 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,12 +14,17 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TOPLEVEL=		custom_toplevel
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
-SUBDIR+=	test_toplevel
+SRCS=			custom_configuration.ml
+SRCS+=			custom_bootstrap.ml
 
-.include "generic.subdir.mk"
+REPLACESUBST=		${STDREPLACESUBST}
+REPLACEFILE=		custom_configuration.ml.in
 
-### End of file `Makefile'
+test:
+	test -x ${DESTDIR}${BINDIR}/custom_toplevel
+
+.include "ocaml.toplevel.mk"
+
+### End of file `TestToplevel.mk'
