@@ -99,14 +99,14 @@ _OCAML_CMXA+=		${lib:T}.cmxa
 _OCAML_A+=		${lib:T}.a
 _OCAML_SRCS.${lib:T}.cmxa+=\
 			${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
-LIB+=			${lib}.cmxa ${lib}.a
+LIB+=			${lib:T}.cmxa ${lib:T}.a
 .endif
 .if defined(_OCAML_COMPILE_NATIVE)&&defined(_OCAML_COMPILE_PLUGIN)
 _OCAML_CMXS+=		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmxs}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
 SRCS.${lib:T}.cma?=	${SRCS.${lib:T}}
-_OCAML_SRCS+=		SRCS.${lib}.cma
+_OCAML_SRCS+=		SRCS.${lib:T}.cma
 _OCAML_CMA+=		${lib:T}.cma
 _OCAML_SRCS.${lib:T}.cma+=\
 			${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
@@ -133,10 +133,10 @@ ${plugin}: ${plugin:.cmxs=.ml}
 
 .for lib in ${_OCAML_LIB}
 .if defined(_OCAML_COMPILE_NATIVE)
-${lib}.cmxa: ${_OCAML_SRCS.${lib}.cmxa}
+${lib:T}.cmxa: ${_OCAML_SRCS.${lib:T}.cmxa}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-${lib}.cma: ${_OCAML_SRCS.${lib:T}.cma}
+${lib:T}.cma: ${_OCAML_SRCS.${lib:T}.cma}
 .endif
 .endfor
 
