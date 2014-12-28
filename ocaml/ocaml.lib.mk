@@ -149,4 +149,19 @@ ${lib:T}.cma: ${_OCAML_SRCS.${lib:T}.cma}
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
+.if !target(display-ocaml-lib)
+display-ocaml-lib:
+	${INFO} 'Display ocaml.lib information'
+.for displayvar in LIBRARY
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.for lib in ${LIBRARY}
+.for suffix in cma cmxa cmxs
+.for displayvar in _OCAML_SRCS.${lib:T}.${suffix}
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.endfor
+.endfor
+.endif
+
 ### End of file `ocaml.lib.mk'
