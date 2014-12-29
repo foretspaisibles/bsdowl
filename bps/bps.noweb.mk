@@ -344,8 +344,13 @@ ${file}: ${NOWEB.${file:T}}
 	${_NOTANGLE_TOOL.${file:T}} -R${.TARGET} ${.ALLSRC} | cpif ${.TARGET}
 .endfor
 
+.if defined(NOTANGLE) && !empty(NOTANGLE)
 do-clean-notangle:
 	${RM} -f ${NOTANGLE}
+.else
+do-clean-notangle:
+	${NOP}
+.endif
 
 do-${NOWEB_CLEAN}: do-clean-notangle
 
@@ -494,8 +499,13 @@ ${file}${_NOWEAVE_DEVICE.suffix.${device}}: ${NOWEB.${file:T}}
 .endfor
 .endfor
 
+.if defined(_NOWEAVE_OBJS) && !empty(_NOWEAVE_OBJS)
 do-clean-noweave:
 	${RM} -f ${_NOWEAVE_OBJS}
+.else
+do-clean-noweave:
+	${NOP}
+.endif
 
 do-${NOWEB_CLEAN}: do-clean-noweave
 
