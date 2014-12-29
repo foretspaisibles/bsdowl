@@ -279,6 +279,10 @@ ODOC=			${ODOC_NAME}.odoc
 
 PRODUCT+=		${ODOC}
 
+do-product: do-product-odoc
+do-product-odoc:
+	@${PRODUCTTOOL} '${ODOC}' ''
+
 .if !empty(ODOC_LOAD)
 ${ODOC_HTML}: ${ODOC_LOAD}
 .endif
