@@ -54,7 +54,7 @@ __<bps.credentials.mk>__:
 # Variables
 #
 
-.if ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == no
+.if "${_BPS_SWITCH_CREDENTIALS_STRATEGY}" == "no"
 USE_SWITCH_CREDENTIALS?= no
 .else
 USE_SWITCH_CREDENTIALS?= yes
