@@ -155,6 +155,11 @@ ${TOPLEVEL}: .PHONY
 	${INFO} Not building toplevel ${.TARGET} in native-only mode
 .endif
 
+display-developer-dirs: .PHONY
+.for dir in ${DIRS}
+	@printf '#directory "%s";;\n' "${dir}"
+.endfor
+
 .include "ocaml.main.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
