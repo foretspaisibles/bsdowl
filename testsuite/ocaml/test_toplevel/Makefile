@@ -15,6 +15,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 TEST=			TestToplevel
+TEST+=			TestToplevelCustom
 
 .include "bsdowl.test.mk"
 
