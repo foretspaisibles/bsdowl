@@ -16,7 +16,10 @@
 
 TOPLEVEL=		custom_toplevel
 
+EXTERNAL+=		ocaml.findlib:compiler-libs
+
 SRCS=			custom_configuration.ml
+SRCS+=			custom_library.ml
 SRCS+=			custom_bootstrap.ml
 
 REPLACESUBST=		${STDREPLACESUBST}
