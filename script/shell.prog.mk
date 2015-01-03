@@ -46,8 +46,8 @@ PROGRAM?=		${PROG}
 
 PRODUCT=		${PROGRAM:C@\.(sh|bash|ksh|csh|awk|sed)$@@}
 _PACKAGE_CANDIDATE=	${PRODUCT}
-REPLACE+=		${STDREPLACE}
-REPLACE+=		${BINDIR}
+REPLACESUBST+=		${STDREPLACESUBST}
+REPLACESUBST+=		BINDIR
 
 .for product in ${PRODUCT}
 _MAN_AUTO+=		${product}.1

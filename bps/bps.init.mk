@@ -360,6 +360,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc
 .include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
+.include "bps.replace.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"
 .include "bps.test-expected.mk"
