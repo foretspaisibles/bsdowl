@@ -96,7 +96,7 @@ TOPLEVEL_CLIB?=
 
 OCAMLMKTOP?=ocamlmktop
 
-_TOPLEVEL_FLAGS=-custom -linkall
+_TOPLEVEL_FLAGS=-custom
 
 #
 # Determining toplevel flags
@@ -145,13 +145,13 @@ ${TOPLEVEL}: ${file:=.cma}
 .endfor
 
 ${TOPLEVEL}:
-	${OCAMLMKTOP} ${_TOPLEVEL_FLAGS} ${.ALLSRC} -o ${.TARGET}
+	${OCAMLMKTOP} ${_TOPLEVEL_FLAGS} -o ${.TARGET} ${.ALLSRC}
 
 CLEANFILES+=    ${TOPLEVEL}
 BIN+=           ${TOPLEVEL}
 
 .else
-${TOPLEVEL}:
+${TOPLEVEL}: .PHONY
 	${INFO} Not building toplevel ${.TARGET} in native-only mode
 .endif
 
