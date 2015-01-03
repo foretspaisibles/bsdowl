@@ -17,10 +17,6 @@ let directory_list = [
   "+compiler-libs";
 ]
 
-let open_module_list = [
-  "Custom_library";
-]
-
 let install_printer_list = [
   [ "Custom_library"; "Thing" ];
 ]
@@ -39,52 +35,10 @@ let install_printer path =
   in
   ignore(Toploop.execute_phrase false Format.std_formatter phrase)
 
-let execute_toplevel_phrase s =
-  let phrase =
-    !Toploop.parse_toplevel_phrase (Lexing.from_string s)
-  in
-  if Toploop.execute_phrase true Format.std_formatter phrase then
-    ()
-  else
-    failwith "Custom_bootstrap.execute_toplevel_phrase"
-
-let open_module m =
-  let open Parsetree in
-  let loc = {
-    Location.loc_start = Lexing.dummy_pos;
-    Location.loc_end = Lexing.dummy_pos;
-    Location.loc_ghost = false
-  }
-  in
-  let phrase = Ptop_def [
-    {
-      pstr_desc = Pstr_open({
-        popen_lid = {
-	  Asttypes.txt = Longident.Lident m;
-	  Asttypes.loc = loc
-	};
-        popen_override = Asttypes.Fresh;
-	popen_loc = loc;
-	popen_attributes = [];
-      });
-      pstr_loc = loc
-    };
-  ]
-  in
-  print_endline m;
-  if Toploop.execute_phrase true Format.std_formatter phrase then
-    ()
-  else
-    failwith "Custom_bootstrap.open_module"
-
-let open_module m =
-  execute_toplevel_phrase (Printf.sprintf "open %s;;" m)
-
 let bootstrap () =
   begin
     List.iter Topdirs.dir_directory directory_list;
     List.iter install_printer install_printer_list;
-    List.iter open_module open_module_list;
   end
 
 let _ =
