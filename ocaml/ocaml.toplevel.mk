@@ -94,6 +94,8 @@ _PACKAGE_CANDIDATE=	${TOPLEVEL}
 
 .if defined(TOPLEVEL_COPT)||defined(TOPLEVEL_CLIB)
 TOPLEVEL_CUSTOM?=	yes
+.elif defined(SRCS)&&!empty(SRCS:M*.c)
+TOPLEVEL_CUSTOM?=	yes
 .else
 TOPLEVEL_CUSTOM?=	no
 .endif
@@ -132,10 +134,19 @@ TOPLEVEL_FLAGS+=	-I ${item}
 
 .if !defined(_OCAML_COMPILE_NATIVE_ONLY)
 
-.for file in ${SRCS}
-_OCAML_CMO+= ${file:.ml=.cmo}
+.for file in ${SRCS:M*.ml}
+_OCAML_CMO+=		${file:.ml=.cmo}
 ${TOPLEVEL}: ${file:.ml=.cmo}
 .endfor
+
+.for file in ${SRCS:M*.c}
+${TOPLEVEL}: ${file:.c=.o}
+CLEANFILES+=		${file:.c=.o}
+.endfor
+
+.if defined(SRCS)&&!empty(SRCS:M*.c)
+CFLAGS+=		-I ${OCAMLROOTDIR}
+.endif
 
 .for file in ${LIBS}
 ${TOPLEVEL}: ${file:=.cma}

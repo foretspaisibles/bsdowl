@@ -17,16 +17,13 @@
 TOPLEVEL=		custom_toplevel
 
 SRCS=			greeting.ml
+SRCS+=			greeting_stub.c
 
 EXTERNAL+=		ocaml.findlib:compiler-libs
 
 # We provide a quick and dirty way to produce the C object, but in
 # real projects, it is reasonable to write a small library as a
 # separate project module to provide all the required stubs.
-
-CFLAGS+=		-I ${OCAMLROOTDIR}
-custom_toplevel:	greeting_stub.o
-CLEANFILES+=		greeting_stub.o
 
 test:
 	test -x ${DESTDIR}${BINDIR}/custom_toplevel
