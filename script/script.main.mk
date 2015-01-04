@@ -26,7 +26,7 @@
 #
 # TMPDIR=		/var/run/tmp
 #
-# REPLACE=		PREFIX TMPDIR
+# REPLACESUBST=		PREFIX TMPDIR
 #
 # .include "script.shell.mk"
 
@@ -78,13 +78,13 @@
 #   be `${LIBDIR}/perl5/5.12.4${PACKAGEDIR}`.
 #
 #
-#  REPLACE [not set]
+#  REPLACESUBST [not set]
 #   List of variables to be replaced in the preparation step
 #
 #   The pipe character `|` must not appear in replacement text of the
 #   variables enumerated by REPLACE.
 #
-#  STDREPLACE [see description]
+#  STDREPLACESUBST [see description]
 #   The standard replacement list
 
 
@@ -101,37 +101,6 @@ __<script.shell.mk>__:
 
 
 #
-# Replacement of variables
-#
-
-STDREPLACE=		PACKAGE
-STDREPLACE+=		VERSION
-STDREPLACE+=		prefix
-STDREPLACE+=		exec_prefix
-STDREPLACE+=		bindir
-STDREPLACE+=		sbindir
-STDREPLACE+=		libexecdir
-STDREPLACE+=		datarootdir
-STDREPLACE+=		datadir
-STDREPLACE+=		sysconfdir
-STDREPLACE+=		sharedstatedir
-STDREPLACE+=		localstatedir
-STDREPLACE+=		runstatedir
-STDREPLACE+=		includedir
-STDREPLACE+=		docdir
-STDREPLACE+=		infodir
-STDREPLACE+=		libdir
-STDREPLACE+=		localedir
-STDREPLACE+=		mandir
-
-.if defined(REPLACE)&&!empty(REPLACE)
-.for var in ${REPLACE}
-_SCRIPT_SED+=		-e 's|@${var}@|${${var:S/|/\|/g}}|g'
-.endfor
-.endif
-
-
-#
 # Script programs
 #
 
@@ -145,10 +114,9 @@ BIN+=			${PROGRAM:C@\.(sh|bash|csh|ksh|awk|sed|pl|py)$@@}
 .for script in ${PROGRAM:M*.${ext}}
 CLEANFILES+=		${script:T:.${ext}=}
 buildfiles:		${script:T:.${ext}=}
-.if defined(_SCRIPT_SED)
+.if defined(REPLACEFILTER)
 ${script:T:.${ext}=}: ${script}
-	${SED} ${_SCRIPT_SED} < ${.ALLSRC} > ${.TARGET}.output
-	${MV} ${.TARGET}.output ${.TARGET}
+	${REPLACEFILTER} < ${.ALLSRC} > ${.TARGET}
 .else
 ${script:T:.${ext}=}: ${script}
 	${CP} ${.ALLSRC} ${.TARGET}

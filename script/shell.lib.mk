@@ -40,8 +40,8 @@ THISMODULE=		shell.lib
 
 PRODUCT=		${LIBRARY:C@\.(sh|bash|ksh|csh|awk|sed|subr)$@@}
 _PACKAGE_CANDIDATE=	${PRODUCT}
-REPLACE+=		${STDREPLACE}
-REPLACE+=		SUBRDIR
+REPLACESUBST+=		${STDREPLACESUBST}
+REPLACESUBST+=		SUBRDIR
 
 .for product in ${PRODUCT}
 _MAN_AUTO+=		${product}.3
