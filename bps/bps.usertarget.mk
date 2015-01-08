@@ -63,7 +63,7 @@ do-all: do-all-${target}
 
 do-all-${target}: .USE
 	@echo ${MAKE} ${target}
-	@cd ${.CURDIR} && ${MAKE} ${target}
+	@(cd ${.CURDIR} && ${MAKE} ${target})
 .endfor
 
 

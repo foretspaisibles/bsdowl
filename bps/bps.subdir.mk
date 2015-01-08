@@ -96,13 +96,14 @@ USE_SUBDIR?= no
 _SUBDIR: .USE
 .for item in ${_SUBDIR_LIST}
 	${INFO} "${SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
-	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
+	@(cd ${.CURDIR}/${item}\
+	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/\
+	  ${.TARGET:S/^do-//:S/-subdir$//} )
 .endfor
 
 ${_SUBDIR_LIST}::
 	${INFO} "${.TARGET} (all)"
-	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
+	@(cd ${.CURDIR}/${.TARGET}; ${MAKE} all)
 
 .if defined(_SUBDIR_TARGET)&&!empty(_SUBDIR_TARGET)
 .for target in ${_SUBDIR_TARGET}
