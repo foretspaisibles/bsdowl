@@ -21,4 +21,13 @@
 
 obj: do-obj-subdir
 
+.unexport SRCDIR
+.unexport WRKDIR
+.unexport PACKAGE
+.unexport PACKAGEDIR
+.unexport VERSION
+.unexport OFFICER
+.unexport MODULE
+.unexport EXTERNAL
+
 ### End of file `generic.subdir.mk'
