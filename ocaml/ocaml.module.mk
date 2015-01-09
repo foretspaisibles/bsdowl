@@ -26,10 +26,20 @@
 .if !target(__<ocaml.module.mk>__)
 __<ocaml.module.mk>__:
 
+.if ${THISMODULE} == ocaml.prog || ${THISMODULE} == ocaml.lib
+.if defined(PRODUCT_langc.lib)
 .for module_path in ${_MODULE_langc.lib_ARGS}
 DIRS+=			${SRCDIR}/${module_path}
 DIRS+=			${WRKDIR}/${module_path}
+OCAMLLFLAGS+=		-ccopt -L${WRKDIR}/${module_path}
 .endfor
+.for clib in ${PRODUCT_langc.lib}
+OCAMLLFLAGS+=		-cclib -l${clib}
+.endfor
+OCAMLLFLAGS+=		-custom
+.endif
+.endif
+
 
 .for module_path in ${_MODULE_ocaml.lib_ARGS}
 DIRS+=			${SRCDIR}/${module_path}
