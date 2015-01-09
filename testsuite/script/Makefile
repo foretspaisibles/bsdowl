@@ -13,8 +13,10 @@
 # you should have received as part of this distribution.
 
 
-SUBDIR=		test_shell
-SUBDIR+=	test_python
+SUBDIR=		test_program
+SUBDIR+=	test_library
+SUBDIR+=	test_complex
+SUBDIR+=	test_binding
 
 .include "generic.subdir.mk"
 
