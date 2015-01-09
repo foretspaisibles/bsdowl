@@ -31,9 +31,21 @@ PKGS+=			${external_arg}
 .endfor
 
 .for external_arg in ${_EXTERNAL_ocaml.lib_ARGS}
+.if defined(_EXTERNAL_ocaml.lib_${external_arg}_DIR)
+DIRS+=			${_EXTERNAL_ocaml.lib_${external_arg}_DIR}
+.endif
+.if !defined(_EXTERNAL_ocaml.lib_${external_arg}_BYTE)\
+	  &&!defined(_EXTERNAL_ocaml.lib_${external_arg}_NATIVE)
 _EXTERNAL_LIBS+=	${external_arg}
-.if defined(_EXTERNAL_ocaml.lib_${external_arg}_DIRS)
-DIRS+=			${_EXTERNAL_ocaml.lib_${external_arg}_DIRS}
+.endif
+.if defined(_EXTERNAL_ocaml.lib_${external_arg}_BYTE)
+OCAMLLBADD+=		${_EXTERNAL_ocaml.lib_${external_arg}_BYTE}
+OCAMLABADD+=		${_EXTERNAL_ocaml.lib_${external_arg}_BYTE}
+.endif
+.if defined(_EXTERNAL_ocaml.lib_${external_arg}_NATIVE)
+OCAMLLNADD+=		${_EXTERNAL_ocaml.lib_${external_arg}_NATIVE}
+OCAMLANADD+=		${_EXTERNAL_ocaml.lib_${external_arg}_NATIVE}
+OCAMLCSADD+=		${_EXTERNAL_ocaml.lib_${external_arg}_NATIVE}
 .endif
 .endfor
 
