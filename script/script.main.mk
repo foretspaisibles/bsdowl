@@ -1,4 +1,4 @@
-### script.shell.mk -- Development of shell scripts
+### script.main.mk -- Development of shell scripts
 
 # Author: Michael Grünewald
 # Date: Fri Feb 10 10:40:49 GMT 2006
@@ -28,7 +28,7 @@
 #
 # REPLACE=		PREFIX TMPDIR
 #
-# .include "script.shell.mk"
+# .include "script.main.mk"
 
 
 ### DESCRIPTION
@@ -94,8 +94,8 @@
 .error shell.main.mk cannot be included directly.
 .endif
 
-.if !target(__<script.shell.mk>__)
-__<script.shell.mk>__:
+.if !target(__<script.main.mk>__)
+__<script.main.mk>__:
 
 .include "bps.init.mk"
 
@@ -189,6 +189,6 @@ MANFILTER=		${SED} ${_SCRIPT_SED}
 .include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
-.endif #!target(__<script.shell.mk>__)
+.endif #!target(__<script.main.mk>__)
 
-### End of file `script.shell.mk'
+### End of file `script.main.mk'
