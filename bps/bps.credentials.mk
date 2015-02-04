@@ -82,7 +82,7 @@ ${target}-switch-credentials:
 .if ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == su
 	@(cd ${.CURDIR} && ${SU} root -c '${MAKE} ${target}')
 .elif ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == sudo
-	@(cd ${.CURDIR} && ${SUDO} ${MAKE} UID=0 ${target}>)
+	@(cd ${.CURDIR} && ${SUDO} ${MAKE} UID=0 ${target})
 .else
 	@(cd ${.CURDIR} && ${MAKE} UID=0 ${target})
 .endif
