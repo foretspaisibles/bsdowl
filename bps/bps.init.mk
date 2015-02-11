@@ -191,12 +191,12 @@
 #   .CURDIR.
 #
 #
-#  _MAKE_USERTARGET [configure obj depend build doc all
+#  _MAKE_USERTARGET [obj configure depend build doc all
 #    install test clean distclean realclean benchmark]
 #    The list of targets that are defined by every module.
 #
 #
-#  _MAKE_ALLSUBTARGET [configure depend build doc]
+#  _MAKE_ALLSUBTARGET [configure depend build doc test]
 #    The list of subtargets of the all target.
 
 
@@ -337,13 +337,13 @@ COOKIEPREFIX?=		.cookie.
 # Set _MAKE_USERTARGET and _MAKE_ALLSUBTARGET
 #
 
-_MAKE_USERTARGET?=	configure obj depend build doc all install\
+_MAKE_USERTARGET?=	obj configure depend build doc all install\
 			test clean distclean realclean benchmark
 
 .if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-_MAKE_ALLSUBTARGET?=	configure obj depend build doc
+_MAKE_ALLSUBTARGET?=	obj configure depend build doc test
 .else
-_MAKE_ALLSUBTARGET?=	configure depend build doc
+_MAKE_ALLSUBTARGET?=	configure depend build doc test
 .endif
 
 #
