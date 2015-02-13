@@ -17,16 +17,16 @@
 
 ### SYNOPSIS
 
-# SCRIPT=		mp2eps.sh
-# SCRIPT+=		mp2pdf.sh
-# SCRIPT+=		mp2png.sh
+# PROGRAM=		mp2eps.sh
+# PROGRAM+=		mp2pdf.sh
+# PROGRAM+=		mp2png.sh
 #
-# SCRIPTLIB+=		mp2pnglib.sh
+# SUBR+=		mp2pnglib.sh
 #
 #
-# TMPDIR=		/var/run/tmp
+# tmpdir=		/var/run/tmp
 #
-# REPLACE=		PREFIX TMPDIR
+# REPLACE=		${STDREPLACE}
 #
 # .include "script.main.mk"
 
@@ -67,15 +67,16 @@
 #   List of script subroutine libraries to install
 #
 #
-#  SUBRDIR [${SHAREDIR}${PACKAGEDIR}]
+#  SUBRDIR [${datadir}${PACKAGEDIR}]
 #   List of script libraries to install
 #
 #   The variables SUBRDIR, SUBRMODE, SUBROWN and
 #   SUBRGRP parametrise the installation.
 #
 #   The SUBRDIR variable defaults to
-#   `${SHAREDIR}${PACKAGEDIR}` but other sensible locations could
-#   be `${LIBDIR}/perl5/5.12.4${PACKAGEDIR}`.
+#   `${datadir}${PACKAGEDIR}` but other sensible locations could
+#   follow another pattern, like for instance
+#   `${libdir}/perl5/5.12.4${PACKAGEDIR}`.
 #
 #
 #  REPLACE [not set]
@@ -83,6 +84,7 @@
 #
 #   The pipe character `|` must not appear in replacement text of the
 #   variables enumerated by REPLACE.
+#
 #
 #  STDREPLACE [see description]
 #   The standard replacement list
