@@ -118,6 +118,16 @@
 
 ### IMPLEMENTATION
 
+
+.if defined(MODULE)&&!empty(MODULE)
+.if "${MODULE:O}" != "${MODULE:O:u}"
+.error The MODULE variable lists redundant entries, this is an error.\
+	  Please verify that the first module is assigned to the list\
+	  with MODULE= and not MODULE+=.
+.endif
+.endif
+
+
 .if defined(MODULE)
 _SUBDIR_LIST+=		${MODULE:C@.*\:@@}
 .endif

@@ -18,6 +18,7 @@
 SUBDIR=		test_program
 SUBDIR+=	test_library
 SUBDIR+=	test_complex
+SUBDIR+=	test_toplevel
 
 .include "generic.subdir.mk"
 

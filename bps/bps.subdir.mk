@@ -78,7 +78,7 @@
 .if !target(__<bps.subdir.mk>__)
 __<bps.subdir.mk>__:
 
-_SUBDIR_TARGET+= ${_MAKE_USERTARGET}
+_SUBDIR_TARGET?= ${_MAKE_USERTARGET:Nall:Nconfigure}
 SUBDIR_PREFIX?=
 
 .if defined(SUBDIR) && !empty(SUBDIR)
@@ -96,13 +96,14 @@ USE_SUBDIR?= no
 _SUBDIR: .USE
 .for item in ${_SUBDIR_LIST}
 	${INFO} "${SUBDIR_PREFIX}${item} (${.TARGET:S/^do-//:S/-subdir$//})"
-	@cd ${.CURDIR}/${item}\
-	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/ ${.TARGET:S/^do-//:S/-subdir$//}
+	@(cd ${.CURDIR}/${item}\
+	  &&${MAKE} SUBDIR_PREFIX=${SUBDIR_PREFIX}${item}/\
+	  ${.TARGET:S/^do-//:S/-subdir$//} )
 .endfor
 
 ${_SUBDIR_LIST}::
 	${INFO} "${.TARGET} (all)"
-	@cd ${.CURDIR}/${.TARGET}; ${MAKE} all
+	@(cd ${.CURDIR}/${.TARGET}; ${MAKE} all)
 
 .if defined(_SUBDIR_TARGET)&&!empty(_SUBDIR_TARGET)
 .for target in ${_SUBDIR_TARGET}

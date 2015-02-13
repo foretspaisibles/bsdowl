@@ -29,6 +29,22 @@
 #   is a single word or from the last component of SRCDIR otherwise.
 #
 #
+#  SUBR
+#   List of script subroutine libraries to install
+#
+#
+#  SUBRDIR [${datadir}${PACKAGEDIR}]
+#   List of script libraries to install
+#
+#   The variables SUBRDIR, SUBRMODE, SUBROWN and
+#   SUBRGRP parametrise the installation.
+#
+#   The SUBRDIR variable defaults to
+#   `${datadir}${PACKAGEDIR}` but other sensible locations could
+#   follow another pattern, like for instance
+#   `${libdir}/perl5/5.12.4${PACKAGEDIR}`.
+#
+#
 #  BINOWN, BINGRP, BINMODE, BINDIR, BINNAME
 #   Parameters of the program installation
 #
@@ -46,8 +62,8 @@ PROGRAM?=		${PROG}
 
 PRODUCT=		${PROGRAM:C@\.(sh|bash|ksh|csh|awk|sed)$@@}
 _PACKAGE_CANDIDATE=	${PRODUCT}
-REPLACE+=		${STDREPLACE}
-REPLACE+=		${BINDIR}
+REPLACESUBST+=		${STDREPLACESUBST}
+REPLACESUBST+=		BINDIR
 
 .for product in ${PRODUCT}
 _MAN_AUTO+=		${product}.1

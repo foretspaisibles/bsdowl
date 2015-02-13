@@ -14,11 +14,24 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+_MAKE_ALLSUBTARGET?=
+
 .include "bps.init.mk"
 .include "bps.credentials.mk"
 .include "bps.subdir.mk"
 .include "bps.clean.mk"
 
+_SUBDIR_TARGET?= ${_MAKE_USERTARGET}
+
 obj: do-obj-subdir
+
+.unexport SRCDIR
+.unexport WRKDIR
+.unexport PACKAGE
+.unexport PACKAGEDIR
+.unexport VERSION
+.unexport OFFICER
+.unexport MODULE
+.unexport EXTERNAL
 
 ### End of file `generic.subdir.mk'

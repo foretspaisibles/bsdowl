@@ -1,12 +1,12 @@
-### Makefile -- Counting characters and lines in a file
+### Makefile -- Test features of module ocaml.toplevel
 
 # Author: Michael Grünewald
-# Date: Fri Oct  4 06:52:41 CEST 2013
+# Date: Sun Dec 28 18:14:15 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,11 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM= 	wordcount
+TEST=			TestToplevel
+TEST+=			TestToplevelCustom
 
-SRCS+=		ancillary.ml
-SRCS+=		application.ml
-
-.include "ocaml.prog.mk"
+.include "bsdowl.test.mk"
 
 ### End of file `Makefile'

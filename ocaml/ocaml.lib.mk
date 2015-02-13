@@ -99,14 +99,18 @@ _OCAML_CMXA+=		${lib:T}.cmxa
 _OCAML_A+=		${lib:T}.a
 _OCAML_SRCS.${lib:T}.cmxa+=\
 			${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
-LIB+=			${lib}.cmxa ${lib}.a
+LIB+=			${lib:T}.cmxa ${lib:T}.a
 .endif
 .if defined(_OCAML_COMPILE_NATIVE)&&defined(_OCAML_COMPILE_PLUGIN)
-_OCAML_CMXS+=		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmxs}
+_OCAML_CMXS+=		${lib:T}.cmxs
+LIB+=			${lib:T}.cmxs
+CLEANFILES+=		${lib:T}.cmxs
+_OCAML_SRCS.${lib:T}.cmxs+=\
+			${_OCAML_SRCS.${lib:T}.cmxa}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
 SRCS.${lib:T}.cma?=	${SRCS.${lib:T}}
-_OCAML_SRCS+=		SRCS.${lib}.cma
+_OCAML_SRCS+=		SRCS.${lib:T}.cma
 _OCAML_CMA+=		${lib:T}.cma
 _OCAML_SRCS.${lib:T}.cma+=\
 			${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
@@ -117,26 +121,17 @@ LIB+=			${SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmi}
 .endif
 .endfor
 
-.if !empty(_OCAML_CMXS)
-LIB+=			${_OCAML_CMXS}
-CLEANFILES+=		${_OCAML_CMXS}
-.endif
-
 .include "ocaml.main.mk"
-
-.if !empty(_OCAML_CMXS)
-.for plugin in ${_OCAML_CMXS}
-${plugin}: ${plugin:.cmxs=.ml}
-.endfor
-.endif
-
 
 .for lib in ${_OCAML_LIB}
 .if defined(_OCAML_COMPILE_NATIVE)
-${lib}.cmxa: ${_OCAML_SRCS.${lib}.cmxa}
+${lib:T}.cmxa: ${_OCAML_SRCS.${lib:T}.cmxa}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-${lib}.cma: ${_OCAML_SRCS.${lib:T}.cma}
+${lib:T}.cma: ${_OCAML_SRCS.${lib:T}.cma}
+.endif
+.if defined(_OCAML_COMPILE_NATIVE)&&defined(_OCAML_COMPILE_PLUGIN)
+${lib:T}.cmxs: ${_OCAML_SRCS.${lib:T}.cmxs}
 .endif
 .endfor
 
@@ -148,5 +143,20 @@ ${lib}.cma: ${_OCAML_SRCS.${lib:T}.cma}
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
+
+.if !target(display-ocaml-lib)
+display-ocaml-lib:
+	${INFO} 'Display ocaml.lib information'
+.for displayvar in LIBRARY
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.for lib in ${LIBRARY}
+.for suffix in cma cmxa cmxs
+.for displayvar in _OCAML_SRCS.${lib:T}.${suffix}
+	${MESG} "${displayvar}=${${displayvar}}"
+.endfor
+.endfor
+.endfor
+.endif
 
 ### End of file `ocaml.lib.mk'
