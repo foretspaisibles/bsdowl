@@ -1,4 +1,4 @@
-### script.shell.mk -- Development of shell scripts
+### script.main.mk -- Development of shell scripts
 
 # Author: Michael Grünewald
 # Date: Fri Feb 10 10:40:49 GMT 2006
@@ -17,18 +17,18 @@
 
 ### SYNOPSIS
 
-# SCRIPT=		mp2eps.sh
-# SCRIPT+=		mp2pdf.sh
-# SCRIPT+=		mp2png.sh
+# PROGRAM=		mp2eps.sh
+# PROGRAM+=		mp2pdf.sh
+# PROGRAM+=		mp2png.sh
 #
-# SCRIPTLIB+=		mp2pnglib.sh
+# SUBR+=		mp2pnglib.sh
 #
 #
-# TMPDIR=		/var/run/tmp
+# tmpdir=		/var/run/tmp
 #
-# REPLACESUBST=		PREFIX TMPDIR
+# REPLACESUBST=		${STDREPLACESUBST}
 #
-# .include "script.shell.mk"
+# .include "script.main.mk"
 
 
 ### DESCRIPTION
@@ -67,15 +67,16 @@
 #   List of script subroutine libraries to install
 #
 #
-#  SUBRDIR [${SHAREDIR}${PACKAGEDIR}]
+#  SUBRDIR [${datadir}${PACKAGEDIR}]
 #   List of script libraries to install
 #
 #   The variables SUBRDIR, SUBRMODE, SUBROWN and
 #   SUBRGRP parametrise the installation.
 #
 #   The SUBRDIR variable defaults to
-#   `${SHAREDIR}${PACKAGEDIR}` but other sensible locations could
-#   be `${LIBDIR}/perl5/5.12.4${PACKAGEDIR}`.
+#   `${datadir}${PACKAGEDIR}` but other sensible locations could
+#   follow another pattern, like for instance
+#   `${libdir}/perl5/5.12.4${PACKAGEDIR}`.
 #
 #
 #  REPLACESUBST [not set]
@@ -83,6 +84,7 @@
 #
 #   The pipe character `|` must not appear in replacement text of the
 #   variables enumerated by REPLACE.
+#
 #
 #  STDREPLACESUBST [see description]
 #   The standard replacement list
@@ -94,8 +96,8 @@
 .error shell.main.mk cannot be included directly.
 .endif
 
-.if !target(__<script.shell.mk>__)
-__<script.shell.mk>__:
+.if !target(__<script.main.mk>__)
+__<script.main.mk>__:
 
 .include "bps.init.mk"
 
@@ -157,6 +159,6 @@ MANFILTER=		${SED} ${_SCRIPT_SED}
 .include "bps.clean.mk"
 .include "bps.usertarget.mk"
 
-.endif #!target(__<script.shell.mk>__)
+.endif #!target(__<script.main.mk>__)
 
-### End of file `script.shell.mk'
+### End of file `script.main.mk'
