@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/michipili/bsdowl.png?label=ready&title=Ready)](https://waffle.io/michipili/bsdowl)
 # BSD Owl Scripts
 
 This collection of BSD Make directives aims at providing a highly
