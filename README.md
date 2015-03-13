@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/michipili/bsdowl.svg)](https://travis-ci.org/michipili/bsdowl)
+
 # BSD Owl Scripts
 
 This collection of BSD Make directives aims at providing a highly
