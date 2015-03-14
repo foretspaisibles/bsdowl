@@ -14,10 +14,6 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROJECT=		bsdowl
-OFFICER=		michipili@gmail.com
-VERSION=		@version@
-
 prefix?=		@prefix@
 exec_prefix?=		@exec_prefix@
 bindir?=		@bindir@

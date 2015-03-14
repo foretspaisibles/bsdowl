@@ -28,7 +28,7 @@
 
 # Variables:
 #
-#  _BPS_VERSION [@version@]
+#  _BPS_VERSION [@VERSION@]
 #    The installed version of BPS.
 #
 #
@@ -159,7 +159,7 @@
 .if !target(__<bps.bpsconfig.mk>__)
 __<bps.bpsconfig.mk>__:
 
-_BPS_VERSION=		@version@
+_BPS_VERSION=		@VERSION@
 
 _BPS_PREFIX?=		@prefix@
 _BPS_EXEC_PREFIX?=	@exec_prefix@
