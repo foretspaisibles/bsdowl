@@ -16,7 +16,7 @@ http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt *)
 
 let project = "bsdowl"
 let officer = "michipili@gmail.com"
-let version = "@version@"
+let version = "@VERSION@"
 let prefix = "@prefix@"
 let exec_prefix = "@exec_prefix@"
 let bindir = "@bindir@"
