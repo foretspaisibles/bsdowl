@@ -69,8 +69,12 @@ _OCAMLDEP_FILTER_SCRIPT+=	-e "s@${.OBJDIR}/*@@g"
 OCAMLDEPFLAGS+=			-I ${.OBJDIR}
 .endif
 
+.if undefined(_OCAMLDEP_FILTER_SCRIPT)||empty(_OCAMLDEP_FILTER_SCRIPT)
+_OCAMLDEP_FILTER=	cat
+.else
 _OCAMLDEP_FILTER=	sh -c '${SED} ${_OCAMLDEP_FILTER_SCRIPT}'\
 			  -- OCAMLDEP_FILTER
+.endif
 
 .for thg in ${_OCAML_SRCS}
 .for item in ${${thg}}
