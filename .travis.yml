@@ -1,0 +1,3 @@
+language: c
+script: sh -ex ./Library/Ancillary/travisci main
+before_script: sudo sh -ex ./Library/Ancillary/travisci before
