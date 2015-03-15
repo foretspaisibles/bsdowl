@@ -205,7 +205,7 @@
 .if !target(__<bps.init.mk>__)
 __<bps.init.mk>__:
 
-.include "bps.bpsconfig.mk"
+.sinclude "bps.bpsconfig.mk"
 
 .MAIN:			all
 
@@ -313,6 +313,7 @@ M4?=			m4
 # Identify user running make
 #
 
+.if target(__<bps.bpsconfig.mk>__)
 .if !defined(UID)
 UID!=			${ID} -u
 .endif
@@ -323,6 +324,11 @@ USER!=			${ID} -n -u
 
 .if !defined(GROUP)
 GROUP!=			${ID} -n -g
+.endif
+.else
+UID=			0
+USER=			0
+GROUP=			0
 .endif
 
 
