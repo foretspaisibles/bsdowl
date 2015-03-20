@@ -44,8 +44,8 @@ TEXDRAFTSTAMP!=		(cd ${.CURDIR} && ${_TEXMF_DRAFTSTAMP_CMD})
 
 .for document in ${_TEX_DOCUMENT}
 .for device in ${TEXDEVICE}
-.if defined(TEXDOCNAME.${document:T}.${device})
-DOCNAME.${document:T}.${device}:=	${TEXDOCNAME.${document:T}}_${TEXDRAFTSTAMP}.${device}
+.if defined(DOCNAME.${document:T}.${device})
+DOCNAME.${document:T}.${device}:=	${DOCNAME.${document:T}}_${TEXDRAFTSTAMP}.${device}
 .else
 DOCNAME.${document:T}.${device}=	${document:T}_${TEXDRAFTSTAMP}.${device}
 .endif

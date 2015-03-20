@@ -1,4 +1,4 @@
-/Makefile.inc
+/Makefile.config
 bps/bps.bpsconfig.mk
 configure
 autom4te.cache/

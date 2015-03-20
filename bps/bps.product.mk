@@ -22,33 +22,42 @@
 # Variables:
 #
 #  THISMODULE [not set]
-#    A string identifying the module being built.
+#   A string identifying the module being built.
 #
 #
 #  PRODUCT [not set]
-#    The list of products built by the current module
+#   The list of products built by the current module
 #
 #
-#  PRODUCTFILE [strategy]
-#    A file exporting the list of available products
+#  PRODUCTFILE [${WRKDIR}/.product]
+#   A file exporting a table of available products
+#
+#
+#  PRODUCT_AWK [${AWK} -F'|']
+#   A awk program that can be used to process the product file
 
 .if !target(__<bps.init.mk>__)
 .error bps.product.mk cannot be included directly.
 .endif
 
-.if !target(__<bps.product.mk>__)&&defined(PRODUCT)
+.if !target(__<bps.product.mk>__)
 __<bps.product.mk>__:
 
 PRODUCTFILE?=		${WRKDIR}/.product
+PRODUCTTOOL?=		sh -c '\
+printf "%s|%s|%s|%s\n"\
+  "${THISMODULE}"\
+  "${RELDIR}"\
+  "$$1"\
+  "$$2"\
+  >> ${PRODUCTFILE}\
+' PRODUCTTOOL
 
-.if defined(THISMODULE)&&defined(PRODUCT)&&!empty(PRODUCT)
+.if defined(THISMODULE)&&defined(PRODUCT)
 do-product: .PHONY
-	@${ECHO} ".if empty(PRODUCT_${THISMODULE}:M${PRODUCT})"\
-	  >> ${PRODUCTFILE}
-	@${ECHO} "PRODUCT_${THISMODULE}+=${PRODUCT}"\
-	  >> ${PRODUCTFILE}
-	@${ECHO} ".endif"\
-	  >> ${PRODUCTFILE}
+.for product in ${PRODUCT}
+	@${PRODUCTTOOL} '${product}' '${PRODUCT_ARGS.${product}}'
+.endfor
 do-depend:		do-product
 .endif
 
@@ -56,8 +65,17 @@ do-distclean:		do-distclean-product
 do-distclean-product:	.PHONY
 	@${RM} -f ${PRODUCTFILE}
 
+PRODUCT_AWK?=		${AWK} -F'|'
+
 .if exists(${PRODUCTFILE})
-.include "${PRODUCTFILE}"
+_PRODUCT_MODULE_LIST!=	${PRODUCT_AWK}\
+			  '{a[$$1]}END{for(m in a){print m}}'\
+			  ${PRODUCTFILE}
+.for module in ${_PRODUCT_MODULE_LIST}
+PRODUCT_${module}!=	${PRODUCT_AWK} -v module='${module}'\
+			  '$$1 == module {print $$3}'\
+			  ${PRODUCTFILE}
+.endfor
 .endif
 
 .endif # !target(__<bps.product.mk>__)

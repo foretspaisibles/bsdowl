@@ -184,6 +184,13 @@
 #   The command used to invoke the macro processor M4
 #
 #
+#  RELDIR [automatically set]
+#   The current path, relative to ${SRCDIR}
+#
+#   This is left undefined if SRCDIR is not defined or if it matches
+#   .CURDIR.
+#
+#
 #  _MAKE_USERTARGET [configure obj depend build doc all
 #    install test clean distclean realclean benchmark]
 #    The list of targets that are defined by every module.
@@ -206,17 +213,19 @@ MAKEINITRC?=		Makefile.inc
 
 # Input the package configuration file, if any.
 .if defined(SRCDIR) && !empty(SRCDIR)
+.sinclude "${SRCDIR}/Makefile.build"
+.sinclude "${SRCDIR}/Makefile.config"
 .if ${SRCDIR} != ${.CURDIR}
-.if exists(${SRCDIR}/${MAKEINITRC})
-.include "${SRCDIR}/${MAKEINITRC}"
+RELDIR:=		${.CURDIR:S@^${SRCDIR}@@}
+.sinclude "${SRCDIR}/${MAKEINITRC}"
 .endif
-.endif
+.else
+.sinclude "Makefile.build"
+.sinclude "Makefile.config"
 .endif
 
 # Input the current module configuration file, if any.
-.if exists(${.CURDIR}/${MAKEINITRC})
-.include "${.CURDIR}/${MAKEINITRC}"
-.endif
+.sinclude "${.CURDIR}/${MAKEINITRC}"
 
 
 #
@@ -353,6 +362,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc
 .include "bps.autoconf.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"
+.include "bps.test-expected.mk"
 
 .endif # !target(__<bps.init.mk>__)
 

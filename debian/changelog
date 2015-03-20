@@ -1,8 +1,9 @@
-bsdowl (3.0.0-20141203-1) UNRELEASED; urgency=medium
+bsdowl (3.0.0-20141228-1) UNRELEASED; urgency=medium
 
   * Update package to 3.0.0-20141203. 
+  * Update package to 3.0.0-20141228. 
 
- -- Michael Grünewald <michipili@gmail.com>  Fri, 20 Mar 2015 15:39:15 +0100
+ -- Michael Grünewald <michipili@gmail.com>  Fri, 20 Mar 2015 15:56:09 +0100
 
 bsdowl (2.2.2-1) unstable; urgency=medium
 

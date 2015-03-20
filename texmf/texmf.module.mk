@@ -21,6 +21,22 @@
 .if !target(__<texmf.module.mk>__)
 __<texmf.module.mk>__:
 
+.for module_name in mpost.files mpost.doc\
+	  tex.files tex.doc latex.files latex.doc
+.for path in MPINPUTS TEXINPUTS
+
+.for module_path in ${_MODULE_${module_name}_ARGS}
+.if empty(${module_path}:M${SRCDIR}/${module_path})
+${path}+=		${SRCDIR}/${module_path}
+.endif
+.if empty(${module_path}:M${WRKDIR}/${module_path})
+${path}+=		${WRKDIR}/${module_path}
+.endif
+.endfor
+
+.endfor
+.endfor
+
 .endif # !target(__<texmf.module.mk>__)
 
 ### End of file `texmf.module.mk'

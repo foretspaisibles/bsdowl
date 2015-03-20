@@ -79,6 +79,7 @@ ${parser:.mly=.ml} ${parser:.mly=.mli}: ${parser}
 	${OCAMLYACC} -b ${.TARGET:S/.mli$//:S/.ml$//} ${.ALLSRC}
 
 ${parser:.mly=.cmo}: ${parser:.mly=.cmi}
+${parser:.mly=.cmx}: ${parser:.mly=.cmi}
 
 .endfor
 .endif

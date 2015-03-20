@@ -39,6 +39,6 @@ test-doc:
 
 test:	test-lib test-doc test-prog
 
-.include "bps.project.mk"
+.include "generic.project.mk"
 
 ### End of file `TestComplex.mk'

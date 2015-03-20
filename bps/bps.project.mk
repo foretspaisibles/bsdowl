@@ -125,9 +125,6 @@ DISTNAME?=		${PACKAGE}-${VERSION}
 DISTDIR?=		${.OBJDIR}
 GPG?=			gpg
 
-.include "bps.init.mk"
-
-
 #
 # Data for compression tools
 #
@@ -358,23 +355,16 @@ PROJECTENV+=		PATH="${PROJECTLIBRARYSHELL}:${PATH}"
 
 
 # The SHELL variable is defined in user's environment
-SUBSHELLDIR?=		.
+SUBSHELLDIR?=		${.CURDIR}
 subshell: .PHONY
 	${INFO} "Entering developper's subshell"
-	@cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL}
+	@(cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL})
 	${INFO} "Exiting developper's subshell"
 
-#
-# Delegating targets to subdirectories
-#
-
-.if defined(MODULE)
-SUBDIR+=		${MODULE:C@.*\:@@}
+# Remove the global product file before generating dependencies
+.if target(do-distclean-product)
+pre-depend: do-distclean-product
 .endif
-
-.include "bps.subdir.mk"
-
-obj: do-obj-subdir
 
 .endif # !target(__<bps.project.mk>__)
 

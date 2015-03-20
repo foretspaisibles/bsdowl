@@ -17,10 +17,10 @@
 TEST=			TestComplex
 TEST+=			TestComplexMultiple
 
-TESTSEQUENCE=		clean obj depend build install
+TEST_SEQUENCE=		clean obj depend build install
 
 .if "${WITH_TESTSUITE_GPG}" == "yes"
-TESTSEQUENCE+=		dist
+TEST_SEQUENCE+=		dist
 .endif
 
 .include "bsdowl.test.mk"

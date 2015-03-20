@@ -25,6 +25,6 @@ SUBDIR+=	texmf
 all configure install build depend doc:
 	${NOP}
 
-.include "bps.subdir.mk"
+.include "generic.subdir.mk"
 
 ### End of file `Makefile'

@@ -1,6 +1,6 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/Makefile)
-AC_SUBST([version], [3.0.0-20141203])
+AC_SUBST([version], [3.0.0-20141228])
 AC_CONFIG_AUX_DIR([Library/Autoconf])
 AC_CANONICAL_HOST
 AC_NEED_BSDMAKE()
@@ -201,7 +201,7 @@ AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
-AC_CONFIG_FILES([Makefile.inc bps/bps.bpsconfig.mk testsuite/Makefile.inc])
+AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT
 
 cat <<EOF
