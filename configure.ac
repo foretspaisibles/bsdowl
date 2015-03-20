@@ -1,6 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
 AC_INIT(bps/Makefile)
-AC_SUBST([version], [3.0.0-20150213])
 AC_CONFIG_AUX_DIR([Library/Autoconf])
 AC_CANONICAL_HOST
 AC_NEED_BSDMAKE()
