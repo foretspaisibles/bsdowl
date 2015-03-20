@@ -1,44 +1,38 @@
-### Makefile
+### Makefile -- Support for TeX and METAPOST
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 18:12:07 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 18:12:07 CEST 2007
 
-FILES = texmf.init.mk
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-FILES+= tex.init.mk
-FILES+= tex.doc.pre.mk
-FILES+= tex.doc.main.mk
-FILES+= tex.doc.post.mk
-FILES+= tex.doc.mk
-FILES+= tex.device.dvi.mk
-FILES+= tex.device.ps.mk
-FILES+= tex.device.pdf.mk
-FILES+= tex.driver.dvi.mk
-FILES+= tex.driver.pdftex.mk
-FILES+= tex.driver.dvips.mk
-FILES+= tex.mpost.mk
-FILES+= tex.files.mk
-FILES+= tex.files.main.mk
+SHARE=			texmf.init.mk
+SHARE+=			texmf.uses.mk
+SHARE+=			texmf.module.mk
+SHARE+=			texmf.external.mk
+SHARE+=			texmf.depend.mk
+SHARE+=			texmf.clean.mk
+SHARE+=			texmf.build.mk
+SHARE+=			texmf.mpost.mk
+SHARE+=			texmf.draft.mk
+SHARE+=			texmf.bibtex.mk
+SHARE+=			texmf.index.mk
 
-FILES+= latex.doc.mk
-FILES+= latex.doc.pre.mk
-FILES+= latex.doc.post.mk
-FILES+= latex.bibtex.mk
+SHARE+=			tex.doc.mk
+SHARE+=			plain.files.mk
+SHARE+=			latex.doc.mk
+SHARE+=			latex.files.mk
+SHARE+=			mpost.doc.mk
+SHARE+=			mpost.files.mk
 
-tex.driver.pdftex.mk: tex.driver.dvi.mk
-	sed \
-	  -e 's/tex\.driver\.dvi\.mk/tex\.driver\.pdftex\.mk/g'\
-	  -e 's/DVI/PDF/g' \
-	  -e 's/dvi/pdf/g' \
-	  ${.ALLSRC} > ${.TARGET}
-
-tex.device.pdf.mk: tex.device.dvi.mk
-	sed -e 's/DVI/PDF/g' -e 's/dvi/pdf/g' ${.ALLSRC} > ${.TARGET}
-
-CLEANFILES+= tex.driver.pdftex.mk
-CLEANFILES+= tex.device.pdf.mk
-
-.include "project.mk"
+.include "generic.files.mk"
 
 ### End of file `Makefile'

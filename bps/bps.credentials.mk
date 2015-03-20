@@ -1,9 +1,9 @@
 ### bps.credentials.mk -- Credential switch
 
 # Author: Michael Grünewald
-# Date: Sat 29 Mar 2008 16:05:16 CET
+# Date: Sat Mar 29 16:05:16 CET 2008
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -18,8 +18,6 @@
 ### SYNOPSIS
 
 # USE_SWITCH_CREDENTIALS = yes
-#
-# .include "bps.credentials.mk"
 
 
 ### DESCRIPTION
@@ -27,26 +25,27 @@
 # Implement a credential switch which applies to the targets
 # enumerated in the _SWITCH_CREDENTIALS_TARGETS variable, e.g. install.
 
+# Variables:
 #
-# Variable description
+#  USE_SWITCH_CREDENTIALS
+#   Command the use of the switch credential functionality
 #
-
-# USE_SWITCH_CREDENTIALS
+#   Possible values are 'yes' or 'no', it defaults to 'yes'.
 #
-#  Command the use of the switch credential functionality
 #
-#  Possible values are 'yes' or 'no', it defaults to 'yes'.
-
-# _SWITCH_CREDENTIALS_TARGETS
+#  _SWITCH_CREDENTIALS_TARGETS
+#   List of targets needing a credential switch
 #
-#  List of targets needing a credential switch
-#
-#  It defaults to the empty list, except for the user is inable to
-#  write in ${DESTDIR}${PREFIX}, in which case the install target is
-#  added to this list.
+#   It defaults to the empty list, except for the user is inable to
+#   write in ${DESTDIR}${PREFIX}, in which case the install target is
+#   added to this list.
 
 
 ### IMPLEMENTATION
+
+.if !target(__<bps.init.mk>__)
+.error bps.credentials.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.credentials.mk>__)
 __<bps.credentials.mk>__:
@@ -80,7 +79,13 @@ ${target}:: ${target}-switch-credentials
 	${NOP}
 ${target}-switch-credentials:
 	${INFO} 'Switching to root credentials for target (${target})'
+.if ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == su
 	@${SU} root -c '${MAKE} ${target}'
+.elif ${_BPS_SWITCH_CREDENTIALS_STRATEGY} == sudo
+	@${SUDO} ${MAKE} UID=0 ${target}
+.else
+	@${MAKE} UID=0 ${target}
+.endif
 .endif
 .endfor
 .endif

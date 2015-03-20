@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Sun Jun 16 13:54:55 CEST 2013
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -17,10 +17,10 @@
 
 ### SYNOPSIS
 
-# TOPLEVEL = toplevel
-# SRCS = initialize_toplevel.ml
-# LIBS = unix
-# LIBS+= str
+# TOPLEVEL=		toplevel
+# SRCS=			initialize_toplevel.ml
+# LIBS=			unix
+# LIBS+=		str
 #
 # .include "ocaml.toplevel.mk"
 
@@ -40,49 +40,49 @@
 #
 #
 #  TOPLEVEL
-#    UNIX file name of the generated toplevel
+#   UNIX file name of the generated toplevel
 #
 #
 #  DIRS
-#    Lookup path for object files
+#   Lookup path for object files
 #
-#    Relative paths are interpreted from ${.OBJDIR}.
+#   Relative paths are interpreted from ${.OBJDIR}.
 #
 #
 #  SRCS
-#    OCaml implementation files
+#   OCaml implementation files
 #
 #
 #  LIBS
-#    OCaml library files
+#   OCaml library files
 #
 #
 #  PKGS
-#    OCaml findlib packages
+#   OCaml findlib packages
 #
 #
 #  TOPLEVEL_CUSTOM
-#    Flag governing generation of a custom toplevel
+#   Flag governing generation of a custom toplevel
 #
 #
 #  TOPLEVEL_COPT
-#    Pass the given options to the C compiler and linker
+#   Pass the given options to the C compiler and linker
 #
-#    This forces TOPLEVEL_CUSTOM to yes.
+#   This forces TOPLEVEL_CUSTOM to yes.
 #
 #
 #  TOPLEVEL_CLIB
-#    Pass the given library names to the C linker
+#   Pass the given library names to the C linker
 #
-#    This forces TOPLEVEL_CUSTOM to yes.
+#   This forces TOPLEVEL_CUSTOM to yes.
 
 
 ### IMPLEMENTATION
 
-.if !target(__<ocaml.toplevel.mk>__)
-__<ocaml.toplevel.mk>__:
+THISMODULE=		ocaml.toplevel
+PRODUCT=		${TOPLEVEL}
+_PACKAGE_CANDIDATE=	${TOPLEVEL}
 
-.include "bps.init.mk"
 .include "ocaml.init.mk"
 
 
@@ -94,7 +94,7 @@ TOPLEVEL_CUSTOM?= no
 TOPLEVEL_COPT?=
 TOPLEVEL_CLIB?=
 
-OCAMLMKTOP?= ocamlmktop
+OCAMLMKTOP?=ocamlmktop
 
 _TOPLEVEL_FLAGS=-custom -linkall
 
@@ -159,7 +159,5 @@ ${TOPLEVEL}:
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
-
-.endif # !target(__<ocaml.toplevel.mk>__)
 
 ### End of file `ocaml.odoc.mk'

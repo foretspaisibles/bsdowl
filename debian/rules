@@ -15,7 +15,7 @@ override_dh_auto_install:
 	${MAKETOOL} install
 	dh_installman
 
-override_dh_auto_clean:
+override_dh_auto_clean: override_dh_auto_configure
 	${MAKETOOL} distclean
 
 override_dh_auto_test:

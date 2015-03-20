@@ -1,9 +1,9 @@
-### ocaml.depend.mk -- Dependency generator
+### ocaml.depend.mk -- Dependency generator for OCaml modules
 
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:40:59 CEST 2007
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -53,6 +53,10 @@
 
 ### IMPLEMENTATION
 
+.if !defined(THISMODULE)
+.error ocaml.depend.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:
 
@@ -91,7 +95,7 @@ __<ocaml.depend.mk>__:
 	ocamldep -native ${OCAMLDEPFLAGS} ${.ALLSRC} > ${.TARGET}
 .endif
 
-REALCLEANFILES+= .depend
+DISTCLEANFILES+=	.depend
 
 .if target(do-depend)
 do-depend: .depend

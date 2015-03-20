@@ -1,14 +1,22 @@
-### Makefile -- Collection de makefiles `misc'
+### Makefile -- Miscellaneous modules
 
 # Author: Michael Grünewald
-# Date: Sam  7 jul 2007 18:09:47 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Sat Jul  7 18:09:47 CEST 2007
 
-FILES+= conf.freebsd.mk
-FILES+= misc.script.mk
-FILES+=	misc.elisp.mk
-FILES+=	misc.dotfile.mk
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-.include "project.mk"
+SHARE=			elisp.lib.mk
+SHARE+=			generic.files.mk
+
+.include "generic.files.mk"
 
 ### End of file `Makefile'

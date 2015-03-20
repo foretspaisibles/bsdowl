@@ -1,8 +1,9 @@
-# Author: Michael Grünewald
-# Date: dim 16 jui 2013 13:41:46 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+### fix_encoding_and_copyright.sh
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# Author: Michael Grünewald
+# Date: Sun Jul 16 13:41:46 CEST 2013
+
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -96,3 +97,5 @@ lu_process()
 }
 
 lu_query . | lu_select | lu_process
+
+### End of file `fix_encoding_and_copyright.sh'

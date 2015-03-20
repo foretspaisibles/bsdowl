@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Wed Aug  1 11:37:14 CEST 2007
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -48,6 +48,10 @@
 #  _OCAML_SRCS.*
 #   Lists of sources for inferred objects
 
+
+.if !defined(THISMODULE)
+.error ocaml.object.mk cannot be included directly.
+.endif
 
 .if !target(__<ocaml.object.mk>__)
 __<ocaml.object.mk>__:

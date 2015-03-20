@@ -1,9 +1,9 @@
-### ocaml.build.mk -- Creating command lines for build
+### ocaml.build.mk -- Build rules for OCaml modules
 
 # Author: Michael Grünewald
 # Date: Tue Apr  5 10:31:04 CEST 2005
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -48,35 +48,39 @@
 
 # Variables:
 #
-#  WITH_DEBUG
+#  WITH_DEBUG [no]
 #   Build with debug symbols
 #
 #   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
 #   OCAMLCFLAGS and OCAMLLFLAGS.
 #
 #
-#  WITH_THREADS (no)
+#  WITH_THREADS [no]
 #   Build with threads support
 #
 #
-#  WITH_VMTHREADS (no)
+#  WITH_VMTHREADS [no]
 #   Force VM-level scheduling of threads in byte-code programs
 #
 #
-#  WITH_CAMLP4 (no)
+#  WITH_CAMLP4 [no]
 #   Include the camlp4 directory during the build process
 #
 #
-#  WITH_COMPILERLIBS (no)
+#  WITH_COMPILERLIBS [no]
 #   Include the compiler libs directory during the build process
 #
 #
-#  USE_ANNOTATE (no)
+#  USE_ANNOTATE [no]
 #   Generate annotate files to support use of type information in editors
 #
 #
-#  USE_CUSTOM (yes)
+#  USE_CUSTOM [yes]
 #   Link byte-code programs in custome mode
+
+.if !defined(THISMODULE)
+.error ocaml.build.mk cannot be included directly.
+.endif
 
 
 ### IMPLEMENTATION

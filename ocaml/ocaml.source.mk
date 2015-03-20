@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Wed Aug  1 11:47:44 CEST 2007
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -37,6 +37,10 @@
 # This module is intended to be included by other modules rather than
 # to serve as is to the end user. (See ocaml.manual.mk for a
 # module producing HTML documentation.)
+
+.if !defined(THISMODULE)
+.error ocaml.source.mk cannot be included directly.
+.endif
 
 .if !target(__<ocaml.source.mk>__)
 __<ocaml.source.mk>__:

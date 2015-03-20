@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Wed Jun 30 16:02:10 CEST 2010
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# LIBDIR?= ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
+# LIBDIR?=		${ocamllibdir}${PACKAGEDIR}
 # .include "ocaml.meta.mk"
 
 
@@ -31,24 +31,72 @@
 .if !target(__<ocaml.meta.mk>__)
 __<ocaml.meta.mk>__:
 
-.include "bps.init.mk"
-.include "ocaml.init.mk"
+THISMODULE?=		ocaml.meta
 
-FILESGROUPS+= META
-
-METAOWN?= ${LIBOWN}
-METAGRP?= ${LIBGRP}
-METADIR?= ${LIBDIR}
-METAMODE?= ${LIBMODE}
-METANAME?= META
-
-.if exists(META)||exists(META.in)
-META= META
+.if ${THISMODULE} == ocaml.meta
+PRODUCT=		${META}
 .endif
 
+.include "ocaml.init.mk"
+
+FILESGROUPS+=		META
+
+METAOWN?=		${LIBOWN}
+METAGRP?=		${LIBGRP}
+METADIR?=		${LIBDIR}
+METAMODE?=		${LIBMODE}
+METANAME?=		META
+
+STDREPLACE=		PACKAGE
+STDREPLACE+=		VERSION
+STDREPLACE+=		prefix
+STDREPLACE+=		exec_prefix
+STDREPLACE+=		bindir
+STDREPLACE+=		sbindir
+STDREPLACE+=		libexecdir
+STDREPLACE+=		datarootdir
+STDREPLACE+=		datadir
+STDREPLACE+=		sysconfdir
+STDREPLACE+=		sharedstatedir
+STDREPLACE+=		localstatedir
+STDREPLACE+=		runstatedir
+STDREPLACE+=		includedir
+STDREPLACE+=		docdir
+STDREPLACE+=		infodir
+STDREPLACE+=		libdir
+STDREPLACE+=		ocamllibdir
+STDREPLACE+=		localedir
+STDREPLACE+=		mandir
+
+REPLACE+=		${STDREPLACE}
+
+_SCRIPT_SED=		${SED}
+
+.if defined(REPLACE)&&!empty(REPLACE)
+.for var in ${REPLACE}
+_SCRIPT_SED+=		-e 's|@${var}@|${${var:S/|/\|/g}}|g'
+.endfor
+.endif
+
+.if exists(META)||exists(META.in)
+META=			META
+.endif
+
+.if !empty(META)
+.for file in ${META}
+.if exists(${file}.in)
+${file}:		${file}.in
+	${_SCRIPT_SED} ${.ALLSRC} > ${.TARGET}
+CLEANFILES+=		${file}
+.endif
+.endfor
+.endif
+
+.if ${THISMODULE} == ocaml.meta
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
+.endif
 
 .endif #!target(__<ocaml.meta.mk>__)
 

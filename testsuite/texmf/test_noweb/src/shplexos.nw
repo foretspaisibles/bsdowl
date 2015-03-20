@@ -1,0 +1,267 @@
+%%% shplexos.nw -- Exercise sheets for -*- LaTeX -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Wed Nov  1 17:25:21 CET 2006
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Modèle de document SHLPEXOS}
+
+Le modèle de document~SHPLEXOS permet de préparer des planches d'exos.
+
+<<shplexos.cls>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{shplexos}[2006/11/01]
+
+\@twosidefalse
+\@mparswitchfalse
+\@twocolumnfalse
+
+\setlength\lineskip{1\p@}
+\setlength\normallineskip{1\p@}
+\renewcommand\baselinestretch{}
+\setlength\parskip{0\p@ \@plus \p@}
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+
+\setlength\arraycolsep{5\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\skip\@mpfootins = \skip\footins
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+\input{size10.clo}
+\pagenumbering{none}
+
+%
+% PACKAGE MADNESS
+%
+\RequirePackage{shmetal}
+\RequirePackage{shltx}
+\RequirePackage{shthm}
+%
+% SHPLEXOS RUN CONTROL
+%
+\shltxrc{shplexosrc}
+
+@ \subsection{Exercices et questions}
+<<shplexos.cls>>=
+\newcounter{exercice}
+\renewcommand\theexercice{\arabic{exercice}}
+\newenvironment{exercice}[1][]%
+{%
+  \par\bigskip\noindent
+  \stepcounter{exercice}%
+  \begingroup
+  \ifstrempty{#1}\def\rmA{}\else\def\rmA{ --- #1}\fi
+  \textbf{Exercice \theexercice\rmA.} %
+  \endgroup
+  \ignorespaces
+}%
+{%
+  \par
+}
+
+\newcounter{question}[exercice]
+\renewcommand\thequestion{\theexercice.\arabic{question}}
+\newcommand\question[1][]{%
+  \par\medskip\noindent
+  \stepcounter{question}%
+  \begingroup
+  \ifstrempty{#1}\def\rmA{}\else\def\rmA{ #1.}\fi
+  \textit{\thequestion.\rmA} %
+  \endgroup
+}
+
+@ \subsection{Questions à choix multiples}
+Les macros suivantes facilitent la réalisation des QCM. Chaque
+question est un exercice, entre begin{exercice} et end{exercice}. Il
+est important que l'énoncé soit tout à fait clair quant au sens des
+réponses données. Chaque choix de réponse est précédé soit d'une boîte;
+soit d'une série de boîtes, chacune étant suivie d'une lettre
+permettant de l'identifier dans l'énoncé de la question. Ces deux
+comportement permettent de traiter deux types de situation:
+\begin{itemize}
+\item les choix correpondent à une réponse possible à la question, et
+la boîte permet de cocher la bonne réponse parmi celle proposées;
+\item les choix correspondent chacun à une question particulière à
+laquelle on répond par vrai ou faux, par oui ou non, ou par tout autre
+ensemble fini de possibilités, il y a une boîte par possibilité et
+chaque boîte est suivie d'une lettre pour l'identifier.
+\end{itemize}
+La présentation des choix multiples plusieurs paramètres:
+\begin{description}
+\item[qcmwidth] la largeur de la boîte verticale dans laquelle est
+préparé le texte de la réponse, à droite des boîtes;
+
+\item[qcmtagwidth] la largeur de la boîte verticale dans laquelle est
+composé le paragraphe contenant les boîtes à cocher;
+\item[qcmsep] la largeur de l'espace séparant le texte de la
+question~$n$ du paragraphe des boîtes pour la question~$n+1$;
+\item[qcmmargin] le retrait à droite et à gauche des lignes proposant
+les choix;
+\item[qcmcols] le nombre de colonnes selon lequel s'agencent les
+différentes réponses aux questions.
+\item[qcmindex] le nombre de réponses déjà composées dans la question
+en cours de préparation, ce registre est utilisé par les macros
+composant le qcm.
+\end{description}
+
+La commande qcmselectlayout permet de déterminer automatiquement la
+valeur de \va{qcmwidth} à partir de \va{textwidth} et des paramètres
+précédents.
+
+Chaque boîte suivie de sa marque et de l'espace appropriée occupe en
+tout~3em, si vous utilisez~$n$ boîtes pour chaque réponse et que vous
+shouhaitez les voir apparaître toutes sur la même ligne,
+utilisez~$n*3\mathrm{em}$ comme valeur pour \va{qcmtagwidth}.
+<<shplexos.nw>>=
+\newdimen\qcmwidth
+\newdimen\qcmsep
+\newdimen\qcmmargin
+\newdimen\qcmtagwidth
+\newcount\qcmcols
+\newcount\qcmindex
+
+@ La commande \fn{qcmtags} permet de définir la listre des lettres
+utilisée pour numéroter les boîtes, lorsque cette liste est vide,
+comme après [[\qcmtags{}]], une seule boîte sans étiquette est
+composée.  Exemples:
+\begin{verbatim}
+\qcmtags{}   pour les choix représentant une réponse possible
+\qcmtags{VF} vrai/faux
+\qcmtags{ON} oui/non
+\qcmtags{abcde} ...
+\end{verbatim}
+
+<<shplexos.nw>>=
+\def\qcmtags#1{\def\qcmtags@L{}\qcmtags@A#1\relax\relax\ignorespaces}
+\def\qcmtags@A#1#2\relax{%
+  \rtA=\expandafter{\qcmtags@L}%
+  \rtB={\\{#1}}%
+  \edef\qcmtags@L{\the\rtA\the\rtB}%
+  \ifstrempty{#2}\let\rmN=\qcmtags@B\else\let\rmN=\qcmtags@A\fi
+  \rmN#2\relax
+}
+\def\qcmtags@B\relax{}
+\qcmtags{}
+
+% La commande qcmselectlayout calcule la valeur adéquate pour qcmwidth
+% à partir de textwidth et des autres paramètres déclarés
+% ci-dessus. La formule utilisée est
+%
+% qcmwidth = (
+%  textwidth
+%  - qcmsep * (qcmcols - 1)
+%  - 2 * qcmmargin
+%  - qcmtagwidth * qcmcols
+%  ) / qcmcols
+%
+% On enregistre un appel à cette commande au début du document, ainsi
+% les calculs faits tiennent toujours compte de la véritable valeur de
+% textwidth après que celle-ci ait été modifieé dans le préambule.
+
+\def\qcmselectlayout{%
+  \qcmwidth=-\qcmsep
+  \advance\qcmwidth-\qcmtagwidth
+  \multiply\qcmwidth\qcmcols
+  \advance\qcmwidth\qcmsep
+  \advance\qcmwidth-2\qcmmargin
+  \advance\qcmwidth\textwidth
+  \divide\qcmwidth\qcmcols
+}
+
+\AtBeginDocument{\qcmselectlayout}
+
+% Les commandes qcmsepskip, qcmbeginline, qcmendline, et
+% qcmtagprepare, sont utilisées par la commande qcmbox, qui prépare
+% effectivement la question.
+
+\def\qcmsepskip{\hskip\qcmsep}
+
+\def\qcmbeginline{%
+  \par\medskip\noindent
+  \begingroup
+  \advance\leftskip\qcmmargin
+  \advance\rightskip\qcmmargin
+  \let\latex@par=\par
+  \def\par{\qcmendline}%
+}
+
+\def\qcmendline{\latex@par\endgroup\smallskip}
+
+\def\qcmtagprepare#1{%
+  \makebox[2.9em][l]{$\Box$\thinspace#1\hfil}%
+  \hskip 0pt plus .1em \relax
+}
+
+\long\def\qcmbox#1{%
+  \begingroup
+  \ifnum\qcmindex=\z@
+  \aftergroup\qcmbeginline
+  \else
+  \aftergroup\qcmsepskip
+  \fi
+  \endgroup
+  \advance\qcmindex\@ne
+  \hskip\z@skip
+  \parbox[t]{\qcmtagwidth}{%
+    \parindent\z@
+    \noindent
+    \ifx\qcmtags@L\empty
+    $\Box$\hfil
+    \else
+    \let\\\qcmtagprepare\qcmtags@L
+    \fi
+  }\parbox[t]{\qcmwidth}{\parindent\z@#1}%
+  \begingroup
+  \ifnum\qcmindex=\qcmcols
+  \aftergroup\qcmendline
+  \fi
+  \endgroup
+  \ignorespaces
+}
+
+
+\qcmcols=2
+\qcmsep=3em
+\qcmmargin=1em
+\qcmtagwidth=3em
+
+%
+% TITRE
+%
+
+\ifx\mkheader\undefined\def\mkheader{}\fi
+% Cette commande peut être redéfinie dans shplexosrc.tex.
+
+\def\mktitle{%
+  \ifx\empty\mkheader\else\noindent\mkheader\par\vspace{2\baselineskip}\fi
+  \noindent\makebox[\textwidth]{\Large\@title}\par
+  \vspace{2\baselineskip}
+}
+
+\AtBeginDocument{\mktitle}
+
+%
+% Frenchy
+%
+
+\parindent=10pt
+@
+%%% End of file `shplexos.nw'

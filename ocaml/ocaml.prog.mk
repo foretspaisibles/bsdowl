@@ -1,9 +1,9 @@
-### ocaml.prog.mk -- Préparation de programmes avec Objective Caml
+### ocaml.prog.mk -- Prepare OCaml programs
 
 # Author: Michael Grünewald
 # Date: Tue Apr  5 12:31:04 CEST 2005
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -17,7 +17,7 @@
 
 ### SYNOPSIS
 
-# PROG =	basicrun
+# PROG=		basicrun
 # SRCS+=	main.ml
 # SRCS+=	basic_types.ml
 # SRCS+=	basic_parser.mly basic_lexer.mll
@@ -29,9 +29,9 @@
 # and do not want ship these modules as a library, you can use the
 # following:
 #
-# PROG =	client server
-# SRCS =        protocol.ml
-# LIBS =	unix
+# PROGRAM=	client server
+# SRCS=		protocol.ml
+# LIBS=		unix
 #
 # If files client.ml and server.ml do exist, they are appended to the
 # automatic value of SRCS.client and SRCS.server, so that after the
@@ -44,12 +44,13 @@
 # functionality or regression tests, so that you can keep all of them
 # in a single directory.
 
+
 ### DESCRIPTION
 
 # Variables:
 #
 #
-#  PROGRAM or PROG
+#  PROGRAM [not set]
 #   Name of the program
 #
 #   This can actually be a list of programs.  In this case the SRCS
@@ -57,6 +58,9 @@
 #   all programs and for each `program` the variable `SRCS.program`
 #   should specify files that will only be compiled and linked in
 #   `program`.
+#
+#   If PACKAGE is not defined, it will be guessed from PROGRAM if this
+#   is a single word or from the last component of SRCDIR otherwise.
 #
 #
 #  SRCS
@@ -83,22 +87,79 @@
 #   Parameters of the program installation
 #
 #   See `bps.own.mk` for a closer description of these variables.
+#
+#
+#  COMPILE [byte_code]
+#   List of targeted code generators
+#
+#   If this variable contains one of the words byte_code, byte,
+#   or both, then the production of byte objects is required.
+#
+#   If this variable contains one of the words native_code, native
+#   or both, then the production of native objects is required.
+#
+#
+#  WITH_DEBUG [no]
+#   Build with debug symbols
+#
+#   Setting WITH_DEBUG to yes will add the `-g` flag to the variables
+#   OCAMLCFLAGS and OCAMLLFLAGS.
+#
+#
+#  WITH_PROFILE [no]
+#   Build with profiling information
+#
+#   The profiling of mulithreded byte-code is not supported by OCaml.
+#
+#
+#  WITH_THREADS [no]
+#   Build with threads support
+#
+#
+#  WITH_VMTHREADS [no]
+#   Force VM-level scheduling of threads in byte-code programs
+#
+#
+#  WITH_CAMLP4 [no]
+#   Include the camlp4 directory during the build process
+#
+#
+#  WITH_COMPILERLIBS [no]
+#   Include the compiler libs directory during the build process
+#
+#
+#  USE_ANNOTATE [no]
+#   Generate annotate files to support use of type information in editors
+#
+#
+#  USE_CUSTOM [yes]
+#   Link byte-code programs in custom mode
 
 
-### MAGIC STUFF
+### IMPLEMENTATION
 
-.include "bps.init.mk"
-.include "ocaml.init.mk"
+THISMODULE=		ocaml.prog
+PRODUCT=		${PROGRAM}
+_PACKAGE_CANDIDATE=	${PROGRAM}
 
 .if defined(PROG)&&!empty(PROG)
-PROGRAM?= ${PROG}
+PROGRAM?=${PROG}
 .endif
 
 .if !defined(PROGRAM)||empty(PROGRAM)
 .error The ocaml.prog.mk module expects you to set the PROGRAM or the PROG variable to a sensible value.
 .endif
 
-## DU MODE SINGLETON AU MODE ENSEMBLE
+.include "ocaml.init.mk"
+
+.for program in ${PROGRAM}
+_MAN_AUTO+=		${program}.1
+_MAN_AUTO+=		${program}.8
+.endfor
+
+#
+# Localise values
+#
 
 .for item in ${PROGRAM}
 _OCAML_SRCS+=SRCS.${item:T}
@@ -116,9 +177,18 @@ _OCAML_CN+=${item:T}.native
 SRCS.${item:T}.byte?=${SRCS.${item:T}}
 _OCAML_CB+=${item:T}.byte
 .endif
+.if defined(_EXTERNAL_LIBS)&&!empty(_EXTERNAL_LIBS)
+_OCAML_LIBS+=		${_EXTERNAL_LIBS}
+.endif
+.if defined(_MODULE_LIBS)&&!empty(_MODULE_LIBS)
+_OCAML_LIBS+=		${_MODULE_LIBS}
+.endif
 .if defined(LIBS)&&!empty(LIBS)
-LIBS.${item:T}.byte?=${LIBS:=.cma}
-LIBS.${item:T}.native?=${LIBS:=.cmxa}
+_OCAML_LIBS+=		${LIBS}
+.endif
+.if defined(_OCAML_LIBS)&&!empty(_OCAML_LIBS)
+LIBS.${item:T}.byte?=${_OCAML_LIBS:=.cma}
+LIBS.${item:T}.native?=${_OCAML_LIBS:=.cmxa}
 .endif
 .endfor
 
@@ -153,6 +223,7 @@ ${item}.byte: ${SRCS.${item}.byte:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
 .endif
 .endfor
 
+.include "bps.man.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"

@@ -1,0 +1,6 @@
+.depend
+.product
+*.cm[xioa]
+*.cmxa
+*.done
+Makefile.inc

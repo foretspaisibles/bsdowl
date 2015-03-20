@@ -1,0 +1,1 @@
+extend-diff-ignore = "^(Makefile.inc|bps/bps.bpsconfig.mk|configure|support/mp2eps|support/mp2pdf|testsuite/Makefile.inc|texmf/tex.device.pdf.mk|texmf/tex.driver.pdftex.mk)$"

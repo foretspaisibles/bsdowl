@@ -1,0 +1,1044 @@
+% -*- mode: Noweb; noweb-code-mode: latex -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Fri Oct 27 18:54:40 CEST 2006
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Bibliothèque SHLTX}
+
+La bibliothèque SHLTX définit des macros utiles à plusieurs
+autres bibliothèques de la famille \emph{Samhain}
+et à des classes de documents. Parmi ces macros,
+certaines sont destinées à la préparation de mathématiques en
+respectant les usages français, d'autres sont destinées à la
+préparation du paragraphe. Un autre service que rend cette
+bibliothèque consiste en le contournement de difficultés que l'on
+rencontre en utilisant la bibliothèque \emph{graphicx} et le programme
+de dessin~\emph{Metapost}, nous reviendrons sur ces difficultés avant
+d'examiner la façon de les contourner.
+
+<<shltx.sty>>=
+<<Tâches administratives initiales>>
+<<Définitions pour la programmation>>
+<<Domaine du mode mathématique>>
+<<Domaine du paragraphe>>
+<<Domaine de la structure>>
+<<Autres services>>
+<<Tâches administratives finales>>
+
+@ \subsection{Tâches administratives}
+Une partie des instructions figurant dans la bibliothèque ne
+vise pas à la réalisation des services offerts par la bibliothèque
+mais à faire d'elle un \emph{bon citoyen} de la cité~\LaTeX.
+Ces instructions remplissent des tâches administratives.
+
+La première tâche est l'enregistrement du nom et de la version de la
+bibliothèque, ces informations peuvent être contrôlées par
+l'utilisateur de la bibliothèque pour s'assurer qu'elle présente
+l'interface attendue.
+
+La seconde tâche est la sauvegarde et la restauration de la valeur de
+la macro [[\\]], qui reçoit diverses valeurs au cours de l'évaluation
+du fichier. On prend donc la peine de sauvegarder sa valeur au début
+du traitement et à la restaurer à la fin.
+
+@ \textit{Remarque}
+Au lieu de définir une procédure
+spéciale~\fn{dblbkslashrestore} que l'on évalue à la fin de la bibliothèque,
+on aurait pu
+simplement évaluer [[\let\\=\ltxdblbkslash]] pour restaurer la valeur
+de~[[\\]] sauvegardée au début du fichier. La commande~\fn{dblbkslashrestore}
+peut être utile aux usagers de la bibliothèque.
+
+<<Tâches administratives initiales>>=
+<<Enregistrement de la bibliothèque>>
+<<Sauvegarde de dblbackslash>>
+
+<<Tâches administratives finales>>=
+<<Restauration de dblbackslash>>
+
+<<Enregistrement de la bibliothèque>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{shltx}
+
+<<Sauvegarde de dblbackslash>>=
+\let\ltxdblbkslash=\\
+\def\dblbkslashrestore{\let\\=\ltxdblbkslash}
+
+<<Restauration de dblbackslash>>=
+\dblbkslashrestore
+
+
+@ \subsection{Définitions pour la programmation}
+<<Définitions pour la programmation>>=
+<<Réservation de registres>>
+<<Boîte à outils>>
+
+
+@ \paragraph{Réservation de registres}
+Les macros de cette bibliothèque, ainsi que celles des classes de
+document chargenat cette bibliothèque, utilisent les registres de
+travail que nous réservons maintenant. Ces registres portent des noms
+comme \va{rcA} pour les registres de type \emph{count}, \va{rtA} pour
+les registres de \emph{tokens}, etc.
+
+On pourrait très bien employer les registres [[\count0]],
+[[\count2]], etc. comme registres de travail, préférer les registres
+nommés est une affaire de goût.
+
+<<Réservation de registres>>=
+\newcount\rcA
+\newcount\rcB
+\newcount\rcC
+\newcount\rcD
+
+\newtoks\rtA
+\newtoks\rtB
+\newtoks\rtC
+\newtoks\rtD
+
+\newbox\rbA
+\newbox\rbB
+\newbox\rbC
+\newbox\rbD
+
+\newdimen\rdA
+\newdimen\rdB
+\newdimen\rdC
+\newdimen\rdD
+
+\let\rmA\undefined
+\let\rmB\undefined
+\let\rmC\undefined
+\let\rmD\undefined
+\let\rmN\undefined
+
+
+@ \paragraph{Macros pour la programmation}
+Nous définissons les éléments d'une boîte à outils toute
+croquignolette. Ces outils sont~\fn{ignore}, \fn{getcsname}
+et~\fn{ifstrempty}.
+
+@ La macro \fn{ignore} gaspille son argument.
+<<Boîte à outils>>=
+\newcommand\ignore[1]{}
+
+@ La macro \fn{getcsname} appliquée sur une séquence de contrôle est remplacée
+par l'identifiant de la séquence de contrôle.
+<<Boîte à outils>>=
+\newcommand\getcsname[1]{%
+  \expandafter
+  \ignore
+  \string#1%
+}
+
+@  Le test \fn{teststrempty} et le drapeau \fn{ifstrempty} testent la vacuité
+du texte de remplacement d'une macro.
+<<Boîte à outils>>=
+\newif\ifstrempty
+\newcommand\teststrempty[1]{%
+  \def\rmA{#1}%
+  \ifx\empty\rmA
+    \stremptytrue
+  \else
+    \stremptyfalse
+  \fi
+}
+
+\def\toksrappend#1\to#2{#2=\expandafter{\the#2#1}}
+
+
+@ \subsection{Domaine du mode mathématique}
+
+Nous décrivons les services rendus par la bibliothèque~SHLTX
+pour aider aux réalisations du mode mathématique. On définit un bon
+nombre de macros pour permettre la saisie des fonctions mathématiques
+usuelles; le format~\LaTeX\ propose des abréviations pour ces
+fonctions selon les usages anglo-saxons, il s'agit ici de faciliter le
+respect des coutumes francophones. Pour préparer ces définitions on
+définit des noms symboliques pour les fontes utilisées, ainsi les noms
+des fonctions usuelles sont préparés~\va{operatorfont},
+etc. L'utilisateur devrait utiliser ces noms lorsqu'il enrichit cette
+partie du dictionnaire des macros de \LaTeX. Hormis les macros
+destinées à faciliter la saisie des objets usuels, la
+bibliothèque~SHLTX définit des macros supplémentaires pour des
+préparatiosn spéciales, comme par exemple~\fn{set} qui présente un
+ensemble défini en compréhension.
+
+<<Domaine du mode mathématique>>=
+<<Noms symboliques pour les fontes>>
+<<Macros pour les objets mathématiques usuels>>
+<<Préparations en mode mathématique>>
+
+
+@ \paragraph{Noms symboliques pour les fontes}
+L'utilisation de noms symboliques pour les fontes facilite l'obtention d'une
+présenattion cohérente.
+
+
+@ \subparagraph{usualsetfont}
+Sélectionne une fonte adaptée pour préparer les ensembles usuels,
+au nombre desquels on compte:
+\begin{itemize}
+\item les ensembles de nombres, N, Z, Q, R, C, et parfois D, O, H, etc.;
+\item les espaces géométriques usuels comme les espaces projectifs,
+les espace affines, etc.;
+\item les sous-groupes du groupe linéaire.
+\end{itemize}
+<<Noms symboliques pour les fontes>>=
+\def\usualsetfont{\mathbf}
+
+
+@ \subparagraph{operatorfont}
+La fonte pour les opérateurs, comme par exemples:
+\begin{itemize}
+\item les fonctions usuelles;
+\item les noyaux et images des morphismes de groupes;
+\item les «fonctions d'ensemble», comme adhérence d'un ensemble,
+espace vectoriel engendré par une partie, etc.
+\end{itemize}
+<<Noms symboliques pour les fontes>>=
+\def\operatorfont{\mathrm}
+
+
+@ \subparagraph{functorfont}
+La fonte utilisée pour préparer les symboles pour
+\begin{itemize}
+\item les algèbres de matrices;
+\item les algèbres tensorielles,  symétriques et anti-symétriques,
+ainsi que tous les fibrés qui vont derrière;
+\item les espaces d'homomorphismes, endomorphismes, etc.
+\end{itemize}
+<<Noms symboliques pour les fontes>>=
+\def\functorfont{\mathrm}
+
+
+
+@ \subparagraph{sheavefont}
+La fonte utilisée pour les ensembles de fonctions usuelles, ou les
+faisceaux.
+<<Noms symboliques pour les fontes>>=
+\def\sheavefont{\mathcal}
+
+
+@ \subparagraph{groupfont}
+La fonte utilisée pour le groupe symétrique, le groupe alterné et le
+morphisme signature. On choisit une fonte \emph{fraktur} pour
+obtenir le même genre de notations que celles utilisées par V.~der WAERDEN.
+<<Noms symboliques pour les fontes>>=
+\def\groupfont{\mathfrak}
+
+@ \paragraph{Macros déclaratives}
+On définit des macros servant à déclarer de nouvelles abréviations pour le
+mode mathématique. Elles utilisent les noms de fontes symboliques.
+<<Macros pour les objets mathématiques usuels>>=
+\def\newusualset#1#2{\newcommand#1{\usualsetfont{#2}}}
+\def\newfunctor#1#2{\newcommand#1{{\functorfont{#2}}}}
+\def\newsheaf#1#2{\newcommand#1{{\sheavefont{#2}}}}
+\def\newgroup#1#2{\newcommand#1{\groupfont{#2}}}
+\def\newloperator#1#2{\def#1{\mathop{\operatorfont{#2}}}}
+\def\newnoperator#1#2{\def#1{\mathop{\operatorfont{#2}}\nolimits}}
+
+
+@ \paragraph{Noms courts à double emploi}
+Les macros~[[\P]], [[\S]], et d'autres dont le nom est une
+seule lettre sont définies dans la convention d'entrée de~\LaTeX. Mais
+dans la préparation d'un texte mathématique, il est tentant d'utiliser
+ces macros pour saisir respectivement les~\emph{espaces projectifs},
+\emph{sphères}, etc.
+
+C'est bien-entendu une idée calamiteuse de modifier la convention d'entrée
+de~\LaTeX, mais l'usage de ces macros s'est enraciné dans mes habitudes.
+
+Dans cette section, on définit une procédure qui sauvegarde la liaison
+actuelle des macros~[[\P]], etc. et redéfinit~[[\P]], etc. pour que
+dans le mode horizontal (le mode du paragraphe) ces macros aient leur
+sens original, et dans le mode mathématique le nouveau sens indiqué
+par la macro \va{expansion} au moment de l'évaluation.
+
+\textit{Remarque}
+Il est important que les conventions d'entrée ne soient
+plus modifiées après que cette partie du fichier ait été évaluée. Par
+conséquent, le chargement des bibliothèques \emph{fontenc},
+\emph{inputenc} et les bibliothèques sélectionnant un nouveau jeu de
+fontes, comme~\emph{lmodern} doivent être chargées avant~SHLTX.
+
+<<Macros pour les objets mathématiques usuels>>=
+\def\\#1#2{%
+  \rtA=\expandafter{\getcsname#1}%
+  \rtB={#2}%
+  \edef\rmA{%
+    \global\let
+    \expandafter\noexpand\csname text@\the\rtA\endcsname=\noexpand#1%
+    \global\def
+    \expandafter\noexpand\csname math@\the\rtA\endcsname{\expansion}%
+    \noexpand\renewcommand\noexpand#1{%
+      \noexpand\ifmmode
+        \expandafter\noexpand\csname math@\the\rtA\endcsname
+      \noexpand\else
+        \expandafter\noexpand\csname text@\the\rtA\endcsname
+      \noexpand\fi
+    }%
+  }\rmA
+}
+
+
+@ On commence par [[\P]], [[\O]], [[\S]] et [[\H]] qui permettent
+respectivement la saisie des espaces projectifs, des groupes orthogonaux,
+des sphères, et de l'algèbre des quaternions
+d'Hamilton. Toutes ces définitions ont en commun le fait qu'elles
+codent pour un ensemble usuel.
+<<Macros pour les objets mathématiques usuels>>=
+\def\expansion{\noexpand\usualsetfont{\the\rtB}}
+
+\\\P{P}         	% Espace projectif
+\\\O{O}         	% Groupe orthogonal
+\\\S{S}         	% Sphère
+\\\H{H}         	% Quaternions d'Hamilton
+
+@ Dans le même genre, la macro~[[\th]] fait partie de la convention
+d'entrée de~\LaTeX, elle permet de saisir la lettre~\emph{thorn
+\th}. On souahite qu'en mode mathématique elle permette la saisie de
+la fonction~\emph{tangente hyperbolique}.
+<<Macros pour les objets mathématiques usuels>>=
+\def\expansion{%
+  \noexpand\mathop{\noexpand\operatorfont{\the\rtB}}\noexpand\nolimits
+}
+
+\\\th{th}       	% Tangente Hyperbolique,
+			%  conflit avec THORN
+
+@ \paragraph{Ensembles de scalaires}
+On définit des macros courtes pour les ensembles de scalaires. Définir une
+macro courte est généralement une très mauvaise idée, et ces définitions sont
+en conflit avec la bibliothèque \emph{hyperref}. Leur utilisation est cependant
+ici aussi fermement enracinée dans mes habitudes.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newusualset
+\\\N{N}         	% Entiers naturels
+\\\Z{Z}         	% Entiers relatifs
+\\\Q{Q}         	% Nombres rationnels
+\\\R{R}         	% Nombres réels
+\\\C{C}         	% Nombres complexes
+
+
+@ \paragraph{Groupes usuels}
+Les macros pour les groupes usuels ont génénralement pour identifiant le nom
+habituellement donné au groupe (GL, SL, etc.). Les identifiant des groupes
+symplectiques et spinoriels ne sont pas tout en capitales.
+<<Macros pour les objets mathématiques usuels>>=
+\\\GL{GL}       	% Groupe linéaire général
+\\\SL{SL}       	% Groupe spécial linéaire
+\\\SO{SO}       	% Groupe spécial orthogonal
+\\\Sp{Sp}       	% Groupe symplectique
+\\\GO{GO}       	% Groupe des similitudes
+\\\GA{GA}       	% Groupe affine
+\\\PGL{PGL}     	% Groupe des homographies
+\\\PSL{PSL}     	%  et son deuxième nom
+\\\PSO{PSO}     	% Groupe des homographies préservant
+			%  une quadrique
+\\\PSp{PSp}     	% Groupe des homographies préservant
+                	%  une forme symplectique
+\\\Spin{Spin}   	% Groupe de spineurs
+
+
+@ \paragraph{Espaces géométriques}
+Deux macros ayant autrement leur place ici ont déjà été définies, car
+elles ont des sens différents dans le mode texte et dans le mode
+paragraphe, il s'agit de~[[\P]] et de~[[\S]].
+<<Macros pour les objets mathématiques usuels>>=
+\\\A{A}         	% Espace affine
+\\\G{G}         	% Grassmannienne
+
+
+@ \paragraph{Fonctions usuelles \LaTeX}
+Les fonction usuelles suivantes sont définies par le
+format~\LaTeX. Les redéfinir permet de faire
+intervenir~\va{operatorfont} dans leur texte de remplacement. Les
+modifications de~\va{operatorfont} affectent donc les fonctions
+usuelles de~\LaTeX\ tout autant que les fonctions usuelles
+nouvellement définies.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newnoperator
+\\\exp{exp}     	% Exponentielle
+\\\log{log}     	% Logarithme
+\\\lg{lg}       	%  ...
+\\\ln{ln}       	%  ...
+\\\sin{sin}     	% Sinus
+\\\cos{cos}     	% Cosinus
+\\\arcsin{arcsin}	% Arc Sinus (en)
+\\\sinh{sinh}   	% Sinus hyperbolique (en)
+\\\arccos{arccos}	% Arc Cosinus (en)
+\\\cosh{cosh}   	% Cosinus Hyperbolique (en)
+\\\tan{tan}     	% Tangente (en)
+\\\arctan{arctan}	% Arc tangent (en)
+\\\tanh{tanh}   	% Tangente Hyperbolique (en)
+\\\cot{cot}     	% Cotangente
+\\\coth{coth}   	% Corangente hyperbolique
+\\\sec{sec}     	% Sécante
+\\\csc{csc}     	% Cosécante
+\\\arg{arg}     	% Argument d'un nombre complexe
+\\\ker{ker}     	% Noyau
+\\\dim{dim}     	% Dimension
+\\\hom{hom}     	% XXX Qu'est-ce que c'est?
+\\\deg{deg}     	% Degré
+
+
+@ \paragraph{Fonctions usuelles francophones}
+Parmi les définitions suivantes, celle de l'adhérence n'est pas très répandue,
+mais pose moins de de dilemmes typographiques que le surlignement
+habituellement utilisé dans les notes manuscrites.
+
+<<Macros pour les objets mathématiques usuels>>=
+\\\tg{tg}       	% Tangente
+\\\sh{sh}       	% Sinus Hyperbolique
+\\\ch{ch}       	% Cosinus Hyperbolique
+%\\\th{th}      	% Tangente Hyperbolique, conflit avec THORN
+\\\Arcsin{Arc\,sin}	% Réciproques des
+\\\Arccos{Arc\,cos}	%  fonctions
+\\\Arctg{Arc\,tg}	%  circulaires
+\\\Argsh{Arg\,sh}
+\\\Argch{Arg\,ch}
+\\\Argth{Arg\,th}
+\\\sgn{sgn}     	% Fonction signe
+\\\pr{pr}       	% Projection sur les facteurs du produit cartésien
+\\\ker{Ker}     	% Noyau d'un morphisme
+\\\im{Im}       	% Image d'un morphsime
+\\\trace{Tr}    	% Trace des applications linéaires
+\\\card{Card}   	% Cardinal
+\\\adh{Adh}     	% Adhérence
+\\\rang{rg}     	% Rang
+                	%  d'un endomorphisme, d'un fibré vectoriel, etc.
+\\\vl{v.l.}     	% Variété linéaire engendrée
+\\\vlp{v.l.p.}  	% Variété linéaire projective engendrée
+
+
+@ \paragraph{Opérateurs usuels \LaTeX}
+Il s'agit des opérateurs de limites, etc. ainsi que de quelques
+fonctions devant être considérées comme des opérateurs du point de vue
+de la présentation.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newloperator
+\\\lim{lim}
+\\\limsup{lim\,sup}
+\\\liminf{lim\,inf}
+\\\max{max}     	% Maximum
+\\\min{min}     	% Minimum
+\\\sup{sup}     	% Supremum
+\\\inf{inf}     	% Infimum
+\\\det{det}     	% Déterminant
+\\\Pr{Pr}       	% Probabilités
+\\\gcd{gcd}     	% PGCD (en)
+
+
+@ \paragraph{Opérateurs usuels francophones}
+Certains opérateurs sont déjà définis (limites sup, min max, etc.) dans les
+notations anglophones..
+
+% XXX Les définitions de Pr, deg, sont contradictoires!
+<<Macros pour les objets mathématiques usuels>>=
+\\\pgcd{pgcd}   	% PGCD
+\\\ppcm{ppcm}   	% PPCM
+\\\Pr{P}        	% Probabilité
+
+
+
+@ \paragraph{Tenseurs, fibrés, foncteurs, etc.}
+Pour les fibrés tangent, cotangent, etc. on utilise généralement une
+simple majuscule, ainsi que pour l'homologie.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newfunctor
+\\\Ten{T}       	% Algèbre tensorielle
+\\\Alt{\Lambda} 	% Algèbre extérieure
+\\\Sym{S}       	% Algèbre symétrique
+\\\Hom{Hom}     	% Homomorphismes
+\\\End{End}     	% Endomorphismes
+\\\Aut{Aut}     	% Automorphismes
+\\\Iso{Isom}    	% Isomorphismes
+
+
+@ \paragraph{Faisceaux usuels}
+Les faisceaux sont désignés par une lettre dédiée. Comme il s'agit souvent
+d'espaces de fonctions, seul le type de fonctions est indiqué en commentaire.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newsheaf
+\\\Cont{C}      	% Continues ou plus régulières
+\\\Regl{R}      	% Réglées
+\\\Boun{B}      	% Bornées
+\\\Holo{H}      	% Holomorphes
+\\\Mero{M}      	% Méromorphes
+\\\Reg{O}       	% Régulières (variétés algébriques)
+\\\Rat{M}       	% Rationnelles
+\\\Rsz{L}       	% Fonctions intégrables (espace de Riesz)
+
+
+@ \paragraph{Manufacture de groupes}
+On définit des abréviations pour le groupe symétrique.
+<<Macros pour les objets mathématiques usuels>>=
+\let\\\newgroup
+\\\gsym{S}      	% Groupe symétrique
+\\\galt{A}      	% Groupe alternés
+\\\sign{p}      	% Morphisme signature (pas la fonction signe)
+
+
+@ \paragraph{Autres définitions}
+Derniers regrets: le degré~\fn{deg}, la relation~\emph{divisé} de
+l'arithmétique~\fn{div} et sa négation~\fn{ndiv}, une abréviation pour
+l'inverse~\fn{inv}.
+<<Macros pour les objets mathématiques usuels>>=
+\def\deg{{\mathit d}^{\mathrm o}}
+\mathchardef\div="326A
+\def\ndiv{\mathrel{\kern-.26em\not\kern.26em\div}}
+\newcommand\inv[1]{{#1}^{-1}}
+
+@  Notre macro~\fn{transpose} pour la transposition admet un argument
+optionnel permettant d'ajouter un préfixe à son argument principal, qui est
+omis dans le calcul de hauteur fait pour placer le signe de
+transposition. Cette macro serait probablement mieux écrite
+avec~\fn{sideplace}. La commande~\fn{tr} sert pour la transposition usuelle.
+
+<<Macros pour les objets mathématiques usuels>>=
+\newcommand\transpose[3][\relax]{{\vphantom{#3}}^{#2}#1{#3}}
+\newcommand\tr[2][t]{\transpose{#1}{#2}}
+
+
+@ \subsection{Préparations spéciales en mode mathématique}
+
+La macro~\fn{set} sert à préparer les ensembles. Elle met des accolades
+bien espacées autour de son argument, et reconnaît la présence de~\fn{mid}
+dans son argument pour le remplacer par une barre verticale de la bonne
+hauteur. Exemple:~[[\set{ a\in A \mid P(a) }]].
+<<Préparations en mode mathématique>>=
+\newcommand\set[1]{%
+  \set@A#1\mid\mid\set@A
+}
+\def\set@A#1\mid#2\mid#3\set@A{%
+  \teststrempty{#2}
+  \ifstrempty\set@B{#1}\else\set@C{#1}{#2}\fi
+}
+\def\set@B#1{%
+  \left\{\,#1\,\right\}%
+}
+\def\set@C#1#2{%
+  \mathchoice%
+    {\set@D\displaystyle{#1}{#2}}%
+    {\set@D\textstyle{#1}{#2}}%
+    {\set@D\scriptstyle{#1}{#2}}%
+    {\set@D\scriptscriptstyle{#1}{#2}}%
+}
+\def\set@D#1#2#3{%
+  \begingroup
+  \setbox\rbA=\hbox{$#1#2$}%
+  \setbox\rbB=\hbox{$#1#3$}%
+  \setbox\rbC=\vbox{}%
+  \ifdim\ht\rbA>\ht\rbB
+    \ht\rbC=\ht\rbA
+  \else
+    \ht\rbC=\ht\rbB
+  \fi
+  \ifdim\dp\rbA>\dp\rbB
+    \dp\rbC=\dp\rbA
+  \else
+    \dp\rbC=\dp\rbB
+  \fi
+  \left\{\,#1#2\mathrel{\left\vert\box\rbC\right.}#1#3\,\right\}
+  \endgroup
+}
+
+@ La macro~\fn{fun} prépare la définition d'une fonction, avec ensemble de
+départ d'arrivée et la description de l'image de son argument.
+Exemple: [[\fun f\: A \to B \\ a \mapsto f(a)\\]].
+<<Préparations en mode mathématique>>=
+\def\fun#1\:#2\to#3\\#4\mapsto#5\\{%
+  \begin{array}{cccl}%
+  #1:&#2&\to&#3\\&#4&\mapsto&#5%
+  \end{array}%
+}
+
+@ Les matrices sont présentées avec des crochets.
+<<Préparations en mode mathématique>>=
+%\newenvironment{matrix}%
+%  {\begin{bmatrix}}%
+%  {\end{bmatrix}}%
+
+
+@ Certaines majuscules grecques ne sont pas associées à des séquences de
+contrôle dans la convention de saisie de~\LaTeX. Nous définissons des
+des abbréviations pour ces majuscules.
+<<Préparations en mode mathématique>>=
+\def\\#1#2{\newcommand#1{\mathrm{#2}}}
+\\\Alpha{A}
+\\\Beta{B}
+\\\Epsilon{E}
+\\\Zeta{Z}
+\\\Eta{H}
+\\\Iota{I}
+\\\Kappa{K}
+\\\Mu{M}
+\\\Nu{N}
+\\\Omicron{O}
+\\\Rho{R}
+\\\Tau{T}
+\\\Chi{X}
+% \mathchardef\Alpha="7041
+% \mathchardef\Beta="7042
+% \mathchardef\Gamma="7000
+% \mathchardef\Delta="7001
+% \mathchardef\Epsilon="7045
+% \mathchardef\Zeta="705A
+% \mathchardef\Eta="7048
+% \mathchardef\Theta="7002
+% \mathchardef\Iota="7049
+% \mathchardef\Kappa="704B
+% \mathchardef\Lambda="7003
+% \mathchardef\Mu="704D
+% \mathchardef\Nu="704E
+% \mathchardef\Xi="7004
+% \mathchardef\Omicron="704F
+% \mathchardef\Pi="7005
+% \mathchardef\Rho="7050
+% \mathchardef\Sigma="7006
+% \mathchardef\Tau="7054
+% \mathchardef\Upsilon="7007
+% \mathchardef\Phi="7008
+% \mathchardef\Chi="7058
+% \mathchardef\Psi="7009
+% \mathchardef\Omega="700A
+
+
+@ \subsection{Domaine du paragraphe}
+
+<<Domaine du paragraphe>>=
+<<Ajustement des paramètres pour les paragraphes difficiles>>
+<<Autres préparations pour le paragraphe>>
+
+@ \paragraph{Paragraphes difficiles}
+Il est parfois impossible à \TeX\ de préparer de façon satisfaisante
+un paragraphe du document, ce qui résulte en un message \emph{overfull
+hbox} indiquant le paragraphe présentant des difficultés. Les très
+nombreux paramètres de l'algorithme de coupure des lignes peuvent être
+ajustés de façon à rendre l'agorithme un petit peu moins exigeant qu'à
+l'ordinaire et permettre à \TeX\ de préparer tout de même le
+paragraphe.
+
+
+{\textit Remarque}
+Les ajustement de paramètres doivent être plus soigneusement étudiés, pour
+donner des résultats plus satisfaisants.
+
+
+Le format \LaTeX\ propose une commande~\fn{sloppy} pour remédier à
+cela. Cependant, les paramètres mis en vigueur par cette procédure
+sont très permissifs, et lorsque on les applique à un long paragraphe,
+ils peuvent mener à un résultat décevant. Il est donc utile de
+proposer une solution plus graduelle à ce problème. Cette solution est
+composée d'une procédure~\fn{thisparagraph} qui ouvre un groupe se
+terminant après la fin du paragraphe, et de procédures~\fn{tricky},
+\fn{hard}, \fn{nasty} et~\fn{sloppy} procédant à des ajustements des
+paramètres de l'algorithme de coupure des mots. On utilise ces
+procédures de la façon suivante:
+\begin{verbatim}
+\thisparagraph\tricky
+Et avoient par mi eulx belles et haultes dames et mieux nippées,
+lesquelles très grâcieusement, par blandices et mignardises,
+incitoient ces gallants Trublions à escarbouiller, descrouller
+transpercer, subvertir et déconfire quiconque ne trublionnoit
+pas. N'en soyez pas esbahi,et reconnaissez à cele l'inclination
+mortelle des dames à cruelletés et violence, et admiration du fier
+courage et vaillance guerrière, comme ils voit jà par les histoires
+anticques où il est conté que le dieu Mars fust aimé de Vénus ainsi
+que de déesses et de mortelles à foison, et que Apollo, au rebours,
+bien qu'il fust plaisant joueur de viole, ne reçut que desdains des
+nymphes et des chambrières.
+\end{verbatim}
+Les paramètres mis en vigueur par~\fn{tricky} sont valables jusqu'à la
+fin du paragraphe commencé par la
+déclaration~[[\thisparagraph\tricky]]. Lorsqu'on rencontre un
+paragraphe que~\TeX\ n'arrive pas à préparer, on utilise
+successivement les incantations~[[\thisparagraph\tricky]],
+[[\thisparagraph\hard]] et ainsi de suite
+jusqu'à~[[\thisparagraph\sloppy]].
+
+<<Ajustement des paramètres pour les paragraphes difficiles>>=
+\newcommand\thisparagraph{\begingroup\def\par{\endgraf\endgroup}}
+
+\newcommand\tricky{%
+  \multiply\pretolerance by 5
+  \divide\pretolerance by 4
+  \multiply\tolerance by 5
+  \divide\tolerance by 4
+  \emergencystretch=.5em
+  \relax
+}
+
+\newcommand\hard{%
+  \multiply\pretolerance by 5
+  \divide\pretolerance by 3
+  \multiply\tolerance by 5
+  \divide\tolerance by 3
+  \hyphenpenalty=0
+  \exhyphenpenalty=0
+  \emergencystretch=1em
+  \hbadness=120
+  \adjdemerits=5000
+  \relax
+}
+
+\newcommand\nasty{%
+  %
+  % Saute la première passe et essaie directement de préparer le
+  %  paragraphe en coupant les mots, réduit les pénalités de coupure
+  %  des mots
+  %
+  \pretolerance=-1
+  \tolerance=1414
+  \emergencystretch=1.5em
+  \hbadness=1414
+  \doublehyphendemerits=2000
+  \finalhyphendemerits=500
+  \hyphenpenalty=0
+  \exhyphenpenalty=0
+  %
+  % Les lignes de classes différentes et contigües
+  %  sont moins pénalisées
+  %
+  \adjdemerits=4000
+  \relax
+}
+
+@ \paragraph{Dates}
+On définit une commande~\fn{schoolyear} pour préparer les années
+universitaires, comme 1997--1998, d'après la valeur du registre~\va{year}.
+Pour cette macro, l'année commence au mois d'août.
+
+La commande~\fn{setdate} permet de charger simultanément les
+registres~\va{year}, \va{month} et~\va{date}. Par
+exemple~[[\setdate{2006/11/01}]].
+
+<<Autres préparations pour le paragraphe>>=
+\newcommand\schoolyear{%
+  \begingroup
+  \rcA=\year
+  \rcB=\year
+  \ifnum\month>7 % July is usually Holiday
+    \advance\rcB by \@ne
+  \else
+    \advance\rcA by \m@ne
+  \fi
+  \the\rcA\relax--\the\rcB\relax
+  \endgroup
+}
+
+\newcommand\setdate[1]{\setdate@A#1\@}
+\def\setdate@A#1/#2/#3\@{%
+  \year=#1\relax
+  \month=#2\relax
+  \day=#3\relax
+}
+
+@ \paragraph{Nom et citations}
+La macro~\fn{newname} définit des macros pour les noms des personnes.
+Les bénéfices apportés par l'utilisation de macros pour préparer les noms de
+personnes sont:
+\begin{enumerate}
+\item
+la cohérence de la préparation du nom dans le texte, par exemple si on utilise
+de petites capitales;
+\item
+la préparation d'un index des noms cités s'en trouve facilitée;
+\item
+les fautes de saisie des noms déclenchent une erreur;
+\item
+on peut globalement choisir d'omettre ou d'inclure les prénoms des auteurs.
+\end{enumerate}
+
+Pour définir une abréviation permettant de préparer le nom de
+quelqu'un. On peut dire~[[\newname\CARTAN{Cartan}]]
+et la commande~\fn{CARTAN} prépare le nom de M.~Cartan avec des petites
+capitales. La commande~\fn{newname} reçoit en argument optionnel un prénom, ou
+des initiales. Par exemple
+\begin{example}
+\newname\ECARTAN[Élie]{Cartan}
+\newname\HCARTAN[Henri]{Cartan}
+\end{example}
+et l'option est préparée comme un prénom, précédant le nom et lié
+
+Les noms sont préparés avec la commande~\fn{nameprepare} qui prend deux
+arguments, le prénom et le nom, et peut être redéfinie pour modifier la
+préparation des noms. La présence du prénom peut-être déterminée grâce
+à~\fn{teststrempty}.
+
+\textit{Remarque}
+Dans un titre de section de livre etc. on n'utilise pas les petites capitales,
+le nom est composé comme le reste du titre. On n'utilise les petites capitales
+que pour le paragraphe. On se gardera donc d'utiliser les commandes définies
+grâce à~\fn{newname} pour insérer les noms des auteurs dans les titres, à
+l'orthographe desquels on accordera par ailleurs la plus grande attention.
+
+<<Autres préparations pour le paragraphe>>=
+\newcommand\newname[1]{%
+  \begingroup
+  \rtA={#1}%
+  \newname@A
+}
+
+\newcommand\newname@A[2][]{%
+  \rtB={#1}%
+  \rtC={#2}%
+  \edef\rmN{%
+    \noexpand\newcommand\the\rtA
+    {\noexpand\name[\the\rtB]{\the\rtC}\noexpand}%
+  }%
+  \expandafter\endgroup\rmN
+}
+
+\newcommand\nameprepare[2]{%
+  \teststrempty{#1}%
+  \ifstrempty\else#1~\fi{#2}%
+}
+\newcommand\name[2][]{\nameprepare{#1}{#2}}
+
+@ \paragraph{Abréviations usuelles}
+De nombreuses règles régissent la préparation des abréviations usuelles,
+notamment l'utilisation des italiques n'est pas systématique. Pour favoriser
+l'adoption d'un style cohérent dans l'utilisation des abréviations courantes,
+on définit pour chacune d'elles une macro.
+
+Le texte de remplacement de toutes ces abréviations se termine par un
+point. Lorsque une de ces abréviations termine une phrase du manuscrit, le
+point final doit être omis, mais pas les points de suspension, d'exclamation
+ou d'interrogation.
+
+\begin{description}
+\item[ie]
+Locution latine «id est,» c'est-à-dire.
+
+\item[eg]
+Locution latine «exempli gratia,» par exemple, utilisée en anglais mais pas
+en français.
+
+\item[etc]
+Locution latine «et cætera,» et les autres choses.
+
+\item[cf]
+Mot latin «confer,» impératif du verbe «conferre» signifiant
+comparer, rapprocher; comme le verbe «conférer» en français.
+
+\item[cad]
+C'est-à-dire.
+
+\item[cqfd]
+Ce qu'il fallait dénmonter, est toujours la fin d'une phrase.
+
+\item[ibid]
+Mot latin «ibidem,» ici-même; on l'utilise pour renvoyer à un
+passage déjà cité précedemment, pour éviter d'en donner les
+références une seconde fois dans un petit intervalle de texte.
+\end{description}
+
+\textit{Remarque}
+Pour «confer,» on trouve aussi l'abréviation Cf.~(avec une
+capitale).
+
+<<Autres préparations pour le paragraphe>>=
+\newcommand\ie{i.e.}
+\newcommand\eg{e.g.}
+\newcommand\etc{etc.}
+\newcommand\cf{cf.}
+\newcommand\cad{c.-à-d.}
+\newcommand\cqfd{c.q.f.d.}
+\newcommand\ibid{\emph{ibid.}}
+
+
+@ \subsection{Domaine de la structure}
+
+On définit plusieurs macros travaillant dans le domaine de la sructure du
+document.
+
+L'environnement~\fn{pageinsert} crée une figure occupant une page complète. On
+peut y utiliser les commandes~\fn{caption} et~\fn{label} comme dans une figure
+ordinaire.
+
+L'environnement~\fn{displaytabular} créée un tableau centré. Cet environnement
+prend un argument décrivant le tableau, comme pour~\fn{tabular}.
+
+La macro~\fn{displayimage} crée une image présentant une image
+centrée. On peut insérer cette commande dans le corps d'une figure.
+
+<<Domaine de la structure>>=
+\newenvironment{pageinsert}%
+{%
+  \begin{figure}[p]%
+  \begin{minipage}[h][\textheight][c]{\textwidth}%
+}%
+{%
+  \end{minipage}%
+  \end{figure}%
+}
+
+\newenvironment{displaytabular}%
+{\par\begin{center}\begin{tabular}}%
+{\end{tabular}\end{center}}
+
+
+\newcommand\displayimage[2][]{%
+  \par
+  \begin{center}
+  \includegraphics[#1]{#2}%
+  \end{center}
+}
+
+
+@ \subsection {Autres services}
+
+<<Autres services>>=
+<<Fichier run control>>
+<<Chargement de bibliothèques>>
+<<Bidouille pour réconcilier GRAPHICX et METAPOST>>
+
+
+@ \paragraph{Chargement de bibliothèques}
+Les classes de document usagères des services de SHLTX lui confient le
+chargement d'un petit nombre de bibliothèques. Ces bibliothèques sont
+recommandées pour tous les documents. La parmière~\emph{array}
+enrichit les possibilités de présentation des tableaux
+avec~\LaTeX. Les deux suivantes sont destinées à la préparation du
+mode mathématique, elles corrigent certains comportements inappropriés
+de~\LaTeX.
+
+<<Chargement de bibliothèques>>=
+\RequirePackage{textcomp}
+\RequirePackage{array}
+%
+% This is crappy, but needed
+%
+\let\openbox\undefined
+\let\iint\undefined
+\let\iiint\undefined
+\let\iiiint\undefined
+\let\idotsint\undefined
+\RequirePackage{amsthm}
+\RequirePackage{amsmath}
+
+
+@ \paragraph{Fichier run control}
+Sur les systèmes UNIX, la plupart des programmes peuvent voir un
+certain nombre de paramètres d'éxécution inscrits dans un fichier de
+contrôle d'éxécution ou \emph{run control}: par exemple~\emph{cshrc},
+\emph{mailrc}, \emph{xdvirc}, etc. (On peut aussi attribuer à
+l'abréviation~\emph{rc} apparaissant dans ce noms le sens
+de~\emph{resource configuration}.)  La bibliothèque SHLTX permet aux
+classes de document sollicitant ses services d'utiliser un fichier de
+contrôle d'éxécution. Pour ce faire, l'usager appelle la
+macro~\va{shltxrc} avec en argument le nom duf fichier à lire. Si ce
+fichier existe, SHLTX fait alors en sorte qu'il soit lu par~\LaTeX.
+Chaque classe de document peut utiliser son propre fichier~\emph{run
+control}, par exemple la classe~\emph{book} peut donner la
+valeur~\emph{bookrc} en argument à~\va{shltxrc}, et ainsi de suite.
+
+Ce fichier~\emph{run control} peut être utilisé pour définir les
+termes à faire apparaître dans une en-tête, par exemple l'année
+scolaire ou le nom de l'université. Il n'est pas conseillé d'utiliser
+ce fichier pour charger des bibliothèques.
+
+Grâce aux chemins de recherche de~\LaTeX, on peut partager le même
+fichier~\emph{run control} entre plusieurs documents, projets, et même
+entre tous les utilisateurs d'un même système~\LaTeX. À~l'inverse, il
+peut être nécessaire d'inhiber l'utilisation d'un fichier
+\emph{runcontrol} pour réaliser un document particulier. Dans ce cas
+il suffit de créer un fichier \emph{run control} vide que \LaTeX\
+puisse voir avant le fichier ne devant pas être lu. Il suffit
+généralement de placer ce fichier~\emph{run control} vide dans le même
+dossier que le fichier principal~(celui avec le préambule) du document
+\LaTeX\ en préparation.
+
+<<Fichier run control>>=
+\def\shltxrc#1{\AtEndOfPackage{\InputIfFileExists{#1}\relax\relax}}
+
+
+@ \paragraph{Graphicx et les suffixes des noms de fichiers}
+L'extension `graphicx' pense que ce qui suit un point dans un nom de
+fichier est un suffixe, du genre .JPG, .PDF, etc. Malheureusement
+pour `graphicx', la sortie de METAPOST est un fichier `dia.1' pour
+la figure `1' de dia.mp, etc.; ce n'est qu'ensuite que l'on produit
+les fichiers `dia.1.eps' ou `dia.1.pdf', etc.
+
+La méthode retenue ici pour contourner cette `feature' est de
+préciser pour chaque driver (i.e. dvips ou pdf) la liste des
+suffixes possibles; on encapsule alors l'appel à la commande
+[[\includegraphics]].
+
+La nouvelle commande ne comprend pas l'étoile, à laquelle il est de
+toute façon recommandé de préférer l'association 'clip=true' dans
+les arguments optionnels de [[\includegraphics]].
+
+Comme ces contorsions ont pour seul but de permmettre d'utiliser
+facilement includegraphicx et MetaPost, il n'y a pas lieu de
+s'intéresser aux formats PNG et JPEG, également compris par le
+driver PDFTEX.
+
+\textit{Remarque}
+L'extension `includegraphicx' avertit en principe l'utilisateur
+lorsque ses commandes rencontrent un fichier dont le suffixe ne leur
+permettent pas de penser qu'elles sauront le traiter
+correctement. Ce comportement disparaît à cause des règles
+\begin{verbatim}
+\DeclareGraphicsRule\{*\}\{pdf/eps\}\{*\}\{\}
+\end{verbatim}
+ci-dessus.
+
+<<Bidouille pour réconcilier GRAPHICX et METAPOST>>=
+\newif\ifPDF
+\ifx\pdfoutput\undefined
+  \PDFfalse
+\else
+  \ifnum\pdfoutput>0 %
+     \PDFtrue
+  \else
+     \PDFfalse
+  \fi
+\fi
+
+\ifPDF
+\RequirePackage[pdftex]{graphicx}
+\def\sh@includegraphics@S{pdf}
+\DeclareGraphicsRule{*}{pdf}{*}{}
+\else
+\RequirePackage[dvips]{graphicx}
+\def\sh@includegraphics@S{eps}
+\DeclareGraphicsRule{*}{eps}{*}{}
+\fi
+
+\let\sh@includegraphics@O=\includegraphics
+
+\newcommand\sh@includegraphics[2][]{%
+  \begingroup
+  \rtA={#2}%
+  \rtB=\expandafter{\sh@includegraphics@S}%
+  \edef\rtN{\noexpand\IfFileExists%
+    {\the\rtA.\the\rtB}%
+    % then
+    {\rtA={\the\rtA.\the\rtB}}% remplace rtA par le nom du fichier
+    % else
+    {}% do nada
+    % fi
+  }%
+  \rtN
+  \ifstrempty{#1}\rtB={}\else\rtB={[#1]}\fi
+  \edef\rtN{\noexpand\relax\noexpand\sh@includegraphics@O\the\rtB{\the\rtA}}%
+  \expandafter\endgroup\rtN
+}
+
+\let\includegraphics=\sh@includegraphics
+@
+%%% End of file `shltx.nw'

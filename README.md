@@ -1,20 +1,27 @@
 # BSD Owl Scripts
 
-This collection of BSD Make directives can be used to create workflows
-including the following activities:
+This collection of BSD Make directives aims at providing a highly
+portable build system targetting modern UNIX systems and supporting
+common or less command languages.
 
+It can already be used to:
 - Preparation and publication of TeX documents;
 - Development of TeX macros with NOWEB;
 - Development of OCaml software;
 - Maintainance of a FreeBSD workstation configuration files;
 - Preparation of a static website with ONSGMLS.
 
-This README contains enough information to get you started. You
-will find more details on the
-[Wiki at Bickbucket](https://bitbucket.org/michipili/bsdowl/wiki)
-or the
-[Wiki at Github](https://github.com/michipili/bsdowl/wiki).
+It is well tested under:
+- Mac OS X, version 10.6.8 and above
+- FreeBSD, version 9.0 and above
+- Debian Jessie and newer
 
+It is hoped to function well under several other operating systems
+such as NetBSD, OpenBSD and other Linuces. See our
+[compatibility list][wiki/Compatibility] on the wiki.
+
+This README contains enough information to get you started. You
+will find more details on the [wiki][wiki].
 
 The _Highlights_ section emphasizes important features of BSD Make
 Pallàs Scripts.  The _Installation_ details the installation procedure
@@ -23,32 +30,35 @@ Make Pallàs Scripts to prepare TeX documents and OCaml programs.
 
 If you are not at all familiar with makefiles you can quickly learn
 the basics with de Boor's
-[classical tutorial](http://www.freebsd.org/doc/en/books/pmake/index.html).
+[classical tutorial][4].
 It is also nice to feel confident while interacting with the shell, if
 this is not the case
-[UNIX Power Tools](http://docstore.mik.ua/orelly/unix/upt/)
+[UNIX Power Tools][5]
 could help you.
 
 
 # Highlights
 
-## Portability
+## Compatibility
 
-BSD Owl Scripts (BPS) is written with portability in mind, it
-can be used with several operating systems and flavours of make:
+We aim at providing a highly portable build system targetting modern
+UNIX systems.  It is already well tested under:
+- Mac OS X, version 10.6.8 and above
+- FreeBSD, version 9.0 and above
+- Debian Jessie and newer
 
-- FreeBSD's Make, the successor of `pmake`;
-- Mac OS X's Make, `bsdmake`;
-- NetBSD's Make, `bmake`, also available on Linux systems.
+It is hoped to function well under several other operating systems
+such as NetBSD, OpenBSD or even Cygwin. See our
+[compatibility list][wiki/Compatibility] on the wiki.
 
-This means that projects managed with BPS are easy to develop and
-deploy in heterogeneous environment.
+This means that projects managed with BSD Owl Scripts are easy to
+develop and deploy in heterogeneous environment.
 
 
 ## Advanced features
 
 Here is a short list of advanced features that will make you love
-using BPS for your papers written with TeX:
+using BSD Owl Scripts for your papers written with TeX:
 
 - Support TeX documents split in multiple directories;
 - Support figure generation with METAPOST;
@@ -68,7 +78,8 @@ And for OCaml projects, this list is:
 
 BSD Owl Scripts is free software: copying it and
 redistributing it is very much welcome under conditions of the
-CeCILL-B licence agreement, found in the COPYING and COPYING-FR files
+[CeCILL-B][1] licence agreement, found in the [COPYING][2]
+and [COPYING-FR][3] files
 of the distribution.
 
 
@@ -94,7 +105,7 @@ the corresponding documentation.
 First of all, acquire the latest tarball `bsdowl-2.0.tar.bz2`
 and its signature `bsdowl-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdowl/get/master.tar.bz2).
+[development branch][branch/master]
 Point a root shell to the directory containing the tarball:
 
     # tar xjf bsdowl-2.0.tar.bz2
@@ -104,15 +115,16 @@ You now have to choose an installation prefix, say `/usr/local`, where
 the directives and a few helper scripts are installed:
 
     # ./configure --prefix=/usr/local
-    # make all
-    # make install
+    # make -r all
+    # make -r install
 
-Ensure that `/usr/local/bin` is listed in the path for each system
-user.  Ensure that `/usr/local/share/mk` is listed in the search path
+To let BSD Make know about bsdowl, you then need to
+ensure that `/usr/local/bin` is listed in the path for each system
+user and that `/usr/local/share/mk` is listed in the search path
 for your compatible make program, this is usually done by adding the
 line
 
-    .MAKEFLAGS: -I/usr/local/share/mk
+    .MAKEFLAGS: -I /usr/local/share/mk
 
 To the file `/etc/make.conf`.
 
@@ -122,21 +134,22 @@ To the file `/etc/make.conf`.
 First of all, acquire the latest tarball `bsdowl-2.0.tar.bz2`
 and its signature `bsdowl-2.0.tar.bz2.sig` that you should
 verify—alternatively, download the tip of the
-[development branch](https://bitbucket.org/michipili/bsdowl/get/master.tar.bz2).
+[development branch][branch/master]
 Point a user shell to the directory containing the tarball:
 
     $ tar xjf bsdowl-2.0.tar.bz2
     $ cd bsdowl-2.0
     $ ./configure --prefix=${HOME}
-    $ make all
-    $ make install
+    $ env MAKEFLAGS= make -r all
+    $ env MAKEFLAGS= make -r install
 
-Ensure that `${HOME}/bin` is listed in your path and that the
-`MAKEFLAGS` variable contains the word `-I${HOME}/share/mk`.  If you
+To let BSD Make know about bsdowl, you then need to
+ensure that `${HOME}/bin` is listed in your path and that the
+`MAKEFLAGS` variable contains `-I ${HOME}/share/mk`.  If you
 are using `bash` or `sh` you can achieve this by appending the lines
 
     PATH="${HOME}/bin:${PATH}"
-    MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I${HOME}/share/mk"
+    MAKEFLAGS="${MAKEFLAGS}${MAKEFLAGS:+ }-I ${HOME}/share/mk"
     export PATH
     export MAKEFLAGS
 
@@ -152,12 +165,12 @@ appending the following lines
         set makeflags = ()
     endif
 
-    set -f makeflags = ( $makeflags "-I${HOME}/share/mk" )
-    setenv  MAKEFLAGS   "$makeflags"
+    set makeflags = ( $makeflags "-I ${HOME}/share/mk" )
+    setenv MAKEFLAGS   "$makeflags"
     unset makeflags
 
 to your `~/.cshrc` or `~/.tcshrc`, depending on your configuration.
-These two suggestions will work in typical cases but a special
+These two suggestions will work in typical cases but some special
 configuration will require arrangements.
 
 
@@ -374,3 +387,14 @@ arts.  This software is gently dedicated to her.
 
 
 Michael Grünewald in Bonn, on January 20, 2014
+
+   [1]: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
+   [2]: COPYING
+   [3]: COPYING-FR
+   [4]: http://www.freebsd.org/doc/en/books/pmake/index.html
+   [5]: http://docstore.mik.ua/orelly/unix/upt/
+
+   [wiki]: https://github.com/michipili/bsdowl/wiki
+   [wiki/Compatibility]: https://github.com/michipili/bsdowl/wiki/Compatibility
+
+   [branch/master]: https://github.com/michipili/bsdowl/tree/master

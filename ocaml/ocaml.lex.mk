@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Wed Aug  1 11:38:01 CEST 2007
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -44,9 +44,13 @@
 #  _OMCAML_MLI
 #   Interfaces associated to detected lexers are added to this list
 
+
+.if !defined(THISMODULE)
+.error ocaml.lex.mk cannot be included directly.
+.endif
+
 .if !target(__<ocaml.lex.mk>__)
 __<ocaml.lex.mk>__:
-
 
 OCAMLLEX?= ocamllex
 

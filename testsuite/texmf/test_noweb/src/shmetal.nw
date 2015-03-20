@@ -1,0 +1,61 @@
+%%% shmetal.nw -- SHMETAL Library for -*- latex -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Fri Oct 19 00:03:37 CEST 2007
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Bibliothèque SHMETAL}
+
+La bibliothèque~SHMETAL définit le code des caractères utilisés
+pour le documents source des documents Samhain, les fontes utilisées
+et le positionnement des caractères dans ces fontes. Les paramètres
+définis par cette bibliothèque agissent là où le métal grince et
+frotte dans la préparation du document.
+
+<<shmetal.sty>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{shmetal}
+
+@ On définit des options pour sélectionner une fonte spéciale pour la
+préparation du texte.
+<<shmetal.sty>>=
+\def\shmetal@font{latinmodern}
+\def\shmetal@latinmodern{\RequirePackage{lmodern}}
+\def\shmetal@times{\RequirePackage{txfonts}}
+\def\shmetal@garamond{%
+  \RequirePackage[urw-garamond,
+   uppercase=upright,
+   greeklowercase=upright
+  ]{mathdesign}%
+}
+\DeclareOption{lmodern}{\def\shmetal@font{latinmodern}}
+\DeclareOption{garamond}{\def\shmetal@font{garamond}}
+\DeclareOption{times}{\def\shmetal@font{times}}
+
+@ Dans une classe, on utilise le fragment suivant pour transmettre
+les options à~\emph{shmetal}.
+\begin{verbatim}
+\DeclareOption{lmodern}{\PassOptionsToPackage{\CurrentOption}{shmetal}}
+\end{verbatim}
+
+<<shmetal.sty>>=
+\ProcessOptions\relax
+\RequirePackage[french]{babel}
+\RequirePackage[T1]{fontenc}
+\RequirePackage[latin9]{inputenc}
+\RequirePackage{amssymb}
+\RequirePackage[left=25mm,right=25mm,top=25mm,bottom=25mm]{geometry}
+\csname shmetal@\shmetal@font \endcsname
+@
+
+%%% End of file `shmetal.nw'

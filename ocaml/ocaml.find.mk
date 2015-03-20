@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Sat Jul  7 20:14:16 CEST 2007
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -67,6 +67,10 @@
 #   Force VM-level scheduling of threads in byte-code programs
 
 ### IMPLEMENTATION
+
+.if !defined(THISMODULE)
+.error ocaml.find.mk cannot be included directly.
+.endif
 
 .if !target(__<ocaml.find.mk>__)
 __<ocaml.find.mk>__:

@@ -3,7 +3,7 @@
 # Author: Michael Grünewald
 # Date: Tue Apr  5 12:31:04 CEST 2005
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -45,50 +45,64 @@
 #   It can list implementation files, lexer and parser definitions.
 #
 #
-#  LIBOWN, LIBGRP, LIBMODE, LIBDIR, LIBNAME
+#  LIBOWN, LIBGRP, LIBMODE, LIBNAME
 #   Paramters of the library installation
 #
-#   See `bps.own.mk` for a closer description of these variables. If
-#   the PACKAGE library is set, then LIBDIR will appropriately be
-#   initialised to ${PREFIX}/lib/ocaml/site-lib${PACKAGEDIR}
-#   instead of {PREFIX}/lib/ocaml.
+#   See `bps.own.mk` for a closer description of these variables.
+#
+#
+#  LIBDIR [${ocamllibdir}${PACKAGEDIR}]
+#   The installation target for libraries
+#
+#   The value defined in `bps.own.mk` is suited for C libraries but not
+#   for OCaml objects that are rather installed in the same location as
+#   the standard library.
+#
+#
+#  ocamllibdir [${libdir}]
+#   Directory for ocaml libraries
+#
+#   See "USES+=site-lib" below.
+#
+#
+# Uses:
+#
+#  site-lib: No argument allowed
+#   Use ${libdir}/ocaml/site-lib as default value for ocamllibdir
 
 
 ### IMPLEMENTATION
 
-.include "bps.init.mk"
-.include "ocaml.init.mk"
-
-# We do not support the LIB short name, because it clashes with a file
-# installation group.
-#
-# .if defined(LIB)&&!empty(LIB)
-# LIBRARY?= ${LIB}
-# .endif
+THISMODULE=		ocaml.lib
 
 .if !defined(LIBRARY)||empty(LIBRARY)
 .error The ocaml.lib.mk expects you to set the LIBRARY variable to a sensible value.
 .endif
+
+PRODUCT=		${LIBRARY}
+_PACKAGE_CANDIDATE=	${LIBRARY}
+
+.include "ocaml.init.mk"
 
 _OCAML_SRCS?=
 _OCAML_CMA?=
 _OCAML_CMXA?=
 _OCAML_A?=
 
-_OCAML_LIB:=${LIBRARY}
+_OCAML_LIB:=		${LIBRARY}
 
 .for lib in ${_OCAML_LIB}
-SRCS.${lib:T}?=${SRCS}
+SRCS.${lib:T}?=		${SRCS}
 .if defined(_OCAML_COMPILE_NATIVE)
-SRCS.${lib:T}.cmxa?=${SRCS.${lib:T}}
-_OCAML_SRCS+=SRCS.${lib}.cmxa
-_OCAML_CMXA+=${lib:T}.cmxa
-_OCAML_A+=${lib:T}.a
+SRCS.${lib:T}.cmxa?=	${SRCS.${lib:T}}
+_OCAML_SRCS+=		SRCS.${lib}.cmxa
+_OCAML_CMXA+=		${lib:T}.cmxa
+_OCAML_A+=		${lib:T}.a
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-SRCS.${lib:T}.cma?=${SRCS.${lib:T}}
-_OCAML_SRCS+=SRCS.${lib}.cma
-_OCAML_CMA+=${lib:T}.cma
+SRCS.${lib:T}.cma?=	${SRCS.${lib:T}}
+_OCAML_SRCS+=		SRCS.${lib}.cma
+_OCAML_CMA+=		${lib:T}.cma
 .endif
 .endfor
 
@@ -98,19 +112,24 @@ _OCAML_CMA+=${lib:T}.cma
 
 .for lib in ${_OCAML_LIB}
 .if defined(_OCAML_COMPILE_NATIVE)
-LIB+= ${lib}.cmxa ${lib}.a
+LIB+=			${lib}.cmxa ${lib}.a
 _OCAML_SRCS.${lib}.cmxa=${.ALLSRC}
-${lib}.cmxa: ${SRCS.${lib}.cmxa:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmx}
+${lib}.cmxa:		${SRCS.${lib}.cmxa:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmx}
 .endif
 .if defined(_OCAML_COMPILE_BYTE)
-LIB+= ${lib}.cma
+LIB+=			${lib}.cma
 _OCAML_SRCS.${lib:T}.cma=${.ALLSRC}
-${lib}.cma: ${SRCS.${lib:T}.cma:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmo}
+${lib}.cma:		${SRCS.${lib:T}.cma:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmo}
 .endif
-.if !empty(SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml)
-LIB+= ${SRCS.${lib:T}:C/\.ml[ly]/.ml/:M*.ml:.ml=.cmi}
+.if !empty(SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml)
+LIB+=			${SRCS.${lib:T}:C@\.ml[ly]@.ml@:M*.ml:.ml=.cmi}
 .endif
 .endfor
+
+
+.if exists(META)||exists(META.in)||defined(META)
+.include "ocaml.meta.mk"
+.endif
 
 .include "bps.clean.mk"
 .include "bps.files.mk"

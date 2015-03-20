@@ -1,0 +1,48 @@
+% -*- mode: Noweb; noweb-code-mode: latex -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Thu Sep 24 21:49:42 CEST 2009
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Classes de document}
+
+@ \subsection{SHARTICLE}
+<<sharticle.cls>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{sharticle}[2007/22/04]
+<<Définition des options>>
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{amsart}}
+\ProcessOptions\relax
+\LoadClass{amsart}
+<<Chargement des bibliothèques>>
+
+@ \subsection{SHBOOK}
+<<shbook.cls>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{shbook}[2007/22/04]
+<<Définition des options>>
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{amsbook}}
+\ProcessOptions\relax
+\LoadClass{amsbook}
+<<Chargement des bibliothèques>>
+
+
+@ \subsection{Éléments communs}
+<<Définition des options>>=
+\DeclareOption{lmodern}{\PassOptionsToPackage{lmodern}{shmetal}}
+\DeclareOption{garamond}{\PassOptionsToPackage{lmodern}{garamond}}
+\DeclareOption{times}{\PassOptionsToPackage{lmodern}{times}}
+<<Chargement des bibliothèques>>=
+\RequirePackage{shmetal}
+\RequirePackage{shltx}
+\RequirePackage{shthm}

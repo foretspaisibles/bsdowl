@@ -1,10 +1,9 @@
-### bps.autoconf.mk -- Support pour AUTOCONF
+### bps.autoconf.mk -- Support for autoconf
 
 # Author: Michael Grünewald
-# Date: Ven 18 avr 2008 09:59:39 CEST
-# Cookie: SYNOPSIS TARGET VARIABLE EN DOCUMENTATION
+# Date: Fri Apr 18 09:59:39 CEST 2008
 
-# BSD Owl Scripts (https://bitbucket.org/michipili/bsdowl)
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
 # Copyright © 2005–2014 Michael Grünewald
@@ -18,37 +17,34 @@
 
 ### SYNOPSIS
 
-# CONFIGURE = Makefile.in
-# CONFIGURE+= header.in
-# .include "bps.autoconf.mk"
+# CONFIGURE=		Makefile.in
+# CONFIGURE+=		header.in
 
 ### DESCRIPTION
 
-# Si un fichier `configure.ac' ou `configure.in' figure dans notre dossier, ou
-# si la variable USE_AUTOCONF est positionnée à `yes' alors les fichiers
-# objets associés aux fichiers énumérés dans la variable
-# CONFIGURE sont ajoutés aux listes de nettoyage `distclean'.
+# If a file configure.ac or configure.in is found in the root of
+# the project tree, or if the variable USE_AUTOCONF is set to yes,
+# then intermediary products associated to the files listed in the
+# CONFIGURE variable are added to the distclean list.
 
+# Variables:
+#
+#  USE_AUTOCONF [set by initialisation strategy]
+#    Flag controlling the use of bps.autoconf.mk.
+#
+#    If a file configure.ac or configure.in is found in the root of
+#    the project tree, or if the variable USE_AUTOCONF is set to yes.
 
+#  CONFIGURE [set by initialisation strategy]
+#    List of files processed for substitution by the configure script.
 #
-# Description des variables
-#
+#    The substituted files derived from the original files are added
+#    to DISTCLEANFILES.  If found, files Makefile.in and
+#    Makefile.inc.in are automatically added to this list.
 
-# USE_AUTOCONF
-#
-#  Contrôle l'utilisation des services du module `bps.autoconf.mk'. Si cette
-#  variable n'est pas définie par l'utilisateur et que des traces de
-#  l'utilisation d'autoconf par le projet sont trouvées, cette variable est
-#  positionnée à `yes'.
-
-# CONFIGURE
-#
-#  Énumère les sources traitées par le script `configure'. Les fichiers objets
-#  produits par `autoconf' correspondant à ces sources sont ajoutés à
-#  DISTCLEANFILES.
-#
-#  Si ils existent, les fichiers `Makefile.in' et `Makefile.inc.in' sont
-#  automatiquement ajoutés à cette énumération.
+.if !target(__<bps.init.mk>__)
+.error bps.autoconf.mk cannot be included directly.
+.endif
 
 .if !target(__<bps.autoconf.mk>__)
 __<bps.autoconf.mk>__:
@@ -60,22 +56,21 @@ USE_AUTOCONF?=no
 .if ${USE_AUTOCONF} == yes
 .for file in config.status config.log
 .if exists(${file})
-DISTCLEANFILES+= ${file}
+DISTCLEANFILES+=	${file}
 .endif
 .endfor
 .if exists(autom4te.cache)
-DISTCLEANDIRS+= autom4te.cache
+DISTCLEANDIRS+=		autom4te.cache
 .endif
-CONFIGURE?=
 .for file in Makefile.in Makefile.inc.in
 .if exists(${file})&&empty(CONFIGURE:M${file})
-CONFIGURE+= ${file}
+CONFIGURE+=		${file}
 .endif
 .endfor
-REALCLEANFILES+= ${CONFIGURE:.in=}
+REALCLEANFILES+=	${CONFIGURE:.in=}
 .if exists(configure.ac)||exists(configure.in)
 .if !defined(REALCLEANFILES)||empty(REALCLEANFILES:Mconfigure)
-REALCLEANFILES+= configure
+REALCLEANFILES+=	configure
 .endif
 .endif
 .endif # ${USE_AUTOCONF} == yes

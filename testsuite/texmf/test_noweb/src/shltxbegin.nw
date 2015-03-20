@@ -1,0 +1,30 @@
+% -*- mode: Noweb; noweb-code-mode: latex -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Sat Sep 20 13:31:09 CEST 2009
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{pxfonts}
+\input{nwlatex}
+\usepackage{noweb}
+\pagestyle{noweb}
+\noweboptions{longchunks,smallcode}
+\title{Macros Samhain pour \LaTeX}
+\author{Michaël Le Barbier\\\texttt{michipili@gmail.com}}
+\begin{document}
+\maketitle
+\tableofcontents
+@

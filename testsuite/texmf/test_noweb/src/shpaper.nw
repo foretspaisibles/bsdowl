@@ -1,0 +1,251 @@
+%%% shpaper.nw -- Math papers for -*- LaTeX -*-
+
+% Author: Michaël Grünewald <michipili@gmail.com>
+% Date: Sat Apr 22 00:03:37 CEST 2007
+
+% BSD Owl Scripts (https://github.com/michipili/bsdowl)
+% This file is part of BSD Owl Scripts
+%
+% Copyright © 2005–2014 Michael Grünewald
+%
+% This file must be used under the terms of the CeCILL-B.
+% This source file is licensed as described in the file COPYING, which
+% you should have received as part of this distribution. The terms
+% are also available at
+% http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+\section{Modèle de document SHPAPER}
+
+Le modèle de document~SHPAPER permet de préparer des papelards et
+des polys pour les étudiants. Ce modèle de document est une dérivation
+du modèle ARTICLE de \LaTeX, ainsi on peut prendre au compte de
+SHPAPER la plupart des indications concernant ARTICLE. La dérivation
+diffère de l'original dans le style des sections et sous-sections, et
+dans l'ensemble des bibliothèques préchargées.
+
+Parmi les bibliothèques préchargées se trouvent~SHLTX, et toutes les
+commandes qu'elle définit pour préparer un texte mathématique en
+français peuvent donc être utilisées.
+
+<<shpaper.cls>>=
+<<SHPAPER Enregistrement de la bibliothèque>>
+<<Chargement de la classe article>>
+<<SHPAPER Chargement des bibliothèques>>
+<<Modifications de la présentation des sections>>
+
+@ \subsection{Enregistrement de la bibliothèque}
+\LaTeX\ fournit des services administatifs, permettant à l'utilisateur
+de se renseigner sur la version de la biliothèque qu'ils
+chargent. Cela leur permet de vérifier que la bibliothèque qu'ils
+sollicitennt présente l'interface souhaitée. On remplit donc le
+formulaire d'enregistrement~\LaTeX.
+<<SHPAPER Enregistrement de la bibliothèque>>=
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesClass{shpaper}[2007/04/22]
+
+@ \subsection{Chargement de la classe article}
+
+On charge la classe article. Cela commence par une espèce de
+blob~\LaTeX\ que j'ai  recopié je ne sais pas très bien où et je ne
+sais pas très bien pourquoi, mais ça à l'air de marcher avec.
+<<Chargement de la classe article>>=
+\@twosidefalse
+\@mparswitchfalse
+\@twocolumnfalse
+
+\setlength\lineskip{1\p@}
+\setlength\normallineskip{1\p@}
+\renewcommand\baselinestretch{}
+\setlength\parskip{0\p@ \@plus \p@}
+\@lowpenalty   51
+\@medpenalty  151
+\@highpenalty 301
+
+\setlength\arraycolsep{5\p@}
+\setlength\tabcolsep{6\p@}
+\setlength\arrayrulewidth{.4\p@}
+\setlength\doublerulesep{2\p@}
+\setlength\tabbingsep{\labelsep}
+\skip\@mpfootins = \skip\footins
+\setlength\fboxsep{3\p@}
+\setlength\fboxrule{.4\p@}
+
+@ On peut maintenant passer au chargement proprement dit, en passant
+tous les paramètres optionnels apparaissant dans
+l'appel~\fn{documentclass} à la classe~ARTICLE, qui sait peut-être ce
+qu'il faut en faire.
+<<Chargement de la classe article>>=
+\DeclareOption{lmodern}{\PassOptionsToPackage{lmodern}{shmetal}}
+\DeclareOption{garamond}{\PassOptionsToPackage{lmodern}{garamond}}
+\DeclareOption{times}{\PassOptionsToPackage{lmodern}{times}}
+\DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
+\ProcessOptions\relax
+%\input{size10.clo}
+\LoadClass{article}
+
+@ \subsection{Chargement des bibliothèques}
+
+<<SHPAPER Chargement des bibliothèques>>=
+\RequirePackage{shmetal}
+\RequirePackage{shltx}
+\RequirePackage{shthm}
+\shltxrc{shpaperrc}
+
+
+@ \subsection{Altération de la présentation des sections}
+On définit des macros personnalisées pour les titres de sections, et
+aussi pour le titre du document.
+
+@ Le premier point est la définition d'une commande sélectionnant un
+style de fonte pour la préparation des titres, cette commande
+est~\fn{structurefont}.
+
+<<Modifications de la présentation des sections>>=
+\newcommand\structurefont{\normalfont\sffamily}
+
+@ Pour le titre du document, on fournit une version modifiée
+de~\emph{mktitle}. Cette version modifiée insère automatiquement
+l'en-tête de l'utilisateur, contenu dans la procédure~\emph{mktitle}.
+Cette procédure peut-être définie dans le fichier~\emph{run control}.
+
+<<Modifications de la présentation des sections>>=
+\let\makeheader\relax
+
+\def\@maketitle{%
+  \newpage
+  \topskip\z@
+  \makeheader
+  \begingroup
+  \structurefont
+  \let \footnote \thanks
+  \noindent
+  \makebox[\hsize]{\Large\bfseries \@title\hfill}%
+  \vskip 1em%
+  \noindent\makebox[\hsize]{%
+    \def\and{\unskip, }\hskip\parindent\normalsize\@author, \@date.\hfill
+  }%
+  \endgroup
+  \par
+  \vskip 1.5em
+  \relax
+}
+
+\AtBeginDocument{\maketitle}
+
+@ Ensuite on redéfinit les commandes de section ordinaires, figurant
+dans ARTICLE.
+<<Modifications de la présentation des sections>>=
+\renewcommand\section{\@startsection {section}{1}{\z@}%
+                                   {-3.5ex \@plus -1ex \@minus -.2ex}%
+                                   {2.3ex \@plus.2ex}%
+                                   {\structurefont\large\bfseries}}
+\renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
+                                     {-4.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\structurefont\slshape\bfseries}}
+\renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
+                                     {-3.25ex\@plus -1ex \@minus -.2ex}%
+                                     {1.5ex \@plus .2ex}%
+                                     {\normalfont\normalsize\bfseries}}
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}%
+                                    {3.25ex \@plus1ex \@minus.2ex}%
+                                    {-1em}%
+                                    {\normalfont\normalsize\itshape}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{5}{\parindent}%
+                                       {3.25ex \@plus1ex \@minus .2ex}%
+                                       {-1em}%
+                                      {\normalfont\normalsize\itshape}}
+
+@ Pour la commande `PART' on utilise la fonte Latin Modern Sans
+Extended.
+<<Modifications de la présentation des sections>>=
+\def\partfont{%
+  \normalfont\fontfamily{lmssq}\Large
+}
+\def\@part[#1]#2{%
+    \ifnum \c@secnumdepth >\m@ne
+      \refstepcounter{part}%
+      \addcontentsline{toc}{part}{\thepart\hspace{1em}#1}%
+    \else
+      \addcontentsline{toc}{part}{#1}%
+    \fi
+    {\parindent \z@ \raggedright
+     \interlinepenalty \@M
+     \normalfont
+     \ifnum \c@secnumdepth >\m@ne
+       \partfont \partname\nobreakspace\thepart
+       \par\nobreak
+     \fi
+     \offinterlineskip
+     \partfont #2%
+     \markboth{}{}\par}%
+    \nobreak
+    \vskip 3ex
+    \@afterheading}
+
+\def\@spart#1{%
+    {\parindent \z@ \raggedright
+     \interlinepenalty \@M
+     \partfont #1\par}%
+     \nobreak
+     \vskip 3ex
+     \@afterheading}
+
+\let\ltx@paragraph\paragraph
+\def\paragraph#1{\ltx@paragraph{#1.}}
+
+@ Maintenant, on modifie la présentation de la table des matières en
+recopiant et éditant la partie concernée de~\emph{article.cls}.
+
+<<Modifications de la présentation des sections>>=
+\renewcommand\l@part[2]{%
+  \ifnum \c@tocdepth >-2\relax
+    \addpenalty\@secpenalty
+    \addvspace{2.25em \@plus\p@}%
+    \setlength\@tempdima{3em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      {\leavevmode
+       \partfont\normalsize #1\hfil \hb@xt@\@pnumwidth{\hss #2}}\par
+       \nobreak
+       \if@compatibility
+         \global\@nobreaktrue
+         \everypar{\global\@nobreakfalse\everypar{}}%
+      \fi
+    \endgroup
+  \fi}
+\renewcommand\l@section[2]{%
+  \ifnum \c@tocdepth >\z@
+    \addpenalty\@secpenalty
+    \addvspace{1.0em \@plus\p@}%
+    \setlength\@tempdima{1.5em}%
+    \begingroup
+      \parindent \z@ \rightskip \@pnumwidth
+      \parfillskip -\@pnumwidth
+      \leavevmode \structurefont \bfseries
+      \advance\leftskip\@tempdima
+      \hskip -\leftskip
+      #1\nobreak\hfil \nobreak\hb@xt@\@pnumwidth{\hss #2}\par
+    \endgroup
+  \fi}
+\renewcommand\l@subsection[2]{\@dottedtocline{2}{1.5em}{2.3em}{\structurefont
+#1}{\structurefont #2}}
+\renewcommand\l@subsubsection[2]{\@dottedtocline{3}{3.8em}{3.2em}{\structurefont
+#1}{\structurefont #2}}
+\renewcommand\l@paragraph[2]{\@dottedtocline{4}{7.0em}{4.1em}{\structurefont
+#1}{\structurefont #2}}
+\renewcommand\l@subparagraph[2]{\@dottedtocline{5}{10em}{5em}{\structurefont
+#1}{\structurefont #2}}
+\renewcommand\l@figure[2]{\@dottedtocline{1}{1.5em}{2.3em}{\structurefont
+#1}{\structurefont #2}}
+\let\l@table\l@figure
+
+<<shpaper.cls>>=
+%
+% Frenchy
+%
+
+\parindent=10pt
+@
+%%% End of file `shplexos.nw'
