@@ -19,8 +19,6 @@
 
 # TOPLEVEL=		toplevel
 # SRCS=			initialize_toplevel.ml
-# LIBS=			unix
-# LIBS+=		str
 #
 # .include "ocaml.toplevel.mk"
 
@@ -75,6 +73,10 @@
 #   Pass the given library names to the C linker
 #
 #   This forces TOPLEVEL_CUSTOM to yes.
+#
+#
+#  TOPLEVEL_FLAGS
+#   Flags passed to ocamlmktop
 
 
 ### IMPLEMENTATION
@@ -90,74 +92,85 @@ _PACKAGE_CANDIDATE=	${TOPLEVEL}
 .error The ocaml.toplevel.mk module expects you to set the TOPLEVEL variable to a sensible value.
 .endif
 
-TOPLEVEL_CUSTOM?= no
-TOPLEVEL_COPT?=
-TOPLEVEL_CLIB?=
+.if defined(TOPLEVEL_COPT)||defined(TOPLEVEL_CLIB)
+TOPLEVEL_CUSTOM?=	yes
+.elif defined(SRCS)&&!empty(SRCS:M*.c)
+TOPLEVEL_CUSTOM?=	yes
+.else
+TOPLEVEL_CUSTOM?=	no
+.endif
 
-OCAMLMKTOP?=ocamlmktop
+OCAMLMKTOP?=		ocamlmktop
 
-_TOPLEVEL_FLAGS=-custom -linkall
 
 #
 # Determining toplevel flags
 #
 
-.if defined(TOPLEVEL_COPT)&&!empty(TOPLEVEL_COPT)
-TOPLEVEL_CUSTOM=yes
-.endif
-
-.if defined(TOPLEVEL_CLIB)&&!empty(TOPLEVEL_CLIB)
-TOPLEVEL_CUSTOM=yes
-.endif
-
 .if ${TOPLEVEL_CUSTOM} == yes
-_TOPLEVEL_FLAGS+=-custom
+.if !defined(TOPLEVEL_FLAGS)||empty(TOPLEVEL_FLAGS:M-custom)
+TOPLEVEL_FLAGS+=	-custom
+.endif
 .endif
 
 .if defined(TOPLEVEL_COPT)&&!empty(TOPLEVEL_COPT)
 .for item in ${TOPLEVEL_COPT}
-_TOPLEVEL_FLAGS+=-ccopt ${item}
+TOPLEVEL_FLAGS+=	-ccopt ${item}
 .endfor
 .endif
 
 .if defined(TOPLEVEL_CLIB)&&!empty(TOPLEVEL_CLIB)
 .for item in ${TOPLEVEL_CLIB}
-_TOPLEVEL_FLAGS+=-cclib -l${item}
+TOPLEVEL_FLAGS+=	-cclib -l${item}
 .endfor
 .endif
 
 .if defined(DIRS)&&!empty(DIRS)
 .for item in ${DIRS}
-_TOPLEVEL_FLAGS+=-I ${item}
+TOPLEVEL_FLAGS+=	-I ${item}
 .endfor
 .endif
 
 
 .if !defined(_OCAML_COMPILE_NATIVE_ONLY)
 
-.for file in ${SRCS}
-_OCAML_CMO+= ${file:.ml=.cmo}
+.for file in ${SRCS:M*.ml}
+_OCAML_CMO+=		${file:.ml=.cmo}
 ${TOPLEVEL}: ${file:.ml=.cmo}
 .endfor
+
+.for file in ${SRCS:M*.c}
+${TOPLEVEL}: ${file:.c=.o}
+CLEANFILES+=		${file:.c=.o}
+.endfor
+
+.if defined(SRCS)&&!empty(SRCS:M*.c)
+CFLAGS+=		-I ${OCAMLROOTDIR}
+.endif
 
 .for file in ${LIBS}
 ${TOPLEVEL}: ${file:=.cma}
 .endfor
 
 ${TOPLEVEL}:
-	${OCAMLMKTOP} ${_TOPLEVEL_FLAGS} ${.ALLSRC} -o ${.TARGET}
+	${OCAMLMKTOP} ${TOPLEVEL_FLAGS} -o ${.TARGET} ${.ALLSRC}
 
 CLEANFILES+=    ${TOPLEVEL}
 BIN+=           ${TOPLEVEL}
 
 .else
-${TOPLEVEL}:
+${TOPLEVEL}: .PHONY
 	${INFO} Not building toplevel ${.TARGET} in native-only mode
 .endif
+
+display-developer-dirs: .PHONY
+.for dir in ${DIRS}
+	@printf '#directory "%s";;\n' "${dir}"
+.endfor
 
 .include "ocaml.main.mk"
 .include "bps.clean.mk"
 .include "bps.files.mk"
 .include "bps.usertarget.mk"
 
-### End of file `ocaml.odoc.mk'
+### End of file `ocaml.toplevel.mk'

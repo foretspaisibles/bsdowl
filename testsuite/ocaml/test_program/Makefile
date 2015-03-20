@@ -20,6 +20,7 @@ TEST+=	TestProgramDebug
 TEST+=	TestProgramProfile
 TEST+=	TestProgramMultiple
 TEST+=	TestProgramLexerParser
+TEST+=	TestProgramExternalOCaml
 
 .if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST+=	TestProgramExternalFindlib

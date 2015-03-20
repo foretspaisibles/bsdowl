@@ -1,12 +1,12 @@
-### Makefile -- Computing the golden ratio
+### TestProgramExternalOCaml.mk -- How does it feel?
 
 # Author: Michael Grünewald
-# Date: Sat Oct  5 20:47:48 CEST 2013
+# Date: Fri Jan  9 09:06:51 CET 2015
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,18 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=	golden_ratio
+PROGRAM=		rolling_stone
+EXTERNAL=		ocaml.lib:unix
 
-SRCS=		main.ml
+_EXTERNAL_ocaml.lib_unix_DIR=	${ocamllibdir}/ocaml
+_EXTERNAL_ocaml.lib_unix_BYTE=	unix.cma
+_EXTERNAL_ocaml.lib_unix_NATIVE=unix.cmxa
 
-LIBS+=		nums
-LIBS+=		newton
-LIBS+=		fibonacci
-
-DIRS=		${.OBJDIR}/../newton
-DIRS+=		${.OBJDIR}/../fibonacci
-
+test:
+	test -x ${DESTDIR}${BINDIR}/rolling_stone
 
 .include "ocaml.prog.mk"
 
-### End of file `Makefile'
+### End of file `TestProgramExternalOCaml.mk'

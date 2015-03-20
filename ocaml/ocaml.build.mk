@@ -246,14 +246,13 @@ ${clib}: ${obj}
 .undef clib
 .endif
 .if (empty(_OCAML_CMO)||empty(_OCAML_CMO:M${obj}))\
-	  &&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))\
-	  &&(empty(_OCAML_CMXS)||empty(_OCAML_CMXS:M${obj}))
+	  &&(empty(_OCAML_CMX)||empty(_OCAML_CMX:M${obj}))
 # We are not building a CMO nor a CMX file
 ${obj}:
 	${_OCAML_BUILD.${obj:T}} ${.ALLSRC:N*.cmi}
 .else
 # We are building a CMO or a CMX file
-if:=${obj:C/.cm[xo]/.cmi/:C/.cmxs/.cmi/}
+if:=${obj:C/.cm[xo]/.cmi/}
 .if !(empty(_OCAML_CMI)||empty(_OCAML_CMI:M${if}))
 ${obj}: ${if}
 ${obj}:

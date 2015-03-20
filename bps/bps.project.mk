@@ -358,7 +358,7 @@ PROJECTENV+=		PATH="${PROJECTLIBRARYSHELL}:${PATH}"
 SUBSHELLDIR?=		${.CURDIR}
 subshell: .PHONY
 	${INFO} "Entering developper's subshell"
-	@(cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL})
+	@(cd ${.CURDIR} && cd ${SUBSHELLDIR} && ${ENVTOOL} ${PROJECTENV} ${SHELL})
 	${INFO} "Exiting developper's subshell"
 
 # Remove the global product file before generating dependencies
