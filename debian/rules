@@ -4,6 +4,10 @@ MAKETOOL=bmake -r DESTDIR=$$(pwd)/debian/bsdowl
 %:
 	dh $@
 
+override_dh_auto_configure:
+	autoconf
+	dh_auto_configure
+
 override_dh_auto_build:
 	${MAKETOOL} build
 
