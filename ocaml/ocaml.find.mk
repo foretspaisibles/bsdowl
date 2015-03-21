@@ -120,6 +120,7 @@ OCAMLFIND?=ocamlfind
 .endif
 
 .if ${USE_OCAMLFIND} == yes
+OCAMLWHERE?= ${OCAMLFIND} ocamlc -where
 OCAMLDOC?= ${OCAMLFIND} ocamldoc
 OCAMLMKTOP?= ${OCAMLFIND} ocamlmktop -linkpkg
 .if ${WITH_PROFILE} == yes
