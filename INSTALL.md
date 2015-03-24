@@ -25,6 +25,12 @@ MacPorts on Mac OS X or **aptitude** on Debian.  If a package is not
 available for your distribution, this is not a problem for **bmake**
 is very portable and [easy to install][install-bmake].
 
+*Other dependencies*
+Depending on the exact set of features we want to use, we may need to
+install the following software packages: graphicsmagick, awk, m4,
+ocaml, texlive-latex-base, gnupg, ocaml-findlib, opensp.  Their exact
+name can very from packaging system to packaging system.
+
 
 ## Site-wide installation procedure
 
