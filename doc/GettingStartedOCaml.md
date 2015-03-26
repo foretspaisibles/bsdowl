@@ -13,22 +13,26 @@ and then consider a more complex case.
 Create a directory to hold your files and put your source there.
 Along the source, create a `Makefile` with the following content:
 
-    PROGRAM=    wordcount
-    .include "ocaml.prog.mk"
+```makefile
+PROGRAM=    wordcount
+.include "ocaml.prog.mk"
+```
 
 ## Building
 
 You can now `make` your program and produce a `wordcount` binary.  The
 complete output of the make process looks like this:
 
-    % make
-    make depend
-    ocamldep  wordcount.ml > .depend
-    make build
-    ocamlc -c -o wordcount.cmo wordcount.ml
-    ocamlc -o wordcount.cb wordcount.cmo
-    cp wordcount.cb wordcount
-    make doc
+```console
+% make
+make depend
+ocamldep  wordcount.ml > .depend
+make build
+ocamlc -c -o wordcount.cmo wordcount.ml
+ocamlc -o wordcount.cb wordcount.cmo
+cp wordcount.cb wordcount
+make doc
+```
 
 When you call `make` without argument it is the same thing as
 `make all` which decomposes as `make depend` and `make build` as you
@@ -41,34 +45,42 @@ Once you are satisfied with the results, you can install it with `make
 install`.  It will call `su` to gain root privileges and install your
 program under `/usr/local/bin` a value deduced from *PREFIX*
 
-    % make install
-    ===> Switching to root credentials for target (install)
-    Password:
-    /usr/bin/install -c -d /usr/local/bin
-    install -o root -g wheel -m 555 wordcount /usr/local/bin
+```console
+% make install
+===> Switching to root credentials for target (install)
+Password:
+/usr/bin/install -c -d /usr/local/bin
+install -o root -g wheel -m 555 wordcount /usr/local/bin
+```
 
 You can check the value of the *PREFIX* variable, or any other
 variable, with `make -V` as in
 
-    % make -V PREFIX
-    /usr/local
+```console
+% make -V PREFIX
+/usr/local
+```
 
 If you want to install your program to another location like
 `${HOME}/bin` you only need to change the *PREFIX*.  You can make the
 change permanent by adding a `PREFIX=${HOME}` line to your `Makefile`:
 
-    PROGRAM=    wordcount
-    PREFIX=     ${HOME}
-    .include "ocaml.prog.mk"
+```makefile
+PROGRAM=    wordcount
+PREFIX=     ${HOME}
+.include "ocaml.prog.mk"
+```
 
 The order of variable declarations is not important but they have to
 come before the `.include` line.  It is also possible to use
 `PREFIX=${HOME}` just once by adding it on the command line without
 editing the `Makefile`:
 
-    % make PREFIX=${HOME} install
-    /usr/bin/install -c -d /home/michael/bin
-    install -o michael -g michael -m 550 wordcount /home/michael/bin
+```console
+% make PREFIX=${HOME} install
+/usr/bin/install -c -d /home/michael/bin
+install -o michael -g michael -m 550 wordcount /home/michael/bin
+```
 
 Note that since you have write access to the *PREFIX* directory, it is
 not necessary to gain root privileges for this installation.
@@ -78,22 +90,27 @@ not necessary to gain root privileges for this installation.
 
 Last you can remove object code from the directory with
 
-    % make clean
-    rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
+```console
+% make clean
+rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
+```
 
 If you look closely, you will notice that the `.depend` file is not
 removed:
 
-    % ls -A
-    .depend      Makefile     wordcount.ml
+```console
+% ls -A
+.depend      Makefile     wordcount.ml
+```
 
 This is on purpose, and if you also want to get rid of the `.depend`
 file you can use the more powerful mantra
 
-    % make realclean
-    rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
-    rm -f  .depend
-
+```console
+% make realclean
+rm -f  wordcount.cmo wordcount.cmi wordcount.cb wordcount
+rm -f  .depend
+```
 
 ## Several files and auxilary libraries
 
@@ -103,12 +120,13 @@ now consists of your main file `wordcount.ml` a library
 `mailreader.ml` relying on the `unix.cma` library.  Here is the
 corresponding `Makefile`:
 
-
-    PROGRAM=    wordcount
-    SRCS+=      mailreader.ml
-    SRCS+=      wordcount.ml
-    LIBS+=      unix
-    .include "ocaml.prog.mk"
+```makefile
+PROGRAM=    wordcount
+SRCS+=      mailreader.ml
+SRCS+=      wordcount.ml
+LIBS+=      unix
+.include "ocaml.prog.mk"
+```
 
 While dependencies between modules are computed with `ocamldep` so
 that modules are compiled as needed, the order in which the files are
