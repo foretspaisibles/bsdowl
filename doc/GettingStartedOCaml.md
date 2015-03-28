@@ -9,8 +9,15 @@ utility.  After reading this page, you will know:
  - How to clean compilation products.
  - How to compile a more complex OCaml program using ocamlfind
 
-We first assume that the source code is a single file `wordcount.ml`
-and then consider a more complex case.
+A minimal example for an OCaml program can be found under
+[testsuite/ocaml/test_program[example-program].  The
+[Gasoline][example-gasoline] project provides a more complete example.
+
+For this guide, we first assume that the source code is a single file
+`wordcount.ml` and then consider a more complex case.
+
+  [example-gasoline]: https://github.com/michipili/gasoline
+  [example-program]:  ../testsuite/ocaml/test_program/TestProgram.mk
 
 
 ## Compile a simple OCaml program
