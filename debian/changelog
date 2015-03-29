@@ -1,3 +1,10 @@
+bsdowl (3.0.0-20150314-1ubuntu1) trusty; urgency=medium
+
+  * Convert to Ubuntu.
+  * Add autoconf to the build dependencies.
+
+ -- Michael Grünewald <michipili@gmail.com>  Sun, 29 Mar 2015 10:19:26 +0200
+
 bsdowl (3.0.0-20150314-1) UNRELEASED; urgency=medium
 
   * Update package to 3.0.0-20141203. 
