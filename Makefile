@@ -14,7 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROJECT=		bsdowl
+PACKAGE=		bsdowl
 OFFICER=		michipili@gmail.com
 VERSION=		3.0.0-current
 
