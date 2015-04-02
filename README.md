@@ -67,8 +67,12 @@ develop and deploy in heterogeneous environment.
 If you are not at all familiar with makefiles you can quickly learn
 the basics with de Boor's [classical tutorial][start-deboor].
 It is also nice to feel confident while interacting with the shell, if
-this is not the case [UNIX Power Tools][start-upt] could help you.
+this is not the case [UNIX Power Tools][start-upt] could help you. The
+[documentation index][start-index] provides an overview of the files
+available in the [doc][start-doc] directory.
 
+  [start-doc]:     ./doc
+  [start-index]:   doc/Index.md
   [start-install]: INSTALL.md
   [start-latex]:   doc/GettingStartedLaTeX.md
   [start-ocaml]:   doc/GettingStartedOCaml.md
