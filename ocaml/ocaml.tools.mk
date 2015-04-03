@@ -117,6 +117,8 @@ USE_OPTIMIZED_COMPILER?= no
 .warning The USE_OPTIMIZED_COMPILER flag is superseded by WITH_PROFILE.
 .endif
 
+OCAMLWHERE?= ocamlc -where
+
 .if ${WITH_PROFILE} == yes
 # Profiling case
 OCAMLCB?= ocamlcp -c

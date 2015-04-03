@@ -1,0 +1,5 @@
+#
+# Configuration of Make
+#
+unset MAKEFLAGS
+unset MAKEOBJDIR
