@@ -67,7 +67,7 @@ _OCAML_DIRS=${DIRS:C/^/-I /}
 .endif
 
 .if !defined(OCAMLROOTDIR)
-OCAMLROOTDIR!=		2>/dev/null ${OCAMLCI} -where
+OCAMLROOTDIR!=		2>/dev/null ${OCAMLWHERE} -where
 .endif
 
 .if defined(OCAMLROOTDIR)
