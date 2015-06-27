@@ -28,6 +28,15 @@ are now probably interested in getting started:
    have several [configuration files](ManageDotFiles.md) so we help you
    taking care of them.
 
+The following list consists of projects using **BSD Owl Scripts** as
+build system.  Studiying these examples is a good starting point to
+start using **BSD Owl Scripts**:
+
+- [Anvil](https://github.com/michipili/anvil), Bourne shell scripts
+- [Gasoline](https://github.com/michipili/gasoline), OCaml
+- [Rashell](https://github.com/michipili/rashell), OCaml
+- [Blueprint](https://github.com/michipili/blueprint), Metapost macros
+
 
 ## Starting points for developers and porters
 
