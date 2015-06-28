@@ -42,6 +42,8 @@ SHARE+=			ocaml.odoc.mk
 SHARE+=			ocaml.manual.mk
 SHARE+=			ocaml.toplevel.mk
 
+SHARE+=			bsdowl.css
+
 .include "generic.files.mk"
 
 ### End of file `Makefile'

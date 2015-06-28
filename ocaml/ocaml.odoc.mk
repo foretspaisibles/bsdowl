@@ -327,6 +327,10 @@ _ODOC_HTML_TOOL+=-charset ${ODOC_HTML_CHARSET}
 _ODOC_HTML_TOOL+=-css-style ${ODOC_HTML_CSS_URL}
 .endif
 
+.if !defined(ODOC_HTML_CSS_URL)
+ODOC_HTML_CSS_FILE?=	${_BPS_DATAROOTDIR}/bsdowl.css
+.endif
+
 .if defined(ODOC_HTML_CSS_FILE)&&!empty(ODOC_HTML_CSS_FILE)
 ${ODOC_HTML}: ${ODOC_HTML_CSS_FILE}
 .endif

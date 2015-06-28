@@ -1,0 +1,188 @@
+body {
+    font-family: Sans-Serif;
+    width: 70ex;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 11pt;
+}
+
+pre, code {
+    font-family: inherit;
+}
+
+table.indextable {
+    font-family: inherit;
+}
+
+table.indextable div.info {
+    font-family: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: Sans-Serif;
+}
+
+
+p {
+    text-align: justify;
+    line-height: 120%;
+}
+
+a:visited {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:link {
+    color: inherit;
+    text-decoration: none;
+}
+
+a:hover {
+    color: Navy;
+    text-decoration: none;
+    background-color: LightGrey;
+}
+
+a:active {
+    color: Navy;
+    text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    text-indent: -40pt;
+}
+
+h1 {
+    font-size: 22pt;
+    text-align: left;
+}
+
+h2 {
+    font-size: 17pt;
+    margin-top: 3ex;
+    margin-bottom: 0ex;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+h3 {
+    font-size: 17pt;
+    margin-top: 3ex;
+    text-align: left;
+}
+
+h4 {
+    font-size: 14pt;
+    text-align: left;
+    font-style: italic;
+    font-weight: normal;
+    letter-spacing: 0.05em;
+}
+
+h5 {
+    font-size: 12pt;
+    text-align: left;
+    font-style: italic;
+    font-weight: normal;
+    display: inline;
+    letter-spacing: 0.2em;
+    color: #004000;
+}
+
+h6 {
+    font-size: 12pt;
+    text-align: left;
+    font-style: normal;
+    font-weight: normal;
+    color: #004000;
+    text-transform: uppercase;
+    margin-bottom: 0pt;
+}
+
+.superscript {
+    font-size: 4;
+}
+
+.subscript {
+    font-size: 4;
+}
+
+.typefieldcomment {
+    color: Black;
+}
+
+.constructor {
+    color: Navy;
+ }
+
+.string {
+    color: Purple;
+}
+
+.warning {
+    color: Red;
+    font-weight: bold;
+}
+
+.info {
+    margin-left: 3ex;
+    margin-right: 3ex;
+}
+
+.param_info {
+    margin-top: 4px;
+    margin-left: 3ex;
+    margin-right: 3ex;
+}
+
+.typetable {
+    border-style: hidden;
+}
+
+.indextable {
+    border-style: hidden;
+}
+
+.paramstable {
+    border-style: hidden;
+    padding: 5pt 5pt;
+}
+
+td.typefieldcomment {
+    font-size: smaller;
+}
+
+/* Code */
+pre, code {
+    color: Blue;
+}
+pre {
+    margin-top: 20pt;
+    margin-bottom: 8pt;
+}
+
+.type {
+    color: Green;
+}
+
+.keyword {
+    color: Black;
+    font-weight: Bold;
+}
+
+.keywordsign {
+    color: Purple;
+}
+
+.code {
+    color: Blue;
+}
+
+div.sig_block {
+    margin-left: 2em;
+}
+
+.info {
+    text-align: justify;
+}
