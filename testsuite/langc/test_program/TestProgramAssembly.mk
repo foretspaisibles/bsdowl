@@ -19,6 +19,9 @@ PROGRAM=		hello_world
 SRCS=			hello_world.c
 SRCS+=			garbage.s
 
+DIRS=			${BSDOWLSRCDIR}/example/langc/hello_world
+.PATH:			${DIRS}
+
 test:
 	test -x ${DESTDIR}${BINDIR}/hello_world
 	test -f ${DESTDIR}${MANDIR}/man1/hello_world.1.gz
