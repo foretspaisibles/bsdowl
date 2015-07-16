@@ -1,12 +1,9 @@
-### Makefile -- A very simple static library
-
-# Author: Michael Grünewald
-# Date: Fri Nov 14 16:28:04 CET 2014
+### Makefile -- A very simple library
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -16,15 +13,18 @@
 
 LIBRARY=		rational
 
+APIVERSION=		1
+LIBVERSION=		${APIVERSION}.0.0
+
 SRCS=			rational.h
 SRCS+=			rational_trace.h
 SRCS+=			rational_trace.c
 SRCS+=			rational_operation.c
 SRCS+=			rational_print.c
 
-DIRS=			${BSDOWLSRCDIR}/example/langc/librational
-.PATH:			${DIRS}
+MAN=			librational.3
+
 
 .include "langc.lib.mk"
 
-### End of file `Makefile'
+### End of `Makefile'
