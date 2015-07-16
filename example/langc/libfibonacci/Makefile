@@ -1,7 +1,7 @@
-### Makefile -- A very simple program
+### Makefile -- Library for computing Fibonacci numbers
 
 # Author: Michael Grünewald
-# Date: Sat Nov 15 16:10:58 CET 2014
+# Date: Fri Nov 14 22:55:51 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		goldenratio
+LIBRARY=		fibonacci
 
-SRCS=			goldenratio.c
+SRCS=			fibonacci.h
+SRCS+=			fibonacci.c
 
-DIRS=			${BSDOWLSRCDIR}/example/langc/librational
-DIRS+=			${BSDOWLSRCDIR}/example/langc/libfibonacci
-.PATH:			${DIRS}
-
-.include "langc.prog.mk"
+.include "langc.lib.mk"
 
 ### End of file `Makefile'
