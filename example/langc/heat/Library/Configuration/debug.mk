@@ -1,12 +1,9 @@
-### Makefile -- Library for computing Fibonacci numbers
-
-# Author: Michael Grünewald
-# Date: Fri Nov 14 22:55:51 CET 2014
+### debug.mk -- Configuration for developement
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,14 +11,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		fibonacci
+.if !empty(THISMODULE:Mlangc.*)
+USES+=			debug
+CFLAGS=
+.endif
 
-SRCS=			fibonacci.h
-SRCS+=			fibonacci.c
-
-DIRS=			${BSDOWLSRCDIR}/example/langc/heat/libfibonacci
-.PATH:			${DIRS}
-
-.include "langc.lib.mk"
-
-### End of file `Makefile'
+### End of file `debug.mk'

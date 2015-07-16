@@ -1,7 +1,7 @@
-### Makefile -- A very simple program
+### Makefile -- A complex heat generating program
 
 # Author: Michael Grünewald
-# Date: Sat Nov 15 16:10:58 CET 2014
+# Date: Fri Nov 14 10:56:08 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,17 +14,20 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		goldenratio
+PACKAGE=	heat
+VERSION=	0.1-current
+OFFICER?=	michipili@gmail.com
 
-SRCS=			goldenratio.c
+MODULE=		langc.lib:librational
+MODULE+=	langc.lib:libfibonacci
+MODULE+=	langc.prog:goldenratio
 
-DIRS=			${BSDOWLSRCDIR}/example/langc/heat/goldenratio
-DIRS+=			${BSDOWLSRCDIR}/example/langc/heat/librational
-DIRS+=			${BSDOWLSRCDIR}/example/langc/heat/libfibonacci
+do-configure:
+	(cd ${.CURDIR} && autoconf && ./configure)
 
-.PATH.c:		${DIRS}
-.PATH.h:		${DIRS}
+do-test: goldenratio/goldenratio
+	${.ALLSRC:tA}
 
-.include "langc.prog.mk"
+.include "generic.project.mk"
 
 ### End of file `Makefile'

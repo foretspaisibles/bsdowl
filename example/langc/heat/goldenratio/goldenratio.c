@@ -44,8 +44,8 @@ goldenratio_fibonacci(int n)
   putchar('\n');
 }
 
-#define	MODE_RATIONAL	0
-#define	MODE_FIBONACCI	1
+#define MODE_RATIONAL   0
+#define MODE_FIBONACCI  1
 
 int
 main(int argc, char * const *argv)
@@ -64,7 +64,7 @@ main(int argc, char * const *argv)
     case 'n':
       rank = atoi(optarg);
       if(rank < 0) {
-	exit(64);
+        exit(64);
       }
       break;
     default:
