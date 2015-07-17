@@ -1,3 +1,18 @@
 language: c
-script: sh -ex ./Library/Ancillary/travisci main
-before_script: sudo sh -ex ./Library/Ancillary/travisci before
+sudo: false
+addons:
+  apt:
+    packages:
+    - gawk
+    - gnupg
+    - graphicsmagick
+    - graphicsmagick
+    - m4
+    - noweb
+    - ocaml
+    - ocaml-findlib
+    - texlive-font-utils
+    - texlive-lang-french
+    - texlive-latex-base
+install: sh -ex ./Library/Ancillary/autoinstall bmake
+script: sh -ex ./Library/Ancillary/travisci
