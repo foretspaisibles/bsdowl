@@ -21,9 +21,9 @@ autoconf
     --with-gm\
     --with-tex\
     --with-ocaml\
-    --with-noweb\
+    --without-noweb\
     --with-credentials=sudo\
-    --enable-test-findlib\
+    --disable-test-findlib\
     --disable-test-noweb\
     --disable-test-gpg\
     --disable-test-texmf
