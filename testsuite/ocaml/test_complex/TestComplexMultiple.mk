@@ -18,6 +18,10 @@ CONFIGURATIONLIST=	Debug Profile Release
 TARGETLIST=		realclean distclean clean
 TARGETLIST+=		obj depend build doc install
 
+prefix=			/opt/bsdowl
+
+.export:		prefix
+
 ${TARGETLIST}: .PHONY
 .for configuration in ${CONFIGURATIONLIST}
 	cd ${.CURDIR} && ${MAKE} -f ${.CURDIR}/TestComplex.mk\
@@ -26,9 +30,9 @@ ${TARGETLIST}: .PHONY
 		${.TARGET}
 .endfor
 
-LIBDIR=			/usr/local/lib/golden_ratio
-BINDIR=			/usr/local/bin
-DOCDIR=			/usr/local/share/doc/golden_ratio
+LIBDIR=			${prefix}/lib/golden_ratio
+BINDIR=			${prefix}/bin
+DOCDIR=			${prefix}/share/doc/golden_ratio
 
 .for configuration in ${CONFIGURATIONLIST}
 testdir:=		${MAKEOBJDIRPREFIX}/${configuration}

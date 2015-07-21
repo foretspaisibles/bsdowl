@@ -21,15 +21,15 @@ AC_TAR_COMPRESSION_METHODS([COMPRESS])
 # programs, nevertheless, it might be useful for packagers and porters
 # to let the configure script fail if some programs are not present.
 
-AC_ARG_WITH([gpg],
+AC_ARG_WITH_PROG([gpg],
   [AS_HELP_STRING([--with-gpg],
     [support signing of distribution files with GPG])],
-  [AC_NEED_PROG([GPG], [gpg])])
+  [GPG], [gpg])
 
-AC_ARG_WITH([gm],
+AC_ARG_WITH_PROG([gm],
   [AS_HELP_STRING([--with-gm],
     [support conversion of METAPOST pictures to PNG with GraphicsMagick])],
-  [AC_NEED_PROG([GraphicsMagick], [gm])])
+  [GraphicsMagick], [gm])
 
 AC_ARG_WITH([tex],
   [AS_HELP_STRING([--with-tex],
@@ -40,30 +40,35 @@ AC_ARG_WITH([tex],
    AC_NEED_PROG([dvips], [dvips])
    AC_NEED_PROG([epstopdf], [epstopdf])])
 
-AC_ARG_WITH([ocaml],
+AC_ARG_WITH_PROG([ocaml],
   [AS_HELP_STRING([--with-ocaml],
     [support preparation of OCaml projects])],
-  [AC_NEED_PROG([ocamlc], [ocamlc])])
+  [ocamlc],
+  [ocamlc])
 
-AC_ARG_WITH([findlib],
+AC_ARG_WITH_PROG([findlib],
   [AS_HELP_STRING([--with-findlib],
     [support use of OCaml findlib in OCaml projects])],
-  [AC_NEED_PROG([ocamlfind], [ocamlfind])])
+  [findlib],
+  [ocamlfind])
 
-AC_ARG_WITH([tidy],
+AC_ARG_WITH_PROG([tidy],
   [AS_HELP_STRING([--with-tidy],
     [support use of tidy to canonise HTML pages])],
-  [AC_NEED_PROG([tidy], [tidy])])
+  [tidy],
+  [tidy])
 
-AC_ARG_WITH([opensp],
+AC_ARG_WITH_PROG([opensp],
   [AS_HELP_STRING([--with-opensp],
     [support static HTML pages generation with OpenSP])],
-  [AC_NEED_PROG([OpenSP], [onsgmls])])
+  [OpenSP],
+  [onsgmls])
 
-AC_ARG_WITH([noweb],
+AC_ARG_WITH_PROG([noweb],
   [AS_HELP_STRING([--with-noweb],
     [support literate programming with noweb])],
-  [AC_NEED_PROG([noweb], [noweb])])
+  [noweb],
+  [noweb])
 
 AC_ARG_WITH([credentials],
   [AS_HELP_STRING([--with-credentials],

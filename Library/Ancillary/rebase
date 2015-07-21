@@ -1,12 +1,11 @@
-### Makefile -- Test Suite for OCaml
+#!/bin/sh -e
 
-# Author: Michael Grünewald
-# Date: Fri Oct 17 13:50:39 CEST 2014
+### rebase -- Rebase topic branches
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,15 +13,21 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+topic_branch_list()
+{
+    git branch | sed -n -e 's/^..//;/topic/p'
+}
 
-SUBDIR=		test_program
-SUBDIR+=	test_library
-SUBDIR+=	test_complex
 
-.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
-SUBDIR+=	test_toplevel
-.endif
+topic_branch_rebase()
+{
+    local branch
 
-.include "generic.subdir.mk"
+    while read "branch"; do
+        git rebase --onto master remaster "${branch}"
+    done
+}
 
-### End of file `Makefile'
+topic_branch_list | topic_branch_rebase
+
+### End of file `rebase'

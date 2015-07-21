@@ -13,64 +13,23 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-depends='graphicsmagick gawk m4 ocaml texlive-latex-base'
-recommends='gnupg graphicsmagick noweb texlive-font-utils texlive-lang-french'
-extras='ocaml ocaml-native-compilers camlp4-extra opam'
-opam='depext ocamlfind'
-
-repo_src="deb-src http://ftp.debian.org/debian/ unstable main"
-repo_extras="deb mirror://mirrors.ubuntu.com/mirrors.txt trusty main restricted universe"
-repo_ocaml="avsm/ocaml42+opam12"
-
-set -a
-OPAMYES=1
-set +a
-
-
-action_before()
-{
-    echo "${repo_src}" >> /etc/apt/sources.list
-    add-apt-repository "${repo_extras}"
-    add-apt-repository --yes "ppa:${repo_ocaml}"
-    apt-get -qq update
-    apt-get -qq install apt-src
-    apt-get -qq install ${depends} ${recommends} ${extras}
-    apt-src -bi install bmake
-}
-
-action_main()
-{
-    opam init -a git://github.com/ocaml/opam-repository
-    eval $(opam config env)
-    opam install ${opam}
-
-    autoconf
-    ./configure\
-        --with-gpg\
-        --with-gm\
-        --with-tex\
-        --with-ocaml\
-        --with-noweb\
-        --with-credentials=sudo\
-        --enable-test-findlib\
-        --disable-test-noweb\
-        --disable-test-gpg\
-        --disable-test-texmf
-
-    bmake build
-    bmake test
-    bmake install
-}
-
-action_usage()
-{
-    1>&2 echo "Failure: $1: action not supported."
-    exit 1
-}
-
-case $1 in
-    before|main)	action_$1;;
-    *)			action_usage $1;;
-esac
+INSTALL_PREFIX="${HOME}/.local"
+autoconf
+./configure\
+    --prefix="${INSTALL_PREFIX}"\
+    --with-gpg\
+    --with-gm\
+    --with-tex\
+    --with-ocaml\
+    --without-noweb\
+    --with-credentials=sudo\
+    --disable-test-findlib\
+    --disable-test-noweb\
+    --disable-test-gpg\
+    --disable-test-texmf
+bmake build
+bmake test
+bmake install
+test -f "${INSTALL_PREFIX}/share/bsdowl/bps.bpsconfig.mk"
 
 ### End of file `travis-tool'

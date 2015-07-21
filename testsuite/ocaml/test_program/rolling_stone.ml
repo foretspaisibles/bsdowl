@@ -11,6 +11,9 @@ you should have received as part of this distribution. The terms
 are also available at
 http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt *)
 
+let ( |> ) x f =
+  f x
+
 let is_without_a_home () =
   try (Unix.getenv "HOME" |> ignore; false)
   with Not_found -> true

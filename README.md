@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/michipili/bsdowl.svg)](https://travis-ci.org/michipili/bsdowl)
+[![Build Status](https://travis-ci.org/michipili/bsdowl.svg?branch=master)](https://travis-ci.org/michipili/bsdowl?branch=master)
 
 # BSD Owl Scripts
 
