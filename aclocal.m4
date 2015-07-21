@@ -111,7 +111,7 @@ AC_DEFUN([AC_HAS_PROG],
    fi;])
 
 
-# AC_NEED_PROG([UNFORMAL PROGRAM NAME], [PROGRAM NAME])
+# AC_NEED_PROG([INFORMAL PROGRAM NAME], [PROGRAM NAME])
 # -----------------------------------------------------
 AC_DEFUN([AC_NEED_PROG],
 [AC_CHECK_PROG([has_$2], [$2], [yes], [no])
