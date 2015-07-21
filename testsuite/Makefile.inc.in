@@ -37,4 +37,8 @@ MINGW32AR?=			@MINGW32AR@
 .export MINGW32CC
 .export MINGW32AR
 
+# Local Variables:
+# mode: makefile
+# End:
+
 ### End of file `Makefile.inc.in'
