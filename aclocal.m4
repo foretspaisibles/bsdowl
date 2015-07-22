@@ -14,6 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+m4_include([Library/Autoconf/ocaml.m4])
+
 
 # AC_PROG_ID
 # ----------

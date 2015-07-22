@@ -8,6 +8,7 @@ AC_PROG_GREP()
 AC_PROG_INSTALL()
 AC_PROG_LN_S()
 AC_PROG_MKDIR_P()
+AC_PROG_OCAML()
 AC_PROG_SED()
 AC_PROG_ID()
 AC_SYSTEM_USER()
@@ -195,6 +196,18 @@ AC_ARG_ENABLE([test-metapost],
   [WITH_TESTSUITE_METAPOST=${WITH_TESTSUITE_TEXMF}])
 
 
+# unpack_ocaml_version
+#
+#   Prepare a string holding OCamlversion
+#
+# This change the version so that numerical comparison is possible.
+
+unpack_ocaml_version[]()
+{
+    echo ${OCAMLVERSION} | awk -F. '{printf("%04d%04d%04d", $1, $2, $2)}'
+}
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
@@ -205,6 +218,7 @@ AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
+AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
 AC_SUBST([VERSION], [$(${BSDMAKE} -V VERSION)])
 AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk testsuite/Makefile.inc])
 AC_OUTPUT

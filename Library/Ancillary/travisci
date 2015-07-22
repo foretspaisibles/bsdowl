@@ -13,20 +13,23 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
+TRAVIS_WITH_TEX=${TRAVIS_FULL}
+TRAVIS_WITH_NOWEB=${TRAVIS_FULL}
+TRAVIS_WITH_FINDLIB=${TRAVIS_FULL}
 INSTALL_PREFIX="${HOME}/.local"
 autoconf
 ./configure\
     --prefix="${INSTALL_PREFIX}"\
     --with-gpg\
     --with-gm\
-    --with-tex\
     --with-ocaml\
-    --without-noweb\
+    --with-tex=${TRAVIS_WITH_TEX}\
+    --with-noweb=${TRAVIS_WITH_NOWEB}\
     --with-credentials=sudo\
-    --disable-test-findlib\
-    --disable-test-noweb\
-    --disable-test-gpg\
-    --disable-test-texmf
+    --enable-test-findlib=${TRAVIS_WITH_FINDLIB}\
+    --enable-test-noweb=no\
+    --enable-test-texmf=no\
+    --disable-test-gpg
 bmake build
 bmake test
 bmake install

@@ -16,3 +16,6 @@ addons:
     - texlive-latex-base
 install: sh -ex ./Library/Ancillary/autoinstall bmake
 script: sh -ex ./Library/Ancillary/travisci
+env:
+    - TRAVIS_FULL=no
+    - TRAVIS_FULL=yes
