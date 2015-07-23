@@ -20,7 +20,11 @@ SUBDIR+=	test_library
 SUBDIR+=	test_complex
 
 .if "${WITH_TESTSUITE_FINDLIB}" == "yes"
+.if defined(OCAMLVERSION)&&!empty(OCAMLVERSION)
+.if ${OCAMLVERSION} > 000400000000
 SUBDIR+=	test_toplevel
+.endif
+.endif
 .endif
 
 .include "generic.subdir.mk"

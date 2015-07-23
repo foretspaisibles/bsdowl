@@ -37,6 +37,7 @@ EXEC_PREFIX?=		${exec_prefix}
 DATAROOTDIR?=		${datarootdir}
 SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
 SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
+OCAMLVERSION?=		@OCAMLVERSION@
 
 # Local Variables:
 # mode: makefile
