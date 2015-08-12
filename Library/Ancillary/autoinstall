@@ -1,6 +1,6 @@
 #!/bin/sh
 
-### autoinstall -- Autoinstall bmake or bsdowl
+### autoinstall -- Autoinstall for Travis CI
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -13,74 +13,13 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-: ${prefix:=${HOME}/.local}
+: ${local:=${HOME}/.local}
 : ${srcdir:=${HOME}/.local/sources}
 
-autoinstall_bsdowl_version='3.0.0-20150401'
+if [ -f "${local}/.anvil_autoinstall_cached" ]; then exit 0; fi
 
-
-autoinstall_bmake()
-{
-    install -d "${srcdir}"
-    cd "${srcdir}"
-
-    curl -s http://void.crufty.net/ftp/pub/sjg/bmake.tar.gz\
-        | tar xzfC - "${srcdir}"
-
-    curl -s http://void.crufty.net/ftp/pub/sjg/mk.tar.gz\
-        | tar xzfC - "${srcdir}/bmake"
-
-    ./bmake/boot-strap --prefix="${prefix}" --install
-    ./bmake/boot-strap --prefix="${prefix}" op=install
-}
-
-autoinstall_bsdowl()
-{
-    local version
-
-    version="${autoinstall_bsdowl_version}"
-    install -d "${srcdir}"
-    cd "${srcdir}"
-
-    curl -L -s https://github.com/michipili/bsdowl/releases/download/v${version}/bsdowl-${version}.tar.xz | tar xJf -
-    cd bsdowl-${version}
-    autoconf
-    ./configure --prefix="${prefix}"
-    bmake build
-    bmake install
-}
-
-autoinstall_usage()
-{
-    iconv -c -f utf-8 <<EOF
-Usage: autoinstall [-h][-s SRCDIR] [-p PREFIX] bsdowl bmake
- Install bmake and bsdowl
-Options:
- -h Display this help message.
- -p PREFIX [${prefix}]
-    Use PREFIX as installation prefix.
- -s SRCDIR [${srcdir}]
-    Download sources to SRCDIR.
-EOF
-}
-
-while getopts "hs:p:" OPTION; do
-    case "${OPTION}" in
-        h)	autoinstall_usage; exit 0;;
-        s)	srcdir="${OPTARG}";;
-        p)	prefix="${OPTARG}";;
-        ?)	autoinstall_usage; exit 64;;
-    esac
-done
-shift $(expr $OPTIND - 1)
-for package in "$@"; do
-    case "${package}" in
-        bmake|bsdmake);;
-        *) autoinstall_usage; exit 64;;
-    esac
-done
-for package in "$@"; do
-    autoinstall_${package}
-done
+git clone 'https://github.com/michipili/anvil' "${srcdir}/anvil"
+/bin/sh -ex "${srcdir}/anvil/subr/anvil_travisci_autoinstall.sh" "$@"\
+    && touch "${local}/.anvil_autoinstall_cached"
 
 ### End of file `autoinstall'
