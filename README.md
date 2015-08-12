@@ -1,11 +1,11 @@
-[![Build Status](https://travis-ci.org/michipili/bsdowl.svg?branch=master)](https://travis-ci.org/michipili/bsdowl?branch=master)
-
 # BSD Owl Scripts
 
 This collection of BSD Make directives aims at providing a highly
 portable build system targetting modern UNIX systems and supporting
 common or less command languages.  This is a build system, which means
 that it can be used to organise fairly complex projects.
+
+[![Build Status](https://travis-ci.org/michipili/bsdowl.svg?branch=master)](https://travis-ci.org/michipili/bsdowl?branch=master)
 
 
 ## Applicative level features
