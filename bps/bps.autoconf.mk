@@ -53,10 +53,20 @@ __<bps.autoconf.mk>__:
 USE_AUTOCONF?=yes
 .endif
 USE_AUTOCONF?=no
-.if ${USE_AUTOCONF} == yes
 
+
+.if ${USE_AUTOCONF} == yes
 configure:
 	(cd ${.CURDIR} && autoconf)
+
+.if defined(CONFIGURE_ARGS)&&!target(do-runconfigure)
+do-runconfigure:
+	(cd ${.CURDIR} && ./configure ${CONFIGURE_ARGS})
+.endif
+
+.if target(do-runconfigure)
+do-runconfigure: configure
+.endif
 
 .for file in configure.ac configure.in aclocal.m4
 .if exists(${file})
