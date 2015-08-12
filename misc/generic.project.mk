@@ -116,6 +116,11 @@
 #   Pop up a user subshell
 
 
+# Uses:
+#
+#  testsuite:DIRECTORY, defaults to testsuite
+#   Use the following directory as test suite
+
 ### IMPLEMENTATION
 
 
