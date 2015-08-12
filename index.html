@@ -1,0 +1,147 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Bsdowl by michipili</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Bsdowl</h1>
+        <p>A highly portable build system targeting modern UNIX systems. Supports OCaml, TeX, METAPOST and more. Based on BSD Make.</p>
+
+        <p class="view"><a href="https://github.com/michipili/bsdowl">View the Project on GitHub <small>michipili/bsdowl</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/michipili/bsdowl/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/michipili/bsdowl/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/michipili/bsdowl">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="bsd-owl-scripts" class="anchor" href="#bsd-owl-scripts" aria-hidden="true"><span class="octicon octicon-link"></span></a>BSD Owl Scripts</h1>
+
+<p>This collection of BSD Make directives aims at providing a highly
+portable build system targetting modern UNIX systems and supporting
+common or less command languages.  This is a build system, which means
+that it can be used to organise fairly complex projects.</p>
+
+<h2>
+<a id="applicative-level-features" class="anchor" href="#applicative-level-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Applicative level features</h2>
+
+<p>BSD Owl Scripts assists developers in the production, installation and
+distribution of projects comprising the following types of products:</p>
+
+<ul>
+<li>C programs, compiled for several targets</li>
+<li>C libraries, static and shared, compiled for several targets</li>
+<li>Shell scripts</li>
+<li>Python scripts</li>
+<li>OCaml programs</li>
+<li>OCaml libraries, with <strong>ocamldoc</strong> documentation</li>
+<li>OCaml plugins</li>
+<li>TeX documents, prepared for several printing devices</li>
+<li>METAPOST figures, with output as PDF, PS, SVG or PNG,
+either as part of a TeX document or as standalone documents</li>
+</ul>
+
+<p>Each item is linked to a project example found in our extensive
+testsuite.</p>
+
+<h2>
+<a id="build-system-level-features" class="anchor" href="#build-system-level-features" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build-system level features</h2>
+
+<p>BSD Owl Scripts offers developers a rich set of features easing
+project management:</p>
+
+<ul>
+<li>Support of compilation profiles</li>
+<li>Support of the parallel mode (at the directory level)</li>
+<li>Support of separate trees for sources and objects</li>
+<li>Support of architecture-dependant compilation options</li>
+<li>Support <strong>GNU autoconf</strong>
+</li>
+<li>Production of GPG-signed tarballs</li>
+<li>Developer subshell, empowered with project-specific scripts</li>
+<li>Literate programming using <strong>noweb</strong>
+</li>
+<li>Preprocessing with <strong>m4</strong>
+</li>
+</ul>
+
+<h2>
+<a id="compatibility-list" class="anchor" href="#compatibility-list" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compatibility list</h2>
+
+<p>It is well tested under:</p>
+
+<ul>
+<li>Mac OS X, version 10.6.8 and above;</li>
+<li>FreeBSD, version 9.0 and above;</li>
+<li>Debian Jessie and newer.</li>
+</ul>
+
+<p>We also want to support NetBSD and OpenBSD, as soon as they will
+provide a modern version of BSD Make.</p>
+
+<p>This means that projects managed with BSD Owl Scripts are easy to
+develop and deploy in heterogeneous environment.</p>
+
+<h2>
+<a id="starting-points" class="anchor" href="#starting-points" aria-hidden="true"><span class="octicon octicon-link"></span></a>Starting points</h2>
+
+<ul>
+<li><a href="https://github.com/michipili/bsdowl/tree/master/INSTALL.md">Installation notes</a></li>
+<li><a href="https://github.com/michipili/bsdowl/tree/master/doc/GettingStartedLaTeX.md">Getting started with a LaTeX document</a></li>
+<li><a href="https://github.com/michipili/bsdowl/tree/master/doc/GettingStartedOCaml.md">Getting started with an OCaml program</a></li>
+</ul>
+
+<p>If you are not at all familiar with makefiles you can quickly learn
+the basics with de Boor's <a href="http://www.freebsd.org/doc/en/books/pmake/index.html">classical tutorial</a>.
+It is also nice to feel confident while interacting with the shell, if
+this is not the case <a href="http://docstore.mik.ua/orelly/unix/upt/">UNIX Power Tools</a> could help you. The
+<a href="https://github.com/michipili/bsdowl/tree/master/doc/Index.md">documentation index</a> provides an overview of the files
+available in the <a href="https://github.com/michipili/bsdowl/tree/master/doc">doc</a> directory.</p>
+
+<h2>
+<a id="free-software" class="anchor" href="#free-software" aria-hidden="true"><span class="octicon octicon-link"></span></a>Free software</h2>
+
+<p>BSD Owl Scripts is free software: copying it and redistributing it is
+very much welcome under conditions of the <a href="http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html">CeCILL-B</a>
+licence agreement, found in the <a href="https://github.com/michipili/bsdowl/tree/master/COPYING">COPYING</a> and
+<a href="https://github.com/michipili/bsdowl/tree/master/COPYING-FR">COPYING-FR</a> files of the distribution.</p>
+
+<h2>
+<a id="last-words" class="anchor" href="#last-words" aria-hidden="true"><span class="octicon octicon-link"></span></a>Last words</h2>
+
+<p>This project started around 2002, it was hosted on a private CVS
+server.  In 2006 it was reorganised, history was lost and it
+moved to a private Subversion server.  In 2008 it was published for
+the first time on GNA (gna.org).  One year later the history was
+converted to git and subversion was only marginally used.  In 2013,
+publication on the GNA server was abandoned and the project was
+published on GitHub and BitBucket, then on GitHub only.</p>
+
+<p>Pallàs Athéné is a Greek goddess of wisdom, mother of sciences and
+arts.  This software is gently dedicated to her.</p>
+
+<p>Michael Grünewald in Bonn, on January 20, 2014</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/michipili">michipili</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
