@@ -343,13 +343,13 @@ COOKIEPREFIX?=		.cookie.
 # Set _MAKE_USERTARGET and _MAKE_ALLSUBTARGET
 #
 
-_MAKE_USERTARGET?=	obj configure depend build doc all install\
+_MAKE_USERTARGET?=	obj runconfigure depend build doc all install\
 			test clean distclean realclean benchmark
 
 .if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-_MAKE_ALLSUBTARGET?=	obj configure depend build doc test
+_MAKE_ALLSUBTARGET?=	obj runconfigure depend build doc test
 .else
-_MAKE_ALLSUBTARGET?=	configure depend build doc test
+_MAKE_ALLSUBTARGET?=	runconfigure depend build doc test
 .endif
 
 #

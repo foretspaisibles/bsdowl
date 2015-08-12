@@ -54,6 +54,16 @@ USE_AUTOCONF?=yes
 .endif
 USE_AUTOCONF?=no
 .if ${USE_AUTOCONF} == yes
+
+configure:
+	(cd ${.CURDIR} && autoconf)
+
+.for file in configure.ac configure.in aclocal.m4
+.if exists(${file})
+configure: ${file}
+.endif
+.endfor
+
 .if "${.CURDIR}" != "${.OBJDIR}"
 _AUTOCONF_DIR=		${.CURDIR}/
 .else
