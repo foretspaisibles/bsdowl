@@ -344,7 +344,7 @@ COOKIEPREFIX?=		.cookie.
 #
 
 _MAKE_USERTARGET?=	obj runconfigure depend build doc all install\
-			test clean distclean realclean benchmark
+			test clean distclean realclean benchmark preparatives
 
 _SUBDIR_TARGET?=	obj depend build doc install clean distclean realclean test
 
@@ -369,6 +369,7 @@ _MAKE_ALLSUBTARGET?=	runconfigure depend build doc test
 .include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
+.include "bps.preparatives.mk"
 .include "bps.replace.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"
