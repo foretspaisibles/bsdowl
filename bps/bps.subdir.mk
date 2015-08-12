@@ -78,7 +78,7 @@
 .if !target(__<bps.subdir.mk>__)
 __<bps.subdir.mk>__:
 
-_SUBDIR_TARGET?= ${_MAKE_USERTARGET:Nall:Nrunconfigure}
+_SUBDIR_TARGET?= ${_MAKE_USERTARGET}
 SUBDIR_PREFIX?=
 
 .if defined(SUBDIR) && !empty(SUBDIR)
