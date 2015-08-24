@@ -1,7 +1,7 @@
-### TestLibrary.mk -- Prepare and install a shell library
+### Makefile -- Prepare and install a shell program
 
 # Author: Michael Grünewald
-# Date: Fri Nov 21 15:39:08 CET 2014
+# Date: Fri Nov 21 15:38:50 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,8 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		libselftest.subr
+PROGRAM=		showconfig.sh
 
-test:
-	test -f ${DESTDIR}${SHAREDIR}/libselftest.subr
-	test -f ${DESTDIR}${MANDIR}/man3/libselftest.3.gz
+.include "shell.prog.mk"
 
-.PATH:			${BSDOWLSRCDIR}/example/script/shell/selftest
-
-.include "shell.lib.mk"
-
-### End of file `TestLibrary.mk'
+### End of file `Makefile'

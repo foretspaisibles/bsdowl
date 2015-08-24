@@ -1,4 +1,4 @@
-### TestLibrary.mk -- Prepare and install a shell library
+### Makefile -- Prepare and install a shell library
 
 # Author: Michael Grünewald
 # Date: Fri Nov 21 15:39:08 CET 2014
@@ -16,12 +16,6 @@
 
 LIBRARY=		libselftest.subr
 
-test:
-	test -f ${DESTDIR}${SHAREDIR}/libselftest.subr
-	test -f ${DESTDIR}${MANDIR}/man3/libselftest.3.gz
-
-.PATH:			${BSDOWLSRCDIR}/example/script/shell/selftest
-
 .include "shell.lib.mk"
 
-### End of file `TestLibrary.mk'
+### End of file `Makefile'
