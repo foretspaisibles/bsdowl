@@ -1,7 +1,7 @@
-%%% simple.tex -- A simple LaTeX document
+%%% galley.tex -- A LaTeX document using an index
 
 % Author: Michael Grünewald
-% Date: Sun Nov 23 16:20:55 CET 2014
+% Date: Thu Nov 27 12:27:28 CET 2014
 
 % BSD Owl Scripts (https://github.com/michipili/bsdowl)
 % This file is part of BSD Owl Scripts
@@ -14,9 +14,13 @@
 % are also available at
 % http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-\documentclass{article}
+\documentclass{amsbook}
+\makeindex
 \begin{document}
-A simple {\LaTeX} document.
+A {\LaTeX} document\index{document} using {bib\TeX} and using an
+index\index{index}.
+\backmatter
+\printindex
 \end{document}
 
-%%% End of file `simple.tex'
+%%% End of file `galley.tex'

@@ -14,12 +14,14 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		withbibtex.tex
+DOCUMENT=		galley.tex
 TEXDEVICE=		pdf
 USES+=			bibtex
 
 test:
 	test -f ${DESTDIR}${DOCDIR}/withbibtex.pdf
+
+.PATH:			${BSDOWLSRCDIR}/example/texmf/bibtex
 
 .include "latex.doc.mk"
 

@@ -14,12 +14,14 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		withindex.tex
+DOCUMENT=		galley.tex
 TEXDEVICE=		pdf
 USES+=			index
 
 test:
 	test -f ${DESTDIR}${DOCDIR}/withindex.pdf
+
+.PATH:			${BSDOWLSRCDIR}/example/texmf/index
 
 .include "latex.doc.mk"
 

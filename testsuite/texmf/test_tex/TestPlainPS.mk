@@ -21,6 +21,8 @@ test:
 	test -f ${DESTDIR}${DOCDIR}/simple.ps
 	test -f ${DESTDIR}${DOCDIR}/simple.epson.ps
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/tex
+
 .include "tex.doc.mk"
 
 ### End of file `TestPlainPS.mk'

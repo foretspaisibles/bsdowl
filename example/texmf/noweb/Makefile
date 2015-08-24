@@ -1,7 +1,7 @@
-### TestMetapostTeX.mk -- Metapost figure using TeX labels
+### Makefile -- Test noweb support with LaTeX
 
 # Author: Michael Grünewald
-# Date: Wed Dec  3 07:56:22 CET 2014
+# Date: Fri Nov 28 10:05:39 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,18 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		texlabel.mp
-MPDEVICE=		eps
+# IMPORTANT. This example is useful because it shows how to develop
+# LaTeX packages with noweband bsdowl.  The LaTeX macros it produces
+# are, however, not maintained. any more.
 
-test:
-	test -f ${DESTDIR}${DOCDIR}/texlabel-1.eps
+PACKAGE=		samhain
+VERSION=		1.0
+OFFICER=		michipili@gmail.com
 
-.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+SUBDIR=			class
+SUBDIR+=		example
+SUBDIR+=		manual
 
-.include "mpost.doc.mk"
+.include "generic.project.mk"
 
-### End of file `TestMetapostTeX.mk'
+### End of file `Makefile'

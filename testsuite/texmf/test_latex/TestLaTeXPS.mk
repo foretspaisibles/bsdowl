@@ -20,6 +20,8 @@ TEXDEVICE=		ps
 test:
 	test -f ${DESTDIR}${DOCDIR}/simple.ps
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/latex
+
 .include "latex.doc.mk"
 
 ### End of file `TestLaTeXPS.mk'

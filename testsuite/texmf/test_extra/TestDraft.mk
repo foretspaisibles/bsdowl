@@ -14,7 +14,7 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		simple.tex
+DOCUMENT=		galley.tex
 TEXDEVICE=		pdf
 USES+=			draft:git
 
@@ -23,6 +23,8 @@ TEST_DRAFTSTAMP!=	(cd ${.CURDIR} && ${TEST_DRAFTSTAMP_CMD})
 
 test:
 	test -f ${DESTDIR}${DOCDIR}/simple_${TEST_DRAFTSTAMP}.pdf
+
+.PATH:			${BSDOWLSRCDIR}/example/texmf/draft
 
 .include "latex.doc.mk"
 

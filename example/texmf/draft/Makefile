@@ -1,7 +1,7 @@
-### TestMetapostTeX.mk -- Metapost figure using TeX labels
+### Makefile -- Test draft support
 
 # Author: Michael Grünewald
-# Date: Wed Dec  3 07:56:22 CET 2014
+# Date: Thu Nov 27 22:24:57 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,14 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		texlabel.mp
-MPDEVICE=		eps
+DOCUMENT=		galley.tex
+USES+=			draft:git
 
-test:
-	test -f ${DESTDIR}${DOCDIR}/texlabel-1.eps
+TEST_DRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
+TEST_DRAFTSTAMP!=	(cd ${.CURDIR} && ${TEST_DRAFTSTAMP_CMD})
 
-.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+.include "latex.doc.mk"
 
-.include "mpost.doc.mk"
-
-### End of file `TestMetapostTeX.mk'
+### End of file `Makefile'

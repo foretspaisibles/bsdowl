@@ -1,7 +1,7 @@
-%%% withindex.tex -- A LaTeX document using an index
+%%% galley.tex -- A LaTeX document using bibtex
 
 % Author: Michael Grünewald
-% Date: Thu Nov 27 12:27:28 CET 2014
+% Date: Thu Nov 27 09:35:52 CET 2014
 
 % BSD Owl Scripts (https://github.com/michipili/bsdowl)
 % This file is part of BSD Owl Scripts
@@ -15,12 +15,12 @@
 % http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 \documentclass{amsbook}
-\makeindex
 \begin{document}
-A {\LaTeX} document\index{document} using {bib\TeX} and using an
-index\index{index}.
+A {\LaTeX} document using {bib\TeX} and using a reference to the
+\emph{\TeX book}~\cite{TEXBOOK}.
 \backmatter
-\printindex
+\bibliographystyle{plain}
+\bibliography{references}
 \end{document}
 
-%%% End of file `withindex.tex'
+%%% End of file `galley.tex'
