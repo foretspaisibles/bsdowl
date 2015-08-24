@@ -1,4 +1,4 @@
-### TestProgram.mk -- Test a Python Program
+### Makefile -- Simple Python Program
 
 # Author: Michael Grünewald
 # Date: Fri Nov 21 15:29:36 CET 2014
@@ -16,12 +16,6 @@
 
 PROGRAM=		showconfig.py
 
-test:
-	test -x ${DESTDIR}${BINDIR}/showconfig
-	test -f ${DESTDIR}${MANDIR}/man1/showconfig.1.gz
-
-.PATH:			${BSDOWLSRCDIR}/example/script/python/showconfig
-
 .include "python.prog.mk"
 
-### End of file `TestProgram.mk'
+### End of file `Makefile'
