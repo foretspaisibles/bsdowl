@@ -20,6 +20,8 @@ MPDEVICE=		eps
 test:
 	test -f ${DESTDIR}${DOCDIR}/texlabel-1.eps
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+
 .include "mpost.doc.mk"
 
 ### End of file `TestMetapostTeX.mk'

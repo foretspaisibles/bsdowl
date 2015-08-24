@@ -20,6 +20,8 @@ TEXDEVICE=		pdf
 test:
 	test -f ${DESTDIR}${DOCDIR}/simple.pdf
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/latex
+
 .include "latex.doc.mk"
 
 ### End of file `TestLaTeXPDF.mk'

@@ -20,7 +20,7 @@ SRCS=			basic_types.ml
 SRCS+=			basic_parser.mly
 SRCS+=			basic_lexer.mll
 
-.PATH:			${TESTSRCDIR}/ocaml/minibasic
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/minibasic
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/minibasic.cma

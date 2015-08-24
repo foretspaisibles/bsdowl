@@ -22,7 +22,8 @@ SRCS+=			rational_trace.c
 SRCS+=			rational_operation.c
 SRCS+=			rational_print.c
 
-DIRS=			${TESTSRCDIR}/librational
+DIRS=			${BSDOWLSRCDIR}/example/langc/heat/librational
+.PATH:			${DIRS}
 
 .include "langc.lib.mk"
 

@@ -16,6 +16,9 @@
 
 PROGRAM=		hello_world
 
+DIRS=			${BSDOWLSRCDIR}/example/langc/hello_world
+.PATH:			${DIRS}
+
 test:
 	test -x ${DESTDIR}${BINDIR}/hello_world
 	test -f ${DESTDIR}${MANDIR}/man1/hello_world.1.gz

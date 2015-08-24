@@ -20,6 +20,8 @@ test:
 	test -x ${DESTDIR}${BINDIR}/showconfig
 	test -f ${DESTDIR}${MANDIR}/man1/showconfig.1.gz
 
+.PATH:			${BSDOWLSRCDIR}/example/script/shell/showconfig
+
 .include "shell.prog.mk"
 
 ### End of file `TestProgram.mk'

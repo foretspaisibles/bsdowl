@@ -21,6 +21,8 @@ MPDEVICE=		svg
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.svg
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+
 .include "mpost.doc.mk"
 
 ### End of file `TestMetapostSVG.mk'

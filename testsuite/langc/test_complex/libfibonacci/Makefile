@@ -19,7 +19,8 @@ LIBRARY=		fibonacci
 SRCS=			fibonacci.h
 SRCS+=			fibonacci.c
 
-DIRS=			${TESTSRCDIR}/libfibonacci
+DIRS=			${BSDOWLSRCDIR}/example/langc/heat/libfibonacci
+.PATH:			${DIRS}
 
 .include "langc.lib.mk"
 

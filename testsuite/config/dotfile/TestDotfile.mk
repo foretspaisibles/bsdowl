@@ -21,6 +21,8 @@ test:
 	test -f ${DESTDIR}${HOME}/.cshrc
 	test -f ${DESTDIR}${HOME}/.Xresources
 
+.PATH:			${BSDOWLSRCDIR}/example/config/dotfile
+
 .include "conf.dotfile.mk"
 
 ### End of file `TestDotfile.mk'

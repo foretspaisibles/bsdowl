@@ -20,8 +20,8 @@ SRCS=			newton.ml
 
 USES+=			site-lib
 
-.PATH:			${TESTSRCDIR}/ocaml/newton
-.PATH:			${TESTSRCDIR}/ocaml/newton-meta
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton-meta
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cma

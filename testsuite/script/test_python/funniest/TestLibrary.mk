@@ -16,7 +16,8 @@
 
 LIBRARY=		funniest
 APIVERSION=		0
-LIBVERSION=		${APIVERSION}.1
+APIREVISION=		1
+LIBVERSION=		${APIVERSION}.${APIREVISION}
 
 USES+=			python:2.7
 USES+=			setuptools
@@ -24,6 +25,8 @@ USES+=			setuptools
 test:
 	test -f ${DESTDIR}${PYTHONLIBDIR}/__init__.py
 	test -f ${DESTDIR}${PYTHONLIBDIR}/__init__.pyc
+
+.PATH:			${BSDOWLSRCDIR}/example/python/funniest
 
 .include "python.lib.mk"
 

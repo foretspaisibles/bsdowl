@@ -20,6 +20,8 @@ test:
 	test -f ${DESTDIR}${SHAREDIR}/libselftest.subr
 	test -f ${DESTDIR}${MANDIR}/man3/libselftest.3.gz
 
+.PATH:			${BSDOWLSRCDIR}/example/script/shell/selftest
+
 .include "shell.lib.mk"
 
 ### End of file `TestLibrary.mk'

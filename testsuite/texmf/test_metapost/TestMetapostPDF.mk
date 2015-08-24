@@ -20,6 +20,8 @@ MPDEVICE=		pdf
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.pdf
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+
 .include "mpost.doc.mk"
 
 ### End of file `TestMetapostPDF.mk'

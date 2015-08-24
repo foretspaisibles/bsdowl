@@ -20,6 +20,8 @@ MPDEVICE=		png
 test:
 	test -f ${DESTDIR}${DOCDIR}/square-1.png
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/metapost
+
 .include "mpost.doc.mk"
 
 ### End of file `TestMetapostPNG.mk'

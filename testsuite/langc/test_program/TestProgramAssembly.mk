@@ -17,12 +17,14 @@
 PROGRAM=		hello_world
 
 SRCS=			hello_world.c
-SRCS+=			garbage.s
+SRCS+=			greeting.s
+
+DIRS=			${BSDOWLSRCDIR}/example/langc/hello_assembly
+.PATH:			${DIRS}
 
 test:
 	test -x ${DESTDIR}${BINDIR}/hello_world
 	test -f ${DESTDIR}${MANDIR}/man1/hello_world.1.gz
-	grep -q 'Garbage' ${DESTDIR}${BINDIR}/hello_world
 
 .include "langc.prog.mk"
 

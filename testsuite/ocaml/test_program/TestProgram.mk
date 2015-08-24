@@ -20,6 +20,8 @@ test:
 	test -x ${DESTDIR}${BINDIR}/wordcount
 	test -f ${DESTDIR}${MANDIR}/man1/wordcount.1.gz
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/wordcount
+
 .include "ocaml.prog.mk"
 
 ### End of file `TestProgram.mk'

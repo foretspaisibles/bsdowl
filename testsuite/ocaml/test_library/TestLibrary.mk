@@ -18,7 +18,7 @@ LIBRARY=		newton
 
 SRCS=			newton.ml
 
-.PATH:			${TESTSRCDIR}/ocaml/newton
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cma

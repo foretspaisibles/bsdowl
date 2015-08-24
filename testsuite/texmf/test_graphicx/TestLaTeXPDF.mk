@@ -23,6 +23,8 @@ SRCS+=			square.mp
 test:
 	test -f ${DESTDIR}${DOCDIR}/illustrated.pdf
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/graphicx
+
 .include "latex.doc.mk"
 
 ### End of file `TestLaTeXPDF.mk'

@@ -18,8 +18,12 @@ PROGRAM=		goldenratio
 
 SRCS=			goldenratio.c
 
-DIRS=			${TESTSRCDIR}/librational
-DIRS+=			${TESTSRCDIR}/libfibonacci
+DIRS=			${BSDOWLSRCDIR}/example/langc/heat/goldenratio
+DIRS+=			${BSDOWLSRCDIR}/example/langc/heat/librational
+DIRS+=			${BSDOWLSRCDIR}/example/langc/heat/libfibonacci
+
+.PATH.c:		${DIRS}
+.PATH.h:		${DIRS}
 
 .include "langc.prog.mk"
 

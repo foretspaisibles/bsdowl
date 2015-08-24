@@ -20,6 +20,8 @@ TEXDEVICE=		dvi
 test:
 	test -f ${DESTDIR}${DOCDIR}/simple.dvi
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/tex
+
 .include "tex.doc.mk"
 
 ### End of file `TestPlainDVI.mk'

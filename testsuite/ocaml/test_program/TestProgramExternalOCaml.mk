@@ -24,6 +24,8 @@ _EXTERNAL_ocaml.lib_unix_NATIVE=unix.cmxa
 test:
 	test -x ${DESTDIR}${BINDIR}/rolling_stone
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/rolling_stone
+
 .include "ocaml.prog.mk"
 
 ### End of file `TestProgramExternalOCaml.mk'

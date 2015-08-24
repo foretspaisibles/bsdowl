@@ -32,4 +32,6 @@ test:
 	test -f ${MAKEOBJDIRPREFIX}/${configuration}${.CURDIR}/wordcount.1.gz
 .endfor
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/wordcount
+
 ### End of file `TestProgramMultiple.mk'

@@ -27,7 +27,8 @@ SRCS+=			rational_print.c
 
 MAN=			librational.3
 
-DIRS=			${TESTSRCDIR}/librational
+DIRS=			${BSDOWLSRCDIR}/example/langc/librational
+.PATH:			${DIRS}
 
 test-static:
 	test -f ${DESTDIR}${LIBDIR}/librational.a

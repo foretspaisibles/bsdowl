@@ -24,6 +24,8 @@ test:
 	test -f ${DESTDIR}${DOCDIR}/illustrated.dvi
 	test -f ${DESTDIR}${DOCDIR}/square-1.eps
 
+.PATH:			${BSDOWLSRCDIR}/example/texmf/graphicx
+
 .include "latex.doc.mk"
 
 ### End of file `TestLaTeXDVI.mk'
