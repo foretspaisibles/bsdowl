@@ -17,7 +17,7 @@
 LIBRARY=		newton
 SRCS+=			newton.ml
 
-.PATH:			${TESTSRCDIR}/ocaml/newton
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/heat/newton
 
 .include "ocaml.lib.mk"
 

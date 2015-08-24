@@ -1,7 +1,7 @@
-### Makefile -- Computing the golden ratio
+### Makefile -- Newton's method
 
 # Author: Michael Grünewald
-# Date: Sat Oct  5 20:47:48 CEST 2013
+# Date: Thu Oct  3 23:39:20 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,23 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=	golden_ratio
+LIBRARY=	newton
+SRCS+=		newton.ml
 
-SRCS=		main.ml
+do-test: newton.cma test_newton.ml .PHONY
+	ocaml ${.ALLSRC}
 
-LIBS+=		nums
-LIBS+=		newton
-LIBS+=		fibonacci
-
-DIRS=		${.OBJDIR}/../newton
-DIRS+=		${.OBJDIR}/../fibonacci
-
-newton.cma:
-	@cd ${.CURDIR}/../newton && ${MAKE} ${.TARGET}
-
-fibonacci.cma:
-	@cd ${.CURDIR}/../fibonacci && ${MAKE} ${.TARGET}
-
-.include "ocaml.prog.mk"
+.include "ocaml.lib.mk"
 
 ### End of file `Makefile'

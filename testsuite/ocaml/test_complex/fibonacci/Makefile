@@ -17,7 +17,7 @@
 LIBRARY=		fibonacci
 SRCS+=			fibonacci.ml
 
-.PATH:			${TESTSRCDIR}/ocaml/fibonacci
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/heat/fibonacci
 
 .include "ocaml.lib.mk"
 

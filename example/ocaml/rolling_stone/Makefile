@@ -1,7 +1,7 @@
-### TestPack.mk -- Produce a packed library
+### Makefile -- How does it feel, when you have no home?
 
 # Author: Michael Grünewald
-# Date: Sat Nov 29 08:06:59 CET 2014
+# Date: Thu Oct  3 22:42:23 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,18 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACK=			minibasic
+PROGRAM=	rolling_stone
+EXTERNAL=	ocaml.findlib:unix
 
-SRCS=			basic_types.ml
-SRCS+=			basic_parser.mly
-SRCS+=			basic_lexer.mll
+.include "ocaml.prog.mk"
 
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/minibasic
-
-test:
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cma
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cmi
-
-.include "ocaml.pack.mk"
-
-### End of file `TestPack.mk'
+### End of file `Makefile'

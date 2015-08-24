@@ -1,7 +1,7 @@
-### TestProgramExternalOCaml.mk -- How does it feel?
+### Makefile -- Prepare an OCaml custom toplevel
 
 # Author: Michael Grünewald
-# Date: Fri Jan  9 09:06:51 CET 2015
+# Date: Sat Jan  3 16:18:30 CET 2015
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,18 +14,17 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		rolling_stone
-EXTERNAL=		ocaml.lib:unix
+TOPLEVEL=		custom_toplevel
 
-_EXTERNAL_ocaml.lib_unix_DIR=	${ocamllibdir}/ocaml
-_EXTERNAL_ocaml.lib_unix_BYTE=	unix.cma
-_EXTERNAL_ocaml.lib_unix_NATIVE=unix.cmxa
+# We provide a quick and dirty way to produce the C object, but in
+# real projects, it is reasonable to write a small library as a
+# separate project module to provide all the required stubs.
 
-test:
-	test -x ${DESTDIR}${BINDIR}/rolling_stone
+SRCS=			greeting.ml
+SRCS+=			greeting_stub.c
 
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/rolling_stone
+EXTERNAL+=		ocaml.findlib:compiler-libs
 
-.include "ocaml.prog.mk"
+.include "ocaml.toplevel.mk"
 
-### End of file `TestProgramExternalOCaml.mk'
+### End of file `Makefile'

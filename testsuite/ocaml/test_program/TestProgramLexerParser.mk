@@ -19,8 +19,8 @@ SRCS+=			basic_parser.mly
 SRCS+=			basic_lexer.mll
 SRCS+=			wordcount.ml
 
-.PATH:			${TESTSRCDIR}/ocaml/minibasic
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/minibasic
 
 .include "TestProgram.mk"
 
-### End of file `TestProgramProfile.mk'
+### End of file `TestProgramLexerParser.mk'

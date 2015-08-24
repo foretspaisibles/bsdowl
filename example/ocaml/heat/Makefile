@@ -1,7 +1,7 @@
-### TestPack.mk -- Produce a packed library
+### Makefile -- Mini project
 
 # Author: Michael Grünewald
-# Date: Sat Nov 29 08:06:59 CET 2014
+# Date: Sun Oct 13 10:50:45 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,18 +14,17 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACK=			minibasic
+PACKAGE=	golden_ratio
+VERSION=	1.0.0
+OFFICER=	michipili@gmail.com
 
-SRCS=			basic_types.ml
-SRCS+=			basic_parser.mly
-SRCS+=			basic_lexer.mll
+MODULE=		ocaml.lib:fibonacci
+MODULE+=	ocaml.lib:newton
+MODULE+=	ocaml.prog:golden_ratio
+MODULE+=	ocaml.manual:manual
 
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/minibasic
+EXTERNAL=	ocaml.lib:nums
 
-test:
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cma
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cmi
+.include "generic.project.mk"
 
-.include "ocaml.pack.mk"
-
-### End of file `TestPack.mk'
+### End of file `Makefile'

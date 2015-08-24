@@ -1,7 +1,7 @@
-### Makefile -- Mini project
+### Makefile -- Newton's method
 
 # Author: Michael Grünewald
-# Date: Sun Oct 13 10:50:45 CEST 2013
+# Date: Thu Oct  3 23:39:20 CEST 2013
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,10 +14,9 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SUBDIR+=	fibonacci
-SUBDIR+=	newton
-SUBDIR+=	golden_ratio
+LIBRARY=		newton
+SRCS+=			newton.ml
 
-.include "bps.subdir.mk"
+.include "ocaml.lib.mk"
 
 ### End of file `Makefile'

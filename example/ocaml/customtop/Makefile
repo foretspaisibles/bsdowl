@@ -1,12 +1,12 @@
-### TestPack.mk -- Produce a packed library
+### Makefile -- Prepare an OCaml toplevel
 
 # Author: Michael Grünewald
-# Date: Sat Nov 29 08:06:59 CET 2014
+# Date: Sun Dec 28 18:15:21 CET 2014
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -14,18 +14,17 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACK=			minibasic
+TOPLEVEL=		custom_toplevel
 
-SRCS=			basic_types.ml
-SRCS+=			basic_parser.mly
-SRCS+=			basic_lexer.mll
+EXTERNAL+=		ocaml.findlib:compiler-libs
 
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/minibasic
+SRCS=			custom_configuration.ml
+SRCS+=			custom_library.ml
+SRCS+=			custom_bootstrap.ml
 
-test:
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cma
-	test -f ${DESTDIR}${LIBDIR}/minibasic.cmi
+REPLACESUBST=		${STDREPLACESUBST}
+REPLACEFILE=		custom_configuration.ml.in
 
-.include "ocaml.pack.mk"
+.include "ocaml.toplevel.mk"
 
-### End of file `TestPack.mk'
+### End of file `Makefile'

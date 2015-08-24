@@ -20,6 +20,8 @@ EXTERNAL=	ocaml.findlib:unix
 test:
 	test -x ${DESTDIR}${BINDIR}/rolling_stone
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/rolling_stone
+
 .include "ocaml.prog.mk"
 
 ### End of file `TestProgramExternalFindlib.mk'

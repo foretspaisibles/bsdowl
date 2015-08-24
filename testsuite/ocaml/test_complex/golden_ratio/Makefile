@@ -18,6 +18,8 @@ PROGRAM=	golden_ratio
 
 SRCS=		main.ml
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/heat/golden_ratio
+
 .include "ocaml.prog.mk"
 
 ### End of file `Makefile'

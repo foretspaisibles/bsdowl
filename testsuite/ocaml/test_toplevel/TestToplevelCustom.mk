@@ -28,6 +28,8 @@ EXTERNAL+=		ocaml.findlib:compiler-libs
 test:
 	test -x ${DESTDIR}${BINDIR}/custom_toplevel
 
+.PATH:			${BSDOWLSRCDIR}/example/ocaml/greetingtop
+
 .include "ocaml.toplevel.mk"
 
 ### End of file `TestToplevel.mk'
