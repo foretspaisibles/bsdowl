@@ -1,12 +1,9 @@
-### TestProgramAssembly.mk -- The obnoxious hello world program
-
-# Author: Michael Grünewald
-# Date: Thu Nov 20 11:56:52 CET 2014
+### Makefile -- The obnoxious hello world program
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -19,13 +16,6 @@ PROGRAM=		hello_world
 SRCS=			hello_world.c
 SRCS+=			greeting.s
 
-DIRS=			${BSDOWLSRCDIR}/example/langc/hello_assembly
-.PATH:			${DIRS}
-
-test:
-	test -x ${DESTDIR}${BINDIR}/hello_world
-	test -f ${DESTDIR}${MANDIR}/man1/hello_world.1.gz
-
 .include "langc.prog.mk"
 
-### End of file `TestProgramAssembly.mk'
+### End of file `Makefile'
