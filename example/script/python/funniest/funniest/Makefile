@@ -1,4 +1,4 @@
-### TestLibrary.mk -- Test installation of Python modules
+### Makefile -- A simple Python module
 
 # Author: Michael Grünewald
 # Date: Sat Nov 22 11:11:04 CET 2014
@@ -22,12 +22,6 @@ LIBVERSION=		${APIVERSION}.${APIREVISION}
 USES+=			python:2.7
 USES+=			setuptools
 
-test:
-	test -f ${DESTDIR}${PYTHONLIBDIR}/__init__.py
-	test -f ${DESTDIR}${PYTHONLIBDIR}/__init__.pyc
-
-.PATH:			${BSDOWLSRCDIR}/example/python/funniest
-
 .include "python.lib.mk"
 
-### End of file `TestLibrary.mk'
+### End of file `Makefile'
