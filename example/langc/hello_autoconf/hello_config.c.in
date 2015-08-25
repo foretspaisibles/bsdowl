@@ -44,8 +44,10 @@ static int binding_n = sizeof(binding_lst) / sizeof(binding);
 void
 print_config()
 {
+  int i;
+
   printf("Print %d configuration bindings:\n\n", binding_n);
-  for(int i = 0; i < binding_n; ++i) {
+  for(i = 0; i < binding_n; ++i) {
     printf("%32s: %s\n", binding_lst[i].key, binding_lst[i].value);
   }
   printf("\n");

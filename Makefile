@@ -28,7 +28,6 @@ SUBDIR+=		script
 SUBDIR+=		misc
 SUBDIR+=		www
 SUBDIR+=		support
-SUBDIR+=		testsuite
 
 CONFIGURE=		Makefile.inc.in
 CONFIGURE+=		bps/bps.bpsconfig.mk.in
@@ -36,7 +35,7 @@ CONFIGURE+=		testsuite/Makefile.inc.in
 PROJECTDISTEXCLUDE=	Wiki
 
 test: .PHONY
-	@(cd testsuite && ${MAKE} test)
+	${.CURDIR}/Library/Ancillary/testtool -R
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .for subdir in ${SUBDIR}

@@ -17,8 +17,6 @@
 LIBRARY=		fibonacci
 SRCS+=			fibonacci.ml
 
-EXTERNAL=		ocaml.findlib:nums
-
 .include "ocaml.lib.mk"
 
 ### End of file `Makefile'

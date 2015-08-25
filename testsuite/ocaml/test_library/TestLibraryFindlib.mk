@@ -14,20 +14,15 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		newton
-
-SRCS=			newton.ml
+TEST_DESCRIPTION=	Simple OCaml library with findlib meta data
+TEST_SOURCEDIR=		example/ocaml/newton-meta
+TEST_SEQUENCE=		preparatives all install
 
 USES+=			site-lib
-
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton-meta
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cma
 	test -f ${DESTDIR}${LIBDIR}/newton.cmi
 	test -f ${DESTDIR}${LIBDIR}/META
-
-.include "ocaml.lib.mk"
 
 ### End of file `TestLibraryFindlib.mk'

@@ -18,10 +18,6 @@ PROGRAM=		goldenratio
 
 SRCS=			goldenratio.c
 
-DIRS=			${BSDOWLSRCDIR}/example/langc/librational
-DIRS+=			${BSDOWLSRCDIR}/example/langc/libfibonacci
-.PATH:			${DIRS}
-
 .include "langc.prog.mk"
 
 ### End of file `Makefile'

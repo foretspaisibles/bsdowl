@@ -34,7 +34,7 @@ MKDEPCMD?=		${CC} -MM
 .endfor
 
 MKDEPTOOL=		${MKDEPCMD}
-.if defined(CFLAGS)&&!empty(CFLAGS:M-I)
+.if defined(CFLAGS)&&!empty(CFLAGS:M-I*)
 MKDEPTOOL+=		${CFLAGS:S@-I @-I@gW:M-I*:S@-I@-I @g}
 .endif
 

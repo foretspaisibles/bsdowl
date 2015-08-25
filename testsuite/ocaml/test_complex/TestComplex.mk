@@ -14,21 +14,29 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACKAGE=	golden_ratio
-VERSION=	1.0.0
-OFFICER=	michipili@gmail.com
+TEST_DESCRIPTION=	Complex OCaml program
+TEST_SOURCEDIR=		example/ocaml/heat
+TEST_SEQUENCE=		preparatives all install
 
-MODULE=		ocaml.lib:fibonacci
-MODULE+=	ocaml.lib:newton
-MODULE+=	ocaml.prog:golden_ratio
-MODULE+=	ocaml.manual:manual
+TEST_MATRIX=		WITH_DEBUG WITH_PROFILE COMPILE
+TEST_WITH_DEBUG=	yes no
+TEST_WITH_PROFILE=	yes no
+TEST_COMPILE=		both native_code byte_code
 
-EXTERNAL+=	ocaml.lib:nums
+USES+=			compile:${COMPILE}
 
 test-lib:
-	test -f ${DESTDIR}${LIBDIR}/fibonacci.cma
-	test -f ${DESTDIR}${LIBDIR}/fibonacci.cmi
+.if !empty(COMPILE:Mboth)||!empty(COMPILE:Mbyte_code)
 	test -f ${DESTDIR}${LIBDIR}/newton.cma
+	test -f ${DESTDIR}${LIBDIR}/fibonacci.cma
+.endif
+.if !empty(COMPILE:Mboth)||!empty(COMPILE:Mnative_code)
+	test -f ${DESTDIR}${LIBDIR}/newton.a
+	test -f ${DESTDIR}${LIBDIR}/newton.cmxa
+	test -f ${DESTDIR}${LIBDIR}/fibonacci.a
+	test -f ${DESTDIR}${LIBDIR}/fibonacci.cmxa
+.endif
+	test -f ${DESTDIR}${LIBDIR}/fibonacci.cmi
 	test -f ${DESTDIR}${LIBDIR}/newton.cmi
 
 test-prog:
@@ -38,7 +46,5 @@ test-doc:
 	test -f ${DESTDIR}${DOCDIR}/html/index.html
 
 test:	test-lib test-doc test-prog
-
-.include "generic.project.mk"
 
 ### End of file `TestComplex.mk'
