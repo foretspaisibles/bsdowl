@@ -200,7 +200,6 @@ testtool_db()
     local OPTIND OPTION OPTARG
 
     OPTIND=1
-    serial=0
     testsuitedir="${BSDOWL_TESTDIR}/src/bsdowl/testsuite"
 
     while getopts "l" OPTION; do
@@ -223,8 +222,8 @@ testtool_db()
             continue;
         fi
 
-        serial=$(( ${serial} + 1 ))
-        printf 'INDEX|%04d|%s|%s|%s|%s|%s\n'\
+        serial=$(printf '%s' "${description}" | cksum | cut -c 1-7)
+        printf 'INDEX|%s|%s|%s|%s|%s|%s\n'\
                "${serial}"\
                "${testfile}"\
                "${sourcedir}"\
@@ -288,7 +287,7 @@ testtool_db__matrix_loop()
 
 testtool_list()
 {
-    testtool_db -l | awk -F '|' '$1 == "INDEX" {printf("%04d %s\n", $2, $7)}'
+    testtool_db -l | awk -F '|' '$1 == "INDEX" {printf("%s %s\n", $2, $7)}'
 }
 
 
