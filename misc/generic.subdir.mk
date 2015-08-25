@@ -21,7 +21,7 @@ _MAKE_ALLSUBTARGET?=
 .include "bps.subdir.mk"
 .include "bps.clean.mk"
 
-_SUBDIR_TARGET?= ${_MAKE_USERTARGET}
+_SUBDIR_TARGET?=	obj depend build doc install clean distclean realclean test
 
 obj: do-obj-subdir
 

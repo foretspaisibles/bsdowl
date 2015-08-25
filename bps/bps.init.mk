@@ -343,13 +343,16 @@ COOKIEPREFIX?=		.cookie.
 # Set _MAKE_USERTARGET and _MAKE_ALLSUBTARGET
 #
 
-_MAKE_USERTARGET?=	obj configure depend build doc all install\
-			test clean distclean realclean benchmark
+_MAKE_USERTARGET?=	obj runconfigure depend build doc all install\
+			test clean distclean realclean benchmark preparatives
+
+_SUBDIR_TARGET?=	obj depend build doc install clean distclean realclean test
+
 
 .if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-_MAKE_ALLSUBTARGET?=	obj configure depend build doc test
+_MAKE_ALLSUBTARGET?=	obj runconfigure depend build doc test
 .else
-_MAKE_ALLSUBTARGET?=	configure depend build doc test
+_MAKE_ALLSUBTARGET?=	runconfigure depend build doc test
 .endif
 
 #
@@ -366,6 +369,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc test
 .include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
+.include "bps.preparatives.mk"
 .include "bps.replace.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"

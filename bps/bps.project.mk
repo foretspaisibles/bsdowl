@@ -116,6 +116,11 @@
 #   Pop up a user subshell
 
 
+# Uses:
+#
+#  testsuite:DIRECTORY, defaults to testsuite
+#   Use the following directory as test suite
+
 ### IMPLEMENTATION
 
 .if !target(__<bps.project.mk>__)
@@ -290,6 +295,36 @@ dist: pre-dist do-dist post-dist
 .endif
 
 .ORDER: pre-dist do-dist post-dist
+
+
+#
+# Testsuite
+#
+
+
+.if defined(_USES_OPTIONS)
+.if!empty(_USES_OPTIONS:Mtestsuite)
+.if ${_USES_testsuite_ARGS:[#]} > 1
+.error Incorrect "USES+= testsuite" usage:\
+	  at most one argument is expected.
+.endif
+.if!empty(_USES_testsuite_ARGS)
+_PROJECT_TESTSUITEDIR=		${_USES_testsuite_ARGS}
+.elif exists(${SRCDIR}/testsuite)
+_PROJECT_TESTSUITEDIR=		testsuite
+.elif exists(${SRCDIR}/test)
+_PROJECT_TESTSUITEDIR=		test
+.endif
+.endif
+.elif exists(${SRCDIR}/testsuite)
+_PROJECT_TESTSUITEDIR=		testsuite
+.endif
+
+.if defined(_PROJECT_TESTSUITEDIR)
+do-test:
+	@(cd ${.CURDIR}/${_PROJECT_TESTSUITEDIR} && ${MAKE} test)
+.endif
+
 
 #
 # Initialisation of PROJECTLIBRARY
