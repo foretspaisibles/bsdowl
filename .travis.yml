@@ -2,6 +2,8 @@ language: c
 sudo: false
 addons:
   apt:
+    sources:
+    - avsm
     packages:
     - gawk
     - gnupg
@@ -10,15 +12,16 @@ addons:
     - m4
     - noweb
     - ocaml
-    - ocaml-findlib
+    - opam
     - texlive-font-utils
     - texlive-lang-french
     - texlive-latex-base
-install: sh -ex ./Library/Ancillary/autoinstall bmake
+install: sh -ex ./Library/Ancillary/autoinstall bmake opam
 script: sh -ex ./Library/Ancillary/travisci
 env:
-  - TRAVIS_FULL=no
-  - TRAVIS_FULL=yes
+  - TRAVIS_OCAML_VERSION=4.02.3 TRAVIS_FULL=no
+  - TRAVIS_OCAML_VERSION=4.02.3 TRAVIS_FULL=yes
 cache:
   directories:
   - ${HOME}/.local
+  - ${HOME}/.opam
