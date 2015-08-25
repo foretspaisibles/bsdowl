@@ -17,6 +17,9 @@ TRAVIS_WITH_TEX=${TRAVIS_FULL}
 TRAVIS_WITH_NOWEB=${TRAVIS_FULL}
 TRAVIS_WITH_FINDLIB=${TRAVIS_FULL}
 INSTALL_PREFIX="${HOME}/.bsdowl"
+
+eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
+
 install -d "${INSTALL_PREFIX}"
 autoconf
 ./configure\
