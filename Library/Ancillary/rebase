@@ -15,7 +15,7 @@
 
 topic_branch_list()
 {
-    git branch | sed -n -e 's/^..//;/topic/p'
+    git branch | sed -n -e 's/^..//;/^topic/p'
 }
 
 
@@ -24,7 +24,7 @@ topic_branch_rebase()
     local branch
 
     while read "branch"; do
-        git rebase --onto master remaster "${branch}"
+        git rebase --onto master master "${branch}"
     done
 }
 
