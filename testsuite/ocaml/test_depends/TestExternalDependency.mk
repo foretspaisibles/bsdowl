@@ -13,7 +13,12 @@
 
 TEST_DESCRIPTION=	External dependencies in an OCaml project
 TEST_SOURCEDIR=		example/ocaml/heat
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST_SEQUENCE=		preparatives depend
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		COMPILE
 TEST_COMPILE=		both native_code byte_code

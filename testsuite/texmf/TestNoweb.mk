@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	LaTeX classes with Noweb
 TEST_SOURCEDIR=		example/texmf/noweb
+
+.if "${WITH_TESTSUITE_NOWEB}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEXINPUTS+=		${BSDOWL_TESTDIR}/share/texmf-local/tex/latex/bsdowl
 

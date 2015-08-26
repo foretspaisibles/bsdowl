@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Simple OCaml program linking a findlib library
 TEST_SOURCEDIR=		example/ocaml/rolling_stone
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 test:
 	test -x ${DESTDIR}${BINDIR}/rolling_stone

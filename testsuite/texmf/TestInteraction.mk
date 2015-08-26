@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Simple plain TeX document failing on errors
 TEST_SOURCEDIR=		example/texmf/tex
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 USES+=			texinteraction:errorstop
 

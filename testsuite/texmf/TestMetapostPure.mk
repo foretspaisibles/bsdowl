@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Pure METAPOST picture
 TEST_SOURCEDIR=		example/texmf/metapost
+
+.if "${WITH_TESTSUITE_METAPOST}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		MPDEVICE
 TEST_MPDEVICE=		eps svg pdf png
