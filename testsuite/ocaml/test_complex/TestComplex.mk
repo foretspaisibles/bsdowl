@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Complex OCaml program
 TEST_SOURCEDIR=		example/ocaml/heat
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		WITH_DEBUG WITH_PROFILE COMPILE
 TEST_WITH_DEBUG=	yes no

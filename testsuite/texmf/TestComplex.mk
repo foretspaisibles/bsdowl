@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Complex LaTeX document with METAPOST figures
 TEST_SOURCEDIR=		example/texmf/complex
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		TEXDEVICE
 TEST_TEXDEVICE=		dvi pdf ps

@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	LaTeX document with METAPOST figures
 TEST_SOURCEDIR=		example/texmf/graphicx
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes" && "${WITH_TESTSUITE_METAPOST}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		TEXDEVICE
 TEST_TEXDEVICE=		dvi pdf ps

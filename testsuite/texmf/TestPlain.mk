@@ -16,7 +16,12 @@
 
 TEST_DESCRIPTION=	Simple plain TeX document
 TEST_SOURCEDIR=		example/texmf/tex
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
 TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 TEST_MATRIX=		TEXDEVICE
 TEST_TEXDEVICE=		dvi pdf ps

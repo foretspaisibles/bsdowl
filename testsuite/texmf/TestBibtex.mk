@@ -14,15 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		galley.tex
-TEXDEVICE=		pdf
-USES+=			bibtex
+TEST_DESCRIPTION=	LaTeX document with BibTeX generated bibliography
+TEST_SOURCEDIR=		example/texmf/bibtex
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
+TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 test:
 	test -f ${DESTDIR}${DOCDIR}/withbibtex.pdf
-
-.PATH:			${BSDOWLSRCDIR}/example/texmf/bibtex
-
-.include "latex.doc.mk"
 
 ### End of file `TestBibtex.mk'
