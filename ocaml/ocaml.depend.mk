@@ -64,6 +64,12 @@ __<ocaml.depend.mk>__:
 _OCAMLDEP_FILTER_SCRIPT+=	-e "s@${directory}/*@@g"
 .endfor
 
+OCAMLDEPFLAGS+=			-I +.
+
+.if defined(_OCAML_DIRS)
+OCAMLDEPFLAGS+=			${_OCAML_DIRS}
+.endif
+
 .if ("${.OBJDIR}" != "${.CURDIR}") && empty(DIRS:M${.CURDIR})
 _OCAMLDEP_FILTER_SCRIPT+=	-e "s@${.OBJDIR}/*@@g"
 OCAMLDEPFLAGS+=			-I ${.OBJDIR}

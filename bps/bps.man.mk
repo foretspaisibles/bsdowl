@@ -96,7 +96,10 @@ MANCOMPRESSEXT?=	.gz
 .SUFFIXES: ${MANSECTIONS:S@^@.@}
 
 .if defined(DIRS)
-.PATH:			${DIRS}
+.for section in ${MANSECTIONS}
+.SUFFIXES: .${section}
+.PATH.${section}:	${DIRS}
+.endfor
 .endif
 
 .if defined(_MAN_AUTO)

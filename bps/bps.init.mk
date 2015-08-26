@@ -121,7 +121,7 @@
 #    A sed programm.
 #
 #
-#  SED_INPLACE [${SED} -i .orig]
+#  SED_INPLACE [${SED} -i.orig]
 #    The sed command used for inplace edition.
 #
 #
@@ -291,7 +291,7 @@ INSTALL_DIR?=		${INSTALL} -d
 AWK?=			${_BPS_AWK}
 GREP?=			${_BPS_GREP}
 SED?=			${_BPS_SED}
-SED_INPLACE?=		${SED} -i .orig
+SED_INPLACE?=		${SED} -i.orig
 TOUCH?=			touch
 ECHO?=			echo
 INFO?=			@echo '===>'
