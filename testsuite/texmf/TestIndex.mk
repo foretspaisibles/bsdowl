@@ -14,15 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-DOCUMENT=		galley.tex
-TEXDEVICE=		pdf
-USES+=			index
+TEST_DESCRIPTION=	LaTeX document featuring an index
+TEST_SOURCEDIR=		example/texmf/index
+
+.if "${WITH_TESTSUITE_TEXMF}" == "yes"
+TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 test:
 	test -f ${DESTDIR}${DOCDIR}/withindex.pdf
-
-.PATH:			${BSDOWLSRCDIR}/example/texmf/index
-
-.include "latex.doc.mk"
 
 ### End of file `TestIndex.mk'
