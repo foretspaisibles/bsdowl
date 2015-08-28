@@ -14,22 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-TOPLEVEL=		custom_toplevel
-
-EXTERNAL+=		ocaml.findlib:compiler-libs
-
-SRCS=			custom_configuration.ml
-SRCS+=			custom_library.ml
-SRCS+=			custom_bootstrap.ml
-
-REPLACESUBST=		${STDREPLACESUBST}
-REPLACEFILE=		custom_configuration.ml.in
+TEST_DESCRIPTION=	Modified OCaml toplevel
+TEST_SOURCEDIR=		example/ocaml/customtop
+TEST_SEQUENCE=		preparatives all install
 
 test:
 	test -x ${DESTDIR}${BINDIR}/custom_toplevel
-
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/customtop
-
-.include "ocaml.toplevel.mk"
 
 ### End of file `TestToplevel.mk'

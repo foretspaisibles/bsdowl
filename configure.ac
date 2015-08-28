@@ -219,8 +219,8 @@ AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
 AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
-AC_SUBST([VERSION], [$(${BSDMAKE} -V VERSION)])
-AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk testsuite/Makefile.inc])
+AC_SUBST([VERSION], [$(sed -n -e '/^VERSION/s/VERSION=[[:space:]]*//p')])
+AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk])
 AC_OUTPUT
 
 cat <<EOF

@@ -15,7 +15,7 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 DOCUMENT=		square.mp
-MPDEVICE=		eps pdf png svg
+DOCUMENT+=		texlabel.mp
 
 .include "mpost.doc.mk"
 

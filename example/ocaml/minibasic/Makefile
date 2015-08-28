@@ -14,13 +14,14 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PACK=	minibasic
+PROG=		minibasic
 
-SRCS =		main.ml
-SRCS+=		basic_types.ml
+SRCS=		basic_types.ml
 SRCS+=		basic_parser.mly
 SRCS+=		basic_lexer.mll
+SRCS+=		minibasic.ml
+SRCS+=		main.ml
 
-.include "ocaml.pack.mk"
+.include "ocaml.prog.mk"
 
 ### End of file `Makefile'

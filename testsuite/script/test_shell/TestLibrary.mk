@@ -14,14 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		libselftest.subr
+TEST_DESCRIPTION=	Simple shell library
+TEST_SOURCEDIR=		example/script/shell/selftest
+TEST_SEQUENCE=		preparatives all install
 
 test:
 	test -f ${DESTDIR}${SHAREDIR}/libselftest.subr
 	test -f ${DESTDIR}${MANDIR}/man3/libselftest.3.gz
-
-.PATH:			${BSDOWLSRCDIR}/example/script/shell/selftest
-
-.include "shell.lib.mk"
 
 ### End of file `TestLibrary.mk'

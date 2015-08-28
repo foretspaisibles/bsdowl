@@ -348,12 +348,7 @@ _MAKE_USERTARGET?=	obj runconfigure depend build doc all install\
 
 _SUBDIR_TARGET?=	obj depend build doc install clean distclean realclean test
 
-
-.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-_MAKE_ALLSUBTARGET?=	obj runconfigure depend build doc test
-.else
-_MAKE_ALLSUBTARGET?=	runconfigure depend build doc test
-.endif
+_MAKE_ALLSUBTARGET?=	depend build doc
 
 #
 # Read other definitions

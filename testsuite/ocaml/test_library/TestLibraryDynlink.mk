@@ -14,24 +14,17 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		newton
+TEST_DESCRIPTION=	Simple OCaml dynlink plugin
+TEST_SOURCEDIR=		example/ocaml/newton
+TEST_SEQUENCE=		preparatives all install
 
-SRCS=			newton.ml
-
-USES+=			site-lib
 USES+=			dynlink
 
 COMPILE=		native
-
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton
-.PATH:			${BSDOWLSRCDIR}/example/ocaml/newton-meta
 
 test:
 	test -f ${DESTDIR}${LIBDIR}/newton.cmxa
 	test -f ${DESTDIR}${LIBDIR}/newton.cmxs
 	test -f ${DESTDIR}${LIBDIR}/newton.cmi
-	test -f ${DESTDIR}${LIBDIR}/META
-
-.include "ocaml.lib.mk"
 
 ### End of file `TestLibraryDynlink.mk'

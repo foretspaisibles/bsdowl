@@ -23,7 +23,7 @@ MODULE+=	ocaml.lib:newton
 MODULE+=	ocaml.prog:golden_ratio
 MODULE+=	ocaml.manual:manual
 
-EXTERNAL=	ocaml.lib:nums
+EXTERNAL=	ocaml.findlib:num
 
 .include "generic.project.mk"
 

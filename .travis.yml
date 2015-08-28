@@ -8,14 +8,19 @@ addons:
     - gawk
     - gnupg
     - graphicsmagick
-    - graphicsmagick
+    - latex-xcolor
+    - lmodern
     - m4
     - noweb
     - ocaml
     - opam
     - texlive-font-utils
+    - texlive-fonts-recommended
     - texlive-lang-french
     - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-latex-recommended
+    - texlive-metapost
 install: sh -ex ./Library/Ancillary/autoinstall bmake opam
 script: sh -ex ./Library/Ancillary/travisci
 env:

@@ -35,8 +35,8 @@ autoconf
     --enable-test-texmf=no\
     --disable-test-gpg
 bmake build
-bmake test
 bmake install
+./Library/Ancillary/testtool -R "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
 test -f "${INSTALL_PREFIX}/share/bsdowl/bps.bpsconfig.mk"
 
 ### End of file `travis-tool'
