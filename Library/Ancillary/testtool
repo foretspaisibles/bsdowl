@@ -172,7 +172,7 @@ testtool_install()
         esac
         cd bsdowl
         autoconf
-        ./configure $(testtool_configure_argv)
+        ./configure $(testtool_configure_argv) || exit 1
         testtool_make build
         testtool_make install
         install -d "${BSDOWL_TESTDIR}/var/db"
