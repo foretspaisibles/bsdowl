@@ -1,5 +1,5 @@
 dnl Process this file with autoconf to produce a configure script.
-AC_INIT(bps/Makefile)
+AC_INIT([bps/Makefile])
 AC_CONFIG_AUX_DIR([Library/Autoconf])
 AC_CANONICAL_HOST
 AC_NEED_BSDMAKE()
@@ -8,6 +8,7 @@ AC_PROG_GREP()
 AC_PROG_INSTALL()
 AC_PROG_LN_S()
 AC_PROG_MKDIR_P()
+AC_PROG_OCAML()
 AC_PROG_SED()
 AC_PROG_ID()
 AC_SYSTEM_USER()
@@ -21,15 +22,15 @@ AC_TAR_COMPRESSION_METHODS([COMPRESS])
 # programs, nevertheless, it might be useful for packagers and porters
 # to let the configure script fail if some programs are not present.
 
-AC_ARG_WITH([gpg],
+AC_ARG_WITH_PROG([gpg],
   [AS_HELP_STRING([--with-gpg],
     [support signing of distribution files with GPG])],
-  [AC_NEED_PROG([GPG], [gpg])])
+  [GPG], [gpg])
 
-AC_ARG_WITH([gm],
+AC_ARG_WITH_PROG([gm],
   [AS_HELP_STRING([--with-gm],
     [support conversion of METAPOST pictures to PNG with GraphicsMagick])],
-  [AC_NEED_PROG([GraphicsMagick], [gm])])
+  [GraphicsMagick], [gm])
 
 AC_ARG_WITH([tex],
   [AS_HELP_STRING([--with-tex],
@@ -40,30 +41,35 @@ AC_ARG_WITH([tex],
    AC_NEED_PROG([dvips], [dvips])
    AC_NEED_PROG([epstopdf], [epstopdf])])
 
-AC_ARG_WITH([ocaml],
+AC_ARG_WITH_PROG([ocaml],
   [AS_HELP_STRING([--with-ocaml],
     [support preparation of OCaml projects])],
-  [AC_NEED_PROG([ocamlc], [ocamlc])])
+  [ocamlc],
+  [ocamlc])
 
-AC_ARG_WITH([findlib],
+AC_ARG_WITH_PROG([findlib],
   [AS_HELP_STRING([--with-findlib],
     [support use of OCaml findlib in OCaml projects])],
-  [AC_NEED_PROG([ocamlfind], [ocamlfind])])
+  [findlib],
+  [ocamlfind])
 
-AC_ARG_WITH([tidy],
+AC_ARG_WITH_PROG([tidy],
   [AS_HELP_STRING([--with-tidy],
     [support use of tidy to canonise HTML pages])],
-  [AC_NEED_PROG([tidy], [tidy])])
+  [tidy],
+  [tidy])
 
-AC_ARG_WITH([opensp],
+AC_ARG_WITH_PROG([opensp],
   [AS_HELP_STRING([--with-opensp],
     [support static HTML pages generation with OpenSP])],
-  [AC_NEED_PROG([OpenSP], [onsgmls])])
+  [OpenSP],
+  [onsgmls])
 
-AC_ARG_WITH([noweb],
+AC_ARG_WITH_PROG([noweb],
   [AS_HELP_STRING([--with-noweb],
     [support literate programming with noweb])],
-  [AC_NEED_PROG([noweb], [noweb])])
+  [noweb],
+  [noweb])
 
 AC_ARG_WITH([credentials],
   [AS_HELP_STRING([--with-credentials],
@@ -190,6 +196,18 @@ AC_ARG_ENABLE([test-metapost],
   [WITH_TESTSUITE_METAPOST=${WITH_TESTSUITE_TEXMF}])
 
 
+# unpack_ocaml_version
+#
+#   Prepare a string holding OCamlversion
+#
+# This change the version so that numerical comparison is possible.
+
+unpack_ocaml_version[]()
+{
+    echo ${OCAMLVERSION} | awk -F. '{printf("%04d%04d%04d", $1, $2, $2)}'
+}
+
+
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
 AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
@@ -200,8 +218,9 @@ AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
-AC_SUBST([VERSION], [$(${BSDMAKE} -V VERSION)])
-AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk testsuite/Makefile.inc])
+AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
+AC_SUBST([VERSION], [$(sed -n -e '/^VERSION/s/VERSION=[[:space:]]*//p')])
+AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk])
 AC_OUTPUT
 
 cat <<EOF

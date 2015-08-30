@@ -14,16 +14,26 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-LIBRARY=		newton
 
-SRCS=			newton.ml
+TEST_DESCRIPTION=	Simple OCaml library
+TEST_SOURCEDIR=		example/ocaml/newton
+TEST_SEQUENCE=		preparatives all install
 
-.PATH:			${TESTSRCDIR}/ocaml/newton
+TEST_MATRIX=		WITH_DEBUG WITH_PROFILE COMPILE
+TEST_WITH_DEBUG=	yes no
+TEST_WITH_PROFILE=	yes no
+TEST_COMPILE=		both native_code byte_code
+
+USES+=			compile:${COMPILE}
 
 test:
-	test -f ${DESTDIR}${LIBDIR}/newton.cma
 	test -f ${DESTDIR}${LIBDIR}/newton.cmi
-
-.include "ocaml.lib.mk"
+.if !empty(COMPILE:Mboth)||!empty(COMPILE:Mbyte_code)
+	test -f ${DESTDIR}${LIBDIR}/newton.cma
+.endif
+.if !empty(COMPILE:Mboth)||!empty(COMPILE:Mnative_code)
+	test -f ${DESTDIR}${LIBDIR}/newton.a
+	test -f ${DESTDIR}${LIBDIR}/newton.cmxa
+.endif
 
 ### End of file `TestLibrary.mk'

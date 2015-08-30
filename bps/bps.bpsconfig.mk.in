@@ -191,7 +191,7 @@ _BPS_SYSTEMGRP?=	@SYSTEMGRP@
 _BPS_COMPRESS?=		@COMPRESS@
 _BPS_SWITCH_CREDENTIALS_STRATEGY?=@SWITCH_CREDENTIALS_STRATEGY@
 
-.endif # !target(__<bps.config.mk>__)
+.endif # !target(__<bps.bpsconfig.mk>__)
 
 .if !target(display-bpsconfig)
 display-bpsconfig:

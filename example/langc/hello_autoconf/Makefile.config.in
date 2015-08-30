@@ -1,0 +1,40 @@
+### @autoconf_input@
+
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
+#
+# Copyright © 2005–2014 Michael Grünewald
+#
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+
+prefix?=		@prefix@
+exec_prefix?=		@exec_prefix@
+bindir?=		@bindir@
+sbindir?=		@sbindir@
+libexecdir?=		@libexecdir@
+datarootdir?=		@datarootdir@
+datadir?=		@datadir@
+sysconfdir?=		@sysconfdir@
+sharedstatedir?=	@sharedstatedir@
+localstatedir?=		@localstatedir@
+runstatedir?=		@runstatedir@
+includedir?=		@includedir@
+docdir?=		@docdir@
+infodir?=		@infodir@
+libdir?=		@libdir@
+localedir?=		@localedir@
+mandir?=		@mandir@
+
+PREFIX?=		${prefix}
+EXEC_PREFIX?=		${exec_prefix}
+DATAROOTDIR?=		${datarootdir}
+
+# Local Variables:
+# mode: makefile
+# End:
+
+### End of file `Makefile.config.in'

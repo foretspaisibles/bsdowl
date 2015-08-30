@@ -1,4 +1,4 @@
-### TestProgramExternalFindlib.mk -- Counting characters and lines in a file
+### TestProgramExternalFindlib.mk -- Test findlib
 
 # Author: Michael Grünewald
 # Date: Thu Oct  3 22:42:23 CEST 2013
@@ -14,12 +14,16 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=	rolling_stone
-EXTERNAL=	ocaml.findlib:unix
+TEST_DESCRIPTION=	Simple OCaml program linking a findlib library
+TEST_SOURCEDIR=		example/ocaml/rolling_stone
+
+.if "${WITH_TESTSUITE_FINDLIB}" == "yes"
+TEST_SEQUENCE=		preparatives all install
+.else
+TEST_SEQUENCE=		IGNORE
+.endif
 
 test:
 	test -x ${DESTDIR}${BINDIR}/rolling_stone
-
-.include "ocaml.prog.mk"
 
 ### End of file `TestProgramExternalFindlib.mk'

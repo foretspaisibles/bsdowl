@@ -14,13 +14,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SRCS=			basic_types.ml
-SRCS+=			basic_parser.mly
-SRCS+=			basic_lexer.mll
-SRCS+=			wordcount.ml
+TEST_DESCRIPTION=	OCaml lexers and parsers with ocamllex and ocamlyacc
+TEST_SOURCEDIR=		example/ocaml/minibasic
+TEST_SEQUENCE=		preparatives all install
 
-.PATH:			${TESTSRCDIR}/ocaml/minibasic
+test:
+	test -x ${DESTDIR}${BINDIR}/minibasic
 
-.include "TestProgram.mk"
-
-### End of file `TestProgramProfile.mk'
+### End of file `TestProgramLexerParser.mk'

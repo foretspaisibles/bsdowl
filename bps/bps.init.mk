@@ -121,7 +121,7 @@
 #    A sed programm.
 #
 #
-#  SED_INPLACE [${SED} -i .orig]
+#  SED_INPLACE [${SED} -i.orig]
 #    The sed command used for inplace edition.
 #
 #
@@ -291,7 +291,7 @@ INSTALL_DIR?=		${INSTALL} -d
 AWK?=			${_BPS_AWK}
 GREP?=			${_BPS_GREP}
 SED?=			${_BPS_SED}
-SED_INPLACE?=		${SED} -i .orig
+SED_INPLACE?=		${SED} -i.orig
 TOUCH?=			touch
 ECHO?=			echo
 INFO?=			@echo '===>'
@@ -343,14 +343,12 @@ COOKIEPREFIX?=		.cookie.
 # Set _MAKE_USERTARGET and _MAKE_ALLSUBTARGET
 #
 
-_MAKE_USERTARGET?=	obj configure depend build doc all install\
-			test clean distclean realclean benchmark
+_MAKE_USERTARGET?=	obj runconfigure depend build doc all install\
+			test clean distclean realclean benchmark preparatives
 
-.if defined(MAKEOBJDIR)||defined(MAKEOBJDIRPREFIX)
-_MAKE_ALLSUBTARGET?=	obj configure depend build doc test
-.else
-_MAKE_ALLSUBTARGET?=	configure depend build doc test
-.endif
+_SUBDIR_TARGET?=	obj depend build doc install clean distclean realclean test
+
+_MAKE_ALLSUBTARGET?=	depend build doc
 
 #
 # Read other definitions
@@ -366,6 +364,7 @@ _MAKE_ALLSUBTARGET?=	configure depend build doc test
 .include "bps.own.mk"
 .include "bps.objdir.mk"
 .include "bps.autoconf.mk"
+.include "bps.preparatives.mk"
 .include "bps.replace.mk"
 .include "bps.credentials.mk"
 .include "bps.noweb.mk"

@@ -14,12 +14,19 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=	wordcount
+TEST_DESCRIPTION=	Simple OCaml program
+TEST_SOURCEDIR=		example/ocaml/wordcount
+TEST_SEQUENCE=		preparatives all install
+
+TEST_MATRIX=		WITH_DEBUG WITH_PROFILE COMPILE
+TEST_WITH_DEBUG=	yes no
+TEST_WITH_PROFILE=	yes no
+TEST_COMPILE=		both native_code byte_code
+
+USES+=			compile:${COMPILE}
 
 test:
 	test -x ${DESTDIR}${BINDIR}/wordcount
 	test -f ${DESTDIR}${MANDIR}/man1/wordcount.1.gz
-
-.include "ocaml.prog.mk"
 
 ### End of file `TestProgram.mk'

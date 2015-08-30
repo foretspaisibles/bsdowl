@@ -14,12 +14,12 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-PROGRAM=		showconfig.sh
+TEST_DESCRIPTION=	Simple shell program
+TEST_SOURCEDIR=		example/script/shell/showconfig
+TEST_SEQUENCE=		preparatives all install
 
 test:
 	test -x ${DESTDIR}${BINDIR}/showconfig
 	test -f ${DESTDIR}${MANDIR}/man1/showconfig.1.gz
-
-.include "shell.prog.mk"
 
 ### End of file `TestProgram.mk'

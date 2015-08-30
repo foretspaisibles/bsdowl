@@ -32,6 +32,7 @@ SHARE+=			bps.clean.mk
 SHARE+=			bps.subdir.mk
 SHARE+=			bps.files.mk
 SHARE+=			bps.autoconf.mk
+SHARE+=			bps.preparatives.mk
 SHARE+=			bps.replace.mk
 SHARE+=			bps.project.mk
 SHARE+=			bps.m4.mk

@@ -1,3 +1,32 @@
 language: c
-script: sh -ex ./Library/Ancillary/travisci main
-before_script: sudo sh -ex ./Library/Ancillary/travisci before
+sudo: false
+addons:
+  apt:
+    sources:
+    - avsm
+    packages:
+    - gawk
+    - gnupg
+    - graphicsmagick
+    - latex-xcolor
+    - lmodern
+    - m4
+    - noweb
+    - ocaml
+    - opam
+    - texlive-font-utils
+    - texlive-fonts-recommended
+    - texlive-lang-french
+    - texlive-latex-base
+    - texlive-latex-extra
+    - texlive-latex-recommended
+    - texlive-metapost
+install: sh -ex ./Library/Ancillary/autoinstall bmake opam
+script: sh -ex ./Library/Ancillary/travisci
+env:
+  - TRAVIS_OCAML_VERSION=4.02.3 TRAVIS_FULL=no
+  - TRAVIS_OCAML_VERSION=4.02.3 TRAVIS_FULL=yes
+cache:
+  directories:
+  - ${HOME}/.local
+  - ${HOME}/.opam
