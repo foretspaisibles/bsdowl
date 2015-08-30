@@ -148,6 +148,11 @@ testtool_configure_argv()
       --disable-test-gpg
 }
 
+testtool_clean()
+{
+    rm -Rf "${BSDOWL_TESTDIR:?}"
+}
+
 testtool_install()
 {
     if [ "${testtool_resume}" = 'yes' ] && [ -d "${BSDOWL_TESTDIR}" ]; then
@@ -158,7 +163,6 @@ testtool_install()
     fi
     (
         set -e
-        rm -Rf "${BSDOWL_TESTDIR:?}"
         install -d "${BSDOWL_TESTDIR}/src"
         cd "${BSDOWL_TESTDIR}/src"
         case "${testtool_copy}" in
@@ -440,6 +444,7 @@ Options:
  -l List available tests.
  -r Resume the last test session.
  -x EXCLUDE-TEST
+ -C Clean the test directory
  -D Run tests with MAKEOBJDIR.
  -P Run tests with MAKEOBJDIRPREFIX.
  -R Use rsync to copy the repository
@@ -467,13 +472,14 @@ BEGIN {
 '
 }
 
-while getopts "hj:lrx:DPR" OPTION; do
+while getopts "hj:lrx:CDPR" OPTION; do
     case "${OPTION}" in
         h)	testtool_usage; exit 0;;
         j)	testtool_parallel="${OPTARG}";;
         l)	testtool_list; exit 0;;
         r)	testtool_resume='yes';;
         x)	testtool_exclude="${testtool_exclude}${testtool_exclude:+ }${OPTARG}";;
+        C)	testtool_clean; exit 0;;
         D)	testtool_objdir='makeobjdir';;
         P)	testtool_objdir='makeobjdirprefix';;
         R)	testtool_copy='rsync';;
@@ -483,7 +489,9 @@ done
 
 shift $(expr ${OPTIND} - 1)
 
-testtool_install || failwith '%s: Installation failed.' "${BSDOWL_TESTDIR}"
+(testtool_clean && testtool_install)\
+    || failwith '%s: Installation failed.' "${BSDOWL_TESTDIR}"
+
 testtool_select "$@" < "${BSDOWL_TESTDIR}/var/db/INDEX"\
     | testtool_run
 
