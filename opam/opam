@@ -1,4 +1,5 @@
 opam-version: "1.2"
+version: "3.0.0-current"
 maintainer: "michipili@gmail.com"
 authors: "Michael Grünewald"
 license: "CeCILL-B"
