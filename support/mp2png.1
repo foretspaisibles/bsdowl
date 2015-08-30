@@ -1,0 +1,34 @@
+.TH MP2PNG 1 "Oct 27, 2014"
+.SH NAME
+mp2png \- Convert METAPOST to PNG
+.SH SYNOPSIS
+.B mp2png
+.RI [\fI-h\fR][\fI-o\ output\fR][\fI-r\ resolution\fR]\ file1\ ...
+.SH DESCRIPTION
+.sp 2
+.B mp2png
+converts METAPOST output to PNG.
+.SH OPTIONS
+.TP
+\fB-h\fR
+Display a cheerful help message.
+.TP
+\fB-o output\fR
+Specify an alternate output file name, instead of a name deduced from
+the name of the input file by changing its suffix.
+.TP
+\fB-r resolution\fR
+Use the given resolution for rendering PNG. The implcit value is 1200
+dpi. Typical resolution for screen viewing ranges from 72 to 100, for
+deskjet printers from 300 to 400, and for laserjet or other high
+quality device, from 600 to above.
+.SH NOTES
+The conversion is done thanks to GraphicsMagick.
+The program will not work if you use the prologue facility (if you
+know nothing about it, this is probably ok).
+.SH SEE ALSO
+.BR gm (1).
+.br
+.SH AUTHOR
+This manual page was written by Michael Grünewald
+<michpili@gmail.com>.
