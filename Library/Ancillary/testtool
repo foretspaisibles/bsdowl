@@ -78,16 +78,15 @@ h2()
 
 testtool_make()
 {
-    local make
-    local config
-
-    config="${BSDOWL_TESTDIR}/src/bsdowl/Makefile.config"
-    if [ -f "${config}" ]; then
-        make=$(sed -n -e '/^BSDMAKE[?]=/s/^BSDMAKE[?]=[[:space:]]*//p' "${config}")
-    else
-        failwith '%s: File not found.' "${config}"
+    if [ -z "${testtool_make__cmd}" ]; then
+        case $(uname) in
+            FreeBSD|NetBSD)
+                testtool_make__cmd='make';;
+            *)
+                testtool_make__cmd='bmake';;
+        esac
     fi
-    "${make}" "$@"
+    "${testtool_make__cmd}" "$@"
 }
 
 
