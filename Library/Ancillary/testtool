@@ -78,16 +78,15 @@ h2()
 
 testtool_make()
 {
-    local make
-    local config
-
-    config="${BSDOWL_TESTDIR}/src/bsdowl/Makefile.config"
-    if [ -f "${config}" ]; then
-        make=$(sed -n -e '/^BSDMAKE[?]=/s/^BSDMAKE[?]=[[:space:]]*//p' "${config}")
-    else
-        failwith '%s: File not found.' "${config}"
+    if [ -z "${testtool_make__cmd}" ]; then
+        case $(uname) in
+            FreeBSD|NetBSD)
+                testtool_make__cmd='make';;
+            *)
+                testtool_make__cmd='bmake';;
+        esac
     fi
-    "${make}" "$@"
+    "${testtool_make__cmd}" "$@"
 }
 
 
@@ -149,6 +148,11 @@ testtool_configure_argv()
       --disable-test-gpg
 }
 
+testtool_clean()
+{
+    rm -Rf "${BSDOWL_TESTDIR:?}"
+}
+
 testtool_install()
 {
     if [ "${testtool_resume}" = 'yes' ] && [ -d "${BSDOWL_TESTDIR}" ]; then
@@ -159,7 +163,6 @@ testtool_install()
     fi
     (
         set -e
-        rm -Rf "${BSDOWL_TESTDIR:?}"
         install -d "${BSDOWL_TESTDIR}/src"
         cd "${BSDOWL_TESTDIR}/src"
         case "${testtool_copy}" in
@@ -173,7 +176,7 @@ testtool_install()
         esac
         cd bsdowl
         autoconf
-        ./configure $(testtool_configure_argv)
+        ./configure $(testtool_configure_argv) || exit 1
         testtool_make build
         testtool_make install
         install -d "${BSDOWL_TESTDIR}/var/db"
@@ -441,6 +444,7 @@ Options:
  -l List available tests.
  -r Resume the last test session.
  -x EXCLUDE-TEST
+ -C Clean the test directory
  -D Run tests with MAKEOBJDIR.
  -P Run tests with MAKEOBJDIRPREFIX.
  -R Use rsync to copy the repository
@@ -468,13 +472,14 @@ BEGIN {
 '
 }
 
-while getopts "hj:lrx:DPR" OPTION; do
+while getopts "hj:lrx:CDPR" OPTION; do
     case "${OPTION}" in
         h)	testtool_usage; exit 0;;
         j)	testtool_parallel="${OPTARG}";;
         l)	testtool_list; exit 0;;
         r)	testtool_resume='yes';;
         x)	testtool_exclude="${testtool_exclude}${testtool_exclude:+ }${OPTARG}";;
+        C)	testtool_clean; exit 0;;
         D)	testtool_objdir='makeobjdir';;
         P)	testtool_objdir='makeobjdirprefix';;
         R)	testtool_copy='rsync';;
@@ -484,7 +489,9 @@ done
 
 shift $(expr ${OPTIND} - 1)
 
-testtool_install || failwith '%s: Installation failed.' "${BSDOWL_TESTDIR}"
+(testtool_clean && testtool_install)\
+    || failwith '%s: Installation failed.' "${BSDOWL_TESTDIR}"
+
 testtool_select "$@" < "${BSDOWL_TESTDIR}/var/db/INDEX"\
     | testtool_run
 
