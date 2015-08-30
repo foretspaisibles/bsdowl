@@ -16,7 +16,7 @@
 
 PACKAGE=		bsdowl
 OFFICER=		michipili@gmail.com
-VERSION=		3.0.0-current
+VERSION=		3.0.0-20150830-releng
 
 SUBDIR+=		bps
 SUBDIR+=		ocaml
