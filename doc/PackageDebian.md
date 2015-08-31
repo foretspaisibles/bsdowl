@@ -217,8 +217,12 @@ the `release` branch, producing an updated package can be as easy as:
 ```
 
 If the upstream package evolves a lot, one can expect more work to be
-ncessary.
+necessary.  When packaging for **Ubuntu** and distributing on a PPA,
+it is necessary to prepare a source package rather than a binary
+package.  For this, we use `git buildpackage -S`.
 
+Once packages are ready, we can *dput* them on the appropriate
+servers.
 
   [anvil]:                       https://github.com/michipili/anvil
   [debian-git]:                  https://wiki.debian.org/PackagingWithGit#Using_the_upstream_repo
