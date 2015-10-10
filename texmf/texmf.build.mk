@@ -59,10 +59,10 @@ DOC+=			${_MPOST_LIST.${document:T}:.mps=.${device}}
 .endfor
 .endfor
 
-_TEX_BUILD_TOOL.dvi=	${_TEX_TOOL.tex}
+_TEX_BUILD_TOOL.dvi=	${_TEX_TOOL.dvi}
 _TEX_BUILD_FIGURE.dvi=	eps
 
-_TEX_BUILD_TOOL.pdf=	${_TEX_TOOL.pdftex}
+_TEX_BUILD_TOOL.pdf=	${_TEX_TOOL.pdf}
 _TEX_BUILD_FIGURE.pdf=	pdf
 
 .for device in dvi pdf
