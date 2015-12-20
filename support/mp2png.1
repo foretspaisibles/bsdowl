@@ -1,0 +1,52 @@
+.\" BSD Owl Scripts (https://github.com/michipili/bsdowl)
+.\" This file is part of BSD Owl Scripts
+.\"
+.\" Copyright © 2005–2015 Michael Grünewald
+.\"
+.\" This file must be used under the terms of the CeCILL-B.
+.\" This source file is licensed as described in the file COPYING, which
+.\" you should have received as part of this distribution. The terms
+.\" are also available at
+.\" http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+.Dd Oct 27, 2014
+.Dt MP2PNG 1
+.Os
+.Sh NAME
+.Nm mp2png
+.Nd Convert METAPOST to PNG
+.Sh SYNOPSIS
+.Nm
+.Op Fl h
+.Op Fl o Ar output
+.Op Fl r Ar resolution
+.Op Ar file ...
+.Sh DESCRIPTION
+.Nm
+is a program to convert METAPOST output to PNG.
+.Sh OPTIONS
+.Bl -tag -width Ds
+.It Fl h
+Display a cheerful help message.
+.It Fl o Ar output
+Specify an alternate
+.Ar output
+file name, instead of a name deduced from
+the name of the input file by changing its suffix.
+.It Fl r Ar resolution
+Use the given
+.Ar resolution
+for rendering PNG. The implcit value is 1200
+dpi. Typical resolution for screen viewing ranges from 72 to 100, for
+deskjet printers from 300 to 400, and for laserjet or other high
+quality device, from 600 to above.
+.El
+.Sh NOTES
+The conversion is done thanks to GraphicsMagick.
+.Pp
+The program will not work if you use the prologue facility (if you
+know nothing about it, this is probably ok).
+.Sh SEE ALSO
+.Xr gm 1
+.Sh AUTHOR
+This manual page was written by
+.An "Michael Gr\[:u]newald" Aq michpili@gmail.com .
