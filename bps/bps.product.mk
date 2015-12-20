@@ -86,9 +86,10 @@ display-product:
 .for displayvar in PRODUCT PRODUCTFILE
 	${MESG} "${displayvar}=${${displayvar}}"
 .endfor
-.for module in ${_MODULE_LIST}
-	${MESG} "PRODUCT_${module}=${PRODUCT_${module}}"
-.endfor
+.if exists(${PRODUCTFILE})
+	${MESG} "---- Dump product file ----"
+	@cat < ${PRODUCTFILE}
+.endif
 .endif
 
 ### End of file `bps.product.mk'
