@@ -17,6 +17,7 @@
 SHARE=			script.main.mk
 SHARE+=			shell.prog.mk
 SHARE+=			shell.lib.mk
+SHARE+=			perl.prog.mk
 SHARE+=			python.prog.mk
 SHARE+=			python.lib.mk
 SHARE+=			python.init.mk

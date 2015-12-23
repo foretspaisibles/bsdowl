@@ -6,7 +6,7 @@
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
-# Copyright © 2005–2014 Michael Grünewald
+# Copyright © 2005–2015 Michael Grünewald
 #
 # This file must be used under the terms of the CeCILL-B.
 # This source file is licensed as described in the file COPYING, which
@@ -15,13 +15,13 @@
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
 
-### SYNOPSIS
+TEST_DESCRIPTION=	Simple perl program
+TEST_SOURCEDIR=		example/script/perl/showconfig
+TEST_SEQUENCE=		preparatives all install
 
-### DESCRIPTION
-
-.if !target(__<TestPerlProgram.mk>__)
-__<TestPerlProgram.mk>__:
-
-.endif # !target(__<TestPerlProgram.mk>__)
+test:
+	test -x ${DESTDIR}${BINDIR}/showconfig
+	test -f ${DESTDIR}${MANDIR}/man1/showconfig.1.gz
+	${DESTDIR}${BINDIR}/showconfig | grep -q ${libexecdir}/showconfig
 
 ### End of file `TestPerlProgram.mk'
