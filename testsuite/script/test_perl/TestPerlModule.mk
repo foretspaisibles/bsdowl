@@ -19,9 +19,19 @@
 
 ### DESCRIPTION
 
-.if !target(__<TestPerlModule.mk>__)
-__<TestPerlModule.mk>__:
+TEST_DESCRIPTION=	Simple perl module
+TEST_SOURCEDIR=		example/script/perl/selftest
+TEST_SEQUENCE=		preparatives all install
 
-.endif # !target(__<TestPerlModule.mk>__)
+PERLLIBDIR=		${LIBDIR}/perl5
+PERLTEST='\
+use Selftest;\
+selftest;\
+'
+
+test:
+	test -f ${DESTDIR}${PERLLIBDIR}/Selftest.pm
+	test -f ${DESTDIR}${MANDIR}/man3/Selftest.3pm.gz
+	perl -I ${DESTDIR}${PERLLIBDIR} -e ${PERLTEST}
 
 ### End of file `TestPerlModule.mk'

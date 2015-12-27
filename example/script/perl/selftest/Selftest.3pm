@@ -1,0 +1,43 @@
+.\" Selftest.3 -- A self-testing library
+.\"
+.\" BSD Owl Scripts (https://github.com/michipili/bsdowl)
+.\" This file is part of BSD Owl Scripts
+.\"
+.\" Copyright © 2005–2014 Michael Grünewald
+.\"
+.\" This file must be used under the terms of the CeCILL-B.
+.\" This source file is licensed as described in the file COPYING, which
+.\" you should have received as part of this distribution. The terms
+.\" are also available at
+.\" http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
+.\"
+.Dd November 21, 2014
+.Dt SELFTEST.PM 3
+.Os
+.Sh NAME
+.Nm Selftest.pm
+.Nd functions used by system perl scripts
+.Sh SYNOPSIS
+.Bl -item -compact
+.It
+.Ic use\& Pa Selftest
+.Pp
+.It
+.Ic selftest();
+.It
+.El
+.Sh DESCRIPTION
+The
+.Nm
+module defines a single function testing for the existence of the
+file holding the module source code.
+.Sh HISTORY
+The
+.Nm
+module appeared as a demonstration perl module for bsdowl.
+.Sh AUTHORS
+.An -nosplit
+This heat generating
+.Nm
+perl module was written by
+.An Michael Gr\(:unewald Aq michipili@gmail.com .
