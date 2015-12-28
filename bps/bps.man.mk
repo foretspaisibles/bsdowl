@@ -122,7 +122,7 @@ buildman:		.PHONY
 .if defined(MAN) && !empty(MAN)
 .for section in ${MANSECTIONS}
 .for man in ${MAN:M*.${section}}
-MANDIR.${man:T}=	${MANDIR}/man${section}
+MANDIR.${man:T}=	${MANDIR}/man${section:C@pm$@p@}
 .endfor
 .endfor
 
