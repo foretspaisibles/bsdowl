@@ -1,7 +1,4 @@
-### Makefile -- Install script programs and libraries
-
-# Author: Michael Grünewald
-# Date: Thu Nov 20 14:11:44 CET 2014
+### Makefile -- Prepare and install a perl module
 
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
@@ -14,19 +11,11 @@
 # are also available at
 # http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-SHARE=			script.main.mk
-SHARE+=			shell.prog.mk
-SHARE+=			shell.lib.mk
-SHARE+=			perl.prog.mk
-SHARE+=			perl.uses.mk
-SHARE+=			perl.init.mk
-SHARE+=			perl.lib.mk
-SHARE+=			python.prog.mk
-SHARE+=			python.lib.mk
-SHARE+=			python.init.mk
-SHARE+=			python.uses.mk
-SHARE+=			python.setuptools.mk
+LIBRARY=		Selftest.pm
+PERLPACKAGE=		org::lang::Parser
 
-.include "generic.files.mk"
+USES+=			perl:5
+
+.include "perl.lib.mk"
 
 ### End of file `Makefile'
