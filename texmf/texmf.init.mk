@@ -36,8 +36,9 @@ WEB2CDIR?=		${TEXMFDIR}/web2c
 TEXDEVICE?=		pdf
 
 TEX?=			pdftex
-TEX.pdftex?=		pdftex
-TEX.tex?=		tex
+TEX.pdf?=		pdftex
+TEX.dvi?=		tex
+TEX.ps?=		tex
 DVIPS?=			dvips
 MPOST?=			mpost
 MPTEX?=			${TEX.tex}
@@ -46,7 +47,6 @@ MP2PNG?=		mp2png
 MP2PDF?=		mp2pdf
 EPSTOPDF?=		epstopdf
 
-_TEX_ENGINES=		tex pdftex
 _TEX_DEVICES?=		pdf ps dvi
 _TEX_SUFFIX.dvi=	.dvi
 _TEX_SUFFIX.pdf=	.pdf
@@ -138,16 +138,20 @@ _TEX_FLAGS+=		-progname ${PROGNAME}
 # TeX tools
 #
 
-.for engine in ${_TEX_ENGINES}
+.for device in ${_TEX_DEVICES}
 .if defined(_TEX_ENV)&&!empty(_TEX_ENV)
-_TEX_TOOL.${engine}=	${ENVTOOL} ${_TEX_ENV}
+_TEX_TOOL.${device}=	${ENVTOOL} ${_TEX_ENV}
 .endif
-_TEX_TOOL.${engine}+=	${TEX.${engine}}
-.if defined(FORMAT.${engine})
-_TEX_TOOL.${engine}+=	-fmt ${FORMAT.${engine}}
+.if defined(TEX.${device})
+_TEX_TOOL.${device}+=	${TEX.${device}}
+.else
+_TEX_TOOL.${device}+=	${TEX}
+.endif
+.if defined(FORMAT.${device})
+_TEX_TOOL.${device}+=	-fmt ${FORMAT.${device}}
 .endif
 .if defined(_TEX_FLAGS)
-_TEX_TOOL.${engine}+=	${_TEX_FLAGS}
+_TEX_TOOL.${device}+=	${_TEX_FLAGS}
 .endif
 .endfor
 
