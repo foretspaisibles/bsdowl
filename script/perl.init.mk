@@ -24,6 +24,8 @@ PERLPACKAGEDIR?=	${PERLPACKAGE:C@::@/@g:C@^@/@}
 PERLPACKAGEDIR?=
 .endif
 
+MANSECTIONS?=		3pm 8pm
+
 .include "bps.init.mk"
 .include "perl.uses.mk"
 

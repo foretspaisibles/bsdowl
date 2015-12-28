@@ -31,7 +31,7 @@ selftest;\
 
 test:
 	test -f ${DESTDIR}${PERLLIBDIR}/Selftest.pm
-	test -f ${DESTDIR}${MANDIR}/man3/Selftest.3pm.gz
+	test -f ${DESTDIR}${MANDIR}/man3p/Selftest.3pm.gz
 	perl -I ${DESTDIR}${PERLLIBDIR} -e ${PERLTEST}
 
 ### End of file `TestPerlModule.mk'
