@@ -120,6 +120,7 @@ OCAMLFIND?=ocamlfind
 .if ${USE_OCAMLFIND} == yes
 OCAMLWHERE?= ${OCAMLFIND} ocamlc -where
 OCAMLDOC?= ${OCAMLFIND} ocamldoc
+OCAMLDEP?= ${OCAMLFIND} ocamldep
 OCAMLMKTOP?= ${OCAMLFIND} ocamlmktop -linkpkg
 .if ${WITH_PROFILE} == yes
 # Profiling case
@@ -157,7 +158,7 @@ PKGS+= threads
 
 
 .for pseudo in OCAMLCB OCAMLCN OCAMLCS OCAMLCI OCAMLLB OCAMLLN\
-	  OCAMLDOC OCAMLMKTOP
+	  OCAMLDOC OCAMLMKTOP OCAMLDEP
 .if defined(PKGS)&&!empty(PKGS)
 ${pseudo}+= -package "${PKGS}"
 .endif

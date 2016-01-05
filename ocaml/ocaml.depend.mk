@@ -47,6 +47,9 @@
 # do-clean-depend
 
 # Variables:
+#
+#  OCAMLDEP [ocamldep]
+#   OCaml dependency generator
 
 
 ### IMPLEMENTATION
@@ -57,6 +60,8 @@
 
 .if !target(__<ocaml.depend.mk>__)
 __<ocaml.depend.mk>__:
+
+OCAMLDEP?=			ocamldep
 
 .for directory in ${DIRS}
 _OCAMLDEP_FILTER_SCRIPT+=	-e "s@${directory}/*@@g"
@@ -95,7 +100,7 @@ OCAMLDEPFLAGS+=		-native
 
 .if defined(_OCAML_DEPEND)
 .depend: ${_OCAML_DEPEND}
-	(cd ${.CURDIR} && ocamldep ${OCAMLDEPFLAGS} ${_OCAML_DEPEND})\
+	(cd ${.CURDIR} && ${OCAMLDEP} ${OCAMLDEPFLAGS} ${_OCAML_DEPEND})\
 	  | ${_OCAMLDEP_FILTER} \
 	  > ${.TARGET}
 .else
