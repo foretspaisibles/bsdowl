@@ -31,9 +31,10 @@ _PACKAGE_CANDIDATE=	${_TEX_DOCUMENT}
 PRODUCT+=		${_TEX_DOCUMENT:=.${device}}
 .endfor
 
-TEX=			pdflatex
-TEX.tex=		latex
-TEX.pdftex=		pdflatex
+
+TEX.pdf?=		pdflatex
+TEX.dvi?=		latex
+TEX.ps?=		latex
 
 MULTIPASS+=		aux toc
 _TEX_AUX_SUFFIXES?=	.log .aux .toc .out
