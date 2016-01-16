@@ -34,6 +34,7 @@ autoconf
     --enable-test-noweb=no\
     --enable-test-texmf=no\
     --disable-test-gpg
+cat Makefile.config
 bmake build
 bmake install
 ./Library/Ancillary/testtool -R "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
