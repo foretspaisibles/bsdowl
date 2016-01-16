@@ -117,6 +117,18 @@ AC_ARG_ENABLE([test-findlib],
   [WITH_TESTSUITE_FINDLIB=${has_ocamlfind}])
 
 
+# OCaml PPX deriving yojson
+#
+#   Enable tests for OCaml PPX deriving yojson.
+
+AC_ARG_ENABLE([test-ppx-deriving-yojson],
+  [AS_HELP_STRING([--enable-test-ppx-deriving-yojson],
+    [enable testsuite part requiring PPX deriving yoson])],
+  [WITH_TESTSUITE_PPX_DERIVING_YOJSON=${enable_test_ppx_deriving_yojson}
+   AC_NEED_FINDLIB_PKG([ppx_deriving_yojson])],
+  [WITH_TESTSUITE_PPX_DERIVING_YOJSON=no])
+
+
 # Python setup tools
 #
 #   Support of Python setup tools for preparing Python libraries is an

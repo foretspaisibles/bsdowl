@@ -15,6 +15,7 @@ TRAVIS_WITH_TEX=${TRAVIS_FULL}
 TRAVIS_WITH_NOWEB=${TRAVIS_FULL}
 TRAVIS_WITH_FINDLIB=${TRAVIS_FULL}
 TRAVIS_WITH_OPENSP=${TRAVIS_FULL}
+TRAVIS_WITH_PPX_DERIVING_YOJSON=${TRAVIS_FULL}
 INSTALL_PREFIX="${HOME}/.bsdowl"
 
 eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
@@ -39,6 +40,7 @@ autoconf
     --with-noweb=${TRAVIS_WITH_NOWEB}\
     --with-credentials=sudo\
     --enable-test-findlib=${TRAVIS_WITH_FINDLIB}\
+    --enable-test-ppx-deriving-yojson=${TRAVIS_WITH_PPX_DERIVING_YOJSON}\
     --enable-test-noweb=no\
     --enable-test-opensp=${TRAVIS_WITH_OPENSP}\
     --enable-test-texmf=${TRAVIS_WITH_TEX}\

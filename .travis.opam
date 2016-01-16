@@ -6,3 +6,4 @@ compiler:
   - 4.04.0
 repository:
   - ocamlfind
+  - ppx_deriving_yojson
