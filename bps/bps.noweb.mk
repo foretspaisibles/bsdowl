@@ -442,6 +442,13 @@ ${file}${_NOWEAVE_DEVICE.suffix.html}: ${NOWEAVE_LATEX_DEFS_FILE}
 .endif
 .endif
 
+.if !empty(NOWEAVE_DEVICE:Mhtml)
+.for file in ${NOWEAVE}
+CLEANFILES+=${file}${_NOWEAVE_DEVICE.suffix.html}
+.endfor
+.endif
+
+
 #
 # Index and autodefs
 #
@@ -492,7 +499,7 @@ _NOWEAVE_SED.${device}.${file}+= -e '2s%</head>%<link rel="stylesheet" title="Cl
 .if !empty(_NOWEAVE_SED.${device}.${file:T})
 _NOWEAVE_CMD.${device}.${file}+= | sed ${_NOWEAVE_SED.${device}.${file:T}}
 .endif
-_NOWEAVE_CMD.${device}.${file}+= | cpif ${.TARGET}
+_NOWEAVE_CMD.${device}.${file}+= > ${.TARGET}
 _NOWEAVE_OBJS+= ${file}${_NOWEAVE_DEVICE.suffix.${device}}
 ${file}${_NOWEAVE_DEVICE.suffix.${device}}: ${NOWEB.${file:T}}
 	${_NOWEAVE_CMD.${device}.${file}}
