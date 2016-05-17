@@ -20,6 +20,12 @@ INSTALL_PREFIX="${HOME}/.bsdowl"
 
 eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
 
+set -a
+BSDOWL_WITH_TEX=${TRAVIS_WITH_TEX}
+BSDOWL_WITH_NOWEB=${TRAVIS_WITH_NOWEB}
+BSDOWL_WITH_FINDLIB=${TRAVIS_WITH_FINDLIB}
+set +a
+
 install -d "${INSTALL_PREFIX}"
 autoconf
 ./configure\
