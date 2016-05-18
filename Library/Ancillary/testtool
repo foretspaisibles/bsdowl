@@ -212,33 +212,52 @@ testtool_db()
         esac
     done
 
-    find "${testsuitedir}" -type f -name '*.mk'\
-        | xargs grep -l TEST_DESCRIPTION\
-        | sort\
-        | while read testfile; do
-        sourcedir=$(testtool_getvariable -f "${testfile}" TEST_SOURCEDIR)
-        sequence=$(testtool_getvariable -f "${testfile}" TEST_SEQUENCE)
-        matrix=$(testtool_getvariable -f "${testfile}" TEST_MATRIX)
-        description=$(testtool_getvariable -f "${testfile}" TEST_DESCRIPTION)
+    (
+        eval $(testtool_db__environment)
+        find "${testsuitedir}" -type f -name '*.mk'\
+            | xargs grep -l TEST_DESCRIPTION\
+            | sort\
+            | while read testfile; do testtool_db__extract; done
+    )
+}
 
-        if [ "${sequence}" = 'IGNORE' ]; then
-            continue;
-        fi
+testtool_db__environment()
+{
+    if [ -r "${BSDOWL_TESTDIR}/src/bsdowl/Makefile.config" ]; then
+        sed -n -e '
+/WITH_TESTSUITE/{
+  s/^/export /
+  s/?=[ 	]*/=/
+  p
+}
+' "${BSDOWL_TESTDIR}/src/bsdowl/Makefile.config"
+    fi
+}
 
-        serial=$(printf '%s' "${description}" | cksum | cut -c 1-7)
-        printf 'INDEX|%s|%s|%s|%s|%s|%s\n'\
-               "${serial}"\
-               "${testfile}"\
-               "${sourcedir}"\
-               "${sequence}"\
-               "${matrix}"\
-               "${description}"
+testtool_db__extract()
+{
+    sourcedir=$(testtool_getvariable -f "${testfile}" TEST_SOURCEDIR)
+    sequence=$(testtool_getvariable -f "${testfile}" TEST_SEQUENCE)
+    matrix=$(testtool_getvariable -f "${testfile}" TEST_MATRIX)
+    description=$(testtool_getvariable -f "${testfile}" TEST_DESCRIPTION)
 
-        if [ -n "${matrix}" ]; then
-            mserial=0
-            testtool_db__matrix ${matrix}
-        fi
-    done
+    if [ "${sequence}" = 'IGNORE' ]; then
+        continue;
+    fi
+
+    serial=$(printf '%s' "${description}" | cksum | cut -c 1-7)
+    printf 'INDEX|%s|%s|%s|%s|%s|%s\n'\
+           "${serial}"\
+           "${testfile}"\
+           "${sourcedir}"\
+           "${sequence}"\
+           "${matrix}"\
+           "${description}"
+
+    if [ -n "${matrix}" ]; then
+        mserial=0
+        testtool_db__matrix ${matrix}
+    fi
 }
 
 testtool_db__matrix()
@@ -472,7 +491,7 @@ BEGIN {
 '
 }
 
-while getopts "hj:lrx:CDPR" OPTION; do
+while getopts "hj:lrx:CDIPR" OPTION; do
     case "${OPTION}" in
         h)	testtool_usage; exit 0;;
         j)	testtool_parallel="${OPTARG}";;
@@ -480,6 +499,7 @@ while getopts "hj:lrx:CDPR" OPTION; do
         r)	testtool_resume='yes';;
         x)	testtool_exclude="${testtool_exclude}${testtool_exclude:+ }${OPTARG}";;
         C)	testtool_clean; exit 0;;
+        I)	testtool_install; exit 0;;
         D)	testtool_objdir='makeobjdir';;
         P)	testtool_objdir='makeobjdirprefix';;
         R)	testtool_copy='rsync';;
