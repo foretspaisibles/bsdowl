@@ -49,7 +49,8 @@ test:
 	test -f ${BSDOWL_TESTDIR}/obj/${BSDOWL_TESTID}${CONFIGURATIONDIR}${ARCHITECTUREDIR}${.CURDIR}${object}
 .endfor
 .else
-	exit 70
+	@${FAIL} The test ${BSDOWL_TESTID} must run with MAKEOBJDIR or MAKEOBJDIRPREFIX set.
+	@false
 .endif
 
 ### End of file `TestComplexMultiple.mk'
