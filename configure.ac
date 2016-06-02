@@ -121,7 +121,7 @@ AC_ARG_ENABLE([test-findlib],
 AC_ARG_ENABLE([test-py-setuptools],
   [AS_HELP_STRING([--enable-test-py-setuptools],
     [enable testsuite part requiring Python setuptools])],
-  [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptool}],
+  [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptools}],
   [WITH_TESTSUITE_PY_SETUPTOOLS=no])
 
 
