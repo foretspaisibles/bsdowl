@@ -16,8 +16,6 @@
 : ${BSDOWL_TOPLEVELDIR:=$(git rev-parse --show-toplevel)}
 : ${BSDOWL_TESTDIR:=${HOME}/obj/bsdowl.testsuite}
 
-PATH="${BSDOWL_TESTDIR}/bin:${PATH}"
-
 unset EXTERNAL
 unset MAKEFLAGS
 unset MAKEOBJDIR
@@ -449,6 +447,7 @@ testtool_run_loop()
 
     if [ "${installmacros}" = 'yes' ]; then
         testinclude="-I ${BSDOWL_TESTDIR}/${testtool_batchname}/share/bsdowl"
+        PATH="${BSDOWL_TESTDIR}/${testtool_batchname}/bin:${PATH}"
     else
         :
     fi
