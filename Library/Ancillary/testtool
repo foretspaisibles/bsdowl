@@ -295,24 +295,28 @@ testtool_dbimport()
 #  Require a batch of tests
 #
 # Options:
+#  -a Require all tests instead of those provided by the arguments.
 #  -n NAME
 #     Use the batch NAME instead of 'current'.
-#  -a Require all tests instead of those provided by the arguments.
+#  -x EXCLUDE-LIST
+#     Exclude given tests from the required batch.
 
 testtool_batch()
 {
-    local OPTIND OPTION OPTARG batchall batchname timestamp
+    local OPTIND OPTION OPTARG batchall batchname timestamp batchexclude
 
+    batchexclude=''
     batchall='no'
     batchname='current'
     timestamp=$(date '+%Y-%m-%dT%H:%M:%SZ')
 
     OPTIND=1
 
-    while getopts 'an:' OPTION; do
+    while getopts 'an:x:' OPTION; do
         case ${OPTION} in
             a)	batchall='yes';;
             n)	batchname="${OPTARG}";;
+            x)	batchexclude="${batchexclude}${batchexclude:+ }${OPTARG}";;
             *)	eprintf 'failwith: %s: Unsupported option.' "${OPTION}";;
         esac
     done
@@ -326,7 +330,17 @@ EOF
           sqlite3 "${testtool_database:?}" 'SELECT id FROM test_index WHERE sequence <> "IGNORE" ;'
       else
           printf '%s\n' "$@"
-      fi ) | ( while read id; do
+      fi )\
+        | awk -v batchexclude="${batchexclude}" '
+BEGIN {
+  n = split(batchexclude, _excludelist, " ");
+  for(i = 1; i <= n; ++i) {
+    excludelist[_excludelist[i]];
+  }
+}
+!($1 in excludelist) { print }
+'\
+        | ( while read id; do
                    testtool_batch__env "${id}"\
                        | awk\
                              -v timestamp="${timestamp}"\
@@ -843,7 +857,7 @@ testtool_action_main()
 testtool_action_runall()
 {
     testtool_assertdb
-    testtool_batch -a -n "${testtool_batchname}"
+    testtool_batch -a -n "${testtool_batchname}" "${testtool_exclude:+-x}${testtool_exclude}"
     testtool_run -k ${testtool_macros}
     testtool_status
 }
