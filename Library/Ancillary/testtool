@@ -528,7 +528,7 @@ EOF
               wlog '====> Running test step %s' "${target}"
               testtool_make\
                   ${testinclude}\
-                  TEST_CONFIGURE_ARGS=$(printf -- '--prefix="%s"' "${prefix}")\
+                  CONFIGURE_ARGS=$(printf -- '--prefix="%s"' "${prefix}")\
                   BSDOWL_TESTDIR="${BSDOWL_TESTDIR}"\
                   BSDOWL_TESTID="${batchoid}"\
                   BSDOWL_BATCHNAME="${testtool_batchname}"\
