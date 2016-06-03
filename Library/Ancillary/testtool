@@ -794,6 +794,17 @@ Options:
 EOF
 }
 
+
+testtool_assertdb()
+{
+    if [ -f "${BSDOWL_TESTDIR}/testtool.db" ]; then
+        :
+    else
+        failwith '%s: Test database is missing.\n Please rebuild it with the -i option.'\
+                 "${BSDOWL_TESTDIR}/testtool.db"
+    fi
+}
+
 ### Testtool actions
 
 testtool_action_list()
@@ -823,6 +834,7 @@ testtool_action_install()
 
 testtool_action_main()
 {
+    testtool_assertdb
     testtool_batch -n "${testtool_batchname}" "$@"
     testtool_run ${testtool_macros}
     testtool_status
@@ -830,6 +842,7 @@ testtool_action_main()
 
 testtool_action_runall()
 {
+    testtool_assertdb
     testtool_batch -a -n "${testtool_batchname}"
     testtool_run -k ${testtool_macros}
     testtool_status
@@ -837,12 +850,14 @@ testtool_action_runall()
 
 testtool_action_retry()
 {
+    testtool_assertdb
     testtool_run -r -k ${testtool_macros}
     testtool_status
 }
 
 testtool_action_status()
 {
+    testtool_assertdb
     testtool_status
 }
 
