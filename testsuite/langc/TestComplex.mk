@@ -17,6 +17,9 @@
 TEST_DESCRIPTION=	Complex C software made of two libraries and a program
 TEST_SOURCEDIR=		example/langc/heat
 TEST_SEQUENCE=		preparatives all install
+TEST_MATRIX=		CONFIGURATION
+
+TEST_CONFIGURATION=	Release
 
 test-librational:
 	test -f ${DESTDIR}${LIBDIR}/librational.a
