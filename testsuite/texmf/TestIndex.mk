@@ -24,6 +24,6 @@ TEST_SEQUENCE=		IGNORE
 .endif
 
 test:
-	test -f ${DESTDIR}${DOCDIR}/withindex.pdf
+	test -f ${DESTDIR}${DOCDIR}/galley.pdf
 
 ### End of file `TestIndex.mk'
