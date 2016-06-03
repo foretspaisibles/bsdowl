@@ -38,6 +38,9 @@ DATAROOTDIR?=		${datarootdir}
 SCRIPTDIR?=		${_BPS_LIBEXEC}${PACKAGEDIR}
 SHAREDIR?=		${_BPS_DATADIR}${PACKAGEDIR}
 
+MINGW32CC?=		@MINGW32CC@
+MINGW32AR?=		@MINGW32AR@
+
 # Local Variables:
 # mode: makefile
 # End:
