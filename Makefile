@@ -35,7 +35,7 @@ CONFIGURE+=		testsuite/Makefile.inc.in
 PROJECTDISTEXCLUDE=	Wiki
 
 test: .PHONY
-	${.CURDIR}/Library/Ancillary/testtool -0
+	${.CURDIR}/Library/Ancillary/testtool -D -I -a
 
 .MAKEFLAGS: -I${.CURDIR}/Library/Make
 .for subdir in ${SUBDIR}
