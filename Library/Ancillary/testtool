@@ -381,7 +381,7 @@ END {
 
 testtool_makeobjdir()
 {
-    printf '%s/%s/%s/var/obj${CONFIGURATIONDIR}${ARCHITECTUREDIR}${.CURDIR:S@^%s/%s/%s/var/src@@}'\
+    printf '%s/%s/%s/var/obj${CONFIGURATION:C@^.@/&@}${ARCHITECTURE:C@^.@/&@}${.CURDIR:S@^%s/%s/%s/var/src@@}'\
            "${BSDOWL_TESTDIR}"\
            "${batchname}"\
            "${batchoid}"\
@@ -439,13 +439,6 @@ testtool_run_loop()
 
     while IFS='|' read batchoid batchname testid testfile sourcedir sequence testenv description; do
 
-        case "${testtool_objdir}" in
-            makeobjdir)		testenv="MAKEOBJDIR=$(testtool_makeobjdir)${testenv:+ }${testenv}";;
-            makeobjdirprefix)	testenv="MAKEOBJDIRPREFIX=$(testtool_makeobjdirprefix)${testenv:+ }${testenv}";;
-            no)			: ;;
-            *) failwith "Unsupported OBJDIR option ${testtool_objdir}";;
-        esac
-
         testrundir="${BSDOWL_TESTDIR}/${testtool_batchname}/${batchoid}/var/src"
         testprefixdir="${BSDOWL_TESTDIR}/${testtool_batchname}/${batchoid}/opt/local"
 
@@ -501,6 +494,17 @@ EOF
               done
           fi
 
+          case "${testtool_objdir}" in
+              makeobjdir)
+                  export MAKEOBJDIR="$(testtool_makeobjdir)";;
+              makeobjdirprefix)
+                  export MAKEOBJDIRPREFIX="$(testtool_makeobjdirprefix)";;
+              no)
+                  : ;;
+              *)
+                  failwith "Unsupported OBJDIR option ${testtool_objdir}";;
+          esac
+
           cd "${testrundir}"
 
           for target in ${sequence} test; do
@@ -510,6 +514,7 @@ EOF
                   TEST_CONFIGURE_ARGS=$(printf -- '--prefix="%s"' "${prefix}")\
                   BSDOWL_TESTDIR="${BSDOWL_TESTDIR}"\
                   BSDOWL_TESTID="${batchoid}"\
+                  BSDOWL_BATCHNAME="${testtool_batchname}"\
                   prefix="${prefix}"\
                   exec_prefix="${prefix}"\
                   datarootdir="${prefix}/share"\

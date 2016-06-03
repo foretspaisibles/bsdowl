@@ -37,12 +37,10 @@ OBJECTLIST+=		/libfibonacci/libfibonacci.a
 OBJECTLIST+=		/goldenratio/goldenratio
 OBJECTLIST+=		/goldenratio/goldenratio.o
 
-pre-all: display-objdir
-
 test:
 .if defined(MAKEOBJDIR)
 .for object in ${OBJECTLIST}
-	test -f ${BSDOWL_TESTDIR}/obj/${BSDOWL_TESTID}${CONFIGURATIONDIR}${ARCHITECTUREDIR}${.CURDIR:S@^${BSDOWL_TESTDIR}@@}${object}
+	test -f ${BSDOWL_TESTDIR}/${BSDOWL_BATCHNAME}/${BSDOWL_TESTID}/var/obj${CONFIGURATIONDIR}${ARCHITECTUREDIR}${.CURDIR:S@^${BSDOWL_TESTDIR}/${BSDOWL_BATCHNAME}/${BSDOWL_TESTID}/var/src@@}${object}
 .endfor
 .elif defined(MAKEOBJDIRPREFIX)
 .for object in ${OBJECTLIST}
