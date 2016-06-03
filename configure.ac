@@ -71,6 +71,12 @@ AC_ARG_WITH_PROG([noweb],
   [noweb],
   [noweb])
 
+AC_ARG_WITH_PROG([sqlite3],
+  [AS_HELP_STRING([--with-sqlite3],
+    [support running the testsuite, requiring sqlite3])],
+  [Sqlite3],
+  [sqlite3])
+
 AC_ARG_WITH([credentials],
   [AS_HELP_STRING([--with-credentials],
     [use ARG for credential switch, where ARG is one of su, sudo or no])],
@@ -93,7 +99,6 @@ AC_ARG_WITH([credentials],
         SWITCH_CREDENTIALS_STRATEGY=su
         ;;
     esac;])
-
 
 #
 # Conditionally enable tests
@@ -121,7 +126,7 @@ AC_ARG_ENABLE([test-findlib],
 AC_ARG_ENABLE([test-py-setuptools],
   [AS_HELP_STRING([--enable-test-py-setuptools],
     [enable testsuite part requiring Python setuptools])],
-  [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptool}],
+  [WITH_TESTSUITE_PY_SETUPTOOLS=${enable_test_py_setuptools}],
   [WITH_TESTSUITE_PY_SETUPTOOLS=no])
 
 

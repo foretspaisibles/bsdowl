@@ -17,8 +17,10 @@
 DOCUMENT=		galley.tex
 USES+=			draft:git
 
-TEST_DRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
-TEST_DRAFTSTAMP!=	(cd ${.CURDIR} && ${TEST_DRAFTSTAMP_CMD})
+.if !defined(TEXDRAFTSTAMP)
+TEXDRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
+TEXDRAFTSTAMP!=		(cd ${.CURDIR} && ${TEXDRAFTSTAMP_CMD})
+.endif
 
 .include "latex.doc.mk"
 

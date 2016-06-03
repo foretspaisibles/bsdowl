@@ -15,17 +15,6 @@
 
 : ${BSDOWL_TOPLEVELDIR:=$(git rev-parse --show-toplevel)}
 : ${BSDOWL_TESTDIR:=${HOME}/obj/bsdowl.testsuite}
-: ${BSDOWL_WITH_TEX:=no}
-: ${BSDOWL_WITH_NOWEB:=no}
-: ${BSDOWL_WITH_FINDLIB:=no}
-
-: ${testtool_resume:=no}
-: ${testtool_parallel:=no}
-: ${testtool_objdir:=no}
-: ${testtool_copy:=gitclone}
-: ${testtool_exclude:=''}
-
-PATH="${BSDOWL_TESTDIR}/bin:${PATH}"
 
 unset EXTERNAL
 unset MAKEFLAGS
@@ -39,11 +28,34 @@ unset SRCDIR
 unset VERSION
 unset WRKDIR
 
+
+# failwith [-x STATUS] PRINTF-LIKE-ARGV
+#  Fail with the given diagnostic message
+#
+# The -x flag can be used to convey a custom exit status, instead of
+# the value 1.  A newline is automatically added to the output.
+
 failwith()
 {
-    1>&2 printf "$@"
-    1>&2 printf '\n'
-    exit 1
+    local OPTIND OPTION OPTARG status
+
+    status=1
+    OPTIND=1
+
+    while getopts 'x:' OPTION; do
+        case ${OPTION} in
+            x)	status="${OPTARG}";;
+            *)	eprintf 'failwith: %s: Unsupported option.' "${OPTION}";;
+        esac
+    done
+
+    shift $(expr ${OPTIND} - 1)
+    {
+        printf 'Failure: '
+        printf "$@"
+        printf '\n'
+    } 1>&2
+    exit "${status}"
 }
 
 eprintf()
@@ -54,27 +66,26 @@ eprintf()
 
 wlog()
 {
-    1>&2 printf "$@"
-    1>&2 printf '\n'
+    {
+        printf "$@"
+        printf '\n'
+    } 1>&2
 }
 
-h1()
+print_sep1()
 {
-    printf '================================================================================\n'
-    printf "$@"
-    printf '\n'
-    printf '================================================================================\n'
+    printf -- '================================================================================\n'
 }
 
-
-h2()
+print_sep2()
 {
     printf -- '--------------------------------------------------------------------------------\n'
-    printf "$@"
-    printf '\n'
-    printf -- '--------------------------------------------------------------------------------\n'
 }
 
+
+#
+# Pseudo-commands
+#
 
 testtool_make()
 {
@@ -90,29 +101,21 @@ testtool_make()
 }
 
 
-testtool_makeobjdir()
-{
-    printf '%s/obj/%s%s%s${.CURDIR:S@^%s@@}'\
-           "${BSDOWL_TESTDIR}"\
-           "${testid}"\
-           "${BSDOWL_TESTDIR}"
-}
-
-
-testtool_makeobjdirprefix()
-{
-    printf '%s/obj/%s' "${BSDOWL_TESTDIR}" "${testid}"
-}
-
+# testtool_getvariable [-I INCLUDE-DIR][-f MAKEFILE] VARIABLE
+#  Report the value of variables from make
+#
+# It is possible to retrieve several variables simultaneously. The
+# tabular output consists has one column for each variable.
 
 testtool_getvariable()
 {
     local OPTIND OPTION OPTARG
-    local variable include makefile
+    local query variable include makefile serial
 
     OPTIND=1
     makefile=''
-    include="-I ${BSDOWL_TESTDIR}/share/bsdowl"
+    include=''
+    variable=''
 
     while getopts "f:I:" OPTION; do
         case ${OPTION} in
@@ -123,376 +126,786 @@ testtool_getvariable()
     done
 
     shift $(expr ${OPTIND} - 1)
-    variable="$1"
+
+    for variable in "$@"; do
+        query="${query}${query:+ }-V ${variable}"
+    done
 
     testtool_make\
         .MAKE.EXPAND_VARIABLES=1\
         ${makefile:+-f "${makefile}"}\
         ${include}\
-        -V "${variable}"
+        ${query}\
+        | sed -n -e 'H;${x;s/\n/|/g;s/^|//;p;}'
 }
 
-testtool_configure_argv()
+#
+# Prepare the test database
+#
+
+# testtool_db__find PATH
+#  Find test-cases declarations in PATH
+
+testtool_db__find()
 {
-    echo\
-      --prefix="${BSDOWL_TESTDIR}"\
-      --with-gpg\
-      --with-gm\
-      --with-ocaml\
-      --with-tex=${BSDOWL_WITH_TEX}\
-      --with-noweb=${BSDOWL_WITH_NOWEB}\
-      --with-credentials=no\
-      --enable-test-findlib=${BSDOWL_WITH_FINDLIB}\
-      --enable-test-noweb=${BSDOWL_WITH_NOWEB}\
-      --enable-test-texmf=${BSDOWL_WITH_TEX}\
-      --disable-test-gpg
+    find "$@" -name '*.mk'\
+        | xargs grep -l TEST_DESCRIPTION\
+        | sort
 }
 
-testtool_clean()
+
+# testtool_db__extract_index PATH
+#  Prepare the index record corresponding to declrations found in PATH
+
+testtool_db__extract_index()
 {
-    rm -Rf "${BSDOWL_TESTDIR:?}"
+    printf 'INDEX|%s|' "${file}";
+    testtool_getvariable\
+        -f "$1"\
+        TEST_SOURCEDIR\
+        TEST_SEQUENCE\
+        TEST_DESCRIPTION
 }
 
-testtool_install()
+# testtool_db__extract_matrix PATH
+#  Prepare the index record corresponding to declrations found in PATH
+
+testtool_db__extract_matrix()
 {
-    if [ "${testtool_resume}" = 'yes' ] && [ -d "${BSDOWL_TESTDIR}" ]; then
-        wlog "Resume previous test batch in '%s'." "${BSDOWL_TESTDIR}"
-        return 0
-    else
-        wlog "Prepare new test batch in '%s'." "${BSDOWL_TESTDIR}"
+    local matrix var value
+
+    matrix=$(testtool_getvariable -f "$1" TEST_MATRIX)
+    if [ -n "${matrix}" ]; then
+        for var in ${matrix}; do
+            for value in $(testtool_getvariable -f "$1" "TEST_${var}"); do
+                printf "MATRIX|${var}|%s\n" ${value}
+            done
+        done
     fi
-    (
-        set -e
-        install -d "${BSDOWL_TESTDIR}/src"
-        cd "${BSDOWL_TESTDIR}/src"
-        case "${testtool_copy}" in
-            gitclone)
-                git clone "${BSDOWL_TOPLEVELDIR}";;
-            rsync)
-                mkdir bsdowl;
-                rsync -a "${BSDOWL_TOPLEVELDIR}/" bsdowl;;
-            *)
-                failwith "install: ${testtool_copy}: Copy method not supported."
-        esac
-        cd bsdowl
-        autoconf
-        ./configure $(testtool_configure_argv) || exit 1
-        testtool_make build
-        testtool_make install
-        install -d "${BSDOWL_TESTDIR}/var/db"
-        testtool_db > "${BSDOWL_TESTDIR}/var/db/CONTENTS"
-        sed -n -e 's/^MATRIX|//p'\
-            < "${BSDOWL_TESTDIR}/var/db/CONTENTS"\
-            > "${BSDOWL_TESTDIR}/var/db/MATRIX"
-        sed -n -e 's/^INDEX|//p'\
-            < "${BSDOWL_TESTDIR}/var/db/CONTENTS"\
-            > "${BSDOWL_TESTDIR}/var/db/INDEX"
-    )
 }
 
-testtool_db()
+
+# testtool_db__importscript
+#  Filter reading files on stdin and writing importscript on stdout
+
+testtool_db__importscript()
 {
-    local serial
-    local mserial
-    local testfile
-    local sourcedir
-    local sequence
-    local matrix
-    local description
-    local testsuitedir
-    local OPTIND OPTION OPTARG
+    (   for binding in $(testtool_run__macros_env); do
+            export ${binding}
+        done
+        while read file; do
+          testtool_db__extract_index "${file}"
+          testtool_db__extract_matrix "${file}"
+      done ) | awk -F '|' '
+BEGIN{
+  for(n=0;n<256;n++) {
+    ord[sprintf("%c",n)] = n
+  }
+}
+
+function hash(text, _prime, _modulo, _ax, _chars, _i)
+{
+  _prime = 104729;
+  _modulo = 1048576;
+  _ax = 0;
+  split(text, _chars, "");
+  for (_i=1; _i <= length(text); _i++) {
+    _ax = (_ax * _prime + ord[_chars[_i]]) % _modulo;
+  };
+  return sprintf("%05x", _ax)
+}
+
+function q(text, _answer, _squote) {
+  _squote = sprintf("%c", 39)
+  _answer = text;
+  gsub(_squote, _squote _squote, _answer);
+  return sprintf("%s%s%s", _squote, _answer, _squote);
+}
+
+$1 == "INDEX" {
+  currentid = hash($5);
+  printf("INSERT INTO test_index VALUES(%s, %s, %s, %s, %s);\n", q(currentid), q($2), q($3), q($4),q($5));
+}
+
+$1 == "MATRIX" {
+  printf("INSERT INTO test_matrix VALUES(%s, %s, %s);\n", q(currentid), q($2), q($3));
+}
+'
+}
+
+# testtool_dbinit
+#  Initialise the test database
+
+testtool_dbinit()
+{
+    rm -f "${testtool_database:?}"
+    sqlite3 "${testtool_database:?}" <<EOF
+CREATE TABLE test_index (
+  id TEXT PRIMARY KEY,
+  filename TEXT,
+  sourcedir TEXT,
+  sequence TEXT,
+  description TEXT
+);
+CREATE TABLE test_matrix (
+  id TEXT,
+  name TEXT,
+  value TEXT,
+  FOREIGN KEY(id) REFERENCES test_index(id)
+);
+CREATE TABLE test_batch (
+  id TEXT,
+  timestamp TEXT,
+  testid TEXT,
+  status TEXT,
+  env TEXT,
+  FOREIGN KEY(testid) REFERENCES test_index(id)
+);
+EOF
+}
+
+
+# testtool_dbimport [-n]
+#  Import data in the test database
+#
+# Options:
+#  -n Dry run.
+
+testtool_dbimport()
+{
+    local OPTIND OPTION OPTARG sink
+
+    sink="sqlite3 ${testtool_database:?}"
+    OPTIND=1
+
+    while getopts 'n' OPTION; do
+        case ${OPTION} in
+            n)	sink='cat';;
+            *)	eprintf 'failwith: %s: Unsupported option.' "${OPTION}";;
+        esac
+    done
+    shift $(expr ${OPTIND} - 1)
+
+    testtool_db__find "${BSDOWL_TOPLEVELDIR}/testsuite"\
+        | testtool_db__importscript\
+        | ${sink}
+}
+
+
+# testtool_batch [-n NAME] [-a] TEST1 ...
+#  Require a batch of tests
+#
+# Options:
+#  -a Require all tests instead of those provided by the arguments.
+#  -n NAME
+#     Use the batch NAME instead of 'current'.
+#  -x EXCLUDE-LIST
+#     Exclude given tests from the required batch.
+
+testtool_batch()
+{
+    local OPTIND OPTION OPTARG batchall batchname timestamp batchexclude
+
+    batchexclude=''
+    batchall='no'
+    batchname='current'
+    timestamp=$(date '+%Y-%m-%dT%H:%M:%SZ')
 
     OPTIND=1
-    testsuitedir="${BSDOWL_TESTDIR}/src/bsdowl/testsuite"
 
-    while getopts "l" OPTION; do
+    while getopts 'an:x:' OPTION; do
         case ${OPTION} in
-            l)	testsuitedir="${BSDOWL_TOPLEVELDIR}/testsuite";;
-            *)	failwith "db: ${OPTION}: Unsupported option.";;
+            a)	batchall='yes';;
+            n)	batchname="${OPTARG}";;
+            x)	batchexclude="${batchexclude}${batchexclude:+ }${OPTARG}";;
+            *)	eprintf 'failwith: %s: Unsupported option.' "${OPTION}";;
         esac
     done
+    shift $(expr ${OPTIND} - 1)
 
-    find "${testsuitedir}" -type f -name '*.mk'\
-        | xargs grep -l TEST_DESCRIPTION\
-        | sort\
-        | while read testfile; do
-        sourcedir=$(testtool_getvariable -f "${testfile}" TEST_SOURCEDIR)
-        sequence=$(testtool_getvariable -f "${testfile}" TEST_SEQUENCE)
-        matrix=$(testtool_getvariable -f "${testfile}" TEST_MATRIX)
-        description=$(testtool_getvariable -f "${testfile}" TEST_DESCRIPTION)
+    sqlite3 ${testtool_database:?} <<EOF
+DELETE FROM test_batch WHERE id = '${batchname}';
+EOF
 
-        if [ "${sequence}" = 'IGNORE' ]; then
-            continue;
-        fi
-
-        serial=$(printf '%s' "${description}" | cksum | cut -c 1-7)
-        printf 'INDEX|%s|%s|%s|%s|%s|%s\n'\
-               "${serial}"\
-               "${testfile}"\
-               "${sourcedir}"\
-               "${sequence}"\
-               "${matrix}"\
-               "${description}"
-
-        if [ -n "${matrix}" ]; then
-            mserial=0
-            testtool_db__matrix ${matrix}
-        fi
-    done
+    ( if [ "${batchall}" = 'yes' ]; then
+          sqlite3 "${testtool_database:?}" 'SELECT id FROM test_index WHERE sequence <> "IGNORE" ;'
+      else
+          printf '%s\n' "$@"
+      fi )\
+        | awk -v batchexclude="${batchexclude}" '
+BEGIN {
+  n = split(batchexclude, _excludelist, " ");
+  for(i = 1; i <= n; ++i) {
+    excludelist[_excludelist[i]];
+  }
+}
+!($1 in excludelist) { print }
+'\
+        | ( while read id; do
+                   testtool_batch__env "${id}"\
+                       | awk\
+                             -v timestamp="${timestamp}"\
+                             -v id="${id}"\
+                             -v batchname="${batchname}" '
+function q(text, _answer, _squote) {
+  _squote = sprintf("%c", 39)
+  _answer = text;
+  gsub(_squote, _squote _squote, _answer);
+  return sprintf("%s%s%s", _squote, _answer, _squote);
+}
+{printf("INSERT INTO test_BATCH VALUES(%s, %s, %s, %s, %s);\n", q(batchname), q(timestamp), q(id), q("PENDING"),q($0));}
+' | sqlite3 ${testtool_database:?}
+               done )
 }
 
-testtool_db__matrix()
+testtool_batch__env()
 {
-    local matrixline
-
-    testtool_db__matrix_loop '' "$@"\
-        | testtool_db__matrix_objdir\
-        | while read matrixline; do
-        mserial=$((${mserial} + 1))
-        printf "MATRIX|${serial}|${mserial}|%s\\n" ${matrixline}
-    done
-}
-
-testtool_db__matrix_objdir()
+    sqlite3\
+        "${testtool_database:?}"\
+        "SELECT name, value FROM test_matrix WHERE id = '$1';"\
+        | awk -F '|' '
 {
-    local line wish wishlist
-
-    case "${testtool_objdir}" in
-        makeobjdir)		wishlist="MAKEOBJDIR";;
-        makeobjdirprefix)	wishlist="MAKEOBJDIRPREFIX";;
-        no)			wishlist="MAKEOBJDIR MAKEOBJDIRPREFIX";;
-        *) failwith "Unsupported OBJDIR option ${testtool_objdir}";;
-    esac
-    while read line; do
-        for wish in ${wishlist}; do
-            printf '%s OBJDIR|%s\n' "${line}" "${wish}"
-        done
-    done
-}
-
-testtool_db__matrix_loop()
-{
-    local prefix key value
-
-    if [ $# -lt 2 ]; then
-        printf '%s\n' "$1"
-    else
-        prefix="$1"
-        key="$2"
-        shift 2
-        for value in $(testtool_getvariable -f "${testfile}" "TEST_${key}"); do
-            testtool_db__matrix_loop "${prefix}${prefix:+ }${key}|${value}" "$@"
-        done
-    fi
-}
-
-
-
-testtool_list()
-{
-    testtool_db -l | awk -F '|' '$1 == "INDEX" {printf("%s %s\n", $2, $7)}'
-}
-
-
-testtool_run()
-{
-    local serial testfile sourcedir sequence matrix description
-    local mserial testenv
-    local testid
-
-    while IFS='|' read serial testfile sourcedir sequence matrix description; do
-        h1 '%s -- %s' "${serial}" "${description}"
-
-        install -d "${BSDOWL_TESTDIR}/var/run/${serial}"
-        tar cfC - "${BSDOWL_TESTDIR}/src/bsdowl/${sourcedir}" .\
-            | tar xfC - "${BSDOWL_TESTDIR}/var/run/${serial}"
-        cp "${testfile}" "${BSDOWL_TESTDIR}/var/run/${serial}/Makefile.local"
-
-        if [ -z "${matrix}" ]; then
-            testid="${serial}"
-            (testtool_run__testenv; testtool_run__test)\
-                || failwith "%s: Test failed." "${testid}"
-        else
-            testtool_run__matrix > "${BSDOWL_TESTDIR}/var/db/MATRIX.${serial}"
-            while IFS='|' read mserial testenv; do
-                testid="${serial}.${mserial}"
-                h2 "%s -- %s" "${testid}" "${testenv}"
-                (testtool_run__testenv "${testenv}"; testtool_run__test)\
-                    || failwith "%s: Test failed." "${testid}"
-            done < "${BSDOWL_TESTDIR}/var/db/MATRIX.${serial}"
-        fi
-    done
-}
-
-testtool_run__testenv()
-{
-    local binding
-
-    case "${testtool_objdir}" in
-        makeobjdir)
-            export MAKEOBJDIR="$(testtool_makeobjdir)";;
-        makeobjdirprefix)
-            export MAKEOBJDIRPREFIX="$(testtool_makeobjdirprefix)";;
-        no)
-            : ;;
-        *)
-            failwith "Unsupported OBJDIR option ${testtool_objdir}";;
-    esac
-
-    for binding in "$@"; do
-        export ${binding}
-    done
-}
-
-
-testtool_run__matrix()
-{
-    awk -F '|'\
-        -v testdir="${BSDOWL_TESTDIR}"\
-        -v serial="${serial}"\
-        '
-function makeobjdirprefix(configurationdir, architecturedir)
-{
-    return testdir "/obj/" testid configurationdir architecturedir;
-}
-
-function makeobjdir(configurationdir, architecturedir, _prefix)
-{
-    return sprintf("%s${.CURDIR:S@^%s@@}", makeobjdirprefix(configurationdir, architecturedir), testdir);
-}
-
-$3 == "OBJDIR" && $4 == "MAKEOBJDIRPREFIX" {
-  $3 = $4
-  $4 = "@@makeobjdirprefix@@"
-}
-
-$3 == "OBJDIR" && $4 == "MAKEOBJDIR" {
-  $3 = $4
-  $4 = "@@makeobjdir@@"
-}
-
-$3 == "CONFIGURATION" {
-  configurationdir[$2] = "/" $4;
-}
-
-$3 == "ARCHITECTURE" {
-  architecturedir[$2] = "/" $4;
-}
-
-$1 == serial {
-  a[$2] = sprintf("%s %s=%s", a[$2], $3, $4)
+  size[$1] += 1;
+  value[$1 "@" size[$1]] = $2;
 }
 
 END {
-  for(k in a) {
-    testid = serial "." k
-    sub("^ ", "", a[k])
-    sub("@@makeobjdir@@", makeobjdir(configurationdir[k], architecturedir[k]), a[k]);
-    sub("@@makeobjdirprefix@@", makeobjdirprefix(configurationdir[k], architecturedir[k]), a[k]);
-    printf("%d|%s\n", k, a[k])
+  total = 1;
+  for(key in size) {
+    total *= size[key];
+  }
+  repeat = 1;
+  for(key in size) {
+    for(i = 0; i < total / size[key] / repeat; ++i) {
+      for(j = 0; j < size[key]; ++j) {
+        for(k = 0; k < repeat; ++k) {
+          pos = k + j*repeat + i*size[key]*repeat;
+          a[pos] = a[pos] " " key "=" value[key "@" (j+1)];
+        }
+      }
+    }
+    repeat *= size[key];
+  }
+  for(i = 0; i < total; ++i) {
+    gsub("^ ", "", a[i]);
+    print(a[i]);
   }
 }
-' <  "${BSDOWL_TESTDIR}/var/db/MATRIX"
+'
 }
 
-testtool_run__test()
+testtool_makeobjdir()
 {
-    local parallel target
+    printf '%s/%s/%s/var/obj${CONFIGURATION:C@^.@/&@}${ARCHITECTURE:C@^.@/&@}${.CURDIR:S@^%s/%s/%s/var/src@@}'\
+           "${BSDOWL_TESTDIR}"\
+           "${batchname}"\
+           "${batchoid}"\
+           "${BSDOWL_TESTDIR}"\
+           "${batchname}"\
+           "${batchoid}"
+}
 
-    set -e
-    if [ "${testtool_parallel}" = 'no' ]; then
-        parallel=''
+
+testtool_makeobjdirprefix()
+{
+    printf '%s/%s/obj/%s' "${BSDOWL_TESTDIR}" "${batchname}" "${batchoid}"
+}
+
+# testtool_run_loop [-n][-k]
+#  Run test specification read on stdin
+#
+# Option:
+#  -n Dry run
+#  -k Keep going
+#  -I Use installed macros for the test
+#
+# The test specification has the following columns:
+#
+#   BATCHOID|BATCHNAME|TESTID|TESTFILE|SOURCEDIR|SEQUENCE|TESTENV|DESCRIPTION
+
+testtool_run_loop()
+{
+    local OPTIND OPTION OPTARG dryrun keepgoing
+    local batchoid batchname testid testfile sourcedir
+    local sequence testenv description
+    local installmacros testinclude
+    local testrundir testprefixdir
+
+    dryrun='no'
+    keepgoing='no'
+    installmacros='no'
+    OPTIND=1
+    while getopts 'knI' OPTION; do
+        case ${OPTION} in
+            k)	keepgoing='yes';;
+            n)	dryrun='yes';;
+            I)	installmacros='yes';;
+            *)	eprintf 'testtool_run_loop: %s: Unsupported option.' "${OPTION}";;
+        esac
+    done
+    shift $(expr ${OPTIND} - 1)
+
+    if [ "${installmacros}" = 'yes' ]; then
+        testinclude="-I ${BSDOWL_TESTDIR}/${testtool_batchname}/share/bsdowl"
+        PATH="${BSDOWL_TESTDIR}/${testtool_batchname}/bin:${PATH}"
     else
-        parallel="-j ${testtool_parallel}"
+        :
     fi
-    install -d "${BSDOWL_TESTDIR}/opt/local/${serial}"
-    cd "${BSDOWL_TESTDIR}/var/run/${serial}"
 
-    for target in ${sequence} test; do
-        testtool_run__make ${parallel} ${target}
+
+    while IFS='|' read batchoid batchname testid testfile sourcedir sequence testenv description; do
+
+        testrundir="${BSDOWL_TESTDIR}/${testtool_batchname}/${batchoid}/var/src"
+        testprefixdir="${BSDOWL_TESTDIR}/${testtool_batchname}/${batchoid}/opt/local"
+
+        print_sep1;
+        printf 'TEST-%03d %s\n' "${batchoid}" "${description}"
+        if [ -n "${testenv}" ]; then
+            printf '          %s\n' "${testenv}"
+        fi
+        printf '          %s\n' "${testfile}"
+        print_sep1;
+        cat <<EOF
+batchoid: ${batchoid}
+testid: ${testid}
+testfile: ${testfile}
+testdir: ${testrundir}
+sourcedir: ${sourcedir}
+sequence: ${sequence}
+parallel: ${testtool_parallel}
+EOF
+        print_sep2
+
+        if [ -n "${testenv}" ]; then
+            printf '%s\n' ${testenv}
+            print_sep2
+        fi
+
+        install -d "${testrundir}"\
+            || failwith '%s: Cannot create test run directory.' "${batchoid}"
+
+        install -d "${testprefixdir}"\
+            || failwith '%s: Cannot create test output directory.' "${batchoid}"
+
+        { tar cfC - "${BSDOWL_TOPLEVELDIR}/${sourcedir}" .\
+                | tar xfC - "${testrundir}"; }\
+            || failwith '%s: Cannot copy test source.' "${batchoid}"
+
+        cp "${testfile}" "${testrundir}/Makefile.local"\
+            || failwith '%s: Cannot copy test file.' "${batchoid}"
+
+        ( set -e
+          destdir="${BSDOWL_TESTDIR:?}/${testtool_batchname}"
+          prefix="/opt/local/${batchoid}"
+
+          if [ "${testtool_parallel}" = 'no' ]; then
+              parallel=''
+          else
+              parallel="-j ${testtool_parallel}"
+          fi
+
+          if [ -n "${testenv}" ]; then
+              for binding in ${testenv}; do
+                  export ${binding}
+              done
+          fi
+
+          case "${testtool_objdir}" in
+              makeobjdir)
+                  export MAKEOBJDIR="$(testtool_makeobjdir)";;
+              makeobjdirprefix)
+                  export MAKEOBJDIRPREFIX="$(testtool_makeobjdirprefix)";;
+              no)
+                  : ;;
+              *)
+                  failwith "Unsupported OBJDIR option ${testtool_objdir}";;
+          esac
+
+          cd "${testrundir}"
+
+          for target in ${sequence} test; do
+              wlog '====> Running test step %s' "${target}"
+              testtool_make\
+                  ${testinclude}\
+                  CONFIGURE_ARGS=$(printf -- '--prefix="%s"' "${prefix}")\
+                  BSDOWL_TESTDIR="${BSDOWL_TESTDIR}"\
+                  BSDOWL_TESTID="${batchoid}"\
+                  BSDOWL_BATCHNAME="${testtool_batchname}"\
+                  prefix="${prefix}"\
+                  exec_prefix="${prefix}"\
+                  datarootdir="${prefix}/share"\
+                  DESTDIR="${destdir}"\
+                  ${parallel}\
+                  ${target} || exit $?
+          done;
+          sqlite3 ${testtool_database:?} <<EOF
+UPDATE test_batch SET status = 'DONE' WHERE oid = '${batchoid}';
+EOF
+        )\
+            || {
+            sqlite3 ${testtool_database:?} <<EOF
+UPDATE test_batch SET status = 'FAILED' WHERE oid = '${batchoid}';
+EOF
+            if [ "${keepgoing}" = 'no' ]; then
+                failwith '%s: Test failed.' "${batchoid}"
+            fi; }
     done
 }
 
-testtool_run__make()
-{
-    local destdir prefix
-    destdir="${BSDOWL_TESTDIR}"
-    prefix="/opt/local/${testid}"
+# testtool_run [-n][-k][-r][-I]
+#  Run pending tests
+#
+# Option:
+#  -n Dry run
+#  -k Keep going
+#  -r Retry failed tests instead of running pending ones
+#  -I Install macros to a special directory before running the tests
 
-    testtool_make\
-        -I "${BSDOWL_TESTDIR}/share/bsdowl"\
-        TEST_CONFIGURE_ARGS=$(printf -- '--prefix="%s"' "${prefix}")\
-        BSDOWL_TESTDIR="${BSDOWL_TESTDIR}"\
-        BSDOWL_TESTID="${testid}"\
-        prefix="${prefix}"\
-        exec_prefix="${prefix}"\
-        datarootdir="${prefix}/share"\
-        DESTDIR="${destdir}"\
-        "$@"
+testtool_run()
+{
+    local OPTIND OPTION OPTARG dryrun keepgoing selectstate
+    local installmacros testinclude
+
+    selectstate='PENDING'
+    dryrun='no'
+    keepgoing='no'
+    installmacros='no'
+    OPTIND=1
+    while getopts 'knrI' OPTION; do
+        case ${OPTION} in
+            k)	keepgoing='yes';;
+            n)	dryrun='yes';;
+            r)	selectstate='FAILED';;
+            I)	installmacros='yes';;
+            *)	eprintf 'testtool_action_run: %s: Unsupported option.' "${OPTION}";;
+        esac
+    done
+    # shift $(expr ${OPTIND} - 1)
+
+    rm -rf "${BSDOWL_TESTDIR:?}/${testtool_batchname:?}"
+    install -d "${BSDOWL_TESTDIR:?}/${testtool_batchname:?}"
+
+    if [ "${installmacros}" = 'yes' ]; then
+        testtool_run__macros_install
+    fi
+
+    { sqlite3 ${testtool_database:?} <<EOF
+SELECT
+ test_batch.oid,
+ test_batch.id,
+ test_index.id,
+ test_index.filename,
+ test_index.sourcedir,
+ test_index.sequence,
+ test_batch.env,
+ test_index.description
+FROM
+ test_index LEFT JOIN test_batch
+WHERE
+ test_batch.status = '${selectstate}'
+AND
+ test_batch.testid = test_index.id;
+EOF
+    } | { if [ "${dryrun}" = 'no' ]; then
+              testtool_run_loop "$@"
+          else
+              cat
+          fi; }
+}
+
+testtool_run__macros_install()
+{
+    local srcdir
+    srcdir="${BSDOWL_TESTDIR}/${testtool_batchname}/var/src/bsdowl"
+
+    install -d "${srcdir}"\
+        || failwith '%s: Cannot create test source directory.' "${srcdir}"
+
+    { tar cfC - "${BSDOWL_TOPLEVELDIR}" . | tar xfC - "${srcdir}"; }\
+        || failwith '%s: Cannot copy sources to source directory.' "${srcdir}"
+
+    ( cd "${srcdir}"\
+            && testtool_run__macros_configure --prefix="${BSDOWL_TESTDIR}/${testtool_batchname}"\
+            && testtool_make all\
+            && testtool_make install )\
+        || failwith '%s: Cannot install to prefix directory.' "${srcdir}"
+}
+
+testtool_run__macros_env()
+{
+    sed -n -e '
+/^WITH_TESTSUITE_/{
+  s/=[[:space:]]*/=/
+  s/[?]=/=/
+  p
+}' "${BSDOWL_TOPLEVELDIR}/Makefile.config"
+}
+
+testtool_run__macros_configure_argv()
+{
+    eval $(testtool_run__macros_env)
+    cat<<EOF
+--enable-test-findlib=${WITH_TESTSUITE_FINDLIB}
+--enable-test-py-setuptools=${WITH_TESTSUITE_PY_SETUPTOOLS}
+--enable-test-mingw32=${WITH_TESTSUITE_MINGW32}
+--enable-test-noweb=${WITH_TESTSUITE_NOWEB}
+--enable-test-gpg=${WITH_TESTSUITE_GPG}
+--enable-test-texmf=${WITH_TESTSUITE_TEXMF}
+--enable-test-metapost=${WITH_TESTSUITE_METAPOST}
+--with-credentials=no
+EOF
+}
+
+testtool_run__macros_configure()
+{
+    autoconf && ./configure $(testtool_run__macros_configure_argv) "$@"
+}
+
+
+# testtool_status
+#  Write a report for the selected batch of tests
+
+testtool_status()
+{
+    local status
+
+    for status in 'PENDING' 'DONE' 'FAILED'; do
+        testtool_status__select "${status}" \
+            | testtool_status__format "${status}"
+    done
+
+    sqlite3 ${testtool_database:?} "SELECT status UNIQ FROM test_batch WHERE test_batch.status = 'FAILED';"\
+        | grep -q 'FAILED'
+
+    if [ $? = 0 ]; then
+        return 1
+    else
+        return 0
+    fi
+}
+
+testtool_status__format()
+{
+    awk -F '|' -v status="$1" '
+function print_sep(_i)
+{
+   for(_i = 0; _i < 80; ++ _i) {
+     printf("=");
+   }
+   printf("\n");
+}
+
+function report_concise(testoid)
+{
+  printf("TEST-%03d %s\n", testoid, description[testoid]);
+}
+
+function report_detailed(testoid)
+{
+  printf("TEST-%03d %s (%s)\n          %s\n          %s\n\n", testoid, description[testoid], id[testoid], env[testoid], filename[testoid]);
+}
+
+function report(testoid)
+{
+  if(status == "FAILED") {
+    report_detailed(testoid);
+  } else {
+    report_concise(testoid);
+  }
+}
+
+
+{
+ oid[NR] = $1;
+ id[$1] = $2;
+ filename[$1] = $3;
+ sourcedir[$1] = $4;
+ sequence[$1] = $5;
+ env[$1] = $6;
+ description[$1] = $7;
+}
+
+END {
+  if(NR >= 1) {
+    print_sep();
+    printf("%s TEST REPORT\n", status);
+    print_sep();
+  }
+
+  for(_index = 1; _index <= NR; ++_index) {
+    report(oid[_index]);
+  }
+
+  if(NR >= 1) {
+    printf("\n");
+  }
+}
+'
+}
+
+
+testtool_status__select()
+{
+    sqlite3 ${testtool_database:?} <<EOF
+SELECT
+ test_batch.oid,
+ test_index.id,
+ test_index.filename,
+ test_index.sourcedir,
+ test_index.sequence,
+ test_batch.env,
+ test_index.description
+FROM
+ test_index LEFT JOIN test_batch
+WHERE
+ test_batch.id = '${testtool_batchname}'
+AND
+ test_batch.status = '$1'
+AND
+ test_batch.testid = test_index.id
+ORDER BY test_batch.oid ASC;
+EOF
 }
 
 
 testtool_usage()
 {
     iconv -f utf-8 -c <<EOF
-Usage: testtool [-j max_jobs][-r][-DP][-l][-R]
+Usage: testtool [-j MAX-JOBS][-a][-DP][-l][-R] [TEST1 …]
  Run the testsuite
 Options:
+ -a Prepare a batch of tests made of all possible tests and run it.
+ -f DATABASE-FILE
+    Set the file used to store the test database.
  -h Display this help message.
  -j MAX-JOBS
-    Run MAX-JOBS in parallel.
+    Run MAX-JOBS in parallel.  This affects individual tests, so that
+    compilation jobs can run in parallel with in a test but tests
+    still run sequentially.
  -l List available tests.
- -r Resume the last test session.
- -x EXCLUDE-TEST
+ -n BATCH-NAME
+    Use the given BATCH-NAME instead of current to prepare test
+    batches.
+ -r Retry failed tests.
+ -x TEST
+    Exclude TEST from the list of tests to run. Can be used
+    several times.
  -C Clean the test directory
  -D Run tests with MAKEOBJDIR.
  -P Run tests with MAKEOBJDIRPREFIX.
  -R Use rsync to copy the repository
+ -S Show the current setup instead of testing.
 EOF
 }
 
-testtool_select()
+
+testtool_assertdb()
 {
-    awk -F '|'\
-        -v exclude="${testtool_exclude}"\
-        -v selection="$*" '
-function words(text, dst, _n, _i, _dst0) {
-  _n = split(text, _dst0, " ")
-  for(_i = 1; _i <= _n; ++_i) {
-    dst[_dst0[_i]]
-  }
+    if [ -f "${BSDOWL_TESTDIR}/testtool.db" ]; then
+        :
+    else
+        failwith '%s: Test database is missing.\n Please rebuild it with the -i option.'\
+                 "${BSDOWL_TESTDIR}/testtool.db"
+    fi
 }
 
-BEGIN {
-  words(selection, t)
-  words(exclude, u)
+### Testtool actions
+
+testtool_action_list()
+{
+    { sqlite3 ${testtool_database:?} <<EOF
+SELECT
+ id,
+ description
+FROM
+ test_index
+ORDER BY id ASC;
+EOF
+    } | awk -F '|' '{printf("%s %s\n", $1, $2)}'
 }
 
-($1 in t || selection == "") && !($1 in u)
-'
+testtool_action_clean()
+{
+    rm -Rf "${BSDOWL_TESTDIR:?}"
 }
 
-while getopts "hj:lrx:CDPR" OPTION; do
+testtool_action_install()
+{
+    install -d "${BSDOWL_TESTDIR:?}"\
+        && testtool_dbinit\
+        && testtool_dbimport
+}
+
+testtool_action_main()
+{
+    testtool_assertdb
+    testtool_batch -n "${testtool_batchname}" "$@"
+    testtool_run ${testtool_macros}
+    testtool_status
+}
+
+testtool_action_runall()
+{
+    testtool_assertdb
+    testtool_batch -a -n "${testtool_batchname}" "${testtool_exclude:+-x}${testtool_exclude}"
+    testtool_run -k ${testtool_macros}
+    testtool_status
+}
+
+testtool_action_retry()
+{
+    testtool_assertdb
+    testtool_run -r -k ${testtool_macros}
+    testtool_status
+}
+
+testtool_action_status()
+{
+    testtool_assertdb
+    testtool_status
+}
+
+
+testtool_action_help()
+{
+    testtool_usage
+}
+
+### Command line analysis
+
+: ${testtool_database:=${BSDOWL_TESTDIR}/testtool.db}
+: ${testtool_resume:=no}
+: ${testtool_parallel:=no}
+: ${testtool_objdir:=no}
+: ${testtool_copy:=gitclone}
+: ${testtool_exclude:=''}
+: ${testtool_batchname:=current}
+: ${testtool_action:=main}
+: ${testtool_macros:=}
+
+while getopts "af:hij:ln:rsx:CDIPRS" OPTION; do
     case "${OPTION}" in
-        h)	testtool_usage; exit 0;;
+        a)	testtool_action='runall';;
+        f)	testtool_database="${OPTARG}";;
+        h)	testtool_action='help';;
+        i)	testtool_action='install';;
         j)	testtool_parallel="${OPTARG}";;
-        l)	testtool_list; exit 0;;
-        r)	testtool_resume='yes';;
+        l)	testtool_action='list';;
+        n)	testtool_batchname="${OPTARG}";;
+        r)	testtool_action='retry';;
+        s)	testtool_action='status';;
         x)	testtool_exclude="${testtool_exclude}${testtool_exclude:+ }${OPTARG}";;
-        C)	testtool_clean; exit 0;;
+        C)	testtool_action='clean';;
         D)	testtool_objdir='makeobjdir';;
+        I)	testtool_macros='-I' ;;
         P)	testtool_objdir='makeobjdirprefix';;
         R)	testtool_copy='rsync';;
-        *)	testtool_usage; exit 64;;
+        S)	testtool_action='show';;
+        *)	testtool_action='usage';;
     esac
 done
 
 shift $(expr ${OPTIND} - 1)
-
-(testtool_clean && testtool_install)\
-    || failwith '%s: Installation failed.' "${BSDOWL_TESTDIR}"
-
-testtool_select "$@" < "${BSDOWL_TESTDIR}/var/db/INDEX"\
-    | testtool_run
+testtool_action_${testtool_action} "$@"
 
 ### End of file `testtool'

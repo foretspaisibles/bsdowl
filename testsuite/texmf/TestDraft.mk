@@ -16,6 +16,9 @@
 
 TEST_DESCRIPTION=	LaTeX document with installed with draft stamp
 TEST_SOURCEDIR=		example/texmf/draft
+TEST_MATRIX=		TEXDRAFTSTAMP
+
+TEST_TEXDRAFTSTAMP=	DRAFT
 
 .if "${WITH_TESTSUITE_TEXMF}" == "yes"
 TEST_SEQUENCE=		preparatives all install
@@ -23,10 +26,7 @@ TEST_SEQUENCE=		preparatives all install
 TEST_SEQUENCE=		IGNORE
 .endif
 
-TEST_DRAFTSTAMP_CMD=	git log -1 --pretty=tformat:'%ai %h' | tr ' ' '_'
-TEST_DRAFTSTAMP!=	(cd ${.CURDIR} && ${TEST_DRAFTSTAMP_CMD})
-
 test:
-	test -f ${DESTDIR}${DOCDIR}/simple_${TEST_DRAFTSTAMP}.pdf
+	test -f ${DESTDIR}${DOCDIR}/galley_${TEXDRAFTSTAMP}.pdf
 
 ### End of file `TestDraft.mk'

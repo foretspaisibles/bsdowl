@@ -20,6 +20,12 @@ INSTALL_PREFIX="${HOME}/.bsdowl"
 
 eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
 
+set -a
+BSDOWL_WITH_TEX=${TRAVIS_WITH_TEX}
+BSDOWL_WITH_NOWEB=${TRAVIS_WITH_NOWEB}
+BSDOWL_WITH_FINDLIB=${TRAVIS_WITH_FINDLIB}
+set +a
+
 install -d "${INSTALL_PREFIX}"
 autoconf
 ./configure\
@@ -27,16 +33,19 @@ autoconf
     --with-gpg\
     --with-gm\
     --with-ocaml\
+    --with-sqlite3\
     --with-tex=${TRAVIS_WITH_TEX}\
     --with-noweb=${TRAVIS_WITH_NOWEB}\
     --with-credentials=sudo\
     --enable-test-findlib=${TRAVIS_WITH_FINDLIB}\
     --enable-test-noweb=no\
-    --enable-test-texmf=no\
+    --enable-test-texmf=${TRAVIS_WITH_TEX}\
     --disable-test-gpg
+cat Makefile.config
 bmake build
 bmake install
-./Library/Ancillary/testtool -R "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
+./Library/Ancillary/testtool -i
+./Library/Ancillary/testtool -I -D -a "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
 test -f "${INSTALL_PREFIX}/share/bsdowl/bps.bpsconfig.mk"
 
 ### End of file `travis-tool'

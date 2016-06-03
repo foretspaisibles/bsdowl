@@ -14,6 +14,7 @@ addons:
     - noweb
     - ocaml
     - opam
+    - sqlite3
     - texlive-font-utils
     - texlive-fonts-recommended
     - texlive-lang-french
