@@ -674,6 +674,15 @@ testtool_status()
         testtool_status__select "${status}" \
             | testtool_status__format "${status}"
     done
+
+    sqlite3 ${testtool_database:?} "SELECT status UNIQ FROM test_batch WHERE test_batch.status = 'FAILED';"\
+        | grep -q 'FAILED'
+
+    if [ $? = 0 ]; then
+        return 1
+    else
+        return 0
+    fi
 }
 
 testtool_status__format()
