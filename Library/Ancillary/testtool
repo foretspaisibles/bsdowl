@@ -705,7 +705,7 @@ function report(testoid)
 
 
 {
- oid[$1];
+ oid[NR] = $1;
  id[$1] = $2;
  filename[$1] = $3;
  sourcedir[$1] = $4;
@@ -721,8 +721,8 @@ END {
     print_sep();
   }
 
-  for(testoid in oid) {
-    report(testoid);
+  for(_index = 1; _index <= NR; ++_index) {
+    report(oid[_index]);
   }
 
   if(NR >= 1) {
@@ -751,7 +751,8 @@ WHERE
 AND
  test_batch.status = '$1'
 AND
- test_batch.testid = test_index.id;
+ test_batch.testid = test_index.id
+ORDER BY test_batch.oid ASC;
 EOF
 }
 
