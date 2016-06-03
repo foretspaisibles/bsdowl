@@ -71,6 +71,12 @@ AC_ARG_WITH_PROG([noweb],
   [noweb],
   [noweb])
 
+AC_ARG_WITH_PROG([sqlite3],
+  [AS_HELP_STRING([--with-sqlite3],
+    [support running the testsuite, requiring sqlite3])],
+  [Sqlite3],
+  [sqlite3])
+
 AC_ARG_WITH([credentials],
   [AS_HELP_STRING([--with-credentials],
     [use ARG for credential switch, where ARG is one of su, sudo or no])],
@@ -93,7 +99,6 @@ AC_ARG_WITH([credentials],
         SWITCH_CREDENTIALS_STRATEGY=su
         ;;
     esac;])
-
 
 #
 # Conditionally enable tests

@@ -33,6 +33,7 @@ autoconf
     --with-gpg\
     --with-gm\
     --with-ocaml\
+    --with-sqlite3\
     --with-tex=${TRAVIS_WITH_TEX}\
     --with-noweb=${TRAVIS_WITH_NOWEB}\
     --with-credentials=sudo\
@@ -43,7 +44,8 @@ autoconf
 cat Makefile.config
 bmake build
 bmake install
-./Library/Ancillary/testtool -R "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
+./Library/Ancillary/testtool -i
+./Library/Ancillary/testtool -I -D -a "${TRAVIS_TEST_EXCLUDE:+-x }${TRAVIS_TEST_EXCLUDE}"
 test -f "${INSTALL_PREFIX}/share/bsdowl/bps.bpsconfig.mk"
 
 ### End of file `travis-tool'
