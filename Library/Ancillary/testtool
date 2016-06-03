@@ -699,7 +699,7 @@ function report_concise(testoid)
 
 function report_detailed(testoid)
 {
-  printf("TEST-%03d %s\n          %s\n          %s\n\n", testoid, description[testoid], env[testoid], filename[testoid]);
+  printf("TEST-%03d %s (%s)\n          %s\n          %s\n\n", testoid, description[testoid], id[testoid], env[testoid], filename[testoid]);
 }
 
 function report(testoid)
@@ -828,6 +828,13 @@ testtool_action_main()
     testtool_status
 }
 
+testtool_action_runall()
+{
+    testtool_batch -a -n "${testtool_batchname}"
+    testtool_run -k ${testtool_macros}
+    testtool_status
+}
+
 testtool_action_retry()
 {
     testtool_run -r -k ${testtool_macros}
@@ -840,13 +847,9 @@ testtool_action_status()
 }
 
 
-testtool_action_show()
+testtool_action_help()
 {
-    local file
-
-    #testtool_batch fb537 edeeb
-    #testtool_batch -a
-    testtool_action_run
+    testtool_usage
 }
 
 ### Command line analysis
