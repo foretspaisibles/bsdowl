@@ -660,28 +660,6 @@ testtool_run__macros_configure()
 }
 
 
-testtool_select()
-{
-    awk -F '|'\
-        -v exclude="${testtool_exclude}"\
-        -v selection="$*" '
-function words(text, dst, _n, _i, _dst0) {
-  _n = split(text, _dst0, " ")
-  for(_i = 1; _i <= _n; ++_i) {
-    dst[_dst0[_i]]
-  }
-}
-
-BEGIN {
-  words(selection, t)
-  words(exclude, u)
-}
-
-($1 in t || selection == "") && !($1 in u)
-'
-}
-
-
 # testtool_status
 #  Write a report for the selected batch of tests
 
