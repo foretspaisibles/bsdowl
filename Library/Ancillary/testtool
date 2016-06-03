@@ -192,7 +192,10 @@ testtool_db__extract_matrix()
 
 testtool_db__importscript()
 {
-    ( while read file; do
+    (   for binding in $(testtool_run__macros_env); do
+            export ${binding}
+        done
+        while read file; do
           testtool_db__extract_index "${file}"
           testtool_db__extract_matrix "${file}"
       done ) | awk -F '|' '
