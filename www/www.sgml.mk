@@ -79,7 +79,7 @@
 
 .SUFFIXES: .sgml
 
-WWWNORMALIZE?=		osgmlnorm -d
+WWWNORMALIZE?=		${_BPS_SGMLNORM} -d
 WWWINPUT?=		raw
 WWWTIDY?=		tidy -q -${WWWINPUT}
 
