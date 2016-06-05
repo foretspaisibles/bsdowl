@@ -62,8 +62,8 @@ AC_ARG_WITH_PROG([tidy],
 AC_ARG_WITH_PROG([opensp],
   [AS_HELP_STRING([--with-opensp],
     [support static HTML pages generation with OpenSP])],
-  [OpenSP],
-  [onsgmls])
+  [opensp],
+  [onsgmls nsgmls])
 
 AC_ARG_WITH_PROG([noweb],
   [AS_HELP_STRING([--with-noweb],
@@ -148,6 +148,23 @@ AC_ARG_ENABLE([test-mingw32],
    fi;])
 
 
+# OpenSP
+#
+#   A part of the testsuite requires a SGML normalizer to
+#   complete.  The tests must be explicitly enabled to run.
+
+AC_CHECK_PROGS([SGMLNORM], [osgmlnorm sgmlnorm], [no])
+AC_ARG_ENABLE([test-opensp],
+  [AS_HELP_STRING([--enable-test-opensp],
+    [enable testsuite part requiring a validating SGML parser])],
+  [WITH_TESTSUITE_SGMLNORM=${enable_test_opensp}],
+  [if test "${SGMLNORM}" == 'no'; then
+     WITH_TESTSUITE_SGMLNORM=no
+   else
+     WITH_TESTSUITE_SGMLNORM=yes
+   fi;])
+
+
 # Noweb
 #
 #   A part of the testsuite requires noweb.  The tests must be
@@ -219,10 +236,12 @@ AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_SUBST([WITH_TESTSUITE_MINGW32])
 AC_SUBST([WITH_TESTSUITE_NOWEB])
 AC_SUBST([WITH_TESTSUITE_GPG])
+AC_SUBST([WITH_TESTSUITE_SGMLNORM])
 AC_SUBST([WITH_TESTSUITE_TEXMF])
 AC_SUBST([WITH_TESTSUITE_METAPOST])
 AC_SUBST([MINGW32CC])
 AC_SUBST([MINGW32AR])
+AC_SUBST([SGMLNORM])
 AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
 AC_SUBST([VERSION], [$(sed -n -e '/^VERSION/s/VERSION=[[:space:]]*//p')])
 AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk])
@@ -238,6 +257,7 @@ Optional Features:
   --enable-test-mingw32=${WITH_TESTSUITE_MINGW32}
   --enable-test-noweb=${WITH_TESTSUITE_NOWEB}
   --enable-test-gpg=${WITH_TESTSUITE_GPG}
+  --enable-test-opensp=${WITH_TESTSUITE_SGMLNORM}
   --enable-test-texmf=${WITH_TESTSUITE_TEXMF}
   --enable-test-metapost=${WITH_TESTSUITE_METAPOST}
 

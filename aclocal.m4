@@ -116,7 +116,7 @@ AC_DEFUN([AC_HAS_PROG],
 # AC_NEED_PROG([INFORMAL PROGRAM NAME], [PROGRAM NAME])
 # -----------------------------------------------------
 AC_DEFUN([AC_NEED_PROG],
-[AC_CHECK_PROG([has_$2], [$2], [yes], [no])
+[AC_CHECK_PROGS([has_$1], [$2], [yes], [no], [path_$1])
 if test "x$has_$2" = 'xno'; then
   AC_MSG_ERROR([*** $1 not found.])
 fi;])

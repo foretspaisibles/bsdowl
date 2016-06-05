@@ -139,6 +139,9 @@
 #  _BPS_COMPRESS [@COMPRESS@]
 #    The list of available compression methods.
 #
+#  _BPS_SGMLNORM [@SGMLNORM@]
+#    The path to a SGML validating parser
+#
 #
 #  _BPS_SWITCH_CREDENTIALS_STRATEGY [@SWITCH_CREDENTIALS_STRATEGY@]
 #    The stratgey used to swithc credentials
@@ -189,6 +192,7 @@ _BPS_ID?=		@ID@
 _BPS_SYSTEMOWN?=	@SYSTEMOWN@
 _BPS_SYSTEMGRP?=	@SYSTEMGRP@
 _BPS_COMPRESS?=		@COMPRESS@
+_BPS_SGMLNORM?=		@SGMLNORM@
 _BPS_SWITCH_CREDENTIALS_STRATEGY?=@SWITCH_CREDENTIALS_STRATEGY@
 
 .endif # !target(__<bps.bpsconfig.mk>__)
@@ -203,7 +207,7 @@ display-bpsconfig:
 	_BPS_DOCDIR _BPS_INFODIR _BPS_LIBDIR _BPS_LOCALEDIR\
 	_BPS_MANDIR _BPS_LN_S _BPS_MKDIR_P _BPS_INSTALL _BPS_AWK\
 	_BPS_GREP _BPS_SED _BPS_ID _BPS_SYSTEMOWN _BPS_SYSTEMGRP\
-	_BPS_COMPRESS
+	_BPS_COMPRESS _BPS_SGMLNORM
 	${MESG} "${displayvar}=${${displayvar}}"
 .endfor
 .endif

@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="ISO-8859-15"?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" [
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd" [
 <!ENTITY bps-current-version "1.4">
 <!ENTITY bps-current-tarball-url "http://download.gna.org/bsdowl/bsdowl-&bps-current-version;.tar.bz2">
 <!ENTITY bps-current-tarball-name "bsdowl-&bps-current-version;.tar.bz2">
@@ -24,6 +24,7 @@
 ]>
 <html>
 <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>&head-title;</title>
 &head-css-global;
 <![ %with.head-css-local [
