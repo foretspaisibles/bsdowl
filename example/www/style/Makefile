@@ -1,32 +1,32 @@
-WWW+= modern.css
-WWW+= modern_sz.css
+### Makefile -- A simple static website
 
-WWW+= classic.css
-WWW+= classic_sz.css
-
-WWW+= trendy.css
-
-WWW+= content.css
-WWW+= more.css
-WWW+= title.css
-WWW+= layout.css
-WWW+= scroll_layout.css
-
-WWWDIR = ${WWWBASE}/style
-
+# BSD Owl Scripts (https://github.com/michipili/bsdowl)
+# This file is part of BSD Owl Scripts
 #
-# update:
-#  Brings the last style files into this directory
+# Copyright © 2002–2016 Michael Grünewald
 #
+# This file must be used under the terms of the CeCILL-B.
+# This source file is licensed as described in the file COPYING, which
+# you should have received as part of this distribution. The terms
+# are also available at
+# http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.txt
 
-WPAGESDIR?= ${HOME}/Workshop/wpages
+WWW+=			modern.css
+WWW+=			modern_sz.css
 
-.if exists(${WPAGESDIR}/style)
-update:
-	cd ${WPAGESDIR} && ${MAKE} PREFIX='${HOME}' WWWDIR='${.CURDIR}' all install
-.else
-update:
-	${FAIL} WPAGESDIR not found
-.endif
+WWW+=			classic.css
+WWW+=			classic_sz.css
+
+WWW+=			trendy.css
+
+WWW+=			content.css
+WWW+=			more.css
+WWW+=			title.css
+WWW+=			layout.css
+WWW+=			scroll_layout.css
+
+WWWDIR=			${WWWROOTDIR}/style
 
 .include "www.files.mk"
+
+### End of file `Makefile'
