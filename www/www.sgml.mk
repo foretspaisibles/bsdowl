@@ -80,7 +80,7 @@
 .SUFFIXES: .sgml
 
 WWWNORMALIZE?=		osgmlnorm -d
-WWWINPUT?=		ascii
+WWWINPUT?=		raw
 WWWTIDY?=		tidy -q -${WWWINPUT}
 
 .for variable in DIRS CATALOG SGML_INCLUDE
