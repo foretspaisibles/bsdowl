@@ -10,7 +10,7 @@ reading this page, you will know:
  - How to install shell libraries.
 
 Minimal examples for a program and a library can be found under
-[testsuite/script/test_shell][example-showconfig].  The
+[example/script/shell/showconfig][example-showconfig].  The
 [Anvil][example-anvil] project provides a more complete example.
 
 
@@ -110,6 +110,6 @@ replacement modifiers to ensure it runs in a sane environment.
 - A [list of obsolete or deprecated shell constructs][shell-obsolete]
 
   [example-anvil]:      https://github.com/michipili/anvil
-  [example-showconfig]: https://github.com/michipili/bsdowl/blob/master/testsuite/script/test_shell/showconfig.sh
+  [example-showconfig]: https://github.com/michipili/bsdowl/blob/master/example/script/shell/showconfig/showconfig.sh
   [shell-check]:        http://www.shellcheck.net
   [shell-obsolete]:     http://wiki.bash-hackers.org/scripting/obsolete
