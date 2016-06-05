@@ -10,7 +10,7 @@ reading this page, you will know:
  - How to install simple Perl modules.
 
 Minimal examples for a program and a library can be found under
-[testsuite/script/test_perl][example-showconfig].
+[example/script/perl/showconfig][example-showconfig].
 
 ## Install a simple Perl program
 
@@ -110,4 +110,4 @@ that the library client prepares all variables required by the library
 to run correctly.
 
   [example-anvil]:      https://github.com/michipili/anvil
-  [example-showconfig]: https://github.com/michipili/bsdowl/blob/master/testsuite/script/test_perl/showconfig.pl
+  [example-showconfig]: https://github.com/michipili/bsdowl/blob/master/example/script/perl/showconfig/showconfig.pl

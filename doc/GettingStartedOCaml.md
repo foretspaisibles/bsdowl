@@ -17,7 +17,6 @@ For this guide, we first assume that the source code is a single file
 `wordcount.ml` and then consider a more complex case.
 
   [example-gasoline]: https://github.com/michipili/gasoline
-  [example-program]:  ../testsuite/ocaml/test_program/TestProgram.mk
 
 
 ## Compile a simple OCaml program
