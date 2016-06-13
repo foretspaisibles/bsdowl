@@ -22,6 +22,11 @@ AC_TAR_COMPRESSION_METHODS([COMPRESS])
 # programs, nevertheless, it might be useful for packagers and porters
 # to let the configure script fail if some programs are not present.
 
+AC_ARG_WITH_PROG([emacs],
+  [AS_HELP_STRING([--with-emacs],
+    [support for installation of elisp libraries])],
+  [EMACS], [emacs])
+
 AC_ARG_WITH_PROG([gpg],
   [AS_HELP_STRING([--with-gpg],
     [support signing of distribution files with GPG])],
@@ -115,6 +120,27 @@ AC_ARG_ENABLE([test-findlib],
     [enable testsuite part requiring findlib])],
   [WITH_TESTSUITE_FINDLIB=${enable_test_findlib}],
   [WITH_TESTSUITE_FINDLIB=${has_ocamlfind}])
+AC_SUBST([WITH_TESTSUITE_FINDLIB])
+
+
+# Emacs
+#
+#   Support a part of the testsuite requires a recent version of Emacs
+#   to run (after 23.2).
+
+AC_SUBST([EMACS])
+AC_SUBST([WITH_TESTSUITE_EMACS])
+
+AC_CHECK_PROGS([EMACS], [emacs], [no])
+AC_ARG_ENABLE([test-emacs],
+  [AS_HELP_STRING([--enable-test-emacs],
+    [enable testsuite part requiring emacs])],
+  [WITH_TESTSUITE_EMACS=${enable_test_emacs}],
+  [if test "${EMACS}" == 'no'; then
+    WITH_TESTSUITE_EMACS=no
+  else
+    WITH_TESTSUITE_EMACS=yes
+  fi;])
 
 
 # Python setup tools
@@ -135,6 +161,10 @@ AC_ARG_ENABLE([test-py-setuptools],
 #   A part of the testsuite requires a Mingw32 cross compiler to
 #   complete.  The tests must be explicitly enabled to run.
 
+AC_SUBST([MINGW32AR])
+AC_SUBST([MINGW32CC])
+AC_SUBST([WITH_TESTSUITE_MINGW32])
+
 AC_CHECK_PROGS([MINGW32CC], [mingw32-gcc i586-mingw32msvc-cc], [no])
 AC_CHECK_PROGS([MINGW32AR], [mingw32-ar i586-mingw32msvc-ar], [no])
 AC_ARG_ENABLE([test-mingw32],
@@ -153,6 +183,9 @@ AC_ARG_ENABLE([test-mingw32],
 #   A part of the testsuite requires a SGML normalizer to
 #   complete.  The tests must be explicitly enabled to run.
 
+AC_SUBST([WITH_TESTSUITE_SGMLNORM])
+AC_SUBST([SGMLNORM])
+
 AC_CHECK_PROGS([SGMLNORM], [osgmlnorm sgmlnorm], [no])
 AC_ARG_ENABLE([test-opensp],
   [AS_HELP_STRING([--enable-test-opensp],
@@ -170,6 +203,8 @@ AC_ARG_ENABLE([test-opensp],
 #   A part of the testsuite requires noweb.  The tests must be
 #   explicitly enabled to run.
 
+AC_SUBST([WITH_TESTSUITE_NOWEB])
+
 AC_HAS_PROG([noweb])
 AC_ARG_ENABLE([test-noweb],
   [AS_HELP_STRING([--enable-test-noweb],
@@ -183,6 +218,8 @@ AC_ARG_ENABLE([test-noweb],
 #   A part of the testsuite requires gpg to sign archives.  The tests
 #   must be explicitly enabled to run.
 
+AC_SUBST([WITH_TESTSUITE_GPG])
+
 AC_HAS_PROG([gpg])
 AC_ARG_ENABLE([test-gpg],
   [AS_HELP_STRING([--enable-test-gpg],
@@ -195,6 +232,8 @@ AC_ARG_ENABLE([test-gpg],
 #
 #   A part of the testsuite requires a TeX installation.  The tests
 #   must be explicitly enabled to run.
+
+AC_SUBST([WITH_TESTSUITE_TEXMF])
 
 AC_HAS_PROG([tex])
 AC_ARG_ENABLE([test-texmf],
@@ -210,6 +249,8 @@ AC_ARG_ENABLE([test-texmf],
 #
 #   This is because some Cygwin bug forbids the use of TeX in some
 #   conditions, nevertheless, METAPOST seems to continue working.
+
+AC_SUBST([WITH_TESTSUITE_METAPOST])
 
 AC_ARG_ENABLE([test-metapost],
   [AS_HELP_STRING([--enable-test-metapost],
@@ -231,17 +272,7 @@ unpack_ocaml_version[]()
 
 
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
-AC_SUBST([WITH_TESTSUITE_FINDLIB])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
-AC_SUBST([WITH_TESTSUITE_MINGW32])
-AC_SUBST([WITH_TESTSUITE_NOWEB])
-AC_SUBST([WITH_TESTSUITE_GPG])
-AC_SUBST([WITH_TESTSUITE_SGMLNORM])
-AC_SUBST([WITH_TESTSUITE_TEXMF])
-AC_SUBST([WITH_TESTSUITE_METAPOST])
-AC_SUBST([MINGW32CC])
-AC_SUBST([MINGW32AR])
-AC_SUBST([SGMLNORM])
 AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
 AC_SUBST([VERSION], [$(sed -n -e '/^VERSION/s/VERSION=[[:space:]]*//p')])
 AC_CONFIG_FILES([Makefile.config bps/bps.bpsconfig.mk])
@@ -252,6 +283,7 @@ cat <<EOF
 ** Configuration Summary **
 
 Optional Features:
+  --enable-test-emacs=${WITH_TESTSUITE_EMACS}
   --enable-test-findlib=${WITH_TESTSUITE_FINDLIB}
   --enable-test-py-setuptools=${WITH_TESTSUITE_PY_SETUPTOOLS}
   --enable-test-mingw32=${WITH_TESTSUITE_MINGW32}
