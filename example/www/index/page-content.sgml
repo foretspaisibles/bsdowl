@@ -51,7 +51,7 @@ other things.</p>
 <p>Make is not the name of a well defined program, but rather the
 name of a large brotherhood. Each of the brother has its own strengths
 and weaknesses, and also its own dialect used to prepare its input
-specification. BSD Make Pallàs scripts can be used with three of these
+specification. BSD OWl Scripts can be used with three of these
 brothers, all of them being descendants of the make program in
 BSD4.4. These programs are:</p>
 
@@ -91,7 +91,7 @@ instructions. In a few words, you need to copy the script files in
 some directory and arrange so that your Make program knows about
 this.</p>
 
-<p>Specific pages are devoted to the uses of the BSD Make Pallàs
+<p>Specific pages are devoted to the uses of the BSD Make Owl
 Scripts:</p>
 
 <ul>
@@ -129,7 +129,7 @@ utilisation are stated.</p>
 
 <h1>Software supporting BSD Owl Scripts</h1>
 
-<p>Some software come with handy scripts using BSD Make Pallàs
+<p>Some software come with handy scripts using BSD Owl Scripts
 Scripts, we list these friends here:</p>
 
 <ul>
@@ -147,10 +147,10 @@ Scripts, we list these friends here:</p>
 </ul>
 
 
-<h1>BSD Owl Scripts is a Gna! hosted project</h1>
+<h1>BSD Owl Scripts used to be a Gna! hosted project</h1>
 
 <pre>
 Registration Date: Tuesday 03/11/2008 at 20:35
-License: CeCILL-B License
+License: BSD License
 Development Status: 5 - Production/Stable
 </pre>

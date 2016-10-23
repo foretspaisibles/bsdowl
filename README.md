@@ -83,13 +83,11 @@ available in the [doc][start-doc] directory.
 ## Free software
 
 BSD Owl Scripts is free software: copying it and redistributing it is
-very much welcome under conditions of the [CeCILL-B][licence-url]
-licence agreement, found in the [COPYING][licence-en] and
-[COPYING-FR][licence-fr] files of the distribution.
+very much welcome under conditions of the BSD licence
+agreement, found in the [LICENSE][licence-en] file of the
+distribution.
 
-  [licence-url]: http://www.cecill.info/licences/Licence_CeCILL-B_V1-en.html
-  [licence-en]:  COPYING
-  [licence-fr]:  COPYING-FR
+  [licence-en]:  LICENSE
 
 
 ## Last words
