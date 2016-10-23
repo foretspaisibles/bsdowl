@@ -58,7 +58,6 @@ When we call `make` without argument it is the same thing as
     make depend
     make build
     make doc
-    make test
 
 Some steps are not connected to any shell commands in the special case
 taken as example, but they can have command attached to them in more
@@ -232,7 +231,6 @@ make build
 ocamlc -c -o newton.cmo newton.ml
 ocamlc -a -o newton.cma newton.cmo
 make doc
-make test
 ```
 
 

@@ -41,12 +41,11 @@ ocamlc -c -o wordcount.cmo wordcount.ml
 ocamlc -o wordcount.byte wordcount.cmo
 cp wordcount.byte wordcount
 make doc
-make test
 ```
 
 When we call `make` without argument it is the same thing as `make
 all` which decomposes as `make configure`, `make depend`,
-`make build`, `make doc` and `make test` as we see.  In this example,
+`make build`, `make doc` and as we see.  In this example,
 the `make configure`, `make doc` and `make test` steps are not bound
 to any recipe or shell command, but it would be the case in more
 elaborated examples.
