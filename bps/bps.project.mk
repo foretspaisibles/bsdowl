@@ -162,7 +162,7 @@ DISTEXCLUDE+=		${f}
 # Strategy to detect auto-excluded files
 #
 
-.for f in CVS .cvsignore .svn .gitignore .git .product
+.for f in CVS .cvsignore .svn .gitignore .git .product '*.DS_Store'
 .if exists(${f})
 DISTEXCLUDE+=		${f}
 .endif
