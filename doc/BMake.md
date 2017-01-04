@@ -41,7 +41,7 @@ It is possible to change this prefix, as in
 If the command completes succesfully, the `bmake` program is then
 installed under the given prefix *PREFIX* and the standard macros
 shipped with the program are in `${PREFIX}/share/mk`.  If appropriate,
-use the same installation prefix for BSD Make Pallas Scripts.
+use the same installation prefix for BSD Owl Scripts.
 
 
 ## Portability

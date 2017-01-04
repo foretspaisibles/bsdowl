@@ -5,7 +5,7 @@ your applications.  As these files are commonly stored under your home
 directory and prefixed with a dot, let us call them *dotfiles*. If you
 consider using a [RCS](http://en.wikipedia.org/wiki/RCS) to keep track
 of the revisions you do to your files you will also need an
-installation procedure.  This procedure is provided by BSD Make Pallàs
+installation procedure.  This procedure is provided by BSD Owl
 Scripts.
 
 This setting is also very useful in you want to use the same

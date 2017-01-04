@@ -45,7 +45,7 @@ other things.
 Make is not the name of a well defined program, but rather the
 name of a large brotherhood. Each of the brother has its own strengths
 and weaknesses, and also its own dialect used to prepare its input
-specification. BSD Make Pallàs scripts can be used with three of these
+specification. BSD Owl scripts can be used with three of these
 brothers, all of them being descendants of the make program in
 BSD4.4. These programs are:
 

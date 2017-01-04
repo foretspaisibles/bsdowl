@@ -5,5 +5,5 @@ ispell-dictionary: "british-ise"
 End:
 -->
 <p id="HEADLINE">Producing and deploying OCaml software</p>
-<p id="INTRODUCTION">We describe services given by BSD Make Pallàs
+<p id="INTRODUCTION">We describe services given by BSD Owl
 Scritps in the production and deployment of OCaml software.</p>
