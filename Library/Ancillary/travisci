@@ -11,38 +11,43 @@
 # This source file is licensed as described in the file LICENSE, which
 # you should have received as part of this distribution.
 
-TRAVIS_WITH_TEX=${TRAVIS_FULL}
-TRAVIS_WITH_NOWEB=${TRAVIS_FULL}
-TRAVIS_WITH_FINDLIB=${TRAVIS_FULL}
-TRAVIS_WITH_OPENSP=${TRAVIS_FULL}
 INSTALL_PREFIX="${HOME}/.bsdowl"
+
+TRAVIS_WITH_EMACS=${TRAVIS_FULL}
+TRAVIS_WITH_FINDLIB=${TRAVIS_FULL}
+TRAVIS_WITH_NOWEB=${TRAVIS_FULL}
+TRAVIS_WITH_OPENSP=${TRAVIS_FULL}
+TRAVIS_WITH_TEX=${TRAVIS_FULL}
 
 eval $(opam config env --switch ${TRAVIS_OCAML_VERSION:?})
 
 set -a
-BSDOWL_WITH_TEX=${TRAVIS_WITH_TEX}
-BSDOWL_WITH_NOWEB=${TRAVIS_WITH_NOWEB}
+BSDOWL_WITH_EMACS=${TRAVIS_WITH_EMACS}
 BSDOWL_WITH_FINDLIB=${TRAVIS_WITH_FINDLIB}
+BSDOWL_WITH_NOWEB=${TRAVIS_WITH_NOWEB}
 BSDOWL_WITH_OPENSP=${TRAVIS_WITH_OPENSP}
+BSDOWL_WITH_TEX=${TRAVIS_WITH_TEX}
 set +a
 
 install -d "${INSTALL_PREFIX}"
 autoconf
 ./configure\
     --prefix="${INSTALL_PREFIX}"\
-    --with-gpg\
-    --with-gm\
-    --with-ocaml\
-    --with-sqlite3\
-    --with-opensp=${TRAVIS_WITH_OPENSP}\
-    --with-tex=${TRAVIS_WITH_TEX}\
-    --with-noweb=${TRAVIS_WITH_NOWEB}\
-    --with-credentials=sudo\
+    --disable-test-gpg\
+    --enable-test-emacs=${TRAVIS_WITH_EMACS}\
     --enable-test-findlib=${TRAVIS_WITH_FINDLIB}\
     --enable-test-noweb=no\
     --enable-test-opensp=${TRAVIS_WITH_OPENSP}\
     --enable-test-texmf=${TRAVIS_WITH_TEX}\
-    --disable-test-gpg
+    --with-credentials=sudo\
+    --with-emacs=${TRAVIS_WITH_EMACS}\
+    --with-gm\
+    --with-gpg\
+    --with-noweb=${TRAVIS_WITH_NOWEB}\
+    --with-ocaml\
+    --with-opensp=${TRAVIS_WITH_OPENSP}\
+    --with-sqlite3\
+    --with-tex=${TRAVIS_WITH_TEX}
 bmake build
 bmake install
 test -f "${INSTALL_PREFIX}/share/bsdowl/bps.bpsconfig.mk"

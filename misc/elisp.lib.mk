@@ -1,8 +1,5 @@
 ### elisp.lib.mk -- Manage Emacs Lisp Directories
 
-# Author: Michael Grünewald
-# Date: Fri Feb 10 17:59:16 GMT 2006
-
 # BSD Owl Scripts (https://github.com/michipili/bsdowl)
 # This file is part of BSD Owl Scripts
 #
@@ -15,75 +12,77 @@
 
 ### SYNOPSIS
 
+# LIBRARY=libraryname
+#
 # SRCS+= module1.el
 # SRCS+= module2.el
-#
-# ELISPC.module1.elc = A command to compile my elisp thing
-# ELISPMODE.module2.elc = 400
-#
-# ELISP_INSTALL_SRC.module2.el = no
 #
 # .include "elisp.lib.mk"
 
 
 ### DESCRIPTION
 
-# Ce module compile et installe des modules EMACS LISP. Le répertoire
-# d'installation est déterminé par la valeur de ELISPDIR
-# (/share/emacs/site-lisp).
+# Variables:
 #
-# La variable ELISP_INSTALL_SRC (yes) contrôle l'installation des
-# fichiers source avec les fichiers byte-code.
-
-FILESGROUPS+= ELISP
-ELISP_INSTALL_SRC = yes
-
-ELISPDIR?= ${datarootdir}/emacs/site-lisp
-ELISPC?= emacs -batch -f batch-byte-compile
-
-.if defined (SRCS) && !empty(SRCS:M*.el)
-
-ELISP+=		${SRCS:M*.el:.el=.elc}
-
-.for file in ${SRCS:M*.el}
-
+#  LIBRARY [not set]
+#   Name of the library
 #
-# Installation des fichiers sources
 #
+#  SRCS [not set]
+#    Files that must be compiled for the library
+#
+#    Listed source files will be installed.
+#
+#
+#  ELISPOWN, ELISPGRP, ELISPMODE, ELISPDIR, ELISPNAME
+#   Parameters of the library installation
+#
+#   See `bps.files.mk` for a closer description of these variables.
+#
+#
+#  ELISPROOTDIR
+#   Root of the elisp library heirarchy
+#
+#   This can be used to customize ELISPDIR, as in
+#   ELISPDIR=${ELISPROOTDIR}/${LIBRARY} for instance.
 
-.if !defined(ELISP_INSTALL_SRC.${file})
-ELISP_INSTALL_SRC.${file}=${ELISP_INSTALL_SRC}
+THISMODULE=		elisp.lib
+
+.if !defined(LIBRARY)||empty(LIBRARY)
+.error The elisp.lib.mk module expects you to set the LIBRARY variable to a sensible value.
 .endif
 
-.if ${ELISP_INSTALL_SRC.${file}} == yes
-ELISP+=${file}
-.endif
-.endfor
+PRODUCT=		${LIBRARY}
+_PACKAGE_CANDIDATE=	${LIBRARY}
 
+FILESGROUPS+=		ELISP
 
-.for obj in ${SRCS:M*.el:.el=.elc}
+_ELISP_CODE='(progn\
+(defun bsdowl-dest-file-function (filename)\
+  (let ((pwd (expand-file-name "."))\
+        (basename (replace-regexp-in-string ".*/" "" filename)))\
+    (concat (file-name-as-directory pwd) basename "c")))\
+(setq byte-compile-dest-file-function (quote bsdowl-dest-file-function))\
+(batch-byte-compile))'
 
-#
-# Fichiers à nettoyer
-#
+EMACS?=			${_BPS_EMACS}
+ELISPDIR?=		${datarootdir}/emacs/site-lisp
+ELISPC?=		${EMACS} -batch --eval ${_ELISP_CODE}
 
-CLEANFILES+= ${obj}
+OBJS=			${SRCS:M*.el:.el=.elc}
 
-#
-# Calcul de la ligne de compilation
-#
+ELISP+=			${SRCS}
+ELISP+=			${OBJS}
 
-.if !defined(ELISPC.${obj})
-ELISPC.${obj} = ${ELISPC}
-.endif
+CLEANFILES+=		${OBJS}
 
-${obj}: ${obj:.elc=.el}
-	${ELISPC.${obj}} ${.ALLSRC}
+.SUFFIXES: .el .elc
 
+${OBJS:M*.elc}: ${SRCS:M*.el}
+	${ELISPC} ${.ALLSRC}
 
-.endfor
-
-.endif
+.el.elc:
+	${ELISPC} ${.ALLSRC}
 
 .include "bps.init.mk"
 .include "bps.clean.mk"

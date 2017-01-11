@@ -28,6 +28,9 @@ are now probably interested in getting started:
    have several [configuration files](ManageDotFiles.md) so we help you
    taking care of them.
 
+ - It is easy to [install elisp macros](DevelopElispMacros.md)
+   supporting your software project or being a project on their own.
+
 The following list consists of projects using **BSD Owl Scripts** as
 build system.  Studiying these examples is a good starting point to
 start using **BSD Owl Scripts**:
