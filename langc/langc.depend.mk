@@ -37,6 +37,7 @@ MKDEPTOOL+=		${CFLAGS:S@-I @-I@gW:M-I*:S@-I@-I @g}
 .endif
 
 .depend:
+	${MKDEPTOOL} ${.ALLSRC}
 	${MKDEPTOOL} ${.ALLSRC} > ${.TARGET}
 
 do-depend:		.depend
