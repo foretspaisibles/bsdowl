@@ -105,6 +105,20 @@ AC_ARG_WITH([credentials],
         ;;
     esac;])
 
+AC_ARG_WITH([numeric-ownership],
+  [AS_HELP_STRING([--with-numeric-ownership],
+    [tell wether ownership information should be conveyed in numeric form.])],
+  [case $with_numeric_ownership in
+    yes|no)
+        NUMERIC_OWNERSHIP=$with_numeric_ownership
+        ;;
+    *)
+        AC_MSG_ERROR([*** $with_numeric_ownership: invalid argument for numeric ownership flag.])
+        ;;
+    esac;],
+  [NUMERIC_OWNERSHIP="${NUMERIC_OWNERSHIP:=no}"])
+
+
 #
 # Conditionally enable tests
 #
@@ -272,6 +286,7 @@ unpack_ocaml_version[]()
 
 
 AC_SUBST([SWITCH_CREDENTIALS_STRATEGY])
+AC_SUBST([NUMERIC_OWNERSHIP])
 AC_SUBST([WITH_TESTSUITE_PY_SETUPTOOLS])
 AC_SUBST([OCAMLVERSION], [$(unpack_ocaml_version)])
 AC_SUBST([VERSION], [$(sed -n -e '/^VERSION/s/VERSION=[[:space:]]*//p')])
@@ -295,5 +310,6 @@ Optional Features:
 
 Optional Packages:
   --with-credentials=${SWITCH_CREDENTIALS_STRATEGY}
+  --with-numeric-ownership=${NUMERIC_OWNERSHIP}
 
 EOF

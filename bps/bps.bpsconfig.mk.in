@@ -143,6 +143,9 @@
 #
 #  _BPS_SWITCH_CREDENTIALS_STRATEGY [@SWITCH_CREDENTIALS_STRATEGY@]
 #    The stratgey used to swithc credentials
+#
+#  _BPS_NUMERIC_OWNERSHIP [@NUMERIC_OWNERSHIP@]
+#    Use numeric file ownership information.
 
 
 # Targets:
@@ -193,6 +196,7 @@ _BPS_SYSTEMGRP?=	@SYSTEMGRP@
 _BPS_COMPRESS?=		@COMPRESS@
 _BPS_SGMLNORM?=		@SGMLNORM@
 _BPS_SWITCH_CREDENTIALS_STRATEGY?=@SWITCH_CREDENTIALS_STRATEGY@
+_BPS_NUMERIC_OWNERSHIP?=@NUMERIC_OWNERSHIP@
 
 .endif # !target(__<bps.bpsconfig.mk>__)
 

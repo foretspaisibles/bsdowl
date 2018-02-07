@@ -37,8 +37,22 @@ _OWN_GRP?=	${_BPS_SYSTEMGRP}
 _OWN_DIRMODE?=	750
 _OWN_BINMODE?=	550
 _OWN_DTAMODE?=	440
+
+.if !empty(_BPS_NUMERIC_OWNERSHIP:Myes)
+.if !empty(UID)
+_OWN_OWN?=	${UID}
+.else
+_OWN_OWN!=	${_BPS_ID} -u
+.endif
+.if !empty(GID)
+_OWN_GRP?=	${GID}
+.else
+_OWN_GRP!=	${_BPS_ID} -g
+.endif
+.else
 _OWN_OWN?=	${USER}
 _OWN_GRP?=	${GROUP}
+.endif
 .endif
 
 BINDIR?=	${bindir}
