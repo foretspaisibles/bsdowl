@@ -57,12 +57,17 @@
 #   front-ends to OCaml compilers.
 #
 #
-#  WITH_THREADS (no)
-#   Build with threads support
+#  WITH_POSIX_THREADS (no)
+#   Build with threads support.
+#
+#    This flag is automatically set if PKGS mentions the threads.posix package.
 #
 #
-#  WITH_VMTHREADS (no)
+#  WITH_VM_THREADS (no)
 #   Force VM-level scheduling of threads in byte-code programs
+#
+#    This flag is automatically set if PKGS mentions the threads.vm package.
+
 
 ### IMPLEMENTATION
 
@@ -148,11 +153,24 @@ OCAMLLN?= ${OCAMLFIND} ocamlopt -linkpkg
 .endif
 .endif
 
-
-.if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
-.if empty(PKGS:Mthreads)
-PKGS+= threads
+.if !empty(PKGS:Mthreads.posix)
+WITH_POSIX_THREADS?=yes
+.else
+WITH_POSIX_THREADS?=no
 .endif
+
+.if !empty(PKGS:Mthreads.vm)
+WITH_VM_THREADS?=yes
+.else
+WITH_VM_THREADS?=no
+.endif
+
+.if ${WITH_POSIX_THREADS} == yes && empty(PKG:Mthreads.posix)
+PKGS+= threads.posix
+.endif
+
+.if ${WITH_VM_THREADS} == yes && empty(PKG:Mthreads.vm)
+PKGS+= threads.vm
 .endif
 
 
@@ -161,12 +179,10 @@ PKGS+= threads
 .if defined(PKGS)&&!empty(PKGS)
 ${pseudo}+= -package "${PKGS}"
 .endif
-.if defined(WITH_THREADS)&&(${WITH_THREADS} == yes)
-.if defined(WITH_VMTHREADS)&&(${WITH_VMTHREADS} == yes)
-${pseudo}+= -threads
-.else
-${pseudo}+= -vmthreads
-.endif
+.if ${WITH_POSIX_THREADS} == yes
+${pseudo}+= -thread
+.elif ${WITH_VM_THREADS} == yes
+${pseudo}+= -vmthread
 .endif
 .if defined(PREDICATES)&&!empty(PREDICATES)
 ${pseudo}+= -predicates "${PREDICATES}"
