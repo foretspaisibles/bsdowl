@@ -2,27 +2,27 @@
 
 ## Requirements
 
-BSD Owl Scripts works at least in the following
+BSD Owl Scripts works at least with the following
 versions of the **make** program:
 
- - FreeBSD 9.0 and newer with he base system program `make`;
+ - FreeBSD 9.0 and newer with the base system program `make`;
  - Mac OS X 10.4 and newer with the third-party program `bmake`;
  - Debian 7.0 and newer with the third-party program `bmake`.
 
-Some special features require extra software being installed on the
-system where BSD Owl Scripts is used.  This is advertised in
+Some special features require that extra software be installed on the
+system where BSD Owl Scripts is used.  This is explained in
 the corresponding documentation.
 
 
-*How to install a compatible version of make on FreeBSD?*
+*How to install a compatible version of make on FreeBSD*
 On FreeBSD, the version of **make** provided in the base system can be
 used and no additional package is required.
 
-*How to install a compatible version of make on Mac OS X or Linux?*
-On Mac OS X or Linux, the adequate version of the **make** program is
+*How to install a compatible version of make on Mac OS X or Linux*
+On Mac OS X or Linux, an adequate version of the **make** program is
 usually packaged as **bmake** and can readily be installed using
 MacPorts on Mac OS X or **aptitude** on Debian.  If a package is not
-available for your distribution, this is not a problem for **bmake**
+available for your distribution, this should not be a problem since **bmake**
 is very portable and [easy to install][install-bmake].
 
 *Other dependencies*
@@ -58,24 +58,24 @@ the directives and a few helper scripts are installed:
 To let BSD Make know about bsdowl, you then need to
 ensure that `/usr/local/bin` is listed in the path for each system
 user and that `/usr/local/share/mk` is listed in the search path
-for your compatible make program, this is usually done by adding the
+for your compatible make program. This is usually done by adding the
 line
 
 ```makefile
 .MAKEFLAGS: -I /usr/local/share/mk
 ```
 
-To the file `/etc/make.conf`.
+to the file `/etc/make.conf`.
 
 
 ## User-specific installation procedure
 
 First of all, acquire the latest tarball `bsdowl-3.0.0-20150314.tar.xz`
-and its signature `bsdowl-3.0.0-20150314.tar.xz.sig` that you should
-verify—alternatively, download the tip of the
+and its signature file `bsdowl-3.0.0-20150314.tar.xz.sig` which you should
+verify — alternatively, download the tip of the
 [development branch][branch/master] or of the
 [release branch][branch/release].
-Point a user shell to the directory containing the tarball:
+Point a user shell at the directory containing the tarball:
 
 ```console
 % tar xJf bsdowl-3.0.0-20150314.tar.xz
